@@ -1,4 +1,4 @@
-// standalone program 
+// standalone program
 package main
 
 import (
@@ -9,9 +9,9 @@ import (
 
 // in-memory Model -- declaration
 type user struct {
-	ID    	  string `json:"id"`
-	Nickname  string `json:"nickname"`
-	Role	  string `json:"role"`
+	ID       string `json:"id"`
+	Nickname string `json:"nickname"`
+	Role     string `json:"role"`
 }
 
 // data
@@ -27,7 +27,7 @@ var users = []user{
 // reguest details stored in gin.Context
 func getUsers(c *gin.Context) {
 	// serialize struct to JSON
-	// net/http response code 
+	// net/http response code
 	c.IndentedJSON(http.StatusOK, users)
 }
 
@@ -60,7 +60,7 @@ func postUser(c *gin.Context) {
 
 func main() {
 	// name of the function, not its result
-	router := gin.Default() 
+	router := gin.Default()
 	router.GET("/users", getUsers)
 	router.GET("/users/:id", getUserByID)
 	router.POST("/users", postUser)

@@ -56,6 +56,14 @@ info:
 	@echo -e "${YELLOW} make stop    --- stop and purge project (only docker containers!) ${RESET}"
 	@echo -e ""
 
+config:
+	@exit 0
+
+fmt:
+	@echo -e "\n${YELLOW} Code reformating (gofmt)... ${RESET}\n"
+	@gofmt -d .
+	@find . -name "*.go" -exec gofmt {} \;
+
 build: 
 	@echo -e "\n${YELLOW} Building project (docker-compose build)... ${RESET}\n"
 	@docker-compose build 
