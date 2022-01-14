@@ -1,0 +1,30 @@
+version: '3.6'
+
+services:
+  swis-core-api-dev:
+    image: ${DOCKER_DEV_IMAGE}
+    container_name: ${DOCKER_DEV_CONTAINER}
+    build:
+      context: .
+      args: 
+        APP_NAME: ${APP_NAME}
+        PROJECT_NAME: ${PROJECT_NAME}
+        DOCKER_DEV_PORT: ${DOCKER_DEV_PORT}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${DOCKER_DEV_PORT}/users"]
+      interval: 0m
+      timeout: 30s
+      retries: 0
+      start_period: 0s
+    ports:
+      - target: ${DOCKER_DEV_PORT}
+        published: ${DOCKER_DEV_EXTERNAL_PORT}
+        mode: host
+        protocol: tcp
+    networks:
+      - ${DOCKER_DEV_NETWORK}
+
+networks:
+  swis-core-api-net:
+    name: ${DOCKER_DEV_NETWORK}
