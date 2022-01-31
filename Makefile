@@ -50,6 +50,10 @@ all: info
 info: 
 	@echo -e "\n${GREEN} ${PROJECT_NAME} / Makefile ${RESET}\n"
 
+	@echo -e "${YELLOW} make config  --- check dev environment ${RESET}"
+	@echo -e "${YELLOW} make fmt     --- reformat the go source (gofmt) ${RESET}"
+	@echo -e "${YELLOW} make doc     --- render documentation from code (go doc) ${RESET}\n"
+
 	@echo -e "${YELLOW} make build   --- build project (docker image) ${RESET}"
 	@echo -e "${YELLOW} make run     --- run project ${RESET}"
 	@echo -e "${YELLOW} make log     --- fetch container's log ${RESET}"
