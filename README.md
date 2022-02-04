@@ -37,7 +37,7 @@ YAML-formated file for docker-compose stack. Contains defitions for docker conta
 
 ### go.mod (go.sum)
 
-Application/package dependencies.
+Application/package dependencies. Deprecated since the module is built inside the docker container.
 
 ### main.go
 

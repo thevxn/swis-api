@@ -1,7 +1,7 @@
 version: '3.6'
 
 services:
-  swis-core-api-dev:
+  swis-api:
     image: ${DOCKER_DEV_IMAGE}
     container_name: ${DOCKER_DEV_CONTAINER}
     build:
@@ -12,7 +12,7 @@ services:
         DOCKER_DEV_PORT: ${DOCKER_DEV_PORT}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${DOCKER_DEV_PORT}/users"]
+      test: ["CMD", "curl", "-f", "-X", "GET", "http://localhost:${DOCKER_DEV_PORT}/users"]
       interval: 0m
       timeout: 30s
       retries: 0
@@ -26,5 +26,5 @@ services:
       - ${DOCKER_DEV_NETWORK}
 
 networks:
-  swis-core-api-net:
+  swis-api-net:
     name: ${DOCKER_DEV_NETWORK}
