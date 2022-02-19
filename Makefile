@@ -56,7 +56,7 @@ info:
 
 	@echo -e "${YELLOW} make build   --- build project (docker image) ${RESET}"
 	@echo -e "${YELLOW} make run     --- run project ${RESET}"
-	@echo -e "${YELLOW} make log     --- fetch container's log ${RESET}"
+	@echo -e "${YELLOW} make logs    --- fetch container's logs ${RESET}"
 	@echo -e "${YELLOW} make stop    --- stop and purge project (only docker containers!) ${RESET}"
 	@echo -e ""
 
@@ -77,7 +77,7 @@ build:
 #@docker build -t ${DOCKER_DEV_IMAGE} .
 #@docker run -it --rm --name ${DOCKER_DEV_CONTAINER} ${DOCKER_DEV_IMAGE}
 
-run:
+run:	build
 	@echo -e "\n${YELLOW} Starting project (docker-compose up)... ${RESET}\n"
 	@docker-compose up --force-recreate --detach
 

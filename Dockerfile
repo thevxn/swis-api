@@ -15,6 +15,7 @@ ENV DOCKER_DEV_PORT ${DOCKER_DEV_PORT}
 WORKDIR /go/src/${APP_NAME}
 COPY . .
 
+RUN go mod init
 RUN go get -d -v ./...
 RUN go install 
 

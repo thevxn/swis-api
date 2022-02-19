@@ -1,5 +1,7 @@
-# savla-net/swis-core-api
+# savla-dev/swis-api
 sakalWeb IS RESTful API v5 [golang]
+
++ http://swapi.savla.su (intranet)
 
 ## repo files
 
