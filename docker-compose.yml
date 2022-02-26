@@ -11,20 +11,15 @@ services:
         PROJECT_NAME: ${PROJECT_NAME}
         DOCKER_DEV_PORT: ${DOCKER_DEV_PORT}
     restart: unless-stopped
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "-X", "GET", "http://localhost:${DOCKER_DEV_PORT}/users"]
-#      interval: 0m
-#      timeout: 30s
-#      retries: 0
-#      start_period: 0s
     ports:
-      - target: ${DOCKER_DEV_PORT}
-        published: ${DOCKER_DEV_EXTERNAL_PORT}
-        mode: host
-        protocol: tcp
+      - "${DOCKER_DEV_EXTERNAL_PORT}:${DOCKER_DEV_PORT}"
     networks:
       - ${DOCKER_DEV_NETWORK}
+    labels:
+      - "traefik.http.routers.swis_api.rule=Host(`swapi.savla.su`)"
+      - "traefik.http.services.swis_api.loadbalancer.server.port=${DOCKER_DEV_PORT}"
+      - "traefik.docker.network=${DOCKER_DEV_NETWORK}"
 
 networks:
-  swis-api-net:
+  traefik_savla:
     name: ${DOCKER_DEV_NETWORK}
