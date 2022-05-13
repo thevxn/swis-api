@@ -1,7 +1,10 @@
+// go:build ignore
+
 // Package swis-api is RESTful API core backend for sakalWeb Information System v5.
 package main
 
 import (
+	"swis-api/dish"
 	"swis-api/users"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +13,10 @@ import (
 
 func main() {
 	router := gin.Default()
+
+	// dish CRUD
+	router.GET("/dish/sockets", dish.GetSocketList)
+	//router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
 
 	// users CRUD
 	router.GET("/users", users.GetUsers)
