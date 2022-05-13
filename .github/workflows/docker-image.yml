@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: swis-api CI/CD pipeline
 
 on:
   push:
@@ -10,9 +10,9 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, stokrle ]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Redeploy docker container (implicit pipeline)
+    - name: Redeploy docker container (makefile chain target)
       run: make run
