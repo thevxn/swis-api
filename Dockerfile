@@ -4,13 +4,17 @@
 
 # https://hub.docker.com/_/golang
 
-FROM golang:1.17.6-alpine
+FROM golang:1.17-alpine
 
 ARG APP_NAME
 ARG DOCKER_DEV_PORT
+ARG TZ
 
 ENV APP_NAME ${APP_NAME}
 ENV DOCKER_DEV_PORT ${DOCKER_DEV_PORT}
+ENV TZ ${TZ}
+
+RUN apk --no-cache add tzdata
 
 WORKDIR /go/src/${APP_NAME}
 COPY . .
