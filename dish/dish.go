@@ -71,7 +71,7 @@ var socketArray = []Socket{
 
 	// public endpoints -- platispivo.cz
 	{Name: "platispivo-cz HTTPS", Host: "https://platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
-	{Name: "www-platispivo-cz HTTPS", Host: "https://www.platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
+	//{Name: "www-platispivo-cz HTTPS", Host: "https://www.platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
 
 	// legacy
 	//{Name: "kyrspa-wz-cz litter HTTP", Host: "http://kyrspa.wz.cz", Port: 80, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/litter/?page=login"},
