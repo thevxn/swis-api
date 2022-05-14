@@ -30,15 +30,15 @@ type Socket struct {
 var socketArray = []Socket{
 	// TCP port check
 	{Name: "frank SSH", Host: "frank.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
-	{Name: "frank public SSH", Host: "frank-public.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
+	//{Name: "frank public SSH", Host: "frank-public.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "fgrebox SSH", Host: "fgrebox.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "squiabbit SSH", Host: "squabbit.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
-	{Name: "stafle SSH", Host: "stafle.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
+	//{Name: "stafle SSH", Host: "stafle.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "stokrle SSH", Host: "stokrle.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "tackbox SSH", Host: "tackbox.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "talion SSH", Host: "talion.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "viking SSH", Host: "viking.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
-	{Name: "viking public SSH", Host: "viking-public.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
+	//{Name: "viking public SSH", Host: "viking-public.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 
 	// TCP port check, cont'd
 	{Name: "frank IP intranet DNS", Host: "10.4.5.130", Port: 53, ExpectedHttpCodes: []int{}, PathHttp: ""},
@@ -49,7 +49,7 @@ var socketArray = []Socket{
 	{Name: "savla-docs HTTP", Host: "http://docs.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/howto/docs"},
 	{Name: "elden-bling dev HTTP", Host: "http://elden-bling.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/"},
 	{Name: "kanban HTTP", Host: "http://kanban.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/login"},
-	{Name: "passbolt HTTP", Host: "http://passbolt.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/"},
+	//{Name: "passbolt HTTP", Host: "http://passbolt.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/"},
 	{Name: "swapi head test HTTP", Host: "http://swapi.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/dish/test"},
 
 	// public endpoints -- savla.dev
@@ -74,8 +74,8 @@ var socketArray = []Socket{
 	{Name: "www-platispivo-cz HTTPS", Host: "https://www.platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
 
 	// legacy
-	{Name: "kyrspa-wz-cz litter HTTP", Host: "http://kyrspa.wz.cz", Port: 80, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/litter/?page=login"},
-	{Name: "smart-comp-cz HTTP", Host: "https://sc.cz", Port: 80, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
+	//{Name: "kyrspa-wz-cz litter HTTP", Host: "http://kyrspa.wz.cz", Port: 80, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/litter/?page=login"},
+	{Name: "smart-comp-cz HTTP", Host: "https://sc.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
 	
 }
 
