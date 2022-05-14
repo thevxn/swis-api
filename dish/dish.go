@@ -34,7 +34,7 @@ var socketArray = []Socket{
 	{Name: "fgrebox SSH", Host: "fgrebox.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "squiabbit SSH", Host: "squabbit.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "stafle SSH", Host: "stafle.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
-	{Name: "stokrle SSH", Host: "storkle.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
+	{Name: "stokrle SSH", Host: "stokrle.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "tackbox SSH", Host: "tackbox.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "talion SSH", Host: "talion.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
 	{Name: "viking SSH", Host: "viking.savla.su", Port: 22, ExpectedHttpCodes: []int{}, PathHttp: ""},
@@ -61,7 +61,7 @@ var socketArray = []Socket{
 
 	// public endpoints -- n0p.cz
 	{Name: "red-n0p-cz HTTPS", Host: "https://red.n0p.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/login"},
-	{Name: "text-n0p-cz HTTPS", Host: "https://text.n0p.cz", Port: 443, ExpectedHttpCodes: []int{ 301, 401 }, PathHttp: "/"},
+	{Name: "text-n0p-cz HTTPS", Host: "https://text.n0p.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301, 401 }, PathHttp: "/"},
 	{Name: "web-n0p-cz HTTPS", Host: "https://web.n0p.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
 	{Name: "wiki-n0p-cz HTTPS", Host: "https://wiki.n0p.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301, 401 }, PathHttp: "/start"},
 
