@@ -50,7 +50,7 @@ var socketArray = []Socket{
 	{Name: "elden-bling dev HTTP", Host: "http://elden-bling.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/"},
 	{Name: "kanban HTTP", Host: "http://kanban.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/login"},
 	{Name: "passbolt HTTP", Host: "http://passbolt.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/"},
-	{Name: "swapi HTTP", Host: "http://swapi.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/dish/head"},
+	{Name: "swapi head test HTTP", Host: "http://swapi.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/dish/test"},
 
 	// public endpoints -- savla.dev
 	{Name: "savla-dev HTTPS", Host: "https://savla.dev", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
@@ -71,7 +71,7 @@ var socketArray = []Socket{
 
 	// public endpoints -- platispivo.cz
 	{Name: "platispivo-cz HTTPS", Host: "https://platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
-	{Name: "www-platispivo-cz HTTPS", Host: "https://www-platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
+	{Name: "www-platispivo-cz HTTPS", Host: "https://www.platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/"},
 
 	// legacy
 	{Name: "kyrspa-wz-cz litter HTTP", Host: "http://kyrspa.wz.cz", Port: 80, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/litter/?page=login"},
@@ -80,6 +80,13 @@ var socketArray = []Socket{
 }
 
 
+func HeadTest(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"test": true,
+	})
+}
+
+// GetSocketList GET method
 func GetSocketList(c *gin.Context) {
 	//var sockets = zasuvka.Sockets{}
 	var sockets = Sockets{

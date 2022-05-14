@@ -15,6 +15,7 @@ func main() {
 	router := gin.Default()
 
 	// dish CRUD
+	router.HEAD("/dish/test", dish.HeadTest)
 	router.GET("/dish/sockets", dish.GetSocketList)
 	//router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
 
