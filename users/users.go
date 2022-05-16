@@ -1,20 +1,27 @@
 package users
 
 import (
+	//b64 "encoding/base64"
+	//"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-// user struct acts like in-memory 
-type user struct {
-	ID       string `json:"id"`
-	Nickname string `json:"nickname"`
-	Role     string `json:"role"`
+
+type Users struct {
+	Users []User `json:"users"`
+}
+
+type User struct {
+	ID       	string `json:"id"`
+	Nickname 	string `json:"nickname"`
+	Role     	string `json:"role"`
+	TokenBase64	string `json:"tokenbase64"`
 }
 
 // users demo data for user struct
-var users = []user{
+var users = []User{
 	{ID: "1", Nickname: "sysadmin", Role: "admin"},
 	{ID: "2", Nickname: "dev", Role: "developer"},
 	{ID: "3", Nickname: "op", Role: "operator"},
@@ -43,7 +50,7 @@ func GetUserByID(c *gin.Context) {
 
 // PostUser enables one to add new user to users model.
 func PostUser(c *gin.Context) {
-	var newUser user
+	var newUser User
 
 	// bind received JSON to newUser
 	if err := c.BindJSON(&newUser); err != nil {
@@ -55,3 +62,4 @@ func PostUser(c *gin.Context) {
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, newUser)
 }
+

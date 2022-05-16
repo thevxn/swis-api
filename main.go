@@ -5,6 +5,7 @@ package main
 
 import (
 	"swis-api/dish"
+	"swis-api/groups"
 	"swis-api/users"
 
 	"github.com/gin-gonic/gin"
@@ -13,17 +14,24 @@ import (
 func main() {
 	router := gin.Default()
 
-	swapiProxies := []string{
-		"10.4.5.0/25",
-		"10.4.5.128/25",
-	}
+	// reqs from this IPs are treated as proxies, ergo log the real client IP address
+	/*swapiProxies := []string{
+		"10.4.5.130/25",
+	}*/
 
-	router.SetTrustedProxies(swapiProxies)
+	//router.SetTrustedProxies(swapiProxies)
 
 	// dish CRUD
 	router.HEAD("/dish/test", dish.HeadTest)
 	router.GET("/dish/sockets", dish.GetSocketList)
 	//router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
+
+	// groups CRUD
+	router.GET("/groups", groups.GetGroups)
+	router.GET("/groups/:id", groups.GetGroupByID)
+	router.POST("/groups", groups.PostGroup)
+	//router.PUT("/groups/:id", groups.PutGroupByID)
+	//router.DELETE("/groups/:id", groups.DeleteGroupByID)
 
 	// users CRUD
 	router.GET("/users", users.GetUsers)
