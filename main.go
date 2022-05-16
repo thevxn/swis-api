@@ -10,9 +10,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
 func main() {
 	router := gin.Default()
+
+	swapiProxies := []string{
+		"10.4.5.0/25",
+		"10.4.5.128/25",
+	}
+
+	router.SetTrustedProxies(swapiProxies)
 
 	// dish CRUD
 	router.HEAD("/dish/test", dish.HeadTest)
