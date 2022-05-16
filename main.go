@@ -4,6 +4,8 @@
 package main
 
 import (
+	"net/http"
+
 	"swis-api/dish"
 	"swis-api/groups"
 	"swis-api/users"
@@ -20,11 +22,17 @@ func main() {
 	}*/
 
 	//router.SetTrustedProxies(swapiProxies)
+	
+	router.GET("/", func(c *gin.Context){
+		c.JSON(http.StatusOK, gin.H{
+			"message": "welcome to sakalweb API (swapi) root",
+		})
+	})
 
 	// dish CRUD
 	router.HEAD("/dish/test", dish.HeadTest)
 	router.GET("/dish/sockets", dish.GetSocketList)
-	//router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
+	router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
 
 	// groups CRUD
 	router.GET("/groups", groups.GetGroups)
@@ -41,6 +49,6 @@ func main() {
 	//router.DELETE("/users/:id", users.DeleteUserByID)
 
 	// attach router to http.Server and start it
-	router.Run("0.0.0.0:8080")
+	router.Run(":8080")
 }
 
