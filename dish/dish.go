@@ -32,7 +32,7 @@ type Socket struct {
 var socketArray = []Socket{
 	// TCP port check
 	{Name: "frank SSH", Host: "frank.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	//{Name: "frank public SSH", Host: "frank-public.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
+	{Name: "frank public SSH", Host: "frank-public.savla.su", Port: 22, DishList: []string{"frank"}},
 	{Name: "fgrebox SSH", Host: "fgrebox.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	{Name: "squabbit SSH", Host: "squabbit.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	//{Name: "stafle SSH", Host: "stafle.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
@@ -40,12 +40,12 @@ var socketArray = []Socket{
 	{Name: "tackbox SSH", Host: "tackbox.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	{Name: "talion SSH", Host: "talion.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	{Name: "viking SSH", Host: "viking.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	//{Name: "viking public SSH", Host: "viking-public.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
+	{Name: "viking public SSH", Host: "viking-public.savla.su", Port: 22, DishList: []string{"frank"}},
 
 	// TCP port check, cont'd
-	{Name: "frank IP intranet DNS", Host: "10.4.5.130", Port: 53},
-	{Name: "frank NS intranet DNS", Host: "ns.savla.su", Port: 53},
-	{Name: "frank OpenTTD", Host: "ottd.savla.dev", Port: 3979},
+	{Name: "frank IP intranet DNS", Host: "10.4.5.130", Port: 53, DishList: []string{"frank, talion"}},
+	{Name: "frank NS intranet DNS", Host: "ns.savla.su", Port: 53, DishList: []string{"frank, talion"}},
+	{Name: "frank OpenTTD", Host: "ottd.savla.dev", Port: 3979, DishList: []string{"frank, talion"}},
 
 	// intranet -- savla.su
 	{Name: "savla-docs HTTP", Host: "http://docs.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/howto/docs", DishList: []string{"talion", "frank"}},
