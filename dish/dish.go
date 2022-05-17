@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/savla-dev/savla-dish/socket"
+	//"github.com/savla-dev/savla-dish/socket"
 )
 
 
@@ -43,9 +43,9 @@ var socketArray = []Socket{
 	{Name: "viking public SSH", Host: "viking-public.savla.su", Port: 22, DishList: []string{"frank"}},
 
 	// TCP port check, cont'd
-	{Name: "frank IP intranet DNS", Host: "10.4.5.130", Port: 53, DishList: []string{"frank, talion"}},
-	{Name: "frank NS intranet DNS", Host: "ns.savla.su", Port: 53, DishList: []string{"frank, talion"}},
-	{Name: "frank OpenTTD", Host: "ottd.savla.dev", Port: 3879, DishList: []string{"frank, talion"}},
+	{Name: "frank IP intranet DNS", Host: "10.4.5.130", Port: 53, DishList: []string{"frank", "talion"}},
+	{Name: "frank NS intranet DNS", Host: "ns.savla.su", Port: 53, DishList: []string{"frank", "talion"}},
+	{Name: "frank OpenTTD", Host: "ottd.savla.dev", Port: 3979, DishList: []string{"frank", "talion"}},
 
 	// intranet -- savla.su
 	{Name: "savla-docs HTTP", Host: "http://docs.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/howto/docs", DishList: []string{"talion", "frank"}},
@@ -90,7 +90,7 @@ func HeadTest(c *gin.Context) {
 
 // GetSocketList GET method
 func GetSocketList(c *gin.Context) {
-	var sockets = socket.Sockets{
+	var sockets = Sockets{
 		Sockets: socketArray,
 	}
 
@@ -112,7 +112,7 @@ func contains(s []string, str string) bool {
 func GetSocketListByHost(c *gin.Context) {
 	host := c.Param("host")
 
-	var sockets = socket.Sockets{
+	var sockets = Sockets{
 		Sockets: []Socket{},
 	}
 

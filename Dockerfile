@@ -4,7 +4,8 @@
 
 # https://hub.docker.com/_/golang
 
-FROM golang:1.17-alpine
+ARG GOLANG_VERSION=1.17
+FROM golang:${GOLANG_VERSION}-alpine
 
 ARG APP_NAME
 ARG DOCKER_DEV_PORT
