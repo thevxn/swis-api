@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	//"github.com/savla-dev/savla-dish/zasuvka"
+	"github.com/savla-dev/savla-dish/socket"
 )
 
 
@@ -32,7 +32,7 @@ type Socket struct {
 var socketArray = []Socket{
 	// TCP port check
 	{Name: "frank SSH", Host: "frank.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	{Name: "frank public SSH", Host: "frank-public.savla.su", Port: 22, DishList: []string{"frank"}},
+	//{Name: "frank public SSH", Host: "frank-public.savla.su", Port: 22, DishList: []string{"frank"}},
 	{Name: "fgrebox SSH", Host: "fgrebox.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	{Name: "squabbit SSH", Host: "squabbit.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	//{Name: "stafle SSH", Host: "stafle.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
@@ -45,7 +45,7 @@ var socketArray = []Socket{
 	// TCP port check, cont'd
 	{Name: "frank IP intranet DNS", Host: "10.4.5.130", Port: 53, DishList: []string{"frank, talion"}},
 	{Name: "frank NS intranet DNS", Host: "ns.savla.su", Port: 53, DishList: []string{"frank, talion"}},
-	{Name: "frank OpenTTD", Host: "ottd.savla.dev", Port: 3979, DishList: []string{"frank, talion"}},
+	{Name: "frank OpenTTD", Host: "ottd.savla.dev", Port: 3879, DishList: []string{"frank, talion"}},
 
 	// intranet -- savla.su
 	{Name: "savla-docs HTTP", Host: "http://docs.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/howto/docs", DishList: []string{"talion", "frank"}},
@@ -73,7 +73,7 @@ var socketArray = []Socket{
 
 	// public endpoints -- platispivo.cz
 	{Name: "platispivo-cz HTTPS", Host: "https://platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	//{Name: "www-platispivo-cz HTTPS", Host: "https://www.platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
+	{Name: "www-platispivo-cz HTTPS", Host: "https://www.platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
 
 	// legacy
 	//{Name: "kyrspa-wz-cz litter HTTP", Host: "http://kyrspa.wz.cz", Port: 80, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/litter/?page=login", DishList: []string{"talion", "frank"}},
@@ -90,8 +90,7 @@ func HeadTest(c *gin.Context) {
 
 // GetSocketList GET method
 func GetSocketList(c *gin.Context) {
-	//var sockets = zasuvka.Sockets{}
-	var sockets = Sockets{
+	var sockets = socket.Sockets{
 		Sockets: socketArray,
 	}
 
@@ -113,7 +112,7 @@ func contains(s []string, str string) bool {
 func GetSocketListByHost(c *gin.Context) {
 	host := c.Param("host")
 
-	var sockets = Sockets{
+	var sockets = socket.Sockets{
 		Sockets: []Socket{},
 	}
 
