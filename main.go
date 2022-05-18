@@ -9,7 +9,7 @@ import (
 	// swis5 modules
 	"swis-api/auth"
 	//"swis-api/b2b"
-	//"swis-api/depot"
+	"swis-api/depot"
 	"swis-api/dish"
 	//"swis-api/flower"
 	"swis-api/groups"
@@ -48,7 +48,9 @@ func main() {
 	})
 
 	// depot CRUD
-	//router.GET("/depot", depot.GetDepots)
+	router.GET("/depot", depot.GetDepots)
+	router.GET("/depot/:owner", depot.GetDepotByOwner)
+	router.POST("/depot/restore", depot.PostDepotDumpRestore)
 	//router.GET("/depot/:groupID", depot.GetDepotByGroupID)
 	//router.GET("/depot/:userID", depot.GetDepotByUserID)
 

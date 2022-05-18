@@ -8,58 +8,69 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Depots struct {
+	Depots  []Depot `json:"depots"`
+}
 
 type Depot struct {
-	Depot []Item `json:"users"`
+	Owner   	string	`json:"owner_name"`
+	DepotItems 	[]Item 	`json:"depot_items"`
 }
 
 type Item struct {
-	ID       	string `json:"id"`
-	Nickname 	string `json:"nickname"`
-	Role     	string `json:"role"`
-	TokenBase64	string `json:"tokenbase64"`
+	ID       	int 	`json:"id"`
+	Description 	string 	`json:"desc"`
+	Misc     	string 	`json:"misc"`
+	Location	string 	`json:"depot"`
 }
 
-// users demo data for user struct
-var users = []Item{
-	{ID: "1", Nickname: "sysadmin", Role: "admin"},
-	{ID: "2", Nickname: "dev", Role: "developer"},
-	{ID: "3", Nickname: "op", Role: "operator"},
+var depots Depots
+
+func GetDepots(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"message": "dumping depots",
+		"depots": depots,
+	})
 }
 
-// GetDepot returns JSON serialized list of users and their properties.
-func GetDepot(c *gin.Context) {
-	// serialize struct to JSON
-	// net/http response code
-	c.IndentedJSON(http.StatusOK, users)
-}
+func GetDepotByOwner(c *gin.Context) {
+	owner := c.Param("owner")
 
-// GetItemByID returns user's properties, given sent ID exists in database.
-func GetItemByID(c *gin.Context) {
-	id := c.Param("id")
-
-	// loop over users
-	for _, a := range users {
-		if a.ID == id {
-			c.IndentedJSON(http.StatusOK, a)
+	for _, d := range depots.Depots {
+		if d.Owner == owner {
+			c.IndentedJSON(http.StatusOK, gin.H{
+				"code": http.StatusOK,
+				"depot": d,
+			})
 			return
 		}
 	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "user not found"})
+	c.IndentedJSON(http.StatusNotFound, gin.H{
+		"code": http.StatusNotFound,
+		"message": "depot not found",
+	})
 }
 
-// PostItem enables one to add new user to users model.
-func PostItem(c *gin.Context) {
-	var newItem Item
 
-	// bind received JSON to newItem
-	if err := c.BindJSON(&newItem); err != nil {
+func PostDepotDumpRestore(c *gin.Context) {
+	var importDepots Depots
+
+	if err := c.BindJSON(&importDepots); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
 		return
 	}
 
-	// add new user
-	users = append(users, newItem)
-	// HTTP 201 Created
-	c.IndentedJSON(http.StatusCreated, newItem)
+	//depots = append(depots, importDepot)
+	depots = importDepots
+
+	c.IndentedJSON(http.StatusCreated, gin.H{
+		"code": http.StatusCreated,
+		"message": "depot imported, omitting output",
+		"depots": importDepots.Depots,
+	})
 }
 

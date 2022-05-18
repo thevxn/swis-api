@@ -1,4 +1,5 @@
-{ "depot": [
+{ "depots": [
+{ "owner_name": "krusty", "depot_items": [
 {"id": 1, "desc": "switch Cisco Catalyst 2960 Series WS-C2960-24LC-S 24 Port Network Switch (8 Port PoE)", "misc": "v kanclu na pekařské", "depot": "Brno"},
 {"id": 2, "desc": "počítač deskový Raspberry Pi 3B", "misc": "pete.n0p.cz, přestavěn do EKG", "depot": "Petrov"},
 {"id": 3, "desc": "počítač přenosný ASUS L7300/L7200 Series", "misc": "vykuchaný, prolly win XP pro; bez disku", "depot": "Petrov"},
@@ -340,5 +341,5 @@
 {"id": 339, "desc": "kniha No More Mr. Nice Guy, Glover Robert", "misc": "anglicky", "depot": "Brno"},
 {"id": 340, "desc": "kniha Přítelkyně z domu smutku, Kantůrková Eva", "misc": "---", "depot": "Brno"},
 {"id": 341, "desc": "rostlina kaktus San Pedro", "misc": "---", "depot": "Brno"}
-]
-}
+]}
+]}
