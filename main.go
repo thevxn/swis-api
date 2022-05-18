@@ -6,8 +6,12 @@ package main
 import (
 	"net/http"
 
+	// swis5 modules
 	"swis-api/auth"
+	//"swis-api/b2b"
+	//"swis-api/depot"
 	"swis-api/dish"
+	//"swis-api/flower"
 	"swis-api/groups"
 	"swis-api/users"
 
@@ -24,23 +28,38 @@ func main() {
 
 	//router.SetTrustedProxies(swapiProxies)
 
-	// root CRUD
+	// root path --- testing Bearer print TODO: delete this
 	router.GET("/", func(c *gin.Context){
 		auth.SetAuthHeaders(c)
 
 		c.JSON(http.StatusOK, gin.H{
+			"title": "swAPI v5 RESTful root",
+			"code": http.StatusOK,
 			"message": "welcome to sakalweb API (swapi) root",
 			"bearer": auth.Params.BearerToken,
 		})
 	})
+	// default 404 route
+	router.NoRoute(func(c *gin.Context){
+		c.JSON(http.StatusNotFound, gin.H{
+			"code": http.StatusNotFound,
+			"message": "unknown route",
+		})
+	})
 
 	// depot CRUD
-	//router.GET("/depot", depot.GetDepot)
+	//router.GET("/depot", depot.GetDepots)
+	//router.GET("/depot/:groupID", depot.GetDepotByGroupID)
+	//router.GET("/depot/:userID", depot.GetDepotByUserID)
 
 	// dish CRUD
 	router.HEAD("/dish/test", dish.HeadTest)
 	router.GET("/dish/sockets", dish.GetSocketList)
 	router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
+
+	// dump CRUD -- backuping routes -- GET to dump arrays to JSON files, POST to rebuild array from JSON dumps
+	//router.GET("/dump/users", users.GetDump)
+	//router.POST("/dump/users", users.PostDump)
 
 	// groups CRUD
 	router.GET("/groups", groups.GetGroups)
@@ -53,6 +72,7 @@ func main() {
 	router.GET("/users", users.GetUsers)
 	router.GET("/users/:id", users.GetUserByID)
 	router.POST("/users", users.PostUser)
+	router.POST("/users/restore", users.PostUsersDumpRestore)
 	router.POST("/users/:id/keys/ssh", users.PostUserSSHKey)
 	//router.PUT("/users/:id", users.PutUserByID)
 	//router.DELETE("/users/:id", users.DeleteUserByID)

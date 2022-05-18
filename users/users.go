@@ -30,16 +30,19 @@ var users = []User{
 }
 
 
-func findUserByID(c *gin.Context) (u *User) {
+func findUserByID(c *gin.Context) (index *int, u *User) {
 	// loop over users
-	for _, a := range users {
+	for i, a := range users {
 		if a.ID == c.Param("id") {
 			//c.IndentedJSON(http.StatusOK, a)
-			return &a
+			return &i, &a
 		}
 	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "user not found"})
-	return nil
+	c.IndentedJSON(http.StatusNotFound, gin.H{
+		"code": http.StatusNotFound,
+		"message": "user not found",
+	})
+	return nil, nil
 }
 
 
@@ -47,14 +50,16 @@ func findUserByID(c *gin.Context) (u *User) {
 func GetUsers(c *gin.Context) {
 	// serialize struct to JSON
 	// net/http response code
-	c.IndentedJSON(http.StatusOK, users)
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"users": users,
+	})
 }
 
 // GetUserByID returns user's properties, given sent ID exists in database.
 func GetUserByID(c *gin.Context) {
 	//id := c.Param("id")
 
-	if user := findUserByID(c); user != nil {
+	if _, user := findUserByID(c); user != nil {
 		// user found
 		c.IndentedJSON(http.StatusOK, user)
 	}
@@ -68,35 +73,65 @@ func PostUser(c *gin.Context) {
 
 	// bind received JSON to newUser
 	if err := c.BindJSON(&newUser); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
 		return
 	}
 
 	// add new user
 	users = append(users, newUser)
+
 	// HTTP 201 Created
-	c.IndentedJSON(http.StatusCreated, newUser)
+	c.IndentedJSON(http.StatusCreated, gin.H{
+		"code": http.StatusCreated,
+		"message": "user added",
+		"user": newUser,
+	})
 }
 
-// PostUserSSHKey need "id" param
-func PostUserSSHKey(c *gin.Context) {
-	var user *User = findUserByID(c)
+// PostUsersDumpRestore
+func PostUsersDumpRestore(c *gin.Context) {
+	var importUsers Users
 
-	// load SSH keys from POST request
-	if err := c.BindJSON(user); err != nil {
+	
+	// bind received JSON to newUser
+	if err := c.BindJSON(&importUsers); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": err,
+			"code": http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
 		})
 		return
 	}
 
-	for _, a := range users {
-		if a.ID == c.Param("id") {
-			// save SSH keys to user
-			a = *user
-			c.IndentedJSON(http.StatusAccepted, user)
-		}
+	// add new user
+	users = importUsers.Users
+	//users = append(users, newUser)
+
+	// HTTP 201 Created
+	c.IndentedJSON(http.StatusCreated, gin.H{
+		"code": http.StatusCreated,
+		"message": "users imported successfully",
+	})
+}
+
+// PostUserSSHKey need "id" param
+func PostUserSSHKey(c *gin.Context) {
+	//var index *int, user *User = findUserByID(c)
+	var index, user = findUserByID(c)
+
+	// load SSH keys from POST request
+	if err := c.BindJSON(user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
 	}
 
-	c.IndentedJSON(http.StatusNotFound, user)
+	// write changes to users array
+	users[*index] = *user	
+	c.IndentedJSON(http.StatusAccepted, *user)
 }
 

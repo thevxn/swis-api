@@ -17,13 +17,16 @@ services:
         TZ: ${TZ}
     restart: unless-stopped
     cpus: 0.5
+    dns:
+      - 1.1.1.2
+      - 1.0.0.2
     mem_reservation: 512m
     ports:
       - "${DOCKER_DEV_EXTERNAL_PORT}:${DOCKER_DEV_PORT}"
     networks:
       - ${DOCKER_DEV_NETWORK}
     labels:
-      - "traefik.http.routers.swis_api.rule=Host(`swapi.savla.su`)"
-      - "traefik.http.services.swis_api.loadbalancer.server.port=${DOCKER_DEV_PORT}"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_URL}`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${DOCKER_DEV_PORT}"
       - "traefik.docker.network=${DOCKER_DEV_NETWORK}"
 
