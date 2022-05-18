@@ -6,6 +6,7 @@ package main
 import (
 	"net/http"
 
+	"swis-api/auth"
 	"swis-api/dish"
 	"swis-api/groups"
 	"swis-api/users"
@@ -22,12 +23,19 @@ func main() {
 	}*/
 
 	//router.SetTrustedProxies(swapiProxies)
-	
+
+	// root CRUD
 	router.GET("/", func(c *gin.Context){
+		auth.SetAuthHeaders(c)
+
 		c.JSON(http.StatusOK, gin.H{
 			"message": "welcome to sakalweb API (swapi) root",
+			"bearer": auth.Params.BearerToken,
 		})
 	})
+
+	// depot CRUD
+	//router.GET("/depot", depot.GetDepot)
 
 	// dish CRUD
 	router.HEAD("/dish/test", dish.HeadTest)
@@ -45,6 +53,7 @@ func main() {
 	router.GET("/users", users.GetUsers)
 	router.GET("/users/:id", users.GetUserByID)
 	router.POST("/users", users.PostUser)
+	router.POST("/users/:id/keys/ssh", users.PostUserSSHKey)
 	//router.PUT("/users/:id", users.PutUserByID)
 	//router.DELETE("/users/:id", users.DeleteUserByID)
 

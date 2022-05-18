@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/savla-dev/savla-dish/socket"
+	//"github.com/savla-dev/savla-dish/socket"
 )
 
 
@@ -90,7 +90,8 @@ func HeadTest(c *gin.Context) {
 
 // GetSocketList GET method
 func GetSocketList(c *gin.Context) {
-	var sockets = socket.Sockets{
+	//var sockets = socket.Sockets{
+	var sockets = Sockets{
 		Sockets: socketArray,
 	}
 
@@ -112,7 +113,8 @@ func contains(s []string, str string) bool {
 func GetSocketListByHost(c *gin.Context) {
 	host := c.Param("host")
 
-	var sockets = socket.Sockets{
+	//var sockets = socket.Sockets{
+	var sockets = Sockets{
 		Sockets: []Socket{},
 	}
 
