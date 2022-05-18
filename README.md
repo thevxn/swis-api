@@ -3,6 +3,19 @@ sakalWeb IS RESTful API v5 [golang]
 
 + http://swapi.savla.su (intranet)
 
+## importing
+
+```
+# run local instance
+make run
+
+# import depot items
+curl -d @.data/depot.json -sLX POST http://localhost:8003/depot/restore | jq .
+
+# import users
+curl -d @.data/users.json -sLX POST http://localhost:8003/users/restore | jq .
+```
+
 ## repo files
 
 ### .env
