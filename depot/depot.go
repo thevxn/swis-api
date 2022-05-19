@@ -70,7 +70,7 @@ func PostDepotDumpRestore(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code": http.StatusCreated,
 		"message": "depot imported, omitting output",
-		"depots": importDepots.Depots,
+		//"depots": importDepots.Depots,
 	})
 }
 
