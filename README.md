@@ -16,6 +16,26 @@ curl -d @.data/depot.json -sLX POST http://localhost:8003/depot/restore | jq .
 curl -d @.data/users.json -sLX POST http://localhost:8003/users/restore | jq .
 ```
 
+### legacy MariaDB export (n0p_depot)
+
+```
+# export legacy table contents, and reformat result lines into JSON array items
+mysql -u n0p_sysadm -p n0p_core -sNe 'select JSON_ARRAY(id, n0p_depot.desc, misc, depot) from n0p_depot;' > n0p_depot.export.json
+
+# check correctness of a JSON file (has to pass, ergo exitcode == 0)
+jq . n0p_depot.export.json
+
+# regexp for bracket change: [ -> {, ] -> }
+2,$s/\[/\{/g
+2,$s/\]/\}/g
+
+# insert a comma ',' at the EOL
+2,$s/^\(.*\)$/\1,/
+
+# take all for array items and convert them into a JSON object
+2,342s/^{\(.*\),[ ]\(".*"\),[ ]\(".*"\),[ ]\(".*"\)\},$/\{"id": \1, "desc": \2, "misc": \3, "depot": \4},/
+```
+
 ## repo files
 
 ### .env
