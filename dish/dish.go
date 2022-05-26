@@ -38,7 +38,7 @@ var socketArray = []Socket{
 	//{Name: "stafle SSH", Host: "stafle.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	{Name: "stokrle SSH", Host: "stokrle.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	{Name: "tackbox SSH", Host: "tackbox.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	{Name: "talion SSH", Host: "talion.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
+	//{Name: "talion SSH", Host: "talion.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	{Name: "viking SSH", Host: "viking.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
 	{Name: "viking public SSH", Host: "viking-public.savla.su", Port: 22, DishList: []string{"frank"}},
 
