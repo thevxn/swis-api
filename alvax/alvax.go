@@ -25,11 +25,11 @@ type Command struct {
 
 
 var commandList = []Command{
-	{Name: "bomb",   ArgumentList: []string{"red", "green", "blue"}, RequiredArg: false},
-	{Name: "dish",   ArgumentList: []string{"enable", "disable", "mute", "search"}, RequiredArg: true},
-	{Name: "kanban", ArgumentList: []string{"getAllProjects"}, RequiredArg: true},
-	{Name: "memes",  ArgumentList: []string{"megamind", "chad"}, RequiredArg: true},
-	{Name: "rating", ArgumentList: []string{"good", "bad"}, AliasNames: []string{"badbot", "goodbot"}},
+	{Name: "bomb", ParentClass: "Bomb",  ArgumentList: []string{"red", "green", "blue"}, RequiredArg: false},
+	{Name: "dish", ParentClass: "Dish",  ArgumentList: []string{"enable", "disable", "mute", "search"}, RequiredArg: true},
+	{Name: "kanban", ParentClass: "Kanban", ArgumentList: []string{"getAllProjects"}, RequiredArg: true},
+	{Name: "memes", ParentClass: "Memes",  ArgumentList: []string{"megamind", "chad"}, RequiredArg: true},
+	{Name: "rating", ParentClass: "Rating", ArgumentList: []string{"good", "bad"}, AliasNames: []string{"badbot", "goodbot"}},
 }
 
 
