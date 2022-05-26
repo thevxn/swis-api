@@ -10,15 +10,15 @@ import (
 
 
 type AlvaxCommands struct {
-	//Users []User `json:"users"`
+	User 		string 		`json:"user"`
 	CommandList	[]Command	`json:"command_list"`
 }
 
 type Command struct {
-	// name as in '/name'
+	// name as in the '/name' Telegram command syntax
+	Name		string		`json:"name"`
 	AliasNames	[]string	`json:"alias_names"`
 	ArgumentList	[]string	`json:"argument_list"`
-	Name		string		`json:"name"`
 	ParentClass	string		`json:"parent_class"`
 	RequiredArg	bool		`json:"required_argument" default:false`
 }

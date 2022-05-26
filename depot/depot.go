@@ -53,7 +53,7 @@ func GetDepotByOwner(c *gin.Context) {
 }
 
 
-func PostDepotDumpRestore(c *gin.Context) {
+func PostDepotsDumpRestore(c *gin.Context) {
 	var importDepots Depots
 
 	if err := c.BindJSON(&importDepots); err != nil {

@@ -52,11 +52,12 @@ func main() {
 
 	// alvax CRUD
 	router.GET("/alvax/commands", alvax.GetCommandList)
+	router.POST("/alvax/commands/restore", alvax.PostCommandsDumpRestore)
 
 	// depot CRUD
 	router.GET("/depots", depot.GetDepots)
 	router.GET("/depots/:owner", depot.GetDepotByOwner)
-	router.POST("/depots/restore", depot.PostDepotDumpRestore)
+	router.POST("/depots/restore", depot.PostDepotsDumpRestore)
 	//router.GET("/depots/:groupID", depot.GetDepotByGroupID)
 	//router.GET("/depots/:userID", depot.GetDepotByUserID)
 
