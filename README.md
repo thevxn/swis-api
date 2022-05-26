@@ -1,4 +1,4 @@
-# savla-dev/swis-api
+# swis-api (swapi)
 sakalWeb IS RESTful API v5 [golang]
 
 + http://swapi.savla.su (intranet)
