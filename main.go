@@ -6,13 +6,16 @@ package main
 import (
 	"net/http"
 
-	// swis5 modules
+	// swapi modules
+	
+	"swis-api/alvax"
 	"swis-api/auth"
 	//"swis-api/b2b"
 	"swis-api/depot"
 	"swis-api/dish"
 	//"swis-api/flower"
 	"swis-api/groups"
+	//"swis-api/hosts"
 	"swis-api/users"
 
 	"github.com/gin-gonic/gin"
@@ -35,7 +38,7 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{
 			"title": "swAPI v5 RESTful root",
 			"code": http.StatusOK,
-			"message": "welcome to sakalweb API (swapi) root",
+			"message": "welcome to sakalWeb API (swapi) root",
 			"bearer": auth.Params.BearerToken,
 		})
 	})
@@ -47,12 +50,15 @@ func main() {
 		})
 	})
 
+	// alvax CRUD
+	router.GET("/alvax/commands", alvax.GetCommandList)
+
 	// depot CRUD
-	router.GET("/depot", depot.GetDepots)
-	router.GET("/depot/:owner", depot.GetDepotByOwner)
-	router.POST("/depot/restore", depot.PostDepotDumpRestore)
-	//router.GET("/depot/:groupID", depot.GetDepotByGroupID)
-	//router.GET("/depot/:userID", depot.GetDepotByUserID)
+	router.GET("/depots", depot.GetDepots)
+	router.GET("/depots/:owner", depot.GetDepotByOwner)
+	router.POST("/depots/restore", depot.PostDepotDumpRestore)
+	//router.GET("/depots/:groupID", depot.GetDepotByGroupID)
+	//router.GET("/depots/:userID", depot.GetDepotByUserID)
 
 	// dish CRUD
 	router.HEAD("/dish/test", dish.HeadTest)
@@ -69,6 +75,12 @@ func main() {
 	router.POST("/groups", groups.PostGroup)
 	//router.PUT("/groups/:id", groups.PutGroupByID)
 	//router.DELETE("/groups/:id", groups.DeleteGroupByID)
+
+	// hosts CRUD
+	//router.GET("/hosts", hosts.GetHosts)
+	//router.GET("/hosts/:hostname", hosts.GetHostByHostname)
+	//router.GET("/hosts/:hyp/vms", hosts.GetVirtualsByHypervisorName)
+	//router.POST("/hosts/restore", hosts.PostHostsDumpRestore)
 
 	// users CRUD
 	router.GET("/users", users.GetUsers)
