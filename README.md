@@ -5,20 +5,26 @@ sakalWeb IS RESTful API v5 [golang]
 
 ## importing
 
+At start, swapi instance memory is cleared and ready for any data import (until the next restart). Any data stored in runtime memory should be dumped using GET methods at particular paths. This approach should make `swapi` instance universal (while omitting custom packages/modules).
+
 ```
-# run local instance
+# run local instance (redeployment CI/CD job)
 make run
 
-# import depot items
+# import prod data -- local .data files to swapi.savla.su prod URL (import_data CI/CD job)
+make import_prod_static_data
+
+
+# (manual) import depot items example
 curl -d @.data/depot.json -sLX POST http://localhost:8003/depot/restore | jq .
 
-# import users
+# (manual) import users example
 curl -d @.data/users.json -sLX POST http://localhost:8003/users/restore | jq .
 
-# import alvax command list
+# (manual) import alvax command list example
 curl -d @.data/alvax_command_list.json -sLX POST http://localhost:8003/alvax/commands/restore | jq .
 
-# import SSH keys
+# (manual) import SSH keys example
 curl -d @.data/krusty_ssh_keys.json -sLX POST http://swapi.savla.su/users/krusty/keys/ssh
 ```
 
