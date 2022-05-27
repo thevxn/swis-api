@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  redeploy:
+  redeployment:
     runs-on: [ self-hosted, stokrle ]
 
     steps:
@@ -15,8 +15,9 @@ jobs:
     - name: Redeploy docker container (makefile chain target)
       run: make run
 
-  import:
+  import_data:
     runs-on: [ self-hosted, stokrle ]
+    needs: [ redeployment ]
 
     steps:
     - uses: actions/checkout@v2
