@@ -24,6 +24,8 @@ type Command struct {
 }
 
 
+// flush alvax commands on start
+//var commandList = AlvaxCommands.CommandList{}
 var commandList = []Command{
 	{Name: "bomb", ParentClass: "Bomb",  ArgumentList: []string{"red", "green", "blue"}, RequiredArg: false},
 	{Name: "dish", ParentClass: "Dish",  ArgumentList: []string{"enable", "disable", "mute", "search"}, RequiredArg: true},
@@ -43,7 +45,7 @@ func GetCommandList(c *gin.Context) {
 
 
 // PosCommandsDumpRestore
-func PostCommandsDumpRestore(c *gin.Context) {
+func PostDumpRestore(c *gin.Context) {
 	var importCommands AlvaxCommands
 
 	// bind received JSON to importCommands

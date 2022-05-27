@@ -27,61 +27,11 @@ type Socket struct {
 }
 
 
-// demo socket list
-//var socketArray = []zasuvka.Socket{}
-var socketArray = []Socket{
-	// TCP port check
-	{Name: "frank SSH", Host: "frank.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	//{Name: "frank public SSH", Host: "frank-public.savla.su", Port: 22, DishList: []string{"frank"}},
-	{Name: "fgrebox SSH", Host: "fgrebox.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	{Name: "squabbit SSH", Host: "squabbit.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	//{Name: "stafle SSH", Host: "stafle.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	{Name: "stokrle SSH", Host: "stokrle.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	{Name: "tackbox SSH", Host: "tackbox.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	//{Name: "talion SSH", Host: "talion.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	{Name: "viking SSH", Host: "viking.savla.su", Port: 22, DishList: []string{"talion", "frank"}},
-	{Name: "viking public SSH", Host: "viking-public.savla.su", Port: 22, DishList: []string{"frank"}},
-
-	// TCP port check, cont'd
-	{Name: "frank IP intranet DNS", Host: "10.4.5.130", Port: 53, DishList: []string{"frank", "talion"}},
-	{Name: "frank NS intranet DNS", Host: "ns.savla.su", Port: 53, DishList: []string{"frank", "talion"}},
-	{Name: "frank OpenTTD", Host: "ottd.savla.dev", Port: 3979, DishList: []string{"frank", "talion"}},
-
-	// intranet -- savla.su
-	{Name: "savla-docs HTTP", Host: "http://docs.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/howto/docs", DishList: []string{"talion", "frank"}},
-	{Name: "elden-bling dev HTTP", Host: "http://elden-bling.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "kanban HTTP", Host: "http://kanban.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/login", DishList: []string{"talion", "frank"}},
-	//{Name: "passbolt HTTP", Host: "http://passbolt.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "swapi head test HTTP", Host: "http://swapi.savla.su", Port: 80, ExpectedHttpCodes: []int{ 200 }, PathHttp: "/dish/test", DishList: []string{"talion", "frank"}},
-
-	// public endpoints -- savla.dev
-	{Name: "savla-dev HTTPS", Host: "https://savla.dev", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "ks-savla-dev HTTPS", Host: "https://ks.savla.dev", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "kss-savla-dev HTTPS", Host: "https://kss.savla.dev", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "modul-savla-dev HTTPS", Host: "https://modul.savla.dev", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "www-savla-dev HTTPS", Host: "https://www.savla.dev", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-
-	// public endpoints -- n0p.cz
-	{Name: "red-n0p-cz HTTPS", Host: "https://red.n0p.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/login", DishList: []string{"talion", "frank"}},
-	{Name: "text-n0p-cz HTTPS", Host: "https://text.n0p.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301, 401 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "web-n0p-cz HTTPS", Host: "https://web.n0p.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "wiki-n0p-cz HTTPS", Host: "https://wiki.n0p.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301, 401 }, PathHttp: "/start", DishList: []string{"talion", "frank"}},
-
-	// public endpoints -- eldenbling.net
-	{Name: "eldenbling-net HTTPS", Host: "https://eldenbling.net", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "www-eldenbling-net HTTPS", Host: "https://www.eldenbling.net", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-
-	// public endpoints -- platispivo.cz
-	{Name: "platispivo-cz HTTPS", Host: "https://platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	{Name: "www-platispivo-cz HTTPS", Host: "https://www.platispivo.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-
-	// legacy
-	//{Name: "kyrspa-wz-cz litter HTTP", Host: "http://kyrspa.wz.cz", Port: 80, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/litter/?page=login", DishList: []string{"talion", "frank"}},
-	{Name: "smart-comp-cz HTTP", Host: "https://sc.cz", Port: 443, ExpectedHttpCodes: []int{ 200, 301 }, PathHttp: "/", DishList: []string{"talion", "frank"}},
-	
-}
+// flush dish socket list array at start
+var socketArray = []Socket{}
 
 
+// HeadTest is the HEAD HTTP method for savla-dish service, that acts like a testing endpoint
 func HeadTest(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"test": true,
@@ -114,9 +64,10 @@ func GetSocketListByHost(c *gin.Context) {
 	host := c.Param("host")
 
 	//var sockets = socket.Sockets{
-	var sockets = Sockets{
+	var sockets = Sockets{}
+	/*var sockets = Sockets{
 		Sockets: []Socket{},
-	}
+	}*/
 
         // loop over socketArray, find 
         for _, s := range socketArray {
@@ -135,5 +86,25 @@ func GetSocketListByHost(c *gin.Context) {
 
         c.IndentedJSON(http.StatusNotFound, gin.H{"message": "no sockets for given 'hostname'"})
 
+}
+
+func PostDumpRestore(c *gin.Context) {
+	var importSockets Sockets
+
+	if err := c.BindJSON(&importSockets); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	//depots = append(depots, importDepot)
+	socketArray = importSockets.Sockets
+
+	c.IndentedJSON(http.StatusCreated, gin.H{
+		"code": http.StatusCreated,
+		"message": "sockets imported, omitting output",
+	})
 }
 

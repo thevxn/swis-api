@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	// swapi modules
-	
 	"swis-api/alvax"
 	"swis-api/auth"
 	//"swis-api/b2b"
@@ -52,12 +51,12 @@ func main() {
 
 	// alvax CRUD
 	router.GET("/alvax/commands", alvax.GetCommandList)
-	router.POST("/alvax/commands/restore", alvax.PostCommandsDumpRestore)
+	router.POST("/alvax/commands/restore", alvax.PostDumpRestore)
 
 	// depot CRUD
 	router.GET("/depots", depot.GetDepots)
 	router.GET("/depots/:owner", depot.GetDepotByOwner)
-	router.POST("/depots/restore", depot.PostDepotsDumpRestore)
+	router.POST("/depots/restore", depot.PostDumpRestore)
 	//router.GET("/depots/:groupID", depot.GetDepotByGroupID)
 	//router.GET("/depots/:userID", depot.GetDepotByUserID)
 
@@ -65,6 +64,7 @@ func main() {
 	router.HEAD("/dish/test", dish.HeadTest)
 	router.GET("/dish/sockets", dish.GetSocketList)
 	router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
+	router.POST("/dish/sockets/restore", dish.PostDumpRestore)
 
 	// groups CRUD
 	router.GET("/groups", groups.GetGroups)
@@ -84,11 +84,10 @@ func main() {
 	router.GET("/users/:name", users.GetUserByName)
 	router.POST("/users", users.PostNewUser)
 	router.POST("/users/:name/keys/ssh", users.PostUsersSSHKeys)
-	router.POST("/users/restore", users.PostUsersDumpRestore)
+	router.POST("/users/restore", users.PostDumpRestore)
 	//router.PUT("/users/:id", users.PutUserByID)
 	//router.DELETE("/users/:id", users.DeleteUserByID)
 
 	// attach router to http.Server and start it
 	router.Run(":8080")
 }
-

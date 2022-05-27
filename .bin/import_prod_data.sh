@@ -100,6 +100,16 @@ function import_alvax_cmd_list {
   curlp --data @${DATA_FILE} --url ${URL} | jq .
 }
 
+function import_dish_sockets {
+  POST_PATH="/dish/sockets/restore"
+  URL="${DEST_URL}${POST_PATH}"
+
+  DATA_FILE="${DATA_DIR}/dish_sockets.json"
+  [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
+
+  echo "importing dish sockets (socket list)..."
+  curlp --data @${DATA_FILE} --url ${URL} | jq .
+}
 
 #
 # workflow/chain import
@@ -109,4 +119,4 @@ import_users          || die "cannot import users"
 import_ssh_keys       || die "cannot import SSH keys"
 import_depots         || die "camnot import depots"
 import_alvax_cmd_list || die "cannot import alvax command list"
-
+import_dish_sockets   || die "cannot import dish sockets"

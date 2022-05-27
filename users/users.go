@@ -10,7 +10,7 @@ import (
 
 
 type Users struct {
-	Users []User `json:"users"`
+	Users 		[]User 	`json:"users"`
 }
 
 type User struct {
@@ -25,11 +25,8 @@ type User struct {
 }
 
 // flush users at start -- see Makefile, import_prod target, and .data/users
-var users = []User{
-	//{ID: "1", Mame: "sysadmin", Roles: []string{"admin"}},
-	//{ID: "2", Name: "dev", Roles: []string{"developer"}},
-	//{ID: "3", Name: "op", Roles: []string{"operator"}},
-}
+var users = []User{}
+//var users = Users.Users{}
 
 
 func findUserByName(c *gin.Context) (index *int, u *User) {
@@ -92,8 +89,8 @@ func PostNewUser(c *gin.Context) {
 	})
 }
 
-// PostUsersDumpRestore
-func PostUsersDumpRestore(c *gin.Context) {
+// PostDumpRestore
+func PostDumpRestore(c *gin.Context) {
 	var importUsers Users
 
 	
