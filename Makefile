@@ -91,9 +91,4 @@ stop:
 
 import_prod: 
 	@echo -e "\n${YELLOW} Import stored data to backend... ${RESET}\n"
-	# import users
-	curl -d @.data/users.json -sLX POST http://${APP_URL}/users/restore | jq .
-	# import depot items
-	curl -d @.data/depots.json -sLX POST http://${APP_URL}/depots/restore | jq .
-	# import alvax command list
-	curl -d @.data/alvax_command_list.json -sLX POST http://${APP_URL}/alvax/commands/restore | jq .
+	@.bin/import_prod_data.sh
