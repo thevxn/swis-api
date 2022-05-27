@@ -16,3 +16,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Redeploy docker container (makefile chain target)
       run: make run
+
+    - name: Import static data to production
+      run: make import_prod_static_data

@@ -89,6 +89,6 @@ stop:
 	@echo -e "\n${YELLOW} Stopping and purging project (docker-compose down)... ${RESET}\n"
 	@docker-compose down
 
-import_prod: 
+import_prod_static_data: 
 	@echo -e "\n${YELLOW} Import stored data to backend... ${RESET}\n"
 	@.bin/import_prod_data.sh
