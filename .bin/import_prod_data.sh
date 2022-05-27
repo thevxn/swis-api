@@ -24,6 +24,10 @@ DEST_URL="${APP_URL:-http://swapi.savla.su}"
 DATA_DIR="${APP_ROOT:-./.data}"
 [ ! -d "${DATA_DIR}" ] && die "DATA_DIR (${DATA_DIR)} of a no existence"
 
+# tools test
+[ ! -f "$(which curl)" ] && die "'curl' tool not found on runtime"
+[ ! -f "$(which jq)" ] && die "'jq' tool not found on runtime"
+
 # use explicitly POST method (-X), hide conn progress info (-s), follow locations (-L)
 alias curlp="$(which curl) -sLX POST"
 alias jq="$(which jq)"
@@ -37,8 +41,8 @@ alias jq="$(which jq)"
 function import_users {
   # import users, template:
   #curl -d @.data/users.json -sLX POST http://${APP_URL}/users/restore | jq .
-  _PATH="/users/restore"
-  URL="${DEST_URL}${_PATH}"
+  POST_PATH="/users/restore"
+  URL="${DEST_URL}${POST_PATH}"
 
   DATA_FILE="${DATA_DIR}/users.json"
   [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
@@ -59,8 +63,8 @@ function import_ssh_keys {
 
   # loop over users and import ssh keys for them
   for USER in ${SSH_KEYS_USERS[@]}; do
-    _PATH="/users/${USER}/keys/ssh"
-    URL="${DEST_URL}${_PATH}"
+    POST_PATH="/users/${USER}/keys/ssh"
+    URL="${DEST_URL}${POST_PATH}"
 
     DATA_FILE=${DATA_DIR}/ssh_keys_${USER}.json
     [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
@@ -73,8 +77,8 @@ function import_ssh_keys {
 function import_depots {
   # import depot items; template:
   #curl -d @.data/depots.json -sLX POST http://${APP_URL}/depots/restore | jq .
-  _PATH="/depots/restore"
-  URL="${DEST_URL}${_PATH}"
+  POST_PATH="/depots/restore"
+  URL="${DEST_URL}${POST_PATH}"
 
   DATA_FILE="${DATA_DIR}/depots.json"
   [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
@@ -86,8 +90,8 @@ function import_depots {
 function import_alvax_cmd_list {
   # import alvax command list
   #curl -d @.data/alvax_command_list.json -sLX POST http://${APP_URL}/alvax/commands/restore | jq .
-  _PATH="/alvax/commands/restore"
-  URL="${DEST_URL}${_PATH}"
+  POST_PATH="/alvax/commands/restore"
+  URL="${DEST_URL}${POST_PATH}"
 
   DATA_FILE="${DATA_DIR}/alvax_command_list.json"
   [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"

@@ -7,9 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-
-  build:
-
+  redeploy:
     runs-on: [ self-hosted, stokrle ]
 
     steps:
@@ -17,5 +15,10 @@ jobs:
     - name: Redeploy docker container (makefile chain target)
       run: make run
 
+  import:
+    runs-on: [ self-hosted, stokrle ]
+
+    steps:
+    - uses: actions/checkout@v2
     - name: Import static data to production
       run: make import_prod_static_data
