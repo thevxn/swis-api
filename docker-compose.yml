@@ -12,6 +12,7 @@ services:
       context: .
       args: 
         APP_NAME: ${APP_NAME}
+        APP_FLAGS: ${APP_NAME}
         DOCKER_DEV_PORT: ${DOCKER_DEV_PORT} 
         GOLANG_VERSION: ${GOLANG_VERSION}
         TZ: ${TZ}

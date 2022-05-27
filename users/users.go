@@ -14,7 +14,8 @@ type Users struct {
 }
 
 type User struct {
-	ID       	string 	`json:"id"`
+	// ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property)
+	//ID       	string 	`json:"id"`
 	Name	 	string 	`json:"name"`
 	FullName	string	`json:"full_name"`
 	Roles         []string 	`json:"roles"`
@@ -23,7 +24,7 @@ type User struct {
 	GPGKeys	      []string  `json:"gpg_keys"`
 }
 
-// users demo data for user struct
+// flush users at start -- see Makefile, import_prod target, and .data/users
 var users = []User{
 	//{ID: "1", Mame: "sysadmin", Roles: []string{"admin"}},
 	//{ID: "2", Name: "dev", Roles: []string{"developer"}},
@@ -116,8 +117,8 @@ func PostUsersDumpRestore(c *gin.Context) {
 	})
 }
 
-// PostUsersSSHKey method adds (rewrites) SSH key array by user.Name
-func PostUsersSSHKey(c *gin.Context) {
+// PostUsersSSHKeys method adds (rewrites) SSH key array by user.Name
+func PostUsersSSHKeys(c *gin.Context) {
 	var index, user = findUserByName(c)
 
 	// load SSH keys from POST request

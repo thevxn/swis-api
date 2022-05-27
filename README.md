@@ -17,6 +17,9 @@ curl -d @.data/users.json -sLX POST http://localhost:8003/users/restore | jq .
 
 # import alvax command list
 curl -d @.data/alvax_command_list.json -sLX POST http://localhost:8003/alvax/commands/restore | jq .
+
+# import SSH keys
+curl -d @.data/krusty_ssh_keys.json -sLX POST http://swapi.savla.su/users/krusty/keys/ssh
 ```
 
 ### legacy MariaDB export (n0p_depot)

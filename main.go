@@ -83,8 +83,8 @@ func main() {
 	router.GET("/users", users.GetUsers)
 	router.GET("/users/:name", users.GetUserByName)
 	router.POST("/users", users.PostNewUser)
+	router.POST("/users/:name/keys/ssh", users.PostUsersSSHKeys)
 	router.POST("/users/restore", users.PostUsersDumpRestore)
-	router.POST("/users/:name/keys/ssh", users.PostUsersSSHKey)
 	//router.PUT("/users/:id", users.PutUserByID)
 	//router.DELETE("/users/:id", users.DeleteUserByID)
 

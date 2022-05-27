@@ -4,20 +4,23 @@
             "name": "krusty",
             "roles": ["admin", "operator"],
             "token_base64": "",
+            "links": null,
             "ssh_keys": null,
             "gpg_keys": null
         },
         {
-            "name": "tack1234",
+            "name": "tack",
             "roles": ["admin", "developer"],
             "token_base64": "",
+            "links": null,
             "ssh_keys": null,
             "gpg_keys": null
         },
         {
-            "name": "op",
+            "name": "stepis",
             "roles": ["developer", "intern"],
             "token_base64": "",
+            "links": null,
             "ssh_keys": null,
             "gpg_keys": null
         }

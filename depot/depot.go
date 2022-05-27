@@ -24,7 +24,9 @@ type Item struct {
 	Location	string 	`json:"depot"`
 }
 
-var depots Depots
+// flush depots at start
+var depots = Depots{}
+
 
 func GetDepots(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
