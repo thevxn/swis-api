@@ -14,6 +14,9 @@ curl -d @.data/depot.json -sLX POST http://localhost:8003/depot/restore | jq .
 
 # import users
 curl -d @.data/users.json -sLX POST http://localhost:8003/users/restore | jq .
+
+# import alvax command list
+curl -d @.data/alvax_command_list.json -sLX POST http://localhost:8003/alvax/commands/restore | jq .
 ```
 
 ### legacy MariaDB export (n0p_depot)
