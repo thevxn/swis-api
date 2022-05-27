@@ -1,25 +1,22 @@
 {
     "users": [
         {
-            "id": "1",
-            "nickname": "krusty",
-            "role": "admin",
+            "name": "krusty",
+            "roles": ["admin", "operator"],
             "token_base64": "",
             "ssh_keys": null,
             "gpg_keys": null
         },
         {
-            "id": "2",
-            "nickname": "tack1234",
-            "role": "developer",
+            "name": "tack1234",
+            "roles": ["admin", "developer"],
             "token_base64": "",
             "ssh_keys": null,
             "gpg_keys": null
         },
         {
-            "id": "3",
-            "nickname": "op",
-            "role": "operator",
+            "name": "op",
+            "roles": ["developer", "intern"],
             "token_base64": "",
             "ssh_keys": null,
             "gpg_keys": null

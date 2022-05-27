@@ -66,10 +66,6 @@ func main() {
 	router.GET("/dish/sockets", dish.GetSocketList)
 	router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
 
-	// dump CRUD -- backuping routes -- GET to dump arrays to JSON files, POST to rebuild array from JSON dumps
-	//router.GET("/dump/users", users.GetDump)
-	//router.POST("/dump/users", users.PostDump)
-
 	// groups CRUD
 	router.GET("/groups", groups.GetGroups)
 	router.GET("/groups/:id", groups.GetGroupByID)
@@ -77,18 +73,18 @@ func main() {
 	//router.PUT("/groups/:id", groups.PutGroupByID)
 	//router.DELETE("/groups/:id", groups.DeleteGroupByID)
 
-	// hosts CRUD
-	//router.GET("/hosts", hosts.GetHosts)
-	//router.GET("/hosts/:hostname", hosts.GetHostByHostname)
-	//router.GET("/hosts/:hyp/vms", hosts.GetVirtualsByHypervisorName)
-	//router.POST("/hosts/restore", hosts.PostHostsDumpRestore)
+	// infra CRUD
+	//router.GET("/infra/hosts", infra.GetHosts)
+	//router.GET("/infra/hosts/:hostname", infra.GetHostByHostname)
+	//router.GET("/infra/hosts/:hyp/vms", infra.GetVirtualsByHypervisorName)
+	//router.POST("/infra/hosts/restore", infra.PostHostsDumpRestore)
 
 	// users CRUD
 	router.GET("/users", users.GetUsers)
-	router.GET("/users/:id", users.GetUserByID)
-	router.POST("/users", users.PostUser)
+	router.GET("/users/:name", users.GetUserByName)
+	router.POST("/users", users.PostNewUser)
 	router.POST("/users/restore", users.PostUsersDumpRestore)
-	router.POST("/users/:id/keys/ssh", users.PostUserSSHKey)
+	router.POST("/users/:name/keys/ssh", users.PostUsersSSHKey)
 	//router.PUT("/users/:id", users.PutUserByID)
 	//router.DELETE("/users/:id", users.DeleteUserByID)
 

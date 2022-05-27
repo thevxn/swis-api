@@ -1,0 +1,60 @@
+{
+    "user": "alvax_bot",
+    "command_list": [
+        {
+            "name": "bomb",
+            "alias_names": null,
+            "argument_list": [
+                "red",
+                "green",
+                "blue"
+            ],
+            "parent_class": "Bomb",
+            "required_argument": false
+        },
+        {
+            "name": "dish",
+            "alias_names": null,
+            "argument_list": [
+                "enable",
+                "disable",
+                "mute",
+                "search"
+            ],
+            "parent_class": "Dish",
+            "required_argument": true
+        },
+        {
+            "name": "kanban",
+            "alias_names": null,
+            "argument_list": [
+                "getAllProjects"
+            ],
+            "parent_class": "Kanban",
+            "required_argument": true
+        },
+        {
+            "name": "memes",
+            "alias_names": null,
+            "argument_list": [
+                "megamind",
+                "chad"
+            ],
+            "parent_class": "Memes",
+            "required_argument": true
+        },
+        {
+            "name": "rating",
+            "alias_names": [
+                "badbot",
+                "goodbot"
+            ],
+            "argument_list": [
+                "good",
+                "bad"
+            ],
+            "parent_class": "Rating",
+            "required_argument": false
+        }
+    ]
+}
