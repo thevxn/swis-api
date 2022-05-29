@@ -58,10 +58,6 @@ dot-file containing base contants for Makefile, Dockerfile (via docker-compose.y
 
 Recipe for docker image build using `docker build .`
 
-### LICENSE
-
-MIT license file for swis-core-api repository/project.
-
 ### Makefile
 
 Dev/build recipe for GNU `make` tool. Listing (Jan 14, 2022):
@@ -81,10 +77,6 @@ $ make
 ### docker-compose.yml
 
 YAML-formated file for docker-compose stack. Contains defitions for docker container and its isolated network. Uses constants from `.env` dot-file.
-
-### go.mod (go.sum)
-
-Application/package dependencies. Deprecated since the module is built inside the docker container.
 
 ### main.go
 
