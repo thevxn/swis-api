@@ -67,7 +67,7 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_source": [
-                "frank"
+                ""
             ],
             "status": null
         },
@@ -334,7 +334,8 @@
             "port_tcp": 443,
             "expected_http_code_array": [
                 200,
-                301
+                301,
+		520
             ],
             "path_http": "/",
             "dish_source": [
