@@ -58,6 +58,7 @@ function import_ssh_keys {
   # users to import given SSH keys arrays to (according to ./data/ssh_keys_username.json convention and swis-api/users.User.SSHKeys model)
   SSH_KEYS_USERS=(
     krusty
+    stepis
     tack
   )
 
@@ -110,6 +111,7 @@ function import_dish_sockets {
   echo "importing dish sockets (socket list)..."
   curlp --data @${DATA_FILE} --url ${URL} | jq .
 }
+
 
 #
 # workflow/chain import

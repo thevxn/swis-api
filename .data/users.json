@@ -4,6 +4,7 @@
             "name": "krusty",
             "roles": ["admin", "operator"],
             "token_base64": "",
+            "github_username": "krustowski",
             "links": null,
             "ssh_keys": null,
             "gpg_keys": null
@@ -12,6 +13,7 @@
             "name": "tack",
             "roles": ["admin", "developer"],
             "token_base64": "",
+            "github_username": "Tackx",
             "links": null,
             "ssh_keys": null,
             "gpg_keys": null
@@ -20,6 +22,7 @@
             "name": "stepis",
             "roles": ["developer", "intern"],
             "token_base64": "",
+            "github_username": "stepiiis",
             "links": null,
             "ssh_keys": null,
             "gpg_keys": null

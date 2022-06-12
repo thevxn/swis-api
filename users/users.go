@@ -21,13 +21,14 @@ type User struct {
 	FullName	string	`json:"full_name"`
 	Roles         []string 	`json:"roles"`
 	TokenBase64	string 	`json:"token_base64"`
+	GitHubUser	string	`json:"github_username"`
+	WireguardKey  []string  `json:"wireguard_public_key"`
 	SSHKeys	      []string  `json:"ssh_keys"`
 	GPGKeys	      []string  `json:"gpg_keys"`
 }
 
 // flush users at start -- see Makefile, import_prod target, and .data/users
-var users = []User{}
-//var users = Users.Users{}
+var users = []User{} //equivalent to Users.Users{}
 
 
 func findUserByName(c *gin.Context) (index *int, u *User) {
