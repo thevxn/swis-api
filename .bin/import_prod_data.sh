@@ -111,6 +111,16 @@ function import_dish_sockets {
   curlp --data @${DATA_FILE} --url ${URL} | jq .
 }
 
+function import_infrastructure {
+  POST_PATH="/infra/restore"
+  URL="${DEST_URL}${POST_PATH}"
+
+  DATA_FILE="${DATA_DIR}/infra.json"
+  [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
+
+  echo "importing infrastructure (hosts+networks)..."
+  curlp --data @${DATA_FILE} --url ${URL} | jq .
+}
 
 #
 # workflow/chain import
@@ -121,3 +131,4 @@ import_ssh_keys       || die "cannot import SSH keys"
 import_depots         || die "camnot import depots"
 import_alvax_cmd_list || die "cannot import alvax command list"
 import_dish_sockets   || die "cannot import dish sockets"
+import_infrastructure || die "cannot import infrastructure"
