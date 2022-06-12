@@ -4,6 +4,7 @@ import (
 	//b64 "encoding/base64"
 	//"encoding/json"
 	"net/http"
+        "strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -92,7 +93,6 @@ func PostNewUser(c *gin.Context) {
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
 	var importUsers Users
-
 	
 	// bind received JSON to newUser
 	if err := c.BindJSON(&importUsers); err != nil {
@@ -132,3 +132,13 @@ func PostUsersSSHKeys(c *gin.Context) {
 	c.IndentedJSON(http.StatusAccepted, *user)
 }
 
+// GetUsersSSHKeysRaw
+func GetUsersSSHKeysRaw(c *gin.Context) {
+	var _, user = findUserByName(c)
+
+	if user != nil {
+		var responseBody = strings.Join(user.SSHKeys, "\n")
+		c.String(http.StatusOK, responseBody)
+	}
+	return
+}

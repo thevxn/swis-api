@@ -15,6 +15,7 @@ import (
 	//"swis-api/flower"
 	"swis-api/groups"
 	//"swis-api/hosts"
+	//"swis-api/infra"
 	"swis-api/users"
 
 	"github.com/gin-gonic/gin"
@@ -84,6 +85,7 @@ func main() {
 	router.GET("/users/:name", users.GetUserByName)
 	router.POST("/users", users.PostNewUser)
 	router.POST("/users/:name/keys/ssh", users.PostUsersSSHKeys)
+	router.GET("/users/:name/keys/ssh", users.GetUsersSSHKeysRaw)
 	router.POST("/users/restore", users.PostDumpRestore)
 	//router.PUT("/users/:id", users.PutUserByID)
 	//router.DELETE("/users/:id", users.DeleteUserByID)
