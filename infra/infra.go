@@ -96,7 +96,7 @@ func findHostByHostname(c *gin.Context) (index *int, h *Host) {
 	var hosts = infrastructure.Hosts
 
 	for i, a := range hosts {
-		if a.Hostname == c.Param("name") {
+		if a.Hostname == c.Param("hostname") {
 			//c.IndentedJSON(http.StatusOK, a)
 			return &i, &a
 		}
@@ -133,8 +133,6 @@ func GetHostByHostname(c *gin.Context) {
 		// host found
 		c.IndentedJSON(http.StatusOK, host)
 	}
-
-	//c.IndentedJSON(http.StatusNotFound, gin.H{"message": "user not found"})
 }
 
 // PostDumpRestore
