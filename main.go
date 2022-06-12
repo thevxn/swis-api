@@ -15,7 +15,7 @@ import (
 	//"swis-api/flower"
 	"swis-api/groups"
 	//"swis-api/hosts"
-	//"swis-api/infra"
+	"swis-api/infra"
 	"swis-api/users"
 
 	"github.com/gin-gonic/gin"
@@ -75,10 +75,12 @@ func main() {
 	//router.DELETE("/groups/:id", groups.DeleteGroupByID)
 
 	// infra CRUD
-	//router.GET("/infra/hosts", infra.GetHosts)
-	//router.GET("/infra/hosts/:hostname", infra.GetHostByHostname)
+	router.GET("/infra", infra.GetInfrastructure)
+	router.GET("/infra/hosts", infra.GetHosts)
+	router.GET("/infra/networks", infra.GetNetworks)
+	router.GET("/infra/hosts/:hostname", infra.GetHostByHostname)
 	//router.GET("/infra/hosts/:hyp/vms", infra.GetVirtualsByHypervisorName)
-	//router.POST("/infra/hosts/restore", infra.PostHostsDumpRestore)
+	router.POST("/infra/restore", infra.PostDumpRestore)
 
 	// users CRUD
 	router.GET("/users", users.GetUsers)
