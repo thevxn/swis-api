@@ -29,10 +29,8 @@ DATA_DIR="${APP_ROOT:-./.data}"
 [ ! -f "$(which jq)" ] && die "'jq' tool not found on runtime"
 
 # use explicitly POST method (-X), hide conn progress info (-s), follow locations (-L)
-alias curlp="$(which curl) -sLX POST"
+alias curlp="$(which curl) -v -sLX POST"
 alias jq="$(which jq)"
-
-export
 
 #
 # import blocks (to differenciate the script/workflow better...)
