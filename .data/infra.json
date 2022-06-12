@@ -1,0 +1,156 @@
+{
+  "infrastructure": {
+    "hosts": [
+      {
+	"hash": "sha256hash_viking",
+	"hostname": "viking.savla.su", 
+	"domain": "savla.su", 
+	"roles": ["hyp"],
+	"ip_address": [
+	  "95.216.7.113/32", 
+	  "10.4.5.140/25",
+	  "10.4.6.33/27"
+        ],
+	"facter": [],  
+        "virtual_machines": [
+	  "sha256hash_brikule",
+	  "sha256hash_hermes"
+	]
+      },
+      {
+	"hash": "sha256hash_squabbit",
+	"hostname": "squabbit.savla.su",
+	"domain": "savla.su",
+        "roles": ["hyp"],
+        "ip_address": [
+	  "10.4.5.1/25",
+ 	  "10.4.5.129/25"
+        ],
+        "facter": [],
+        "virtual_machines": [
+	  "sha256hash_stokrle",
+	  "sha256hash_tackbox",
+	  "sha256hash_fgrebox"
+	]
+      },
+      {
+	"hash": "sha256hash_frank",
+	"hostname": "frank.savla.su",
+	"domain": "savla.su",
+        "roles": [
+ 	  "gateway",
+	  "container",
+	  "runner",
+	  "webserver_nginx",
+	  "vpn_gateway",
+	  "dns"
+	],
+        "ip_address": [
+	  "165.22.94.196/32",
+ 	  "10.4.5.130/25"
+        ],
+        "facter": [],
+        "virtual_machines": []
+      },
+      {
+	"hash": "sha256hash_stokrle",
+	"hostname": "stokrle.savla.su",
+	"domain": "savla.su",
+        "roles": [
+	  "runner",
+	  "webserver_traefik",
+	  "container",
+	  "virtual",
+	  "swapi_prod"
+	],
+        "ip_address": [
+ 	  "10.4.5.33/25"
+        ],
+        "facter": [],
+        "virtual_machines": []
+      },
+      {
+	"hash": "sha256hash_tackbox",
+	"hostname": "tackbox.savla.su",
+	"domain": "savla.su",
+        "roles": [
+	  "container",
+	  "webserver_nginx",
+	  "virtual"
+	],
+        "ip_address": [
+ 	  "10.4.5.36/25"
+        ],
+        "facter": [],
+        "virtual_machines": []
+      },
+      {
+	"hash": "sha256hash_fgrebox",
+	"hostname": "fgrebox.savla.su",
+	"domain": "savla.su",
+        "roles": [
+	  "private",
+	  "virtual"
+	],
+        "ip_address": [
+ 	  "10.4.5.41/25"
+        ],
+        "facter": [],
+        "virtual_machines": []
+      },
+      {
+	"hash": "sha256hash_brikule",
+	"hostname": "brikule.savla.su",
+	"domain": "savla.su",
+        "roles": [
+	  "container",
+	  "webserver_traefik",
+	  "virtual"
+	],
+        "ip_address": [
+ 	  "10.4.6.35/27"
+        ],
+        "facter": [],
+        "virtual_machines": []
+      },
+      {
+	"hash": "sha256hash_hermes",
+	"hostname": "hermes.savla.su",
+	"domain": "savla.su",
+        "roles": [
+	  "container",
+	  "webserver_traefik",
+	  "virtual"
+	],
+        "ip_address": [
+ 	  "10.4.6.50/27"
+        ],
+        "facter": [],
+        "virtual_machines": []
+      }
+    ],
+    "networks": [
+      {
+	"hash": "",
+	"network_name": "squabbit virbr0 intranet",
+	"interface_name": "virbr0",
+	"network_address": "10.4.5.0/25",
+	"network_cidr_block": "25"
+      },
+      {
+	"hash": "",
+	"network_name": "viking br32 network",
+	"interface_name": "br32",
+	"network_address": "10.4.6.32/27",
+	"network_cidr_block": "27"
+      },
+      {
+	"hash": "",
+	"network_name": "intranet VPN frank network",
+	"interface_name": "wg0",
+	"network_address": "10.4.5.128/25",
+	"network_cidr_block": "25"
+      }
+    ]
+  }
+}
