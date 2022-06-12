@@ -70,7 +70,7 @@ fmt:
 
 build: 
 	@echo -e "\n${YELLOW} Building project (docker-compose build)... ${RESET}\n"
-	@docker-compose build 
+	@docker-compose build --no-cache
 
 # || { echo -e "\n${RED} [FAIL] is docker engine running? ${RESET}"; exit 1 }
 

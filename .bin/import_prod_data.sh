@@ -32,6 +32,7 @@ DATA_DIR="${APP_ROOT:-./.data}"
 alias curlp="$(which curl) -sLX POST"
 alias jq="$(which jq)"
 
+export
 
 #
 # import blocks (to differenciate the script/workflow better...)
