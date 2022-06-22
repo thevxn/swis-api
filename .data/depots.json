@@ -330,7 +330,7 @@
 {"id": 328, "desc": "kniha Veganská kuchařka, Gugetzer Gabriele, Vašut 2021", "misc": "nová", "depot": "---"},
 {"id": 329, "desc": "kniha Obsedantně-kompulzivní porucha, Praško, Grambal, Šlebecký, Vyskočilová, Grada 2019", "misc": "nová", "depot": "Brno"},
 {"id": 330, "desc": "kniha Jak vycházet s problémovými lidmi", "misc": "koupena v kromclu", "depot": "Brno"},
-{"id": 331, "desc": "kniha Jak žít s neurózou, prof. Kratochvíl", "misc": "koupena v kromclu", "depot": "Brno"},
+{"id": 331, "desc": "kniha Jak žít s neurózou, prof. Kratochvíl", "misc": "koupena v kromclu", "depot": "lent"},
 {"id": 332, "desc": "počítač přenosný Lenovo ThinkPad P14s (firemní, inuits, s. r. o.)", "misc": "32GB RAM, CPU Intel Core i7 (8-core), fedora 32 + i3wm", "depot": "Brno/roaming"},
 {"id": 333, "desc": "kniha Záhorák všetko skúr ví, dzíl druhý, Vidlár", "misc": "---", "depot": "Brno"},
 {"id": 334, "desc": "kniha Utopený Archimedes, Mornstein V.", "misc": "---", "depot": "Brno"},
@@ -340,6 +340,7 @@
 {"id": 338, "desc": "kniha From Analog to Digital Signal Processing: Theory, Algorithms and Implementation, Smekal Zdenek, Brno 2018", "misc": "darováno prof. Smékalem", "depot": "Brno"},
 {"id": 339, "desc": "kniha No More Mr. Nice Guy, Glover Robert", "misc": "anglicky", "depot": "Brno"},
 {"id": 340, "desc": "kniha Přítelkyně z domu smutku, Kantůrková Eva", "misc": "---", "depot": "Brno"},
-{"id": 341, "desc": "rostlina kaktus San Pedro", "misc": "---", "depot": "Brno"}
+{"id": 341, "desc": "rostlina kaktus San Pedro", "misc": "---", "depot": "Brno"},
+{"id": 342, "desc": "stan kempový Quechua 2 Seconds 2, 2 místa", "misc": "zakoupeno v Decathlonu 16. 6. 2022", "depot": "Brno"}
 ]}
 ]}
