@@ -12,6 +12,7 @@ import (
 	//"swis-api/b2b"
 	"swis-api/depot"
 	"swis-api/dish"
+	"swis-api/finance"
 	//"swis-api/flower"
 	"swis-api/groups"
 	//"swis-api/hosts"
@@ -66,6 +67,11 @@ func main() {
 	router.GET("/dish/sockets", dish.GetSocketList)
 	router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
 	router.POST("/dish/sockets/restore", dish.PostDumpRestore)
+
+	// finance CRUD
+	router.GET("/finance", finance.GetAccounts)
+	router.GET("/finance/accounts/:owner", finance.GetAccountByOwner)
+	router.POST("/finance/restore", finance.PostDumpRestore)
 
 	// groups CRUD
 	router.GET("/groups", groups.GetGroups)

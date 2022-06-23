@@ -1,0 +1,28 @@
+{
+  "accounts": [
+    {
+      "account_name": "Patrik Vlk Personal",
+      "account_number": "unk",
+      "bank_code": 0,
+      "account_swift": "unk",
+      "account_iban": "unk",
+      "account_owner": "tack",
+      "account_items": [
+        {
+          "amount": 523.85,  
+          "currency_code": "CZK", 
+          "description": "savla.dev domain, godaddy.com", 
+          "billing_date": "Feb 16, 2022", 
+          "misc": "yearly billing"
+        }, 
+        {
+          "amount": 14.51,  
+          "currency_code": "GBP", 
+          "description": "eldenbling.net domain, godaddy.com", 
+          "billing_date": "Mar 07, 2022", 
+          "misc": "yearly billing"
+        }
+      ]
+    }
+  ]
+}
