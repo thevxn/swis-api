@@ -1,0 +1,65 @@
+{
+  "business": [
+    {
+      "ico": "14444968",
+      "vat_id": "CZ9605144648",
+      "name_label": "Bc. Kryštof Šara",
+      "role": "owner",
+      "user_name": "krusty",
+      "contact": [
+        {
+          "type": "address",
+          "content": "Petrov 504, 696 65 Petrov"
+        },
+        {
+          "type": "telephone",
+          "content": "+420 728 535 909"
+        },
+        {
+          "type": "telephone",
+          "content": "+420 770 622 742"
+        },
+        {
+          "type": "e-mail address",
+          "content": "krusty@savla.dev"
+        },
+        {
+          "type": "bank account",
+          "content": "---"
+        },
+        {
+          "type": "website",
+          "content": "https://web.n0p.cz/"
+        }
+      ]
+    },
+    {
+      "ico": "29321824",
+      "vat_id": "CZ29321824",
+      "name_label": "Mathesio, s.r.o.",
+      "contact": [
+        {
+          "type": "address",
+          "content": "Soukenická 558/3, Staré Brno, 602 00 Brno"
+        },
+        {
+          "type": "contact person",
+          "content": "Ing. et Ing. Vojtěch Mates, Ph.D"
+        },
+        {
+          "type": "telephone",
+          "content": "+420 777 925 425"
+        },
+        {
+          "type": "e-mail address",
+          "content": "mates@mathesio.cz"
+        },
+        {
+          "type": "website",
+          "content": "https://mathesio.cz"
+        }
+      ],
+      "role": "partner"
+    }
+  ]
+}

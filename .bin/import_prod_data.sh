@@ -133,6 +133,18 @@ function import_finance {
   curlp --data @${DATA_FILE} --url ${URL} | jq .
 }
 
+function import_business_array {
+  POST_PATH="/business/restore"
+  URL="${DEST_URL}${POST_PATH}"
+
+  DATA_FILE="${DATA_DIR}/business_array.json"
+  [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
+
+  echo "importing business array..."
+  curlp --data @${DATA_FILE} --url ${URL} | jq .
+}
+
+
 #
 # workflow/chain import
 #
@@ -144,3 +156,4 @@ import_alvax_cmd_list || die "cannot import alvax command list"
 import_dish_sockets   || die "cannot import dish sockets"
 import_infrastructure || die "cannot import infrastructure"
 import_finance 	      || die "cannot import finance"
+import_business_array || die "cannot import business array"

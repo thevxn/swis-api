@@ -23,6 +23,23 @@
           "misc": "yearly billing"
         }
       ]
+    },
+    {
+      "account_name": "Krystof Sara Entrepreneurial, krusty@savla.dev",
+      "account_number": "2202183377",
+      "bank_code": 2010,
+      "account_swift": "FIOBCZPPXXX",
+      "account_iban": "CZ6220100000002202183377",
+      "account_owner": "krusty",
+      "account_items": [
+	{
+          "amount": 0,  
+          "currency_code": "", 
+          "description": "", 
+          "billing_date": "", 
+          "misc": ""
+	}
+      ]
     }
   ]
 }

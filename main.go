@@ -9,7 +9,7 @@ import (
 	// swapi modules
 	"swis-api/alvax"
 	"swis-api/auth"
-	//"swis-api/b2b"
+	"swis-api/business"
 	"swis-api/depot"
 	"swis-api/dish"
 	"swis-api/finance"
@@ -54,6 +54,11 @@ func main() {
 	// alvax CRUD
 	router.GET("/alvax/commands", alvax.GetCommandList)
 	router.POST("/alvax/commands/restore", alvax.PostDumpRestore)
+
+	// business CRUD
+	router.GET("/business", business.GetBusinessArray)
+	router.POST("/business", business.PostBusiness)
+	router.POST("/business/restore", business.PostDumpRestore)
 
 	// depot CRUD
 	router.GET("/depots", depot.GetDepots)
