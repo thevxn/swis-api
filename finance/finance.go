@@ -17,7 +17,8 @@ type Account struct {
 	AccountNumber	string  `json:"account_number"`
 	// bank codes like "0100" would be invalid as type int
 	BankCode	string	`json:"bank_code"`
-	SWIFT		string	`json:"account_swift"`
+	Currency	string	`json:"account_currency"`
+	SWIFT		string	`json:"account_swift_bic"`
 	IBAN		string	`json:"account_iban"`
 	Owner   	string	`json:"account_owner"`
 	Items 		[]Item 	`json:"account_items"`

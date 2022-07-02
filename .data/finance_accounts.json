@@ -4,7 +4,8 @@
       "account_name": "Patrik Vlk Personal",
       "account_number": "unk",
       "bank_code": "0000",
-      "account_swift": "unk",
+      "account_currency": "CZK",
+      "account_swift_bic": "unk",
       "account_iban": "unk",
       "account_owner": "tack",
       "account_items": [
@@ -25,10 +26,11 @@
       ]
     },
     {
-      "account_name": "Krystof Sara Entrepreneurial, krusty@savla.dev",
+      "account_name": "Krystof Sara Entrepreneurial, krusty@savla.dev, Fio",
       "account_number": "2202183377",
       "bank_code": "2010",
-      "account_swift": "FIOBCZPPXXX",
+      "account_currency": "CZK",
+      "account_swift_bic": "FIOBCZPPXXX",
       "account_iban": "CZ6220100000002202183377",
       "account_owner": "krusty",
       "account_items": [
@@ -42,11 +44,30 @@
       ]
     },
     {
-      "account_name": "Krystof Sara Personal",
+      "account_name": "Krystof Sara Personal, KB G2.2",
       "account_number": "43-9543120237",
       "bank_code": "0100",
-      "account_swift": "KOMBCZPPXXX",
+      "account_currency": "CZK",
+      "account_swift_bic": "KOMBCZPPXXX",
       "account_iban": "CZ4401000000439543120237",
+      "account_owner": "krusty",
+      "account_items": [
+        {
+          "amount": 0,
+          "currency_code": "",
+          "description": "",
+          "billing_date": "",
+          "misc": ""
+        }
+      ]
+    },
+    {
+      "account_name": "Krystof Sara Personal EUR (Wise)",
+      "account_number": "2097669",
+      "bank_code": "",
+      "account_currency": "EUR",
+      "account_swift_bic": "TRWIBEB1XXX",
+      "account_iban": "BE41967209766910",
       "account_owner": "krusty",
       "account_items": [
         {
