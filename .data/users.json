@@ -1,31 +1,85 @@
 {
-    "users": [
-        {
-            "name": "krusty",
-            "roles": ["admin", "operator"],
-            "token_base64": "",
-            "github_username": "krustowski",
-            "links": null,
-            "ssh_keys": null,
-            "gpg_keys": null
-        },
-        {
-            "name": "tack",
-            "roles": ["admin", "developer"],
-            "token_base64": "",
-            "github_username": "Tackx",
-            "links": null,
-            "ssh_keys": null,
-            "gpg_keys": null
-        },
-        {
-            "name": "stepis",
-            "roles": ["developer", "intern"],
-            "token_base64": "",
-            "github_username": "stepiiis",
-            "links": null,
-            "ssh_keys": null,
-            "gpg_keys": null
-        }
-    ]
+  "users": [
+    {
+      "name": "krusty",
+      "full_name": "Kryštof Šara",
+      "roles": [
+        "admin",
+        "operator", 
+	"infrastructure",
+	"gdpr"
+      ],
+      "token_base64": "",
+      "github_username": "krustowski",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null
+    },
+    {
+      "name": "tack",
+      "full_name": "Patrik Vlk",
+      "roles": [
+        "admin",
+        "developer", 
+	"domains"
+      ],
+      "token_base64": "",
+      "github_username": "Tackx",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null
+    },
+    {
+      "name": "stepis",
+      "full_name": "Štěpán Beran",
+      "roles": [
+        "developer",
+        "intern"
+      ],
+      "token_base64": "",
+      "github_username": "stepiiis",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null
+    },
+    {
+      "name": "fgre",
+      "full_name": "Filip Gregor",
+      "roles": [
+        "operator",
+	"inactive"
+      ],
+      "token_base64": "",
+      "github_username": "",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null
+    },
+    {
+      "name": "matejnesuta",
+      "full_name": "Matěj Nešuta",
+      "roles": [
+        "developer",
+	"inactive"
+      ],
+      "token_base64": "",
+      "github_username": "matejnesuta",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null
+    },
+    {
+      "name": "ridlees",
+      "full_name": "Martin Kodada",
+      "roles": [
+        "developer",
+	"inactive"
+      ],
+      "token_base64": "",
+      "github_username": "ridlees",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null
+    }
+  ]
 }

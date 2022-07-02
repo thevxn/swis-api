@@ -15,7 +15,8 @@ type Finance struct {
 type Account struct {
 	Name	   	string	`json:"account_name"`
 	AccountNumber	string  `json:"account_number"`
-	BankCode	int	`json:"bank_code"`
+	// bank codes like "0100" would be invalid as type int
+	BankCode	string	`json:"bank_code"`
 	SWIFT		string	`json:"account_swift"`
 	IBAN		string	`json:"account_iban"`
 	Owner   	string	`json:"account_owner"`
@@ -34,6 +35,7 @@ type Item struct {
 
 // flush finance at start
 var finance = Finance{}
+
 
 func GetAccounts(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{

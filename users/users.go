@@ -25,7 +25,10 @@ type User struct {
 	WireguardKey  []string  `json:"wireguard_public_key"`
 	SSHKeys	      []string  `json:"ssh_keys"`
 	GPGKeys	      []string  `json:"gpg_keys"`
+	// SEE more -- https://gdpr.eu/checklist/
+	GDPRConsent	bool	`json:"gdpr_consent"`
 }
+
 
 // flush users at start -- see Makefile, import_prod target, and .data/users
 var users = []User{} //equivalent to Users.Users{}

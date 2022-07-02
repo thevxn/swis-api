@@ -3,23 +3,23 @@
     {
       "account_name": "Patrik Vlk Personal",
       "account_number": "unk",
-      "bank_code": 0,
+      "bank_code": "0000",
       "account_swift": "unk",
       "account_iban": "unk",
       "account_owner": "tack",
       "account_items": [
         {
-          "amount": 523.85,  
-          "currency_code": "CZK", 
-          "description": "savla.dev domain, godaddy.com", 
-          "billing_date": "Feb 16, 2022", 
+          "amount": 523.85,
+          "currency_code": "CZK",
+          "description": "savla.dev domain, godaddy.com",
+          "billing_date": "Feb 16, 2022",
           "misc": "yearly billing"
-        }, 
+        },
         {
-          "amount": 14.51,  
-          "currency_code": "GBP", 
-          "description": "eldenbling.net domain, godaddy.com", 
-          "billing_date": "Mar 07, 2022", 
+          "amount": 14.51,
+          "currency_code": "GBP",
+          "description": "eldenbling.net domain, godaddy.com",
+          "billing_date": "Mar 07, 2022",
           "misc": "yearly billing"
         }
       ]
@@ -27,18 +27,35 @@
     {
       "account_name": "Krystof Sara Entrepreneurial, krusty@savla.dev",
       "account_number": "2202183377",
-      "bank_code": 2010,
+      "bank_code": "2010",
       "account_swift": "FIOBCZPPXXX",
       "account_iban": "CZ6220100000002202183377",
       "account_owner": "krusty",
       "account_items": [
-	{
-          "amount": 0,  
-          "currency_code": "", 
-          "description": "", 
-          "billing_date": "", 
+        {
+          "amount": 0,
+          "currency_code": "",
+          "description": "",
+          "billing_date": "",
           "misc": ""
-	}
+        }
+      ]
+    },
+    {
+      "account_name": "Krystof Sara Personal",
+      "account_number": "43-9543120237",
+      "bank_code": "0100",
+      "account_swift": "KOMBCZPPXXX",
+      "account_iban": "CZ4401000000439543120237",
+      "account_owner": "krusty",
+      "account_items": [
+        {
+          "amount": 0,
+          "currency_code": "",
+          "description": "",
+          "billing_date": "",
+          "misc": ""
+        }
       ]
     }
   ]
