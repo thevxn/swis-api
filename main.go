@@ -15,8 +15,8 @@ import (
 	"swis-api/finance"
 	//"swis-api/flower"
 	"swis-api/groups"
-	//"swis-api/hosts"
 	"swis-api/infra"
+	"swis-api/news"
 	"swis-api/users"
 
 	"github.com/gin-gonic/gin"
@@ -92,6 +92,11 @@ func main() {
 	router.GET("/infra/hosts/:hostname", infra.GetHostByHostname)
 	//router.GET("/infra/hosts/:hyp/vms", infra.GetVirtualsByHypervisorName)
 	router.POST("/infra/restore", infra.PostDumpRestore)
+
+	// news CRUD
+	router.GET("/news", news.GetNews)
+	router.GET("/news/sources", news.GetSources)
+	//routes.GET("/news/:user", news.GetNewsByUser)
 
 	// users CRUD
 	router.GET("/users", users.GetUsers)
