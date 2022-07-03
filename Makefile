@@ -65,7 +65,7 @@ config:
 
 fmt:
 	@echo -e "\n${YELLOW} Code reformating (gofmt)... ${RESET}\n"
-	@gofmt -d .
+	@gofmt -d -s .
 	@find . -name "*.go" -exec gofmt {} \;
 
 build: 

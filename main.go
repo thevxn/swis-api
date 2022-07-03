@@ -94,9 +94,8 @@ func main() {
 	router.POST("/infra/restore", infra.PostDumpRestore)
 
 	// news CRUD
-	router.GET("/news", news.GetNews)
+	router.GET("/news/:user", news.GetNewsByUser)
 	router.GET("/news/sources", news.GetSources)
-	//routes.GET("/news/:user", news.GetNewsByUser)
 
 	// users CRUD
 	router.GET("/users", users.GetUsers)

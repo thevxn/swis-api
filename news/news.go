@@ -11,8 +11,8 @@ import (
 
 
 type News struct {
-	User	string		`json:"feed_user"`
-	Sources []Source 	`json:"feeds"`
+	User	string		`json:"news_user"`
+	Sources []Source 	`json:"news_sources"`
 }
 
 type Source struct {
@@ -29,7 +29,9 @@ var sources = []Source{
 	{Name: "Root.cz Zprávičky", URL: "https://www.root.cz/rss/zpravicky/"},
 }
 
-var news = News{User: "krusty", Sources: sources}
+var news = []News{
+	{User: "krusty", Sources: sources},
+}
 
 
 // typical RSS structure:
@@ -42,11 +44,11 @@ var news = News{User: "krusty", Sources: sources}
 
 // XML exported Item
 type Item struct {
-	Title		string	`xml:"title"`
-	Perex		string	`xml:"description"`
-	Server		string	`xml:"link_host"`
-	Link		string	`xml:"link"`
-	Timestamp	string	`xml:"pubDate"`
+	Title		string	`xml:"title" json:"title"`
+	Perex		string	`xml:"description" json:"perex"`
+	//Server	string	
+	Link		string	`xml:"link" json:"link"`
+	PubDate		string	`xml:"pubDate" json:"timestamp"`
 }
 
 // XML exported Channel
@@ -64,33 +66,29 @@ type Rss struct {
 }
 
 
-/*
-func findNewsByUser(c *gin.Context) (index *int, s *[]Source) {
-	// loop over users
-	for i, a := range users {
-		if a.ID == c.Param("id") {
+func findSourcesByUser(c *gin.Context) (s *[]Source) {
+	for _, n := range news {
+		if n.User == c.Param("user") {
 			//c.IndentedJSON(http.StatusOK, a)
-			return &i, &a
+			return &n.Sources
 		}
 	}
+
 	c.IndentedJSON(http.StatusNotFound, gin.H{
 		"code": http.StatusNotFound,
-		"message": "user not found",
+		"message": "user's sources not found",
 	})
-	return nil, nil
+	return nil
 }
-*/
 
-func fetchRSSContents(s *Source) (r *Rss) {
-	//resp, err := http.Get("http://www.bbc.co.uk/programmes/p02nrvz8/episodes/downloads.rss")
+func fetchRSSContents(s *Source) (i *[]Item) {
 	resp, err := http.Get(s.URL)
 	if err != nil {
 		log.Println(err)
-		return
+		return nil
 	}
 	defer resp.Body.Close()
 
-	//rss := Rss{}
 	var rss = Rss{}
 
 	decoder := xml.NewDecoder(resp.Body)
@@ -107,23 +105,32 @@ func fetchRSSContents(s *Source) (r *Rss) {
 	for i, item := range rss.Channel.Items {
 		log.Printf("%v. item title: %v\n", i, item.Title)
 	}*/
-	return &rss
+	return &rss.Channel.Items
 }
 
-// GetNews returns all possible news from all sources loaded in memory
-func GetNews(c *gin.Context) {
-	var R = []Rss{}
+// GetNewsByUser returns all possible news from all sources loaded in memory
+func GetNewsByUser(c *gin.Context) {
+	userSources := *findSourcesByUser(c)
+	if userSources == nil {
+		return
+	}
+
+	//var R = []Rss{}
+	var items = []Item{}
  
-	for _, s := range news.Sources {
+	for _, s := range userSources {
 		//R := *fetchRSSContents(&s)
-		R = append(R, *fetchRSSContents(&s))
+		for _, item := range *fetchRSSContents(&s) {
+			items = append(items, item)
+		}
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"news": R,
+		"news": items,
 	})
 }
 
+// GetSources
 func GetSources(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"news": news,
