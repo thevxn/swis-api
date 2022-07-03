@@ -110,7 +110,7 @@ func fetchRSSContents(s *Source) (i *[]Item) {
 
 // GetNewsByUser returns all possible news from all sources loaded in memory
 func GetNewsByUser(c *gin.Context) {
-	userSources := *findSourcesByUser(c)
+	userSources := findSourcesByUser(c)
 	if userSources == nil {
 		return
 	}
@@ -118,7 +118,7 @@ func GetNewsByUser(c *gin.Context) {
 	//var R = []Rss{}
 	var items = []Item{}
  
-	for _, s := range userSources {
+	for _, s := range *userSources {
 		//R := *fetchRSSContents(&s)
 		for _, item := range *fetchRSSContents(&s) {
 			items = append(items, item)
