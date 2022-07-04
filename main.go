@@ -43,6 +43,7 @@ func main() {
 			"bearer": auth.Params.BearerToken,
 		})
 	})
+
 	// default 404 route
 	router.NoRoute(func(c *gin.Context){
 		c.JSON(http.StatusNotFound, gin.H{
@@ -50,6 +51,9 @@ func main() {
 			"message": "unknown route",
 		})
 	})
+
+	// serve savla-dev internal favicon
+	router.StaticFile("/favicon.ico", "./.assets/favicon.ico")
 
 	// alvax CRUD
 	router.GET("/alvax/commands", alvax.GetCommandList)
