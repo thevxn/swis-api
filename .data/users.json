@@ -7,13 +7,28 @@
         "admin",
         "operator", 
 	"infrastructure",
-	"gdpr"
+	"gdpr", 
+	"swis"
       ],
       "token_base64": "",
       "github_username": "krustowski",
       "links": null,
       "ssh_keys": null,
-      "gpg_keys": null
+      "gpg_keys": null, 
+      "wireguard_vpn": [
+        {
+          "public_key": "", 
+	  "device_name": "krustyboks-mac",
+	  "ip_address": "10.4.5.131",
+	  "permission": true
+        },
+        {
+          "public_key": "", 
+	  "device_name": "krustyPhone-iOS",
+	  "ip_address": "10.4.5.134",
+	  "permission": true
+        }
+      ]
     },
     {
       "name": "tack",
@@ -27,7 +42,27 @@
       "github_username": "Tackx",
       "links": null,
       "ssh_keys": null,
-      "gpg_keys": null
+      "gpg_keys": null, 
+      "wireguard_vpn": [
+        {
+          "public_key": "", 
+	  "device_name": "tack-pc-win",
+	  "ip_address": "10.4.5.132",
+	  "permission": true
+        }, 
+        {
+          "public_key": "", 
+	  "device_name": "tack-phone",
+	  "ip_address": "10.4.5.135",
+	  "permission": true
+        },
+        {
+          "public_key": "", 
+	  "device_name": "talion",
+	  "ip_address": "10.4.5.136",
+	  "permission": true
+        }
+      ]
     },
     {
       "name": "stepis",
@@ -40,7 +75,15 @@
       "github_username": "stepiiis",
       "links": null,
       "ssh_keys": null,
-      "gpg_keys": null
+      "gpg_keys": null,
+      "wireguard_vpn": [
+        {
+          "public_key": "", 
+	  "device_name": "",
+	  "ip_address": "",
+	  "permission": false
+        }
+      ]
     },
     {
       "name": "fgre",
@@ -53,7 +96,15 @@
       "github_username": "",
       "links": null,
       "ssh_keys": null,
-      "gpg_keys": null
+      "gpg_keys": null,
+      "wireguard_vpn": [
+        {
+          "public_key": "", 
+	  "device_name": "fgre-macbook",
+  	  "ip_address": "10.4.5.133",
+	  "permission": true
+        }
+      ]
     },
     {
       "name": "matejnesuta",

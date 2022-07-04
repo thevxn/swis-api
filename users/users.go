@@ -16,17 +16,24 @@ type Users struct {
 
 type User struct {
 	// ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property)
-	//ID       	string 	`json:"id"`
-	Name	 	string 	`json:"name"`
-	FullName	string	`json:"full_name"`
-	Roles         []string 	`json:"roles"`
-	TokenBase64	string 	`json:"token_base64"`
-	GitHubUser	string	`json:"github_username"`
-	WireguardKey  []string  `json:"wireguard_public_key"`
-	SSHKeys	      []string  `json:"ssh_keys"`
-	GPGKeys	      []string  `json:"gpg_keys"`
+	//ID       	string 		`json:"id"`
+	Name	 	string 		`json:"name"`
+	FullName	string		`json:"full_name"`
+	Roles         []string 		`json:"roles"`
+	TokenBase64	string 		`json:"token_base64"`
+	GitHubUser	string		`json:"github_username"`
+	Wireguard     []Wireguard  	`json:"wireguard_vpn"`
+	SSHKeys	      []string  	`json:"ssh_keys"`
+	GPGKeys	      []string  	`json:"gpg_keys"`
 	// SEE more -- https://gdpr.eu/checklist/
-	GDPRConsent	bool	`json:"gdpr_consent"`
+	GDPRConsent	bool		`json:"gdpr_consent" default:false`
+}
+
+type Wireguard struct {
+	PublicKey	string	`json:"public_key"`
+	IPAddress	string	`json:"ip_address"`
+	Permission	bool	`json:"permission" default:false`
+	DeviceName	string	`json:"device_name"`
 }
 
 
