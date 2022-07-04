@@ -8,7 +8,7 @@ on:
 
 jobs:
   redeployment:
-    runs-on: [ self-hosted, stokrle ]
+    runs-on: [ self-hosted, internal, docker ]
 
     steps:
     - uses: actions/checkout@v2
@@ -16,7 +16,7 @@ jobs:
       run: make run
 
   import_data:
-    runs-on: [ self-hosted, stokrle ]
+    runs-on: [ self-hosted, internal, docker ]
     needs: [ redeployment ]
 
     steps:
