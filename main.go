@@ -17,6 +17,7 @@ import (
 	"swis-api/groups"
 	"swis-api/infra"
 	"swis-api/news"
+	"swis-api/projects"
 	"swis-api/users"
 
 	"github.com/gin-gonic/gin"
@@ -100,6 +101,15 @@ func main() {
 	// news CRUD
 	router.GET("/news/:user", news.GetNewsByUser)
 	router.GET("/news/sources", news.GetSources)
+
+	// projects CRUD
+	pp := router.Group("/projects") 
+	{
+		pp.GET("/", projects.GetProjects)
+		pp.GET("/:id", projects.GetProjectByID)
+		pp.POST("/", projects.PostProject)
+		pp.POST("/restore", projects.PostDumpRestore)
+	}
 
 	// users CRUD
 	router.GET("/users", users.GetUsers)

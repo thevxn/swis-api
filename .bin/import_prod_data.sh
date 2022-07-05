@@ -144,6 +144,17 @@ function import_business_array {
   curlp --data @${DATA_FILE} --url ${URL} | jq .
 }
 
+function import_projects {
+  POST_PATH="/projects/restore"
+  URL="${DEST_URL}${POST_PATH}"
+
+  DATA_FILE="${DATA_DIR}/projects.json"
+  [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
+
+  echo "importing projects..."
+  curlp --data @${DATA_FILE} --url ${URL} | jq .
+}
+
 
 #
 # workflow/chain import
@@ -157,3 +168,5 @@ import_dish_sockets   || die "cannot import dish sockets"
 import_infrastructure || die "cannot import infrastructure"
 import_finance 	      || die "cannot import finance"
 import_business_array || die "cannot import business array"
+import_projects	      || die "cannot import projects"
+

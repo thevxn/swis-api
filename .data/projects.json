@@ -1,0 +1,92 @@
+{
+  "projects": [
+    {
+      "project_id": "swapi", 
+      "project_name": "sakalWeb IS v5", 
+      "project_desc": "sakalWeb Information System RESTful API version 5",
+      "project_docs_link": "http://docs.savla.su/swis/api",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/swis-api",
+      "project_url": "http://swapi.savla.su",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "kanban", 
+      "project_name": "Kanboard", 
+      "project_desc": "Kanboard simple kanban project management tool",
+      "project_docs_link": "http://docs.savla.su/infra/kanban",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "",
+      "project_url": "http://kanban.savla.su",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "docs", 
+      "project_name": "infra-docs", 
+      "project_desc": "Internal documentation web app using Harp server",
+      "project_docs_link": "http://docs.savla.su/howto/docs",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/infra-docs",
+      "project_url": "http://docs.savla.su",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "dish", 
+      "project_name": "savla-dish", 
+      "project_desc": "Simple TCP socket one-shot tester",
+      "project_docs_link": "http://docs.savla.su/projects/savla-dish",
+      "project_manager": "krusty",
+      "project_published": true,
+      "project_repo": "github.com/savla-dev/savla-dish",
+      "project_url": "",
+      "project_deploy_target": "frank.savla.su"
+    },
+    {
+      "project_id": "elden-bling", 
+      "project_name": "Elden Bling", 
+      "project_desc": "A web app allowing players of Elden Ring to upload/share their favorite Elden Ring characters and their fashion",
+      "project_docs_link": "http://docs.savla.su/projects/elden-bling",
+      "project_manager": "tack",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/elden-bling",
+      "project_url": "http://elden-bling.savla.su",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "alvax-bot", 
+      "project_name": "savla-bot-telegram", 
+      "project_desc": "Express.js-powered Telegram IM bot",
+      "project_docs_link": "http://docs.savla.su/projects/telegram-bots",
+      "project_manager": "tack",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/savla-bot-telegram",
+      "project_url": "691243ca1b28451f4e6599-telegram.n0p.cz",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "platispivo", 
+      "project_name": "platispivo.cz", 
+      "project_desc": "",
+      "project_docs_link": "",
+      "project_manager": "tack",
+      "project_published": false,
+      "project_repo": "",
+      "project_url": "http://platispivo.cz",
+      "project_deploy_target": "frank.savla.su"
+    },
+    {
+      "project_id": "n0p-wiki", 
+      "project_name": "n0p.cz / wiki", 
+      "project_desc": "DokuWiki documentation system web app mainly for the n0p.cz infra, legacy",
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": true,
+      "project_repo": "github.com/n0p-tester/dokuwiki",
+      "project_url": "https://wiki.n0p.cz/",
+      "project_deploy_target": "frank.savla.su"
+    }
+  ]
+}
