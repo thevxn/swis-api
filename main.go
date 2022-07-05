@@ -57,50 +57,74 @@ func main() {
 	router.StaticFile("/favicon.ico", "./.assets/favicon.ico")
 
 	// alvax CRUD
-	router.GET("/alvax/commands", alvax.GetCommandList)
-	router.POST("/alvax/commands/restore", alvax.PostDumpRestore)
+	aa := router.Group("/alvax")
+	{
+		aa.GET("/commands", alvax.GetCommandList)
+		aa.POST("/commands/restore", alvax.PostDumpRestore)
+	}
 
 	// business CRUD
-	router.GET("/business", business.GetBusinessArray)
-	router.POST("/business", business.PostBusiness)
-	router.POST("/business/restore", business.PostDumpRestore)
+	biz := router.Group("/business")
+	{
+		biz.GET("/", business.GetBusinessArray)
+		biz.POST("/", business.PostBusiness)
+		biz.POST("/restore", business.PostDumpRestore)
+	}
 
 	// depot CRUD
-	router.GET("/depots", depot.GetDepots)
-	router.GET("/depots/:owner", depot.GetDepotByOwner)
-	router.POST("/depots/restore", depot.PostDumpRestore)
-	//router.GET("/depots/:groupID", depot.GetDepotByGroupID)
-	//router.GET("/depots/:userID", depot.GetDepotByUserID)
+	de := router.Group("/depots")
+	{
+		de.GET("/", depot.GetDepots)
+		de.GET("/:owner", depot.GetDepotByOwner)
+		de.POST("/restore", depot.PostDumpRestore)
+		//de.GET("/:groupID", depot.GetDepotByGroupID)
+		//gg.GET("/:userID", depot.GetDepotByUserID)
+	}
 
 	// dish CRUD
-	router.HEAD("/dish/test", dish.HeadTest)
-	router.GET("/dish/sockets", dish.GetSocketList)
-	router.GET("/dish/sockets/:host", dish.GetSocketListByHost)
-	router.POST("/dish/sockets/restore", dish.PostDumpRestore)
+	di := router.Group("/dish")
+	{
+		di.HEAD("/test", dish.HeadTest)
+		di.GET("/sockets", dish.GetSocketList)
+		di.GET("/sockets/:host", dish.GetSocketListByHost)
+		di.POST("/sockets/restore", dish.PostDumpRestore)
+	}
 
-	// finance CRUD
-	router.GET("/finance", finance.GetAccounts)
-	router.GET("/finance/accounts/:owner", finance.GetAccountByOwner)
-	router.POST("/finance/restore", finance.PostDumpRestore)
+	// finance accounts CRUD
+	ff := router.Group("/finance")
+	{
+		ff.GET("/", finance.GetAccounts)
+		ff.GET("/accounts/:owner", finance.GetAccountByOwner)
+		ff.POST("/restore", finance.PostDumpRestore)
+	}
 
 	// groups CRUD
-	router.GET("/groups", groups.GetGroups)
-	router.GET("/groups/:id", groups.GetGroupByID)
-	router.POST("/groups", groups.PostGroup)
-	//router.PUT("/groups/:id", groups.PutGroupByID)
-	//router.DELETE("/groups/:id", groups.DeleteGroupByID)
+	gg := router.Group("/groups")
+	{
+		gg.GET("/", groups.GetGroups)
+		gg.GET("/:id", groups.GetGroupByID)
+		gg.POST("/", groups.PostGroup)
+		//gg.PUT("/:id", groups.PutGroupByID)
+		//gg.DELETE("/:id", groups.DeleteGroupByID)
+	}
 
 	// infra CRUD
-	router.GET("/infra", infra.GetInfrastructure)
-	router.GET("/infra/hosts", infra.GetHosts)
-	router.GET("/infra/networks", infra.GetNetworks)
-	router.GET("/infra/hosts/:hostname", infra.GetHostByHostname)
-	//router.GET("/infra/hosts/:hyp/vms", infra.GetVirtualsByHypervisorName)
-	router.POST("/infra/restore", infra.PostDumpRestore)
+	ii := router.Group("/infra")
+        {
+		ii.GET("/", infra.GetInfrastructure)
+		ii.GET("/hosts", infra.GetHosts)
+		ii.GET("/hosts/:hostname", infra.GetHostByHostname)
+		ii.GET("/networks", infra.GetNetworks)
+		//ii.GET("/hosts/:hyp/vms", infra.GetVirtualsByHypervisorName)
+		ii.POST("/restore", infra.PostDumpRestore)
+	}
 
 	// news CRUD
-	router.GET("/news/:user", news.GetNewsByUser)
-	router.GET("/news/sources", news.GetSources)
+        nn := router.Group("/news")
+        {
+		nn.GET("/:user", news.GetNewsByUser)
+		nn.GET("/sources", news.GetSources)
+	}
 
 	// projects CRUD
 	pp := router.Group("/projects") 
@@ -112,14 +136,17 @@ func main() {
 	}
 
 	// users CRUD
-	router.GET("/users", users.GetUsers)
-	router.GET("/users/:name", users.GetUserByName)
-	router.POST("/users", users.PostNewUser)
-	router.POST("/users/:name/keys/ssh", users.PostUsersSSHKeys)
-	router.GET("/users/:name/keys/ssh", users.GetUsersSSHKeysRaw)
-	router.POST("/users/restore", users.PostDumpRestore)
-	//router.PUT("/users/:id", users.PutUserByID)
-	//router.DELETE("/users/:id", users.DeleteUserByID)
+	uu := router.Group("/users")
+	{
+		uu.GET("/", users.GetUsers)
+		uu.GET("/:name", users.GetUserByName)
+		uu.POST("/", users.PostNewUser)
+		uu.POST("/:name/keys/ssh", users.PostUsersSSHKeys)
+		uu.GET("/:name/keys/ssh", users.GetUsersSSHKeysRaw)
+		uu.POST("/restore", users.PostDumpRestore)
+		//uu.PUT("/:id", users.PutUserByID)
+		//uu.DELETE("/:id", users.DeleteUserByID)
+	}
 
 	// attach router to http.Server and start it
 	router.Run(":8080")
