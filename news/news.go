@@ -119,8 +119,12 @@ func GetNewsByUser(c *gin.Context) {
 	var items = []Item{}
  
 	for _, s := range *userSources {
-		//R := *fetchRSSContents(&s)
-		for _, item := range *fetchRSSContents(&s) {
+		cont := fetchRSSContents(&s)
+		if cont == nil {
+			continue
+		}
+
+		for _, item := range *cont {
 			items = append(items, item)
 		}
 	}
