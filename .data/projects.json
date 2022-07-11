@@ -87,6 +87,17 @@
       "project_repo": "github.com/n0p-tester/dokuwiki",
       "project_url": "https://wiki.n0p.cz/",
       "project_deploy_target": "frank.savla.su"
+    }, 
+    {
+      "project_id": "static-sites", 
+      "project_name": "static-sites", 
+      "project_desc": "dockerized old HTML/PHP7.4 sites",
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/static-sites",
+      "project_url": "",
+      "project_deploy_target": "brikule.savla.su"
     }
   ]
 }

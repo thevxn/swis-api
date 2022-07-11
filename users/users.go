@@ -31,7 +31,11 @@ type User struct {
 
 type Wireguard struct {
 	PublicKey	string	`json:"public_key"`
+	PrivateKey	string	`json:"private_key"`
+	// user's private IP address 
 	IPAddress	string	`json:"ip_address"`
+	// IP address list on the side of server (frank)
+	AllowedIPs    []string	`json:"allowed_ips"`
 	Permission	bool	`json:"permission" default:false`
 	DeviceName	string	`json:"device_name"`
 }

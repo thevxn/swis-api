@@ -5,10 +5,13 @@ import (
 	"encoding/xml"
 	"log"
 	"net/http"
+	"sort"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
+// news source structures
 
 type News struct {
 	User	string		`json:"news_user"`
@@ -22,11 +25,11 @@ type Source struct {
 }
 
 var sources = []Source{
-	{Name: "Aktuálně.cz", URL: "https://www.aktualne.cz/rss/"},
+	//{Name: "Aktuálně.cz", URL: "https://www.aktualne.cz/rss/"},
 	{Name: "ČT24 Hlavní zprávy", URL: "http://www.ceskatelevize.cz/ct24/rss/hlavni-zpravy"},
 	{Name: "iRozhlas.cz", URL: "https://www.irozhlas.cz/rss/irozhlas"},
 	{Name: "Seznam Zprávy", URL: "https://api.seznamzpravy.cz/v1/documenttimelines/5ac49a0272c43201ee1d957f?rss=1"},
-	{Name: "Root.cz Zprávičky", URL: "https://www.root.cz/rss/zpravicky/"},
+	//{Name: "Root.cz Zprávičky", URL: "https://www.root.cz/rss/zpravicky/"},
 }
 
 var news = []News{
@@ -48,7 +51,8 @@ type Item struct {
 	Perex		string	`xml:"description" json:"perex"`
 	//Server	string	
 	Link		string	`xml:"link" json:"link"`
-	PubDate		string	`xml:"pubDate" json:"timestamp"`
+	PubDate		string	`xml:"pubDate" json:"pub_date"`
+	ParseDate	time.Time	`json:"parse_date_rfc1123z"`
 }
 
 // XML exported Channel
@@ -92,8 +96,7 @@ func fetchRSSContents(s *Source) (i *[]Item) {
 	var rss = Rss{}
 
 	decoder := xml.NewDecoder(resp.Body)
-	err = decoder.Decode(&rss)
-	if err != nil {
+	if err = decoder.Decode(&rss); err != nil {
 		log.Println(err)
 		return nil
 	}
@@ -125,9 +128,17 @@ func GetNewsByUser(c *gin.Context) {
 		}
 
 		for _, item := range *cont {
+			// time layouts (date template constants) --> https://go.dev/src/time/format.go
+			item.ParseDate, _ = time.Parse(time.RFC1123Z, item.PubDate)
 			items = append(items, item)
 		}
 	}
+
+	// sort items by date DESC
+	// https://stackoverflow.com/a/47028486
+	sort.Slice(items, func(i, j int) bool {
+    		return items[i].ParseDate.After(items[j].ParseDate)
+	})
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"news": items,
@@ -141,40 +152,3 @@ func GetSources(c *gin.Context) {
 	})
 }
 
-/*
-// GetUserByID returns user's properties, given sent ID exists in database.
-func GetUserByID(c *gin.Context) {
-	//id := c.Param("id")
-
-	if _, user := findUserByID(c); user != nil {
-		// user found
-		c.IndentedJSON(http.StatusOK, user)
-	}
-
-	//c.IndentedJSON(http.StatusNotFound, gin.H{"message": "user not found"})
-}
-
-// PostUser enables one to add new user to users model.
-func PostUser(c *gin.Context) {
-	var newUser User
-
-	// bind received JSON to newUser
-	if err := c.BindJSON(&newUser); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
-		})
-		return
-	}
-
-	// add new user
-	users = append(users, newUser)
-
-	// HTTP 201 Created
-	c.IndentedJSON(http.StatusCreated, gin.H{
-		"code": http.StatusCreated,
-		"message": "user added",
-		"user": newUser,
-	})
-}
-*/

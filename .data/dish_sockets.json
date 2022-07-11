@@ -30,8 +30,6 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_source": [
-                "talion",
-                "frank"
             ],
             "status": null
         },
@@ -214,9 +212,9 @@
             "status": null
         },
         {
-            "socket_name": "ks-savla-dev HTTPS",
-            "host_name": "https://ks.savla.dev",
-            "port_tcp": 443,
+            "socket_name": "ks-savla-su HTTP",
+            "host_name": "http://ks.savla.su",
+            "port_tcp": 80,
             "expected_http_code_array": [
                 200,
                 301,
@@ -230,9 +228,9 @@
             "status": null
         },
         {
-            "socket_name": "kss-savla-dev HTTPS",
-            "host_name": "https://kss.savla.dev",
-            "port_tcp": 443,
+            "socket_name": "kss-savla-su HTTP",
+            "host_name": "http://kss.savla.su",
+            "port_tcp": 80,
             "expected_http_code_array": [
                 200,
                 301,
@@ -246,9 +244,9 @@
             "status": null
         },
         {
-            "socket_name": "modul-savla-dev HTTPS",
-            "host_name": "https://modul.savla.dev",
-            "port_tcp": 443,
+            "socket_name": "modul-savla-su HTTP",
+            "host_name": "http://modul.savla.su",
+            "port_tcp": 80,
             "expected_http_code_array": [
                 200,
                 301,

@@ -70,16 +70,11 @@ fmt:
 
 build: 
 	@echo -e "\n${YELLOW} Building project (docker-compose build)... ${RESET}\n"
-	@docker compose build --no-cache
-
-# || { echo -e "\n${RED} [FAIL] is docker engine running? ${RESET}"; exit 1 }
-
-#@docker build -t ${DOCKER_DEV_IMAGE} .
-#@docker run -it --rm --name ${DOCKER_DEV_CONTAINER} ${DOCKER_DEV_IMAGE}
+	@docker-compose build --no-cache
 
 run:	build
 	@echo -e "\n${YELLOW} Starting project (docker-compose up)... ${RESET}\n"
-	@docker compose up --force-recreate --detach
+	@docker-compose up --force-recreate --detach
 
 logs:
 	@echo -e "\n${YELLOW} Fetching container's logs (CTRL-C to exit)... ${RESET}\n"
@@ -87,8 +82,9 @@ logs:
 
 stop:  
 	@echo -e "\n${YELLOW} Stopping and purging project (docker-compose down)... ${RESET}\n"
-	@docker compose down
+	@docker-compose down
 
 import_prod_static_data: 
 	@echo -e "\n${YELLOW} Import stored data to backend... ${RESET}\n"
 	@.bin/import_prod_data.sh
+
