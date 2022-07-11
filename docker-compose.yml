@@ -19,6 +19,7 @@ services:
     restart: unless-stopped
     cpus: 0.5
     dns:
+      - 10.4.5.130
       - 1.1.1.2
       - 1.0.0.2
     mem_reservation: 512m
