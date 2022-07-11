@@ -40,8 +40,6 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_source": [
-                "talion",
-                "frank"
             ],
             "status": null
         },
@@ -52,8 +50,6 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_source": [
-                "talion",
-                "frank"
             ],
             "status": null
         },
@@ -64,8 +60,6 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_source": [
-                "talion",
-                "frank"
             ],
             "status": null
         },
