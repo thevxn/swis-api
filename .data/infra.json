@@ -114,6 +114,21 @@
         "virtual_machines": []
       },
       {
+	"hash": "sha256hash_ravn",
+	"hostname": "ravn.savla.su",
+	"domain": "savla.su",
+        "roles": [
+	  "container",
+	  "webserver_traefik",
+	  "virtual"
+	],
+        "ip_address": [
+ 	  "10.4.6.44/27"
+        ],
+        "facter": [],
+        "virtual_machines": []
+      },
+      {
 	"hash": "sha256hash_hermes",
 	"hostname": "hermes.savla.su",
 	"domain": "savla.su",
