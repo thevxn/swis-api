@@ -60,7 +60,7 @@ type Host struct {
 	Hash       	string 	`json:"hash"`
 	Hostname 	string 	`json:"hostname"`
 	Domain		string	`json:"domain"`
-	Roles         []string 	`json:"roled"`
+	Roles         []string 	`json:"roles"`
 	IPAddress     []string 	`json:"ip_address"`
 	Facter	      []string	`json:"facter"`
 	VMs	      []string	`json:"virtual_machines"`

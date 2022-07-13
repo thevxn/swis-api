@@ -12,6 +12,17 @@
             "status": null
         },
         {
+            "socket_name": "ravn SSH",
+            "host_name": "ravn.savla.su",
+            "port_tcp": 22,
+            "expected_http_code_array": null,
+            "path_http": "",
+            "dish_source": [
+                "frank"
+            ],
+            "status": null
+        },
+        {
             "socket_name": "frank SSH",
             "host_name": "frank.savla.su",
             "port_tcp": 22,
