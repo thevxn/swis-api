@@ -36,7 +36,7 @@ var businessArray = BusinessArray{}
 func findBusinessByICO(c *gin.Context) (b *Business) {
 	// loop over businesses
 	for _, b := range businessArray.BusinessArray {
-		if b.ICO == c.Param("ico") {
+		if b.ICO == c.Param("ico_id") {
 			//c.IndentedJSON(http.StatusOK, b)
 			return &b
 		}
