@@ -27,6 +27,14 @@
           "type": "bank account",
           "content": "---"
         },
+	{
+	  "type": "datova schranka (podnik. FO)", 
+	  "content": "e5tzp85"
+	},
+	{
+	  "type": "datova schranka (nepodnik. FO)", 
+	  "content": "kcqbr9w"
+	},
         {
           "type": "website",
           "content": "https://web.n0p.cz/"

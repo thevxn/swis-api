@@ -36,14 +36,14 @@ var businessArray = BusinessArray{}
 func findBusinessByID(c *gin.Context) (b *Business) {
 	// loop over businesses
 	for _, b := range businessArray.BusinessArray {
-		if b.ID == c.Param("id") {
+		if b.ICO == c.Param("ico") {
 			//c.IndentedJSON(http.StatusOK, b)
 			return &b
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{
 		"code": http.StatusNotFound,
-		"message": "business not found",
+		"message": "business not found by given ICO ID",
 	})
 	return nil
 }
