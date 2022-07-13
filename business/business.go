@@ -33,7 +33,7 @@ type Contact struct {
 // flush businessArray at start
 var businessArray = BusinessArray{}
 
-func findBusinessByID(c *gin.Context) (b *Business) {
+func findBusinessByICO(c *gin.Context) (b *Business) {
 	// loop over businesses
 	for _, b := range businessArray.BusinessArray {
 		if b.ICO == c.Param("ico") {
@@ -60,11 +60,9 @@ func GetBusinessArray(c *gin.Context) {
 	})
 }
 
-// GetBusinessByID returns business' properties, given sent ID exists in database.
-func GetBusinessByID(c *gin.Context) {
-	//id := c.Param("id")
-
-	if biz := findBusinessByID(c); biz != nil {
+// GetBusinessByICO returns business' properties, given sent ICO exists in database.
+func GetBusinessByICO(c *gin.Context) {
+	if biz := findBusinessByICO(c); biz != nil {
 		// business found
 		c.IndentedJSON(http.StatusOK, biz)
 	}

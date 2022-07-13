@@ -67,6 +67,7 @@ func main() {
 	biz := router.Group("/business")
 	{
 		biz.GET("/", business.GetBusinessArray)
+		biz.GET("/:ico_id", business.GetBusinessByICO)
 		biz.POST("/", business.PostBusiness)
 		biz.POST("/restore", business.PostDumpRestore)
 	}
