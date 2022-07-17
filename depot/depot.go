@@ -4,6 +4,7 @@ import (
 	//b64 "encoding/base64"
 	//"encoding/json"
 	"net/http"
+	"sort"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,8 +42,14 @@ func GetDepotByOwner(c *gin.Context) {
 
 	for _, d := range depots.Depots {
 		if d.Owner == owner {
+			// https://pkg.go.dev/sort#Slice
+			sort.Slice(d.DepotItems, func(i, j int) bool {
+    				return (d.DepotItems[i].Description < d.DepotItems[j].Description)
+			})
+
 			c.IndentedJSON(http.StatusOK, gin.H{
 				"code": http.StatusOK,
+				"message": "dumping user's depot, alphabetically sorted",
 				"depot": d,
 			})
 			return

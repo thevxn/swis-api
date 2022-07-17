@@ -23,6 +23,17 @@
             "status": null
         },
         {
+            "socket_name": "hermes SSH",
+            "host_name": "hermes.savla.su",
+            "port_tcp": 22,
+            "expected_http_code_array": null,
+            "path_http": "",
+            "dish_source": [
+                "frank"
+            ],
+            "status": null
+        },
+        {
             "socket_name": "frank SSH",
             "host_name": "frank.savla.su",
             "port_tcp": 22,
@@ -402,6 +413,32 @@
             "dish_source": [
                 "talion",
                 "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "rnp-test-unicorn-com HTTPS",
+            "host_name": "https://rnp-test.unicorn.com",
+            "port_tcp": 443,
+            "expected_http_code_array": [
+                200,
+                301
+            ],
+            "path_http": "/",
+            "dish_source": [
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "rnp-train-unicorn-com HTTPS",
+            "host_name": "https://rnp-train.unicorn.com",
+            "port_tcp": 443,
+            "expected_http_code_array": [
+                200,
+                301
+            ],
+            "path_http": "/",
+            "dish_source": [
             ],
             "status": null
         },

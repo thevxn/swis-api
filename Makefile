@@ -8,7 +8,7 @@
 
 -include .env
 
-PROJECT_NAME?=swis-core-api
+PROJECT_NAME?=swapi
 
 DOCKER_DEV_IMAGE?=${PROJECT_NAME}-build
 DOCKER_DEV_CONTAINER?=${PROJECT_NAME}-dev-run

@@ -1,36 +1,6 @@
 {
   "users": [
     {
-      "name": "krusty",
-      "full_name": "Kryštof Šara",
-      "roles": [
-        "admin",
-        "operator", 
-	"infrastructure",
-	"gdpr", 
-	"swis"
-      ],
-      "token_base64": "",
-      "github_username": "krustowski",
-      "links": null,
-      "ssh_keys": null,
-      "gpg_keys": null, 
-      "wireguard_vpn": [
-        {
-          "public_key": "", 
-	  "device_name": "krustyboks-mac",
-	  "ip_address": "10.4.5.131",
-	  "permission": true
-        },
-        {
-          "public_key": "", 
-	  "device_name": "krustyPhone-iOS",
-	  "ip_address": "10.4.5.134",
-	  "permission": true
-        }
-      ]
-    },
-    {
       "name": "tack",
       "full_name": "Patrik Vlk",
       "roles": [
@@ -60,6 +30,36 @@
           "public_key": "", 
 	  "device_name": "talion",
 	  "ip_address": "10.4.5.136",
+	  "permission": true
+        }
+      ]
+    },
+    {
+      "name": "krusty",
+      "full_name": "Kryštof Šara",
+      "roles": [
+        "admin",
+        "operator", 
+	"infrastructure",
+	"gdpr", 
+	"swis"
+      ],
+      "token_base64": "",
+      "github_username": "krustowski",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null, 
+      "wireguard_vpn": [
+        {
+          "public_key": "", 
+	  "device_name": "krustyboks-mac",
+	  "ip_address": "10.4.5.131",
+	  "permission": true
+        },
+        {
+          "public_key": "", 
+	  "device_name": "krustyPhone-iOS",
+	  "ip_address": "10.4.5.134",
 	  "permission": true
         }
       ]
