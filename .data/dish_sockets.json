@@ -9,7 +9,9 @@
             "dish_source": [
                 "frank"
             ],
-            "status": null
+            "results": [
+	      { "socket_reached": false }
+	    ]
         },
         {
             "socket_name": "ravn SSH",
@@ -233,8 +235,7 @@
             "port_tcp": 80,
             "expected_http_code_array": [
                 200,
-                301,
-		520
+                301
             ],
             "path_http": "/",
             "dish_source": [
@@ -249,8 +250,7 @@
             "port_tcp": 80,
             "expected_http_code_array": [
                 200,
-                301,
-		520
+                301
             ],
             "path_http": "/",
             "dish_source": [
@@ -265,8 +265,7 @@
             "port_tcp": 80,
             "expected_http_code_array": [
                 200,
-                301,
-		520
+                301
             ],
             "path_http": "/",
             "dish_source": [
