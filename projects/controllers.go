@@ -8,26 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Projects struct {
-	Projects	[]Project	`json:"projects"`
-}
-
-type Project struct {
-	ID		string	`json:"project_id"`
-	Name		string	`json:"project_name"`
-	Description	string	`json:"project_desc"`
-        DocsLink	string	`json:"project_docs_link"`
-        Manager		string	`json:"project_manager"`
-        Published	bool	`json:"project_published" default:false`
-	Repository	string	`json:"project_repo"`
-	URL		string	`json:"project_url"`
-	DeployTarget	string	`json:"project_deploy_target"`
-}
-
-// flush projects object/array
-var projects = Projects{}
-
-
 func findProjectByID(c *gin.Context) (p *Project) {
 	// loop over projects
 	for _, p := range projects.Projects {
@@ -37,7 +17,7 @@ func findProjectByID(c *gin.Context) (p *Project) {
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{
-		"code": http.StatusNotFound,
+		"code":    http.StatusNotFound,
 		"message": "project not found",
 	})
 	return nil
@@ -47,8 +27,8 @@ func findProjectByID(c *gin.Context) (p *Project) {
 func GetProjects(c *gin.Context) {
 	// serialize struct to JSON
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"code": http.StatusOK,
-		"message": "dumping projects",
+		"code":     http.StatusOK,
+		"message":  "dumping projects",
 		"projects": projects.Projects,
 	})
 }
@@ -58,7 +38,7 @@ func GetProjectByID(c *gin.Context) {
 	if p := findProjectByID(c); p != nil {
 		// project found
 		c.IndentedJSON(http.StatusOK, gin.H{
-			"code": http.StatusOK,
+			"code":    http.StatusOK,
 			"message": "dumping requested project's contents",
 			"project": p,
 		})
@@ -72,7 +52,7 @@ func PostProject(c *gin.Context) {
 	// bind received JSON to newProject
 	if err := c.BindJSON(&newProject); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": http.StatusBadRequest,
+			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
@@ -82,7 +62,7 @@ func PostProject(c *gin.Context) {
 	projects.Projects = append(projects.Projects, newProject)
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
-		"code": http.StatusCreated,
+		"code":    http.StatusCreated,
 		"message": "new project added",
 		"project": newProject,
 	})
@@ -94,7 +74,7 @@ func PostDumpRestore(c *gin.Context) {
 
 	if err := c.BindJSON(&importProjects); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": http.StatusBadRequest,
+			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
@@ -103,8 +83,7 @@ func PostDumpRestore(c *gin.Context) {
 	projects = importProjects
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
-		"code": http.StatusCreated,
+		"code":    http.StatusCreated,
 		"message": "projects imported/restored, omitting output",
 	})
 }
-

@@ -8,25 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
-type Groups struct {
-        Groups []Group `json:"groups"`
-}
-
-type Group struct {
-        ID              string `json:"id"`
-        Name	        string `json:"nickname"`
-        Role            string `json:"role"`
-}
-
-
-// groups demo data for group struct
-var groups = []Group{
-	{ID: "1", Name: "superadmins"},
-	{ID: "2", Name: "devs"},
-	{ID: "3", Name: "ops"},
-}
-
 // GetGroups returns JSON serialized list of groups and their properties.
 func GetGroups(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, groups)

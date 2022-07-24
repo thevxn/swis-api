@@ -4,46 +4,10 @@ import (
 	//b64 "encoding/base64"
 	//"encoding/json"
 	"net/http"
-        "strings"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
-
-
-type Users struct {
-	Users 		[]User 	`json:"users"`
-}
-
-type User struct {
-	// ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property)
-	//ID       	string 		`json:"id"`
-	Name	 	string 		`json:"name"`
-	FullName	string		`json:"full_name"`
-	Roles         []string 		`json:"roles"`
-	TokenBase64	string 		`json:"token_base64"`
-	GitHubUser	string		`json:"github_username"`
-	Wireguard     []Wireguard  	`json:"wireguard_vpn"`
-	SSHKeys	      []string  	`json:"ssh_keys"`
-	GPGKeys	      []string  	`json:"gpg_keys"`
-	// SEE more -- https://gdpr.eu/checklist/
-	GDPRConsent	bool		`json:"gdpr_consent" default:false`
-}
-
-type Wireguard struct {
-	PublicKey	string	`json:"public_key"`
-	PrivateKey	string	`json:"private_key"`
-	// user's private IP address 
-	IPAddress	string	`json:"ip_address"`
-	// IP address list on the side of server (frank)
-	AllowedIPs    []string	`json:"allowed_ips"`
-	Permission	bool	`json:"permission" default:false`
-	DeviceName	string	`json:"device_name"`
-}
-
-
-// flush users at start -- see Makefile, import_prod target, and .data/users
-var users = []User{} //equivalent to Users.Users{}
-
 
 func findUserByName(c *gin.Context) (index *int, u *User) {
 	// loop over users
@@ -55,12 +19,11 @@ func findUserByName(c *gin.Context) (index *int, u *User) {
 	}
 
 	c.IndentedJSON(http.StatusNotFound, gin.H{
-		"code": http.StatusNotFound,
+		"code":    http.StatusNotFound,
 		"message": "user not found",
 	})
 	return nil, nil
 }
-
 
 // GetUsers returns JSON serialized list of users and their properties.
 func GetUsers(c *gin.Context) {
@@ -88,7 +51,7 @@ func PostNewUser(c *gin.Context) {
 	// bind received JSON to newUser
 	if err := c.BindJSON(&newUser); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": http.StatusBadRequest,
+			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
@@ -99,20 +62,20 @@ func PostNewUser(c *gin.Context) {
 
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
-		"code": http.StatusCreated,
+		"code":    http.StatusCreated,
 		"message": "user added",
-		"user": newUser,
+		"user":    newUser,
 	})
 }
 
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
 	var importUsers Users
-	
+
 	// bind received JSON to newUser
 	if err := c.BindJSON(&importUsers); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": http.StatusBadRequest,
+			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
@@ -124,7 +87,7 @@ func PostDumpRestore(c *gin.Context) {
 
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
-		"code": http.StatusCreated,
+		"code":    http.StatusCreated,
 		"message": "users imported successfully",
 	})
 }
@@ -136,14 +99,14 @@ func PostUsersSSHKeys(c *gin.Context) {
 	// load SSH keys from POST request
 	if err := c.BindJSON(user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": http.StatusBadRequest,
+			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
 	}
 
 	// write changes to users array
-	users[*index] = *user	
+	users[*index] = *user
 	c.IndentedJSON(http.StatusAccepted, *user)
 }
 

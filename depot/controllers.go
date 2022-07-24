@@ -9,31 +9,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Depots struct {
-	Depots  []Depot `json:"depots"`
-}
-
-type Depot struct {
-	Owner   	string	`json:"owner_name"`
-	DepotItems 	[]Item 	`json:"depot_items"`
-}
-
-type Item struct {
-	ID       	int 	`json:"id"`
-	Description 	string 	`json:"desc"`
-	Misc     	string 	`json:"misc"`
-	Location	string 	`json:"depot"`
-}
-
-// flush depots at start
-var depots = Depots{}
-
-
 func GetDepots(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"code": http.StatusOK,
+		"code":    http.StatusOK,
 		"message": "dumping depots",
-		"depots": depots,
+		"depots":  depots,
 	})
 }
 
@@ -44,30 +24,29 @@ func GetDepotByOwner(c *gin.Context) {
 		if d.Owner == owner {
 			// https://pkg.go.dev/sort#Slice
 			sort.Slice(d.DepotItems, func(i, j int) bool {
-    				return (d.DepotItems[i].Description < d.DepotItems[j].Description)
+				return (d.DepotItems[i].Description < d.DepotItems[j].Description)
 			})
 
 			c.IndentedJSON(http.StatusOK, gin.H{
-				"code": http.StatusOK,
+				"code":    http.StatusOK,
 				"message": "dumping user's depot, alphabetically sorted",
-				"depot": d,
+				"depot":   d,
 			})
 			return
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{
-		"code": http.StatusNotFound,
+		"code":    http.StatusNotFound,
 		"message": "depot not found",
 	})
 }
-
 
 func PostDumpRestore(c *gin.Context) {
 	var importDepots Depots
 
 	if err := c.BindJSON(&importDepots); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": http.StatusBadRequest,
+			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
@@ -77,9 +56,8 @@ func PostDumpRestore(c *gin.Context) {
 	depots = importDepots
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
-		"code": http.StatusCreated,
+		"code":    http.StatusCreated,
 		"message": "depots imported, omitting output",
 		//"depots": importDepots.Depots,
 	})
 }
-

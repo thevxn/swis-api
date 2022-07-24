@@ -13,6 +13,7 @@ import (
 	"swis-api/depot"
 	"swis-api/dish"
 	"swis-api/finance"
+
 	//"swis-api/flower"
 	"swis-api/groups"
 	"swis-api/infra"
@@ -34,21 +35,21 @@ func main() {
 	//router.SetTrustedProxies(swapiProxies)
 
 	// root path --- testing Bearer print TODO: delete this
-	router.GET("/", func(c *gin.Context){
+	router.GET("/", func(c *gin.Context) {
 		auth.SetAuthHeaders(c)
 
 		c.JSON(http.StatusOK, gin.H{
-			"title": "swAPI v5 RESTful root",
-			"code": http.StatusOK,
+			"title":   "swAPI v5 RESTful root",
+			"code":    http.StatusOK,
 			"message": "welcome to sakalWeb API (swapi) root",
-			"bearer": auth.Params.BearerToken,
+			"bearer":  auth.Params.BearerToken,
 		})
 	})
 
 	// default 404 route
-	router.NoRoute(func(c *gin.Context){
+	router.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
-			"code": http.StatusNotFound,
+			"code":    http.StatusNotFound,
 			"message": "unknown route",
 		})
 	})
@@ -88,6 +89,7 @@ func main() {
 		di.HEAD("/test", dish.HeadTest)
 		di.GET("/sockets", dish.GetSocketList)
 		di.GET("/sockets/:host", dish.GetSocketListByHost)
+		//di.POST("/sockets/result", dish.PostSocketTestResult)
 		di.POST("/sockets/restore", dish.PostDumpRestore)
 	}
 
@@ -111,24 +113,26 @@ func main() {
 
 	// infra CRUD
 	ii := router.Group("/infra")
-        {
+	{
 		ii.GET("/", infra.GetInfrastructure)
 		ii.GET("/hosts", infra.GetHosts)
 		ii.GET("/hosts/:hostname", infra.GetHostByHostname)
+		//ii.GET("/hosts/ansible/:ansible_group", infra.GetHostsByAnsibleGroup)
+		//ii.GET("/map", infra.GetInfraMap)
 		ii.GET("/networks", infra.GetNetworks)
 		//ii.GET("/hosts/:hyp/vms", infra.GetVirtualsByHypervisorName)
 		ii.POST("/restore", infra.PostDumpRestore)
 	}
 
 	// news CRUD
-        nn := router.Group("/news")
-        {
+	nn := router.Group("/news")
+	{
 		nn.GET("/:user", news.GetNewsByUser)
 		nn.GET("/sources", news.GetSources)
 	}
 
 	// projects CRUD
-	pp := router.Group("/projects") 
+	pp := router.Group("/projects")
 	{
 		pp.GET("/", projects.GetProjects)
 		pp.GET("/:id", projects.GetProjectByID)
