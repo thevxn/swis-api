@@ -38,9 +38,9 @@ else
 endif
 
 # docker-compose vs docker compose (new syntax) check
-COMPOSE_CMD := docker-compose
+COMPOSE_CMD:='docker compose'
 ifeq (, $(shell which ${COMPOSE_CMD} 2>/dev/null))
-	COMPOSE_CMD = 'docker compose'
+	COMPOSE_CMD='docker-compose'
 endif
 
 export
@@ -77,11 +77,11 @@ fmt:
 	@find . -name "*.go" -exec gofmt {} \;
 
 build: 
-	@echo -e "\n${YELLOW} Building project (docker-compose build)... ${RESET}\n"
+	@echo -e "\n${YELLOW} Building project (${COMPOSE_CMD} build)... ${RESET}\n"
 	@$(COMPOSE_CMD) build --no-cache
 
 run:	build
-	@echo -e "\n${YELLOW} Starting project (docker-compose up)... ${RESET}\n"
+	@echo -e "\n${YELLOW} Starting project (${COMPOSE_CMD} up)... ${RESET}\n"
 	@$(COMPOSE_CMD) up --force-recreate --detach
 
 logs:
@@ -89,7 +89,7 @@ logs:
 	@docker logs ${DOCKER_DEV_CONTAINER} -f
 
 stop:  
-	@echo -e "\n${YELLOW} Stopping and purging project (docker-compose down)... ${RESET}\n"
+	@echo -e "\n${YELLOW} Stopping and purging project (${COMPOSE_CMD} down)... ${RESET}\n"
 	@$(COMPOSE_CMD) down
 
 import_prod_static_data: 
