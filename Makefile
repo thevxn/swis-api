@@ -38,9 +38,10 @@ else
 endif
 
 # docker-compose vs docker compose (new syntax) check
-COMPOSE_CMD:='docker compose'
+COMPOSE_CMD:='docker-compose'
 ifeq (, $(shell which ${COMPOSE_CMD} 2>/dev/null))
-	COMPOSE_CMD='docker-compose'
+	# kinda dirty but ok
+	COMPOSE_CMD=$(shell which docker 2>/dev/null) compose
 endif
 
 export
