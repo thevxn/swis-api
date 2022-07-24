@@ -13,8 +13,6 @@ import (
 	"swis-api/depot"
 	"swis-api/dish"
 	"swis-api/finance"
-
-	//"swis-api/flower"
 	"swis-api/groups"
 	"swis-api/infra"
 	"swis-api/news"
@@ -58,100 +56,44 @@ func main() {
 	router.StaticFile("/favicon.ico", "./.assets/favicon.ico")
 
 	// alvax CRUD
-	aa := router.Group("/alvax")
-	{
-		aa.GET("/commands", alvax.GetCommandList)
-		aa.POST("/commands/restore", alvax.PostDumpRestore)
-	}
+	alvaxRouter := router.Group("/alvax")
+	alvax.Routes(alvaxRouter)
 
 	// business CRUD
-	biz := router.Group("/business")
-	{
-		biz.GET("/", business.GetBusinessArray)
-		biz.GET("/:ico_id", business.GetBusinessByICO)
-		biz.POST("/", business.PostBusiness)
-		biz.POST("/restore", business.PostDumpRestore)
-	}
+	businessRouter := router.Group("/business")
+	business.Routes(businessRouter)
 
-	// depot CRUD
-	de := router.Group("/depots")
-	{
-		de.GET("/", depot.GetDepots)
-		de.GET("/:owner", depot.GetDepotByOwner)
-		de.POST("/restore", depot.PostDumpRestore)
-		//de.GET("/:groupID", depot.GetDepotByGroupID)
-		//gg.GET("/:userID", depot.GetDepotByUserID)
-	}
+	// depot/depots CRUD
+	depotRouter := router.Group("/depots")
+	depot.Routes(depotRouter)
 
 	// dish CRUD
-	di := router.Group("/dish")
-	{
-		di.HEAD("/test", dish.HeadTest)
-		di.GET("/sockets", dish.GetSocketList)
-		di.GET("/sockets/:host", dish.GetSocketListByHost)
-		//di.POST("/sockets/result", dish.PostSocketTestResult)
-		di.POST("/sockets/restore", dish.PostDumpRestore)
-	}
+	dishRouter := router.Group("/dish")
+	dish.Routes(dishRouter)
 
 	// finance accounts CRUD
-	ff := router.Group("/finance")
-	{
-		ff.GET("/", finance.GetAccounts)
-		ff.GET("/accounts/:owner", finance.GetAccountByOwner)
-		ff.POST("/restore", finance.PostDumpRestore)
-	}
+	financeRouter := router.Group("/finance")
+	finance.Routes(financeRouter)
 
 	// groups CRUD
-	gg := router.Group("/groups")
-	{
-		gg.GET("/", groups.GetGroups)
-		gg.GET("/:id", groups.GetGroupByID)
-		gg.POST("/", groups.PostGroup)
-		//gg.PUT("/:id", groups.PutGroupByID)
-		//gg.DELETE("/:id", groups.DeleteGroupByID)
-	}
+	groupsRouter := router.Group("/groups")
+	groups.Routes(groupsRouter)
 
 	// infra CRUD
-	ii := router.Group("/infra")
-	{
-		ii.GET("/", infra.GetInfrastructure)
-		ii.GET("/hosts", infra.GetHosts)
-		ii.GET("/hosts/:hostname", infra.GetHostByHostname)
-		//ii.GET("/hosts/ansible/:ansible_group", infra.GetHostsByAnsibleGroup)
-		//ii.GET("/map", infra.GetInfraMap)
-		ii.GET("/networks", infra.GetNetworks)
-		//ii.GET("/hosts/:hyp/vms", infra.GetVirtualsByHypervisorName)
-		ii.POST("/restore", infra.PostDumpRestore)
-	}
+	infraRouter := router.Group("/infra")
+	infra.Routes(infraRouter)
 
 	// news CRUD
-	nn := router.Group("/news")
-	{
-		nn.GET("/:user", news.GetNewsByUser)
-		nn.GET("/sources", news.GetSources)
-	}
+	newsRouter := router.Group("/news")
+	news.Routes(newsRouter)
 
 	// projects CRUD
-	pp := router.Group("/projects")
-	{
-		pp.GET("/", projects.GetProjects)
-		pp.GET("/:id", projects.GetProjectByID)
-		pp.POST("/", projects.PostProject)
-		pp.POST("/restore", projects.PostDumpRestore)
-	}
+	projectsRouter := router.Group("/projects")
+	projects.Routes(projectsRouter)
 
 	// users CRUD
-	uu := router.Group("/users")
-	{
-		uu.GET("/", users.GetUsers)
-		uu.GET("/:name", users.GetUserByName)
-		uu.POST("/", users.PostNewUser)
-		uu.POST("/:name/keys/ssh", users.PostUsersSSHKeys)
-		uu.GET("/:name/keys/ssh", users.GetUsersSSHKeysRaw)
-		uu.POST("/restore", users.PostDumpRestore)
-		//uu.PUT("/:id", users.PutUserByID)
-		//uu.DELETE("/:id", users.DeleteUserByID)
-	}
+	usersRouter := router.Group("/users")
+	users.Routes(usersRouter)
 
 	// attach router to http.Server and start it
 	router.Run(":8080")
