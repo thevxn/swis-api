@@ -37,7 +37,14 @@ else
 	RESET        := ""
 endif
 
+# docker-compose vs docker compose (new syntax) check
+COMPOSE_CMD := docker-compose
+ifeq (, $(shell which ${COMPOSE_CMD} 2>/dev/null))
+	COMPOSE_CMD = 'docker compose'
+endif
+
 export
+
 
 #
 # TARGETS
@@ -50,7 +57,7 @@ all: info
 info: 
 	@echo -e "\n${GREEN} ${PROJECT_NAME} / Makefile ${RESET}\n"
 
-	@echo -e "${YELLOW} make config  --- check dev environment ${RESET}"
+#@echo -e "${YELLOW} make config  --- check dev environment ${RESET}"
 	@echo -e "${YELLOW} make fmt     --- reformat the go source (gofmt) ${RESET}"
 	@echo -e "${YELLOW} make doc     --- render documentation from code (go doc) ${RESET}\n"
 
@@ -60,8 +67,9 @@ info:
 	@echo -e "${YELLOW} make stop    --- stop and purge project (only docker containers!) ${RESET}"
 	@echo -e ""
 
+# target to see the runtime contents of COMPOSE_CMD constant -- to be deleted later
 config:
-	@exit 0
+	@echo ${COMPOSE_CMD}	
 
 fmt:
 	@echo -e "\n${YELLOW} Code reformating (gofmt)... ${RESET}\n"
@@ -70,11 +78,11 @@ fmt:
 
 build: 
 	@echo -e "\n${YELLOW} Building project (docker-compose build)... ${RESET}\n"
-	@docker-compose build --no-cache || docker compose build --no-cache
+	@$(COMPOSE_CMD) build --no-cache
 
 run:	build
 	@echo -e "\n${YELLOW} Starting project (docker-compose up)... ${RESET}\n"
-	@docker-compose up --force-recreate --detach || docker compose up --force-recreate --detach
+	@$(COMPOSE_CMD) up --force-recreate --detach
 
 logs:
 	@echo -e "\n${YELLOW} Fetching container's logs (CTRL-C to exit)... ${RESET}\n"
@@ -82,7 +90,7 @@ logs:
 
 stop:  
 	@echo -e "\n${YELLOW} Stopping and purging project (docker-compose down)... ${RESET}\n"
-	@docker-compose down || docker compose down
+	@$(COMPOSE_CMD) down
 
 import_prod_static_data: 
 	@echo -e "\n${YELLOW} Import stored data to backend... ${RESET}\n"

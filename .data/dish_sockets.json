@@ -344,7 +344,8 @@
             "expected_http_code_array": [
                 200,
                 301,
-                401
+                401,
+		520
             ],
             "path_http": "/start",
             "dish_source": [
