@@ -89,6 +89,8 @@ func GetNewsByUser(c *gin.Context) {
 // GetSources
 func GetSources(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"news": news,
+		"message": "ok, dumping news sources",
+		"code":    http.StatusOK,
+		"news":    news,
 	})
 }
