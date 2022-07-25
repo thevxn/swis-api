@@ -4,7 +4,9 @@
 package main
 
 import (
+	// golang libs
 	"net/http"
+	"time"
 
 	// swapi modules
 	"swis-api/alvax"
@@ -19,29 +21,39 @@ import (
 	"swis-api/projects"
 	"swis-api/users"
 
+	// remote dependencies
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	router := gin.Default()
+	// blank gin without any middleware
+	router := gin.New()
 
-	// reqs from this IPs are treated as proxies, ergo log the real client IP address
-	/*swapiProxies := []string{
-		"10.4.5.130/25",
-	}*/
+	// Global middleware
+	// Logger middleware will write the logs to gin.DefaultWriter even if you set with GIN_MODE=release.
+	// by default gin.DefaultWriter = os.Stdout
+	router.Use(gin.Logger())
 
-	//router.SetTrustedProxies(swapiProxies)
+	// Recovery middleware recovers from any panics and writes a 500 if there was one.
+	router.Use(gin.Recovery())
 
-	// root path --- testing Bearer print TODO: delete this
+	//authRouter := router.Group("/")
+
+	// root path --- auth required
 	router.GET("/", func(c *gin.Context) {
 		auth.SetAuthHeaders(c)
 
 		c.JSON(http.StatusOK, gin.H{
-			"title":   "swAPI v5 RESTful root",
-			"code":    http.StatusOK,
+			"title":   "sakalWebIS v5 RESTful API -- root route",
 			"message": "welcome to sakalWeb API (swapi) root",
+			"code":    http.StatusOK,
 			"bearer":  auth.Params.BearerToken,
 		})
+	})
+
+	// very simple LE support --- https://github.com/gin-gonic/gin#support-lets-encrypt
+	router.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
 	})
 
 	// default 404 route
@@ -96,5 +108,13 @@ func main() {
 	users.Routes(usersRouter)
 
 	// attach router to http.Server and start it
-	router.Run(":8080")
+	// https://pkg.go.dev/net/http#Server
+	server := &http.Server{
+		Addr:         ":8080",
+		Handler:      router,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		//MaxHandlerBytes: 1 << 20,
+	}
+	server.ListenAndServe()
 }

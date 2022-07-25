@@ -14,6 +14,7 @@ services:
         APP_NAME: ${APP_NAME}
         APP_FLAGS: ${APP_NAME}
         DOCKER_DEV_PORT: ${DOCKER_DEV_PORT} 
+        GIN_MODE: ${GIN_MODE}
         GOLANG_VERSION: ${GOLANG_VERSION}
         TZ: ${TZ}
     restart: unless-stopped
