@@ -1,6 +1,6 @@
-// go:build ignore
-
-// Package swis-api is RESTful API core backend for sakalWeb Information System v5.
+// Package swis-api is RESTful API core backend aka 'sakalWeb Information System v5'.
+// Basically it is a system of high modularity, where each module (package in golang terminology)
+// has its routes, models, and controllers (handler functions) defined in its own folder.
 package main
 
 import (
@@ -41,7 +41,7 @@ func main() {
 
 	// root path --- auth required
 	router.GET("/", func(c *gin.Context) {
-		auth.SetAuthHeaders(c)
+		//auth.SetAuthHeaders(c)
 
 		c.JSON(http.StatusOK, gin.H{
 			"title":   "sakalWebIS v5 RESTful API -- root route",
@@ -106,6 +106,12 @@ func main() {
 	// users CRUD
 	usersRouter := router.Group("/users")
 	users.Routes(usersRouter)
+
+	// webui CRUD
+	// only a small proposal for simple swapi fronted to browse swapi data quickly
+	// import "swis-api/webui"
+	//webuiRouter := router.Group("/webui")
+	//webui.Routes(webuiRouter)
 
 	// attach router to http.Server and start it
 	// https://pkg.go.dev/net/http#Server

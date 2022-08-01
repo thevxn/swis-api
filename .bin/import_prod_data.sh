@@ -1,4 +1,5 @@
 #!/bin/sh
+
 # import_prod_data.sh
 # batch import static data from .data import/POST to prod.swapi.savla.su -> swapi.savla.su
 # "workflow" chain structure on the bottom of this script -- below function blocks

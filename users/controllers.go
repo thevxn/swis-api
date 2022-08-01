@@ -9,8 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// findUserByName is a private, hellper function for users array struct browsing.
+// *gin.Context should contain the 'name' parameter (extracted from HTTP path string).
 func findUserByName(c *gin.Context) (index *int, u *User) {
-	// loop over users
+	// Loop over all loaded users.
 	for i, a := range users {
 		if a.Name == c.Param("name") {
 			//c.IndentedJSON(http.StatusOK, a)
