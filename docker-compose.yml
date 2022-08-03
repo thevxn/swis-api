@@ -6,6 +6,7 @@ networks:
 
 volumes:
   swis-data:
+    name: swis-data
 
 services:
   swis-api:

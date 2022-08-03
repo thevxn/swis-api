@@ -9,7 +9,6 @@
 -include .env
 
 PROJECT_NAME?=swapi
-
 DOCKER_COMPOSE_FILE?=./docker-compose.yml
 
 # define standard colors
@@ -69,7 +68,7 @@ build:
 	@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
 
 .PHONY: run
-run:	build
+run:
 	@echo -e "\n${YELLOW} Starting project (docker compose up)... ${RESET}\n"
 	@docker compose --file $(DOCKER_COMPOSE_FILE) up --force-recreate --remove-orphans --detach
 
