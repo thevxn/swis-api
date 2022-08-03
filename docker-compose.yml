@@ -2,34 +2,43 @@ version: '3.6'
 
 networks:
   traefik_savla:
-    name: ${DOCKER_DEV_NETWORK}
+    name: ${DOCKER_NETWORK_NAME}
+
+volumes:
+  swis-data:
 
 services:
   swis-api:
-    image: ${DOCKER_DEV_IMAGE}
-    container_name: ${DOCKER_DEV_CONTAINER}
+    image: ${DOCKER_IMAGE_TAG}
+    container_name: ${DOCKER_CONTAINER_NAME}
     build:
       context: .
+      dockerfile: Dockerfile
       args: 
-        APP_NAME: ${APP_NAME}
+        GOLANG_VERSION: ${GOLANG_VERSION} 
+        ALPINE_VERSION: ${ALPINE_VERSION}
         APP_FLAGS: ${APP_NAME}
-        DOCKER_DEV_PORT: ${DOCKER_DEV_PORT} 
+        APP_NAME: ${APP_NAME}
+        APP_ROOT: ${APP_ROOT}
+        DOCKER_DEV_PORT: ${DOCKER_APP_PORT} 
+        DOCKER_USER: ${DOCKER_USER}
         GIN_MODE: ${GIN_MODE}
-        GOLANG_VERSION: ${GOLANG_VERSION}
         TZ: ${TZ}
     restart: unless-stopped
-    cpus: 0.5
+    volumes: 
+      - "swis-data:${APP_ROOT}"
+    cpus: 0.33
     dns:
       - 10.4.5.130
       - 1.1.1.2
       - 1.0.0.2
     mem_reservation: 512m
     ports:
-      - "${DOCKER_DEV_EXTERNAL_PORT}:${DOCKER_DEV_PORT}"
+      - "${DOCKER_EXPOSE_PORT}:${DOCKER_APP_PORT}/tcp"
     networks:
-      - ${DOCKER_DEV_NETWORK}
+      - ${DOCKER_NETWORK_NAME}
     labels:
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_URL}`)"
-      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${DOCKER_DEV_PORT}"
-      - "traefik.docker.network=${DOCKER_DEV_NETWORK}"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${DOCKER_APP_PORT}"
+      - "traefik.docker.network=${DOCKER_NETWORK_NAME}"
 

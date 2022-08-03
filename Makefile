@@ -1,5 +1,5 @@
 #
-# swis-core-api / Makefile
+# swis-api (swapi) / Makefile
 #
 
 #
@@ -10,8 +10,7 @@
 
 PROJECT_NAME?=swapi
 
-DOCKER_DEV_IMAGE?=${PROJECT_NAME}-build
-DOCKER_DEV_CONTAINER?=${PROJECT_NAME}-dev-run
+DOCKER_COMPOSE_FILE?=./docker-compose.yml
 
 # define standard colors
 # https://gist.github.com/rsperl/d2dfe88a520968fbc1f49db0a29345b9
@@ -37,13 +36,6 @@ else
 	RESET        := ""
 endif
 
-# docker-compose vs docker compose (new syntax) check
-COMPOSE_CMD:='docker-compose'
-ifeq (, $(shell which ${COMPOSE_CMD} 2>/dev/null))
-	# kinda dirty but ok
-	COMPOSE_CMD=$(shell which docker 2>/dev/null) compose
-endif
-
 export
 
 
@@ -51,14 +43,10 @@ export
 # TARGETS
 #
 
-.PHONY: all info build go src make doc
-
-all: info
-
+.PHONY: info
 info: 
 	@echo -e "\n${GREEN} ${PROJECT_NAME} / Makefile ${RESET}\n"
 
-#@echo -e "${YELLOW} make config  --- check dev environment ${RESET}"
 	@echo -e "${YELLOW} make fmt     --- reformat the go source (gofmt) ${RESET}"
 	@echo -e "${YELLOW} make doc     --- render documentation from code (go doc) ${RESET}\n"
 
@@ -68,31 +56,34 @@ info:
 	@echo -e "${YELLOW} make stop    --- stop and purge project (only docker containers!) ${RESET}"
 	@echo -e ""
 
-# target to see the runtime contents of COMPOSE_CMD constant -- to be deleted later
-config:
-	@echo ${COMPOSE_CMD}	
 
+.PHONY: fmt
 fmt:
 	@echo -e "\n${YELLOW} Code reformating (gofmt)... ${RESET}\n"
 	@gofmt -d -s .
 	@find . -name "*.go" -exec gofmt {} \;
 
+.PHONY: build
 build: 
-	@echo -e "\n${YELLOW} Building project (${COMPOSE_CMD} build)... ${RESET}\n"
-	@$(COMPOSE_CMD) build --no-cache
+	@echo -e "\n${YELLOW} Building project (docker compose build)... ${RESET}\n"
+	@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
 
+.PHONY: run
 run:	build
-	@echo -e "\n${YELLOW} Starting project (${COMPOSE_CMD} up)... ${RESET}\n"
-	@$(COMPOSE_CMD) up --force-recreate --detach
+	@echo -e "\n${YELLOW} Starting project (docker compose up)... ${RESET}\n"
+	@docker compose --file $(DOCKER_COMPOSE_FILE) up --force-recreate --remove-orphans --detach
 
+.PHONY: logs
 logs:
 	@echo -e "\n${YELLOW} Fetching container's logs (CTRL-C to exit)... ${RESET}\n"
-	@docker logs ${DOCKER_DEV_CONTAINER} -f
+	@docker logs ${DOCKER_CONTAINER_NAME} --follow
 
+.PHONY: stop
 stop:  
-	@echo -e "\n${YELLOW} Stopping and purging project (${COMPOSE_CMD} down)... ${RESET}\n"
-	@$(COMPOSE_CMD) down
+	@echo -e "\n${YELLOW} Stopping and purging project (docker compose down)... ${RESET}\n"
+	@docker compose --file $(DOCKER_COMPOSE_FILE) down
 
+.PHONY: import_prod_static_data
 import_prod_static_data: 
 	@echo -e "\n${YELLOW} Import stored data to backend... ${RESET}\n"
 	@.bin/import_prod_data.sh
