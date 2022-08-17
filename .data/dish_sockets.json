@@ -2,7 +2,7 @@
     "sockets": [
         {
             "socket_name": "brikule SSH",
-            "host_name": "brikule.savla.su",
+            "host_name": "brikule.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
@@ -15,7 +15,7 @@
         },
         {
             "socket_name": "ravn SSH",
-            "host_name": "ravn.savla.su",
+            "host_name": "ravn.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
@@ -26,7 +26,7 @@
         },
         {
             "socket_name": "hermes SSH",
-            "host_name": "hermes.savla.su",
+            "host_name": "hermes.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
@@ -37,7 +37,7 @@
         },
         {
             "socket_name": "frank SSH",
-            "host_name": "frank.savla.su",
+            "host_name": "frank.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
@@ -49,58 +49,61 @@
         },
         {
             "socket_name": "fgrebox SSH",
-            "host_name": "fgrebox.savla.su",
+            "host_name": "fgrebox.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
+            "comment": "shut down",
             "dish_source": [
             ],
             "status": null
         },
         {
             "socket_name": "squabbit SSH",
-            "host_name": "squabbit.savla.su",
+            "host_name": "squabbit.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
+            "comment": "shut down",
             "dish_source": [
             ],
             "status": null
         },
         {
             "socket_name": "stokrle SSH",
-            "host_name": "stokrle.savla.su",
+            "host_name": "stokrle.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
+            "comment": "shut down",
             "dish_source": [
             ],
             "status": null
         },
         {
             "socket_name": "tackbox SSH",
-            "host_name": "tackbox.savla.su",
+            "host_name": "tackbox.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
+            "comment": "shut down",
             "dish_source": [
             ],
             "status": null
         },
         {
             "socket_name": "talion SSH",
-            "host_name": "talion.savla.su",
+            "host_name": "talion.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
             "dish_source": [
-                ""
             ],
             "status": null
         },
         {
             "socket_name": "viking SSH",
-            "host_name": "viking.savla.su",
+            "host_name": "viking.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
@@ -117,6 +120,99 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_source": [
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "viking node_exporter",
+            "host_name": "http:/viking-node.savla.net",
+            "port_tcp": 9100,
+            "expected_http_code_array": [ 200 ],
+            "path_http": "/metrics",
+            "dish_source": [
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "brikule node_exporter",
+            "host_name": "http://brikule-node.savla.net",
+            "port_tcp": 9100,
+            "expected_http_code_array": [ 200 ],
+            "path_http": "/metrics",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "hermes node_exporter",
+            "host_name": "http://hermes-node.savla.net",
+            "port_tcp": 9100,
+            "expected_http_code_array": [ 200 ],
+            "path_http": "/metrics",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "ravn node_exporter",
+            "host_name": "http://ravn-node.savla.net",
+            "port_tcp": 9100,
+            "expected_http_code_array": [ 200 ],
+            "path_http": "/metrics",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "frank node_exporter",
+            "host_name": "http://frank-node.savla.net",
+            "port_tcp": 9100,
+            "expected_http_code_array": [ 200 ],
+            "path_http": "/metrics",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "brikule traefik metrics",
+            "host_name": "http://brikule-traefik.savla.net",
+            "port_tcp": 8080,
+            "expected_http_code_array": [ 200 ],
+            "path_http": "/metrics",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "ravn traefik metrics",
+            "host_name": "http://ravn-traefik.savla.net",
+            "port_tcp": 8080,
+            "expected_http_code_array": [ 200 ],
+            "path_http": "/metrics",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "hermes traefik metrics",
+            "host_name": "http://hermes-traefik.savla.net",
+            "port_tcp": 8080,
+            "expected_http_code_array": [ 200 ],
+            "path_http": "/metrics",
+            "dish_source": [
+                "talion",
                 "frank"
             ],
             "status": null
@@ -187,6 +283,34 @@
             "status": null
         },
         {
+            "socket_name": "grafana-savla-su HTTP",
+            "host_name": "http://grafana.savla.su",
+            "port_tcp": 80,
+            "expected_http_code_array": [
+                200,
+                301
+            ],
+            "path_http": "/",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "prometheus-savla-su HTTP",
+            "host_name": "http://prometheus.savla.su",
+            "port_tcp": 80,
+            "expected_http_code_array": [
+                200,
+                301
+            ],
+            "path_http": "/targets",
+            "dish_source": [
+            ],
+            "status": null
+        },
+        {
             "socket_name": "kanban HTTP",
             "host_name": "http://kanban.savla.su",
             "port_tcp": 80,
@@ -222,6 +346,52 @@
                 200,
                 301, 
 		520
+            ],
+            "path_http": "/",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "passbolt.savla.su HTTP",
+            "host_name": "http://passbolt.savla.su",
+            "port_tcp": 80,
+            "expected_http_code_array": [
+                200,
+                301
+            ],
+            "path_http": "/",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "eb-dev.savla.su HTTP",
+            "host_name": "http://eb-dev.savla.su",
+            "port_tcp": 80,
+            "expected_http_code_array": [
+                200,
+                301, 
+		404
+            ],
+            "path_http": "/",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "eb-prod.savla.su HTTP",
+            "host_name": "http://eb-prod.savla.su",
+            "port_tcp": 80,
+            "expected_http_code_array": [
+                200,
+                301
             ],
             "path_http": "/",
             "dish_source": [
@@ -301,8 +471,6 @@
             ],
             "path_http": "/login",
             "dish_source": [
-                "talion",
-                "frank"
             ],
             "status": null
         },
@@ -377,6 +545,38 @@
             "expected_http_code_array": [
                 200,
                 301
+            ],
+            "path_http": "/",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "monke-wtf HTTPS",
+            "host_name": "https://monke.wtf",
+            "port_tcp": 443,
+            "expected_http_code_array": [
+                200,
+                301,
+		520
+            ],
+            "path_http": "/",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+            "socket_name": "www-monke-wtf HTTPS",
+            "host_name": "https://www.monke.wtf",
+            "port_tcp": 443,
+            "expected_http_code_array": [
+                200,
+                301,
+		520
             ],
             "path_http": "/",
             "dish_source": [
