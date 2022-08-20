@@ -91,4 +91,4 @@ import_prod_static_data:
 push:
 	@echo -e "\n${YELLOW} (re)tagging project and pushing to master... ${RESET}\n"
 	@git tag -fa v${SWAPI_VERSION} -m "v${SWAPI_VERSION}"
-	@git push --folow-tags origin master
+	@git push --follow-tags origin master
