@@ -18,10 +18,25 @@ func Routes(g *gin.RouterGroup) {
 	// [GIN-debug] TRACE  /dish/test                --> swis-api/dish.HeadTest (3 handlers)
 	//g.Any("/test", HeadTest)
 
+	// testing route for disg
 	g.HEAD("/test", HeadTest)
 
+	// get all sockets loaded
 	g.GET("/sockets", GetSocketList)
+
+	// get sockets by hostname/dish-name
 	g.GET("/sockets/:host", GetSocketListByHost)
-	//g.POST("/sockets/result", PostSocketTestResult)
+
+	// add new socket to the list
+	g.POST("/sockets", PostNewSocket)
+
+	// edit existing socket by ID
+	g.PUT("/sockets/:id", UpdateSocketByID)
+	g.PATCH("/sockets/:id", UpdateSocketByID)
+
+	// remove existing socket by ID
+	g.DELETE("/sockets/:id", DeleteSocketByID)
+
+	// restore all sockets from JSON dump (JSON-bind)
 	g.POST("/sockets/restore", PostDumpRestore)
 }
