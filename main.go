@@ -116,7 +116,7 @@ func main() {
 	// attach router to http.Server and start it
 	// https://pkg.go.dev/net/http#Server
 	server := &http.Server{
-		Addr:         ":8049",
+		Addr:         "0.0.0.0:8049",
 		Handler:      router,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,

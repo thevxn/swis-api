@@ -87,3 +87,8 @@ import_prod_static_data:
 	@echo -e "\n${YELLOW} Import stored data to backend... ${RESET}\n"
 	@.bin/import_prod_data.sh
 
+.PHONY: push
+push:
+	@echo -e "\n${YELLOW} (re)tagging project and pushing to master... ${RESET}\n"
+	@git tag -fa v${SWAPI_VERSION} -m "v${SWAPI_VERSION}"
+	@git push --folow-tags origin master
