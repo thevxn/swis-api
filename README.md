@@ -1,5 +1,8 @@
 # swis-api (swapi)
-sakalWeb IS RESTful API v5 [golang]
+
+[![swis-api CI/CD pipeline](https://github.com/savla-dev/swis-api/actions/workflows/docker-image.yml/badge.svg)](https://github.com/savla-dev/swis-api/actions/workflows/docker-image.yml)
+
+sakalWeb (v5) Information System RESTful API
 
 + http://swapi.savla.su (intranet)
 
