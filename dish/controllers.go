@@ -70,10 +70,9 @@ func GetSocketListByHost(c *gin.Context) {
 
 	// loop over socketArray, find
 	for _, s := range socketArray {
-		if contains(s.DishList, host) {
+		if contains(s.DishTarget, host) {
 			// clear the dish source list for the client (dish)
-			s.DishList = []string{host}
-			//s.DishList = nil
+			s.DishTarget = []string{host}
 			sockets.Sockets = append(sockets.Sockets, s)
 		}
 	}

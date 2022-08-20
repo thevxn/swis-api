@@ -1,6 +1,7 @@
 {
     "sockets": [
         {
+            "socket_id": "ssh_brikule",
             "socket_name": "brikule SSH",
             "host_name": "brikule.savla.net",
             "port_tcp": 22,
@@ -8,12 +9,10 @@
             "path_http": "",
             "dish_source": [
                 "frank"
-            ],
-            "results": [
-	      { "socket_reached": false }
-	    ]
+            ]
         },
         {
+	    "socket_id": "ssh_ravn",
             "socket_name": "ravn SSH",
             "host_name": "ravn.savla.net",
             "port_tcp": 22,
@@ -21,10 +20,10 @@
             "path_http": "",
             "dish_source": [
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "ssh_hermes",
             "socket_name": "hermes SSH",
             "host_name": "hermes.savla.net",
             "port_tcp": 22,
@@ -32,10 +31,10 @@
             "path_http": "",
             "dish_source": [
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "ssh_frank",
             "socket_name": "frank SSH",
             "host_name": "frank.savla.net",
             "port_tcp": 22,
@@ -44,10 +43,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "ssh_fgrebox",
             "socket_name": "fgrebox SSH",
             "host_name": "fgrebox.savla.net",
             "port_tcp": 22,
@@ -55,10 +54,10 @@
             "path_http": "",
             "comment": "shut down",
             "dish_source": [
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "ssh_squabbit",
             "socket_name": "squabbit SSH",
             "host_name": "squabbit.savla.net",
             "port_tcp": 22,
@@ -66,10 +65,10 @@
             "path_http": "",
             "comment": "shut down",
             "dish_source": [
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "ssh_stokrle",
             "socket_name": "stokrle SSH",
             "host_name": "stokrle.savla.net",
             "port_tcp": 22,
@@ -77,10 +76,10 @@
             "path_http": "",
             "comment": "shut down",
             "dish_source": [
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "ssh_tackbox",
             "socket_name": "tackbox SSH",
             "host_name": "tackbox.savla.net",
             "port_tcp": 22,
@@ -88,20 +87,20 @@
             "path_http": "",
             "comment": "shut down",
             "dish_source": [
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "ssh_talion",
             "socket_name": "talion SSH",
             "host_name": "talion.savla.net",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
             "dish_source": [
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "ssh_viking",
             "socket_name": "viking SSH",
             "host_name": "viking.savla.net",
             "port_tcp": 22,
@@ -110,30 +109,30 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "ssh_viking_public",
             "socket_name": "viking public SSH",
             "host_name": "viking-public.savla.su",
             "port_tcp": 22,
             "expected_http_code_array": null,
             "path_http": "",
             "dish_source": [
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "node_exporter_viking",
             "socket_name": "viking node_exporter",
             "host_name": "http:/viking-node.savla.net",
             "port_tcp": 9100,
             "expected_http_code_array": [ 200 ],
             "path_http": "/metrics",
             "dish_source": [
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "node_exporter_brikule",
             "socket_name": "brikule node_exporter",
             "host_name": "http://brikule-node.savla.net",
             "port_tcp": 9100,
@@ -142,10 +141,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "node_exporter_hermes",
             "socket_name": "hermes node_exporter",
             "host_name": "http://hermes-node.savla.net",
             "port_tcp": 9100,
@@ -154,10 +153,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "node_exporter_ravn",
             "socket_name": "ravn node_exporter",
             "host_name": "http://ravn-node.savla.net",
             "port_tcp": 9100,
@@ -166,10 +165,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "node_exporter_frank",
             "socket_name": "frank node_exporter",
             "host_name": "http://frank-node.savla.net",
             "port_tcp": 9100,
@@ -178,10 +177,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "traefik_exporter_brikule",
             "socket_name": "brikule traefik metrics",
             "host_name": "http://brikule-traefik.savla.net",
             "port_tcp": 8080,
@@ -190,10 +189,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "traefik_exporter_ravn",
             "socket_name": "ravn traefik metrics",
             "host_name": "http://ravn-traefik.savla.net",
             "port_tcp": 8080,
@@ -202,10 +201,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "traefik_exporter_hermes",
             "socket_name": "hermes traefik metrics",
             "host_name": "http://hermes-traefik.savla.net",
             "port_tcp": 8080,
@@ -214,10 +213,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "dns_frank",
             "socket_name": "frank IP intranet DNS",
             "host_name": "10.4.5.130",
             "port_tcp": 53,
@@ -226,10 +225,10 @@
             "dish_source": [
                 "frank",
                 "talion"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "dns_frank_ns",
             "socket_name": "frank NS intranet DNS",
             "host_name": "ns.savla.su",
             "port_tcp": 53,
@@ -238,10 +237,10 @@
             "dish_source": [
                 "frank",
                 "talion"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "openttd_frank",
             "socket_name": "frank OpenTTD",
             "host_name": "ottd.savla.dev",
             "port_tcp": 3979,
@@ -250,10 +249,10 @@
             "dish_source": [
                 "frank",
                 "talion"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_docs_savla_su",
             "socket_name": "savla-docs HTTP",
             "host_name": "http://docs.savla.su",
             "port_tcp": 80,
@@ -264,25 +263,25 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
-            "socket_name": "elden-bling dev HTTP",
-            "host_name": "http://elden-bling.savla.su",
+	    "socket_id": "http_eb_dev_savla_su",
+            "socket_name": "eb-dev HTTP",
+            "host_name": "http://eb-dev.savla.su",
             "port_tcp": 80,
             "expected_http_code_array": [
                 200,
 		520
             ],
-            "path_http": "/",
+            "path_http": "/characters",
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_grafana_savla_su",
             "socket_name": "grafana-savla-su HTTP",
             "host_name": "http://grafana.savla.su",
             "port_tcp": 80,
@@ -294,10 +293,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_prometheus_savla_su",
             "socket_name": "prometheus-savla-su HTTP",
             "host_name": "http://prometheus.savla.su",
             "port_tcp": 80,
@@ -307,10 +306,10 @@
             ],
             "path_http": "/targets",
             "dish_source": [
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_kanban_savla_su",
             "socket_name": "kanban HTTP",
             "host_name": "http://kanban.savla.su",
             "port_tcp": 80,
@@ -321,10 +320,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_head_swapi_savla_su",
             "socket_name": "swapi head test HTTP",
             "host_name": "http://swapi.savla.su",
             "port_tcp": 80,
@@ -335,10 +334,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_savla_dev",
             "socket_name": "savla-dev HTTPS",
             "host_name": "https://savla.dev",
             "port_tcp": 443,
@@ -351,10 +350,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_passbolt_savla_su",
             "socket_name": "passbolt.savla.su HTTP",
             "host_name": "http://passbolt.savla.su",
             "port_tcp": 80,
@@ -366,27 +365,11 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_eb_prod_savla_su",
             "socket_name": "eb-dev.savla.su HTTP",
-            "host_name": "http://eb-dev.savla.su",
-            "port_tcp": 80,
-            "expected_http_code_array": [
-                200,
-                301, 
-		404
-            ],
-            "path_http": "/",
-            "dish_source": [
-                "talion",
-                "frank"
-            ],
-            "status": null
-        },
-        {
-            "socket_name": "eb-prod.savla.su HTTP",
             "host_name": "http://eb-prod.savla.su",
             "port_tcp": 80,
             "expected_http_code_array": [
@@ -397,10 +380,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_ks_savla_su",
             "socket_name": "ks-savla-su HTTP",
             "host_name": "http://ks.savla.su",
             "port_tcp": 80,
@@ -412,10 +395,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_kss_savla_su",
             "socket_name": "kss-savla-su HTTP",
             "host_name": "http://kss.savla.su",
             "port_tcp": 80,
@@ -427,10 +410,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "http_modul_savla_su",
             "socket_name": "modul-savla-su HTTP",
             "host_name": "http://modul.savla.su",
             "port_tcp": 80,
@@ -442,10 +425,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_www_savla_dev",
             "socket_name": "www-savla-dev HTTPS",
             "host_name": "https://www.savla.dev",
             "port_tcp": 443,
@@ -461,7 +444,8 @@
             ],
             "status": null
         },
-        {
+	{
+	    "socket_id": "https_red_n0p_cz",
             "socket_name": "red-n0p-cz HTTPS",
             "host_name": "https://red.n0p.cz",
             "port_tcp": 443,
@@ -474,7 +458,8 @@
             ],
             "status": null
         },
-        {
+	{
+	    "socket_id": "https_text_n0p_cz",
             "socket_name": "text-n0p-cz HTTPS",
             "host_name": "https://text.n0p.cz",
             "port_tcp": 443,
@@ -487,10 +472,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_web_n0p_cz",
             "socket_name": "web-n0p-cz HTTPS",
             "host_name": "https://web.n0p.cz",
             "port_tcp": 443,
@@ -502,10 +487,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_wiki_n0p_cz",
             "socket_name": "wiki-n0p-cz HTTPS",
             "host_name": "https://wiki.n0p.cz",
             "port_tcp": 443,
@@ -519,10 +504,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_eldenbling_net",
             "socket_name": "eldenbling-net HTTPS",
             "host_name": "https://eldenbling.net",
             "port_tcp": 443,
@@ -535,10 +520,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_www_eldenbling_net",
             "socket_name": "www-eldenbling-net HTTPS",
             "host_name": "https://www.eldenbling.net",
             "port_tcp": 443,
@@ -550,10 +535,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_monke_wtf",
             "socket_name": "monke-wtf HTTPS",
             "host_name": "https://monke.wtf",
             "port_tcp": 443,
@@ -566,10 +551,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_www_monke_wtf",
             "socket_name": "www-monke-wtf HTTPS",
             "host_name": "https://www.monke.wtf",
             "port_tcp": 443,
@@ -582,10 +567,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_platispivo_cz",
             "socket_name": "platispivo-cz HTTPS",
             "host_name": "https://platispivo.cz",
             "port_tcp": 443,
@@ -598,10 +583,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
+	    "socket_id": "https_www_platispivo_cz",
             "socket_name": "www-platispivo-cz HTTPS",
             "host_name": "https://www.platispivo.cz",
             "port_tcp": 443,
@@ -614,36 +599,10 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         },
         {
-            "socket_name": "rnp-test-unicorn-com HTTPS",
-            "host_name": "https://rnp-test.unicorn.com",
-            "port_tcp": 443,
-            "expected_http_code_array": [
-                200,
-                301
-            ],
-            "path_http": "/",
-            "dish_source": [
-            ],
-            "status": null
-        },
-        {
-            "socket_name": "rnp-train-unicorn-com HTTPS",
-            "host_name": "https://rnp-train.unicorn.com",
-            "port_tcp": 443,
-            "expected_http_code_array": [
-                200,
-                301
-            ],
-            "path_http": "/",
-            "dish_source": [
-            ],
-            "status": null
-        },
-        {
+	    "socket_id": "http_smart_comp_cz",
             "socket_name": "smart-comp-cz HTTP",
             "host_name": "https://sc.cz",
             "port_tcp": 443,
@@ -655,8 +614,7 @@
             "dish_source": [
                 "talion",
                 "frank"
-            ],
-            "status": null
+            ]
         }
     ]
 }
