@@ -60,7 +60,7 @@ func main() {
 	router.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
-			"message": "unknown route",
+			"message": "unknown route, or disallowed method",
 		})
 	})
 
@@ -116,7 +116,7 @@ func main() {
 	// attach router to http.Server and start it
 	// https://pkg.go.dev/net/http#Server
 	server := &http.Server{
-		Addr:         ":8080",
+		Addr:         ":8049",
 		Handler:      router,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,

@@ -6,6 +6,8 @@ sakalWeb (v5) Information System RESTful API
 
 + http://swapi.savla.su (intranet)
 
+[module documentation TBD]()
+
 ## importing
 
 At start, swapi instance memory is cleared and ready for any data import (until the next restart). Any data stored in runtime memory should be dumped using GET methods at particular paths. This approach should make `swapi` instance universal (while omitting custom packages/modules).
@@ -31,6 +33,7 @@ curl -d @.data/alvax_command_list.json -sLX POST http://localhost:8003/alvax/com
 curl -d @.data/krusty_ssh_keys.json -sLX POST http://swapi.savla.su/users/krusty/keys/ssh
 ```
 
+
 ### legacy MariaDB export (n0p_depot)
 
 ```
@@ -50,6 +53,7 @@ jq . n0p_depot.export.json
 # take all for array items and convert them into a JSON object
 2,342s/^{\(.*\),[ ]\(".*"\),[ ]\(".*"\),[ ]\(".*"\)\},$/\{"id": \1, "desc": \2, "misc": \3, "depot": \4},/
 ```
+
 
 ## repo files
 
