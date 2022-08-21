@@ -51,7 +51,7 @@ type Hosts struct {
 // Low-level Host model for a generic machine.
 type Host struct {
 	// Unique hash/ID to link to such host record.
-	ID string `json:"hash" binding:"required"`
+	ID string `json:"id" binding:"required"`
 
 	// Node hostname without its domain.
 	HostnameShort string `json:"hostname_short" binding:"required"`
