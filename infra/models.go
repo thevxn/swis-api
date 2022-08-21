@@ -43,18 +43,36 @@ var networks = []Network{
 }
 */
 
+// High-level struct for batch []Host array importing.
 type Hosts struct {
 	Hosts []Host `json:"hosts"`
 }
 
+// Low-level Host model for a generic machine.
 type Host struct {
-	Hash      string   `json:"hash"`
-	Hostname  string   `json:"hostname"`
-	Domain    string   `json:"domain"`
-	Roles     []string `json:"roles"`
+	// Unique hash/ID to link to such host record.
+	ID string `json:"hash" binding:"required"`
+
+	// Node hostname as FQDN-formatted.
+	HostnameiShort string `json:"hostname_short" binding:"required"`
+
+	// Node hostname as FQDN-formatted.
+	HostnameFQDN string `json:"hostname_fqdn" binding:"required"`
+
+	// Brief node's description -- shown in node's MOTD on remote login.
+	Description string `json:description`
+
+	// Host's default domain name (e.g. savla.su as internal domain name).
+	Domain string `json:"domain" `
+
+	// Ansible roles to be applied to such host.
+	Roles []string `json:"roles"`
+
+	// Important network-related IP addresses to be assigned to such host (e.g. public interface address, wireguard interface address etc).
 	IPAddress []string `json:"ip_address"`
-	Facter    []string `json:"facter"`
-	VMs       []string `json:"virtual_machines"`
+
+	// Children of such machine -- should use machines' hashes for proper linking.
+	Child []string `json:"children"`
 }
 
 var infrastructure = Infrastructure{}

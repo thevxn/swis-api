@@ -2,41 +2,90 @@
   "infrastructure": {
     "hosts": [
       {
-	"hash": "sha256hash_viking",
-	"hostname": "viking.savla.su", 
+	"id": "hel1_viking",
+	"hostname_short": "viking",
+	"hostname_fqdn": "viking.savla.su", 
 	"domain": "savla.su", 
-	"roles": ["hyp"],
+	"ansible_roles": [
+	  "base",
+	  "hyp"
+	],
+	"ansible_groups": [ "viking_intranet" ],
+	"state": "running",
 	"ip_address": [
 	  "95.216.7.113/32", 
 	  "10.4.5.140/25",
 	  "10.4.6.33/27"
         ],
-	"facter": [],  
+	"links": [
+	  {
+	    "source": "hel1_viking", "target": "hel1_brikule", "interface_name": "br32", "type": "virtio"
+	  },
+	  {
+	    "source": "hel1_viking", "target": "hel1_hermes", "interface_name": "br32", "type": "virtio"
+	  },
+	  {
+	    "source": "hel1_viking", "target": "hel1_ravn", "interface_name": "br32", "type": "virtio"
+	  },
+	  {
+	    "source": "hel1_viking", "target": "fra1_frank", "interface_name": "wg0", "type": "wireguard"
+	  },
+	  {
+	    "source": "hel1_viking", "target": "hel1_hetzner_peering", "interface_name": "enp2s0", "type": "ethernet"
+	  }
+	],
         "virtual_machines": [
-	  "sha256hash_brikule",
-	  "sha256hash_hermes"
+	  "hel1_brikule",
+	  "hel1_hermes",
+	  "hel1_ravn"
 	]
       },
+
       {
-	"hash": "sha256hash_squabbit",
-	"hostname": "squabbit.savla.su",
+	"id": "brn1_squabbit",
+	"hostname_short": "squabbit",
+	"hostname_fqdn": "squabbit.savla.su",
 	"domain": "savla.su",
-        "roles": ["hyp"],
+	"ansible_groups": [ "squabbit_intranet" ],
+	"ansible_roles": [ 
+	  "base",
+	  "hyp" 
+	],
+	"state": "shutdown",
         "ip_address": [
 	  "10.4.5.1/25",
- 	  "10.4.5.129/25"
+ 	  "10.4.5.129/25",
+	  "192.168.4.246/24"
         ],
-        "facter": [],
+	"links": [
+	  {
+	    "source": "brn1_squabbit", "target": "brn1_stokrle", "interface_name": "virbr0", "type": "virtio"
+	  },
+	  {
+	    "source": "brn1_squabbit", "target": "brn1_tackbox", "interface_name": "virbr0", "type": "virtio"
+	  },
+	  {
+	    "source": "brn1_squabbit", "target": "brn1_fgrebox", "interface_name": "virbr0", "type": "virtio"
+	  },
+	  {
+	    "source": "brn1_squabbit", "target": "fra1_frank", "interface_name": "wg0", "type": "wireguard"
+	  },
+	  {
+	    "source": "brn1_squabbit", "target": "brn1_vodafone_isp", "interface_name": "enp2s0", "type": "ethernet"
+	  }
+        ],
         "virtual_machines": [
-	  "sha256hash_stokrle",
-	  "sha256hash_tackbox",
-	  "sha256hash_fgrebox"
+	  "brn1_stokrle",
+	  "brn1_tackbox",
+	  "brn1_fgrebox"
 	]
       },
+
       {
 	"hash": "sha256hash_frank",
 	"hostname": "frank.savla.su",
 	"domain": "savla.su",
+	"ansible_groups": [ "intranet_edge" ],
         "roles": [
  	  "gateway",
 	  "container",
@@ -49,14 +98,42 @@
 	  "165.22.94.196/32",
  	  "10.4.5.130/25"
         ],
-        "facter": [],
+	"links": [
+	  {
+	    "source": "fra1_frank", "target": "hel1_viking", "interface_name": "wg0", "type": "wireguard"
+	  },
+	  {
+	    "source": "fra1_frank", "target": "brn1_squabbit", "interface_name": "wg0", "type": "wireguard"
+	  },
+	  {
+	    "source": "fra1_frank", "target": "vpn0_krustyboks", "interface_name": "wg0", "type": "wireguard"
+	  },
+	  {
+	    "source": "fra1_frank", "target": "vpn0_krustyphone", "interface_name": "wg0", "type": "wireguard"
+	  },
+	  {
+	    "source": "fra1_frank", "target": "vpn0_tack_pc", "interface_name": "wg0", "type": "wireguard"
+	  },
+	  {
+	    "source": "fra1_frank", "target": "vpn0_tack_phone", "interface_name": "wg0", "type": "wireguard"
+	  },
+	  {
+	    "source": "fra1_frank", "target": "vpn0_talion", "interface_name": "wg0", "type": "wireguard"
+	  },
+	  {
+	    "source": "fra1_frank", "target": "fra1_digitalocean_peering", "interface_name": "eth0", "type": "ethernet"
+	  }
+	],
         "virtual_machines": []
       },
+
       {
-	"hash": "sha256hash_stokrle",
-	"hostname": "stokrle.savla.su",
+	"id": "brn1_stokrle",
+	"hostname_short": "stokrle",
+	"hostname_fqdn": "stokrle.savla.su",
 	"domain": "savla.su",
-        "roles": [
+	"ansible_groups": [ "squabbit_intranet" ],
+        "ansible_roles": [
 	  "runner",
 	  "webserver_traefik",
 	  "container",
@@ -66,14 +143,20 @@
         "ip_address": [
  	  "10.4.5.33/25"
         ],
-        "facter": [],
-        "virtual_machines": []
+	"links": [
+	  {
+	    "source": "brn1_stokrle", "target": "brn1_squabbit", "interface_name": "enp1s0", "type": "virtio/ethernet"
+	  }
+	]
       },
+
       {
-	"hash": "sha256hash_tackbox",
-	"hostname": "tackbox.savla.su",
+	"id": "brn1_tackbox",
+	"hostname_short": "tackbox",
+	"hostname_fqdn": "tackbox.savla.su",
 	"domain": "savla.su",
-        "roles": [
+	"ansible_groups": [ "squabbit_intranet" ],
+        "ansible_roles": [
 	  "container",
 	  "webserver_nginx",
 	  "virtual"
@@ -81,28 +164,40 @@
         "ip_address": [
  	  "10.4.5.36/25"
         ],
-        "facter": [],
-        "virtual_machines": []
+	"links": [
+	  {
+	    "source": "brn1_tackbox", "target": "brn1_squabbit", "interface_name": "enp1s0", "type": "virtio/ethernet"
+	  }
+	]
       },
+
       {
-	"hash": "sha256hash_fgrebox",
-	"hostname": "fgrebox.savla.su",
+	"id": "brn1_fgrebox",
+	"hostname_short": "fgrebox",
+	"hostname_fqdn": "fgrebox.savla.su",
 	"domain": "savla.su",
-        "roles": [
+	"ansible_groups": [ "squabbit_intranet" ],
+        "ansible_roles": [
 	  "private",
 	  "virtual"
 	],
         "ip_address": [
  	  "10.4.5.41/25"
         ],
-        "facter": [],
-        "virtual_machines": []
+	"links": [
+	  {
+	    "source": "brn1_fgrebox", "target": "brn1_squabbit", "interface_name": "enp1s0", "type": "virtio/ethernet"
+	  }
+	]
       },
+
       {
-	"hash": "sha256hash_brikule",
-	"hostname": "brikule.savla.su",
+	"id": "hel1_brikule",
+	"hostname_short": "brikule",
+	"hostname_fqdn": "brikule.savla.su",
 	"domain": "savla.su",
-        "roles": [
+	"ansible_groups": [ "viking_intranet" ],
+        "ansible_roles": [
 	  "container",
 	  "webserver_traefik",
 	  "virtual"
@@ -110,14 +205,20 @@
         "ip_address": [
  	  "10.4.6.35/27"
         ],
-        "facter": [],
-        "virtual_machines": []
+	"links": [
+	  {
+	    "source": "hel1_brikule", "target": "hel1_viking", "interface_name": "enp1s0", "type": "virtio/ethernet"
+	  }
+	]
       },
+
       {
-	"hash": "sha256hash_ravn",
-	"hostname": "ravn.savla.su",
+	"id": "hel1_ravn",
+	"hostname_short": "ravn",
+	"hostname_fqdn": "ravn.savla.su",
 	"domain": "savla.su",
-        "roles": [
+	"ansible_groups": [ "viking_intranet" ],
+        "ansibleroles": [
 	  "container",
 	  "webserver_traefik",
 	  "virtual"
@@ -125,25 +226,35 @@
         "ip_address": [
  	  "10.4.6.44/27"
         ],
-        "facter": [],
-        "virtual_machines": []
+	"links": [
+	  {
+	    "source": "hel1_ravn", "target": "hel1_viking", "interface_name": "enp1s0", "type": "virtio/ethernet"
+	  }
+	]
       },
+
       {
-	"hash": "sha256hash_hermes",
-	"hostname": "hermes.savla.su",
+	"id": "hel1_hermes",
+	"hostname_short": "hermes",
+	"hostname_fqdn": "hermes.savla.su",
 	"domain": "savla.su",
-        "roles": [
+	"ansible_groups": [ "viking_intranet" ],
+        "ansible_roles": [
 	  "container",
 	  "webserver_traefik",
 	  "virtual"
 	],
         "ip_address": [
- 	  "10.4.6.50/27"
+ 	  "10.4.6.39/27"
         ],
-        "facter": [],
-        "virtual_machines": []
+	"links": [
+	  {
+	    "source": "hel1_hermes", "target": "hel1_viking", "interface_name": "enp1s0", "type": "virtio/ethernet"
+	  }
+	]
       }
     ],
+
     "networks": [
       {
 	"hash": "",
