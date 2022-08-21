@@ -53,8 +53,8 @@ type Host struct {
 	// Unique hash/ID to link to such host record.
 	ID string `json:"hash" binding:"required"`
 
-	// Node hostname as FQDN-formatted.
-	HostnameiShort string `json:"hostname_short" binding:"required"`
+	// Node hostname without its domain.
+	HostnameShort string `json:"hostname_short" binding:"required"`
 
 	// Node hostname as FQDN-formatted.
 	HostnameFQDN string `json:"hostname_fqdn" binding:"required"`
@@ -91,7 +91,7 @@ type Virtual struct {
 }
 
 var squabbitVMs = []Host{
-	{Hostname: "stokrle", Domain: "savla.su", Roles: []string{"build", "deploy"}, IPAddress: []string{"10.4.5.55/25"}},
+	{HostnameShort: "stokrle", Domain: "savla.su", Roles: []string{"build", "deploy"}, IPAddress: []string{"10.4.5.55/25"}},
 }
 
 // demo Hosts data

@@ -13,7 +13,7 @@ func findHostByHostname(c *gin.Context) (index *int, h *Host) {
 	var hosts = infrastructure.Hosts
 
 	for i, a := range hosts {
-		if a.Hostname == c.Param("hostname") {
+		if a.HostnameShort == c.Param("hostname") || a.HostnameFQDN == c.Param("hostname") {
 			//c.IndentedJSON(http.StatusOK, a)
 			return &i, &a
 		}
