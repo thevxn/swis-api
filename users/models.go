@@ -24,6 +24,12 @@ type User struct {
 	// GitHub account/profile name (used for SSH public keys importing).
 	GitHubUser string `json:"github_username"`
 
+	// Discord account/profile name.
+	DiscordUser string `json:"discord_username"`
+
+	// Country of origin -- to help maintain global contacts.
+	Country string `json:"country"`
+
 	// All Wireguard config objects -- an array.
 	Wireguard []Wireguard `json:"wireguard_vpn"`
 

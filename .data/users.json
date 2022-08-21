@@ -10,6 +10,8 @@
       ],
       "token_base64": "",
       "github_username": "Tackx",
+      "discord_user": "Tack#3625",
+      "country": "CZ",
       "links": null,
       "ssh_keys": null,
       "gpg_keys": null, 
@@ -47,6 +49,8 @@
       ],
       "token_base64": "",
       "github_username": "krustowski",
+      "discord_username": "krusty#8743",
+      "country": "CZ",
       "links": null,
       "ssh_keys": null,
       "gpg_keys": null, 
@@ -66,6 +70,56 @@
       ]
     },
     {
+      "name": "cruelmelody",
+      "full_name": "Barbora",
+      "roles": [
+        "developer", 
+	"intern", 
+	"student"
+      ],
+      "token_base64": "",
+      "github_username": "cruelmelody",
+      "country": "CZ",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null,
+      "gdpr_consent": false,
+      "wireguard_vpn": [
+        {
+          "public_key": "", 
+	  "device_name": "",
+	  "ip_address": "",
+	  "permission": false
+        }
+      ]
+    },
+    {
+      "name": "painkiller",
+      "full_name": "Josh Mond",
+      "roles": [
+        "developer",
+        "extern", 
+	"bakend", 
+	"frontend"
+      ],
+      "token_base64": "",
+      "github_username": "joshmond",
+      "discord_username": "Painkiller#8190",
+      "country": "UK",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null,
+      "gdpr_consent": false,
+      "wireguard_vpn": [
+        {
+          "public_key": "", 
+	  "device_name": "",
+	  "ip_address": "",
+	  "permission": false
+        }
+      ]
+    },
+    {
       "name": "stepis",
       "full_name": "Štěpán Beran",
       "roles": [
@@ -74,6 +128,8 @@
       ],
       "token_base64": "",
       "github_username": "stepiiis",
+      "discord_username": "",
+      "country": "CZ",
       "links": null,
       "ssh_keys": null,
       "gpg_keys": null,
@@ -96,6 +152,8 @@
       ],
       "token_base64": "",
       "github_username": "",
+      "discord_username": "",
+      "country": "CZ",
       "links": null,
       "ssh_keys": null,
       "gpg_keys": null,
@@ -109,6 +167,23 @@
       ]
     },
     {
+      "name": "beastyy",
+      "full_name": "Hrishikesh Sawant",
+      "roles": [
+        "developer", 
+        "frontend", 
+        "backend", 
+        "linux"
+      ],
+      "token_base64": "",
+      "github_username": "senorbeast",
+      "discord_username": "Beastyy#3756",
+      "country": "IN",
+      "links": null,
+      "ssh_keys": null,
+      "gpg_keys": null
+    },
+    {
       "name": "matejnesuta",
       "full_name": "Matěj Nešuta",
       "roles": [
@@ -117,6 +192,8 @@
       ],
       "token_base64": "",
       "github_username": "matejnesuta",
+      "discord_username": "",
+      "country": "CZ",
       "links": null,
       "ssh_keys": null,
       "gpg_keys": null
@@ -130,6 +207,7 @@
       ],
       "token_base64": "",
       "github_username": "ridlees",
+      "country": "CZ",
       "links": null,
       "ssh_keys": null,
       "gpg_keys": null
