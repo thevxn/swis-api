@@ -31,7 +31,7 @@ type Socket struct {
 
 	// DishTarget is a string array, usually containing dish's host short name (e.g. frank)
 	// to be refered e.g. /dish/sockets/frank
-	DishTarget []string `json:"dish_targets"`
+	DishTarget []string `json:"dish_target"`
 
 	// Status object for dish results to be returned/updated (by dish itself)
 	// Note: discontinued as dish now reports to pushgateway of prometheus'
