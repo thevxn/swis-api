@@ -35,3 +35,23 @@ func GetFrontendBySiteName(c *gin.Context) {
 		c.IndentedJSON(http.StatusOK, frontend)
 	}
 }
+
+func PostDumpRestore(c *gin.Context) {
+	var importFrontends []Frontend
+
+	if err := c.BindJSON(&importFrontends); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	//depots = append(depots, importDepot)
+	swives = importFrontends
+
+	c.IndentedJSON(http.StatusCreated, gin.H{
+		"code":    http.StatusCreated,
+		"message": "swife frontends imported, omitting output",
+	})
+}

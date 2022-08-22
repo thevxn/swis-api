@@ -157,6 +157,16 @@ function import_projects {
   curlp --data @${DATA_FILE} --url ${URL} | jq .
 }
 
+function import_frontends {
+  POST_PATH="/swife/restore"
+  URL="${DEST_URL}${POST_PATH}"
+
+  DATA_FILE="${DATA_DIR}/swife_frontends.json"
+  [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
+
+  echo "importing swife frontends..."
+  curlp --data @${DATA_FILE} --url ${URL} | jq .
+}
 
 #
 # workflow/chain import
@@ -171,4 +181,5 @@ import_infrastructure || die "cannot import infrastructure"
 import_finance 	      || die "cannot import finance"
 import_business_array || die "cannot import business array"
 import_projects	      || die "cannot import projects"
+import_frontends      || die "cannot import frontends"
 
