@@ -8,7 +8,7 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_target": [
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -19,7 +19,6 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_target": [
-                "frank"
             ]
         },
         {
@@ -30,7 +29,7 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_target": [
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -42,7 +41,7 @@
             "path_http": "",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -108,7 +107,7 @@
             "path_http": "",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -140,7 +139,7 @@
             "path_http": "/metrics",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -152,7 +151,7 @@
             "path_http": "/metrics",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -164,7 +163,7 @@
             "path_http": "/metrics",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -176,7 +175,7 @@
             "path_http": "/metrics",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -188,7 +187,7 @@
             "path_http": "/metrics",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -200,7 +199,7 @@
             "path_http": "/metrics",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -212,7 +211,7 @@
             "path_http": "/metrics",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -223,7 +222,7 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_target": [
-                "frank",
+                "ravn",
                 "talion"
             ]
         },
@@ -235,7 +234,7 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_target": [
-                "frank",
+                "ravn",
                 "talion"
             ]
         },
@@ -247,7 +246,7 @@
             "expected_http_code_array": null,
             "path_http": "",
             "dish_target": [
-                "frank",
+                "ravn",
                 "talion"
             ]
         },
@@ -262,7 +261,7 @@
             "path_http": "/howto/docs",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -276,8 +275,7 @@
             ],
             "path_http": "/characters",
             "dish_target": [
-                "talion",
-                "frank"
+                "talion"
             ]
         },
         {
@@ -292,7 +290,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -319,7 +317,7 @@
             "path_http": "/login",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -333,7 +331,7 @@
             "path_http": "/dish/test",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -349,7 +347,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -364,7 +362,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -379,7 +377,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -394,7 +392,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -409,7 +407,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -424,7 +422,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -440,7 +438,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ],
             "status": null
         },
@@ -457,7 +455,7 @@
             "path_http": "/about",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ],
             "status": null
         },
@@ -474,7 +472,7 @@
             "path_http": "/login",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ],
             "status": null
         },
@@ -483,6 +481,7 @@
             "socket_name": "kanban-savla-dev HTTPS",
             "host_name": "https://kanban.savla.dev",
             "port_tcp": 443,
+	    "comment": "disabled for public net",
             "expected_http_code_array": [
                 200,
                 301,
@@ -490,8 +489,6 @@
             ],
             "path_http": "/login",
             "dish_target": [
-                "talion",
-                "frank"
             ],
             "status": null
         },
@@ -522,7 +519,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -537,7 +534,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -554,7 +551,7 @@
             "path_http": "/start",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -570,7 +567,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -585,7 +582,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -601,7 +598,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -617,7 +614,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -633,7 +630,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -649,7 +646,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         },
         {
@@ -664,7 +661,7 @@
             "path_http": "/",
             "dish_target": [
                 "talion",
-                "frank"
+                "ravn"
             ]
         }
     ]
