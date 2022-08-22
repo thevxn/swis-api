@@ -25,7 +25,7 @@ func findFrontendBySiteName(c *gin.Context) (f *Frontend) {
 func GetFrontendBySiteName(c *gin.Context) {
 	if frontend := findFrontendBySiteName(c); frontend != nil {
 
-		frontend.Title = b64.StdEncoding.EncodeToString([]byte(fronted.Title))
+		frontend.Title = b64.StdEncoding.EncodeToString([]byte(frontend.Title))
 		frontend.Description = b64.StdEncoding.EncodeToString([]byte(frontend.Description))
 
 		c.IndentedJSON(http.StatusOK, frontend)
