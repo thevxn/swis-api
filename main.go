@@ -19,6 +19,7 @@ import (
 	"swis-api/infra"
 	"swis-api/news"
 	"swis-api/projects"
+	"swis-api/swife"
 	"swis-api/users"
 
 	// remote dependencies
@@ -102,6 +103,10 @@ func main() {
 	// projects CRUD
 	projectsRouter := router.Group("/projects")
 	projects.Routes(projectsRouter)
+
+	// swife CRUD
+	swifeRouter := router.Group("/swife")
+	swife.Routes(swifeRouter)
 
 	// users CRUD
 	usersRouter := router.Group("/users")

@@ -444,6 +444,57 @@
             ],
             "status": null
         },
+        {
+	    "socket_id": "https_krusty_savla_dev",
+            "socket_name": "krusty-dev HTTPS",
+            "host_name": "https://krusty.savla.dev",
+            "port_tcp": 443,
+            "expected_http_code_array": [
+                200,
+                301,
+		520
+            ],
+            "path_http": "/about",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+	    "socket_id": "https_redmine_savla_dev",
+            "socket_name": "redmine-savla-dev HTTPS",
+            "host_name": "https://redmine.savla.dev",
+            "port_tcp": 443,
+            "expected_http_code_array": [
+                200,
+                301,
+		520
+            ],
+            "path_http": "/login",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
+        {
+	    "socket_id": "https_kanban_savla_dev",
+            "socket_name": "kanban-savla-dev HTTPS",
+            "host_name": "https://kanban.savla.dev",
+            "port_tcp": 443,
+            "expected_http_code_array": [
+                200,
+                301,
+		520
+            ],
+            "path_http": "/login",
+            "dish_source": [
+                "talion",
+                "frank"
+            ],
+            "status": null
+        },
 	{
 	    "socket_id": "https_red_n0p_cz",
             "socket_name": "red-n0p-cz HTTPS",

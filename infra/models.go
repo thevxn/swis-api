@@ -60,7 +60,7 @@ type Host struct {
 	HostnameFQDN string `json:"hostname_fqdn" binding:"required"`
 
 	// Brief node's description -- shown in node's MOTD on remote login.
-	Description string `json:description`
+	Description string `json:"description"`
 
 	// Host's default domain name (e.g. savla.su as internal domain name).
 	Domain string `json:"domain" `

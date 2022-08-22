@@ -82,8 +82,9 @@
       },
 
       {
-	"hash": "sha256hash_frank",
-	"hostname": "frank.savla.su",
+	"id": "fra1_frank",
+	"hostname_short": "frank",
+	"hostname_fqdn": "frank.savla.su",
 	"domain": "savla.su",
 	"ansible_groups": [ "intranet_edge" ],
         "roles": [
