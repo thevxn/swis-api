@@ -1,8 +1,6 @@
 package swife
 
 import (
-	b64 "encoding/base64"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -26,12 +24,11 @@ func findFrontendBySiteName(c *gin.Context) (f *Frontend) {
 func GetFrontendBySiteName(c *gin.Context) {
 	if frontend := findFrontendBySiteName(c); frontend != nil {
 
-		// reencode HTML strings
-		frontend.Title = b64.StdEncoding.
-			EncodeToString([]byte(fmt.Sprintf("%s", frontend.Title)))
-		frontend.Description = b64.StdEncoding.
-			EncodeToString([]byte(fmt.Sprintf("%s", frontend.Description)))
-
+		// reencode HTML strings --- only if raw HTML as input!
+		//frontend.Title = b64.StdEncoding.
+		//	EncodeToString([]byte(fmt.Sprintf("%s", frontend.Title)))
+		//frontend.Description = b64.StdEncoding.
+		//	EncodeToString([]byte(fmt.Sprintf("%s", frontend.Description)))
 		c.IndentedJSON(http.StatusOK, frontend)
 	}
 }
