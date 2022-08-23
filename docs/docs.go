@@ -484,6 +484,265 @@ const docTemplate = `{
                 }
             }
         },
+        "/infra": {
+            "get": {
+                "description": "get all infrastructure details",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Get whole infrastructure",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Infrastructure"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/hosts": {
+            "get": {
+                "description": "get hosts list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Get all hosts",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Hosts"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/hosts/{hostname}": {
+            "get": {
+                "description": "get host by :hostname param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Get host by Hostname",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/networks": {
+            "get": {
+                "description": "get networks list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Get all networks",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Infrastructure"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/restore": {
+            "post": {
+                "description": "restore infrastructure data model",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Upload infrastructure JSON dump",
+                "responses": {}
+            }
+        },
+        "/news/sources/{name}": {
+            "get": {
+                "description": "get news sources by their :name param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Get news source list by Username",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/news.News"
+                        }
+                    }
+                }
+            }
+        },
+        "/news/{name}": {
+            "get": {
+                "description": "fetch and parse news for :user param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Get news by User",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/news.News"
+                        }
+                    }
+                }
+            }
+        },
+        "/projects": {
+            "post": {
+                "description": "add new project to projects list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Add new project",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/projects.Project"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/projects.Project"
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/restore": {
+            "post": {
+                "description": "upload project JSON dump and restore the data model",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Upload projects dump -- restore projects",
+                "responses": {}
+            }
+        },
+        "/projects/{id}": {
+            "get": {
+                "description": "get project details by :id param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Get project by ID",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/projects.Project"
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/{name}": {
+            "get": {
+                "description": "get project list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Get all projects",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/projects.Projects"
+                        }
+                    }
+                }
+            }
+        },
+        "/swife/restore": {
+            "post": {
+                "description": "upload frontend JSON dump and restore the data model",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "swife"
+                ],
+                "summary": "Uploadswife dump backup -- restores all frontends",
+                "responses": {}
+            }
+        },
+        "/swife/{sitename}": {
+            "get": {
+                "description": "get frontend details by :sitename param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "swife"
+                ],
+                "summary": "Get frontend by Sitename",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swife.Frontend"
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "description": "get users complete list",
@@ -891,6 +1150,194 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/groups.Group"
                     }
+                }
+            }
+        },
+        "infra.Host": {
+            "type": "object",
+            "required": [
+                "hostname_fqdn",
+                "hostname_short",
+                "id"
+            ],
+            "properties": {
+                "children": {
+                    "description": "Children of such machine -- should use machines' hashes for proper linking.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "description": {
+                    "description": "Brief node's description -- shown in node's MOTD on remote login.",
+                    "type": "string"
+                },
+                "domain": {
+                    "description": "Host's default domain name (e.g. savla.su as internal domain name).",
+                    "type": "string"
+                },
+                "hostname_fqdn": {
+                    "description": "Node hostname as FQDN-formatted.",
+                    "type": "string"
+                },
+                "hostname_short": {
+                    "description": "Node hostname without its domain.",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Unique hash/ID to link to such host record.",
+                    "type": "string"
+                },
+                "ip_address": {
+                    "description": "Important network-related IP addresses to be assigned to such host (e.g. public interface address, wireguard interface address etc).",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "roles": {
+                    "description": "Ansible roles to be applied to such host.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "infra.Hosts": {
+            "type": "object",
+            "properties": {
+                "hosts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/infra.Host"
+                    }
+                }
+            }
+        },
+        "infra.Infrastructure": {
+            "type": "object",
+            "properties": {
+                "hosts": {
+                    "description": "Users\t\t[]User\nGroups\t[]Group",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/infra.Host"
+                    }
+                },
+                "networks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/infra.Network"
+                    }
+                }
+            }
+        },
+        "infra.Network": {
+            "type": "object",
+            "properties": {
+                "hash": {
+                    "type": "string"
+                },
+                "interface": {
+                    "type": "string"
+                },
+                "network_address": {
+                    "type": "string"
+                },
+                "network_cidr_block": {
+                    "type": "string"
+                },
+                "network_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "news.News": {
+            "type": "object",
+            "properties": {
+                "news_sources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/news.Source"
+                    }
+                },
+                "news_user": {
+                    "type": "string"
+                }
+            }
+        },
+        "news.Source": {
+            "type": "object",
+            "properties": {
+                "source_id": {
+                    "type": "string"
+                },
+                "source_name": {
+                    "type": "string"
+                },
+                "source_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "projects.Project": {
+            "type": "object",
+            "properties": {
+                "project_deploy_target": {
+                    "type": "string"
+                },
+                "project_desc": {
+                    "type": "string"
+                },
+                "project_docs_link": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "string"
+                },
+                "project_manager": {
+                    "type": "string"
+                },
+                "project_name": {
+                    "type": "string"
+                },
+                "project_published": {
+                    "type": "boolean"
+                },
+                "project_repo": {
+                    "type": "string"
+                },
+                "project_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "projects.Projects": {
+            "type": "object",
+            "properties": {
+                "projects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/projects.Project"
+                    }
+                }
+            }
+        },
+        "swife.Frontend": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "description": "Site's description, possible on the frontpage.",
+                    "type": "string"
+                },
+                "site_name": {
+                    "description": "SiteName or hostname to get details for.",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Site's title.",
+                    "type": "string"
                 }
             }
         },

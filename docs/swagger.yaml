@@ -188,6 +188,136 @@ definitions:
           $ref: '#/definitions/groups.Group'
         type: array
     type: object
+  infra.Host:
+    properties:
+      children:
+        description: Children of such machine -- should use machines' hashes for proper
+          linking.
+        items:
+          type: string
+        type: array
+      description:
+        description: Brief node's description -- shown in node's MOTD on remote login.
+        type: string
+      domain:
+        description: Host's default domain name (e.g. savla.su as internal domain
+          name).
+        type: string
+      hostname_fqdn:
+        description: Node hostname as FQDN-formatted.
+        type: string
+      hostname_short:
+        description: Node hostname without its domain.
+        type: string
+      id:
+        description: Unique hash/ID to link to such host record.
+        type: string
+      ip_address:
+        description: Important network-related IP addresses to be assigned to such
+          host (e.g. public interface address, wireguard interface address etc).
+        items:
+          type: string
+        type: array
+      roles:
+        description: Ansible roles to be applied to such host.
+        items:
+          type: string
+        type: array
+    required:
+    - hostname_fqdn
+    - hostname_short
+    - id
+    type: object
+  infra.Hosts:
+    properties:
+      hosts:
+        items:
+          $ref: '#/definitions/infra.Host'
+        type: array
+    type: object
+  infra.Infrastructure:
+    properties:
+      hosts:
+        description: "Users\t\t[]User\nGroups\t[]Group"
+        items:
+          $ref: '#/definitions/infra.Host'
+        type: array
+      networks:
+        items:
+          $ref: '#/definitions/infra.Network'
+        type: array
+    type: object
+  infra.Network:
+    properties:
+      hash:
+        type: string
+      interface:
+        type: string
+      network_address:
+        type: string
+      network_cidr_block:
+        type: string
+      network_name:
+        type: string
+    type: object
+  news.News:
+    properties:
+      news_sources:
+        items:
+          $ref: '#/definitions/news.Source'
+        type: array
+      news_user:
+        type: string
+    type: object
+  news.Source:
+    properties:
+      source_id:
+        type: string
+      source_name:
+        type: string
+      source_url:
+        type: string
+    type: object
+  projects.Project:
+    properties:
+      project_deploy_target:
+        type: string
+      project_desc:
+        type: string
+      project_docs_link:
+        type: string
+      project_id:
+        type: string
+      project_manager:
+        type: string
+      project_name:
+        type: string
+      project_published:
+        type: boolean
+      project_repo:
+        type: string
+      project_url:
+        type: string
+    type: object
+  projects.Projects:
+    properties:
+      projects:
+        items:
+          $ref: '#/definitions/projects.Project'
+        type: array
+    type: object
+  swife.Frontend:
+    properties:
+      description:
+        description: Site's description, possible on the frontpage.
+        type: string
+      site_name:
+        description: SiteName or hostname to get details for.
+        type: string
+      title:
+        description: Site's title.
+        type: string
+    type: object
   users.User:
     properties:
       country:
@@ -585,6 +715,176 @@ paths:
       summary: Get group by ID
       tags:
       - groups
+  /infra:
+    get:
+      description: get all infrastructure details
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Infrastructure'
+      summary: Get whole infrastructure
+      tags:
+      - infra
+  /infra/hosts:
+    get:
+      description: get hosts list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Hosts'
+      summary: Get all hosts
+      tags:
+      - infra
+  /infra/hosts/{hostname}:
+    get:
+      description: get host by :hostname param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Host'
+      summary: Get host by Hostname
+      tags:
+      - infra
+  /infra/networks:
+    get:
+      description: get networks list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Infrastructure'
+      summary: Get all networks
+      tags:
+      - infra
+  /infra/restore:
+    post:
+      consumes:
+      - application/json
+      description: restore infrastructure data model
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload infrastructure JSON dump
+      tags:
+      - infra
+  /news/{name}:
+    get:
+      description: fetch and parse news for :user param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/news.News'
+      summary: Get news by User
+      tags:
+      - news
+  /news/sources/{name}:
+    get:
+      description: get news sources by their :name param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/news.News'
+      summary: Get news source list by Username
+      tags:
+      - news
+  /projects:
+    post:
+      description: add new project to projects list
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/projects.Project'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Project'
+      summary: Add new project
+      tags:
+      - projects
+  /projects/{id}:
+    get:
+      description: get project details by :id param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Project'
+      summary: Get project by ID
+      tags:
+      - projects
+  /projects/{name}:
+    get:
+      description: get project list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Projects'
+      summary: Get all projects
+      tags:
+      - projects
+  /projects/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload project JSON dump and restore the data model
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload projects dump -- restore projects
+      tags:
+      - projects
+  /swife/{sitename}:
+    get:
+      description: get frontend details by :sitename param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swife.Frontend'
+      summary: Get frontend by Sitename
+      tags:
+      - swife
+  /swife/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload frontend JSON dump and restore the data model
+      produces:
+      - application/json
+      responses: {}
+      summary: Uploadswife dump backup -- restores all frontends
+      tags:
+      - swife
   /users:
     get:
       description: get users complete list

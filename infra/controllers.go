@@ -26,24 +26,48 @@ func findHostByHostname(c *gin.Context) (index *int, h *Host) {
 	return nil, nil
 }
 
+// @Summary Get whole infrastructure
+// @Description get all infrastructure details
+// @Tags infra
+// @Produce  json
+// @Success 200 {object} infra.Infrastructure
+// @Router /infra [get]
 func GetInfrastructure(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"infrastructure": infrastructure,
 	})
 }
 
+// @Summary Get all hosts
+// @Description get hosts list
+// @Tags infra
+// @Produce  json
+// @Success 200 {object} infra.Hosts
+// @Router /infra/hosts [get]
 func GetHosts(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"hosts": infrastructure.Hosts,
 	})
 }
 
+// @Summary Get all networks
+// @Description get networks list
+// @Tags infra
+// @Produce  json
+// @Success 200 {object} infra.Infrastructure.Networks
+// @Router /infra/networks [get]
 func GetNetworks(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"networks": infrastructure.Networks,
 	})
 }
 
+// @Summary Get host by Hostname
+// @Description get host by :hostname param
+// @Tags infra
+// @Produce  json
+// @Success 200 {object} infra.Host
+// @Router /infra/hosts/{hostname} [get]
 func GetHostByHostname(c *gin.Context) {
 	if _, host := findHostByHostname(c); host != nil {
 		// host found
@@ -51,6 +75,12 @@ func GetHostByHostname(c *gin.Context) {
 	}
 }
 
+// @Summary Upload infrastructure JSON dump
+// @Description restore infrastructure data model
+// @Tags infra
+// @Accept json
+// @Produce json
+// @Router /infra/restore [post]
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
 	var importInfrastructure Infrastructures

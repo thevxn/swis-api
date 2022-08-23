@@ -21,6 +21,12 @@ func findFrontendBySiteName(c *gin.Context) (f *Frontend) {
 	return nil
 }
 
+// @Summary Get frontend by Sitename
+// @Description get frontend details by :sitename param
+// @Tags swife
+// @Produce  json
+// @Success 200 {object} swife.Frontend
+// @Router /swife/{sitename} [get]
 func GetFrontendBySiteName(c *gin.Context) {
 	if frontend := findFrontendBySiteName(c); frontend != nil {
 
@@ -33,6 +39,12 @@ func GetFrontendBySiteName(c *gin.Context) {
 	}
 }
 
+// @Summary Uploadswife dump backup -- restores all frontends
+// @Description upload frontend JSON dump and restore the data model
+// @Tags swife
+// @Accept json
+// @Produce json
+// @Router /swife/restore [post]
 func PostDumpRestore(c *gin.Context) {
 	var importFrontends []Frontend
 

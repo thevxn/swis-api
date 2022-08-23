@@ -23,6 +23,12 @@ func findProjectByID(c *gin.Context) (p *Project) {
 	return nil
 }
 
+// @Summary Get all projects
+// @Description get project list
+// @Tags projects
+// @Produce  json
+// @Success 200 {object} projects.Projects
+// @Router /projects/{name} [get]
 // GetProjects function dumps the projects variable contents
 func GetProjects(c *gin.Context) {
 	// serialize struct to JSON
@@ -33,6 +39,12 @@ func GetProjects(c *gin.Context) {
 	})
 }
 
+// @Summary Get project by ID
+// @Description get project details by :id param
+// @Tags projects
+// @Produce  json
+// @Success 200 {object} projects.Project
+// @Router /projects/{id} [get]
 // GetProjectByID returns project's properties, given sent ID exists in database
 func GetProjectByID(c *gin.Context) {
 	if p := findProjectByID(c); p != nil {
@@ -45,6 +57,13 @@ func GetProjectByID(c *gin.Context) {
 	}
 }
 
+// @Summary Add new project
+// @Description add new project to projects list
+// @Tags projects
+// @Produce json
+// @Param request body projects.Project true "query params"
+// @Success 200 {object} projects.Project
+// @Router /projects [post]
 // PostProject
 func PostProject(c *gin.Context) {
 	var newProject Project
@@ -68,6 +87,12 @@ func PostProject(c *gin.Context) {
 	})
 }
 
+// @Summary Upload projects dump -- restore projects
+// @Description upload project JSON dump and restore the data model
+// @Tags projects
+// @Accept json
+// @Produce json
+// @Router /projects/restore [post]
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
 	var importProjects Projects
