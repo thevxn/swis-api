@@ -39,7 +39,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/alvax.Command"
+                            "$ref": "#/definitions/alvax.AlvaxCommands"
                         }
                     }
                 }
@@ -59,6 +59,91 @@ const docTemplate = `{
                 ],
                 "summary": "Upload alvax dump backup -- restores all loaded commands",
                 "responses": {}
+            }
+        },
+        "/business": {
+            "get": {
+                "description": "get business complete list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Get all businesses",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/business.BusinessArray"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new business",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Add new business to the array",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                }
+            }
+        },
+        "/business/restore": {
+            "post": {
+                "description": "upload business JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Upload business dump backup -- restores all businesses",
+                "responses": {}
+            }
+        },
+        "/business/{ico}": {
+            "get": {
+                "description": "get business by :ico param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Get business by its ICO (ID)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                }
             }
         },
         "/depots": {
@@ -272,6 +357,133 @@ const docTemplate = `{
                 }
             }
         },
+        "/finance": {
+            "get": {
+                "description": "get finance complete list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Get all finance accounts",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Finance"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/accounts/{owner}": {
+            "get": {
+                "description": "get finance account by :owner param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Get finance account by its Owner",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Account"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/restore": {
+            "post": {
+                "description": "upload accounts JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Upload finance accounts dump backup -- restores all finance accounts",
+                "responses": {}
+            }
+        },
+        "/group": {
+            "post": {
+                "description": "add new group to groups array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Add new group to groups array",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/groups.Group"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/groups.Group"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups": {
+            "get": {
+                "description": "get groups complete list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Get all groups",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/groups.Groups"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/{id}": {
+            "get": {
+                "description": "get group by :id param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Get group by ID",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/groups.Group"
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "description": "get users complete list",
@@ -357,7 +569,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/{user}/keys/ssh": {
+        "/users/{name}/keys/ssh": {
             "get": {
                 "description": "fetch :user ssh key array output in plain text",
                 "produces": [
@@ -408,6 +620,20 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "alvax.AlvaxCommands": {
+            "type": "object",
+            "properties": {
+                "command_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/alvax.Command"
+                    }
+                },
+                "user": {
+                    "type": "string"
+                }
+            }
+        },
         "alvax.Command": {
             "type": "object",
             "properties": {
@@ -432,6 +658,57 @@ const docTemplate = `{
                 },
                 "required_argument": {
                     "type": "boolean"
+                }
+            }
+        },
+        "business.Business": {
+            "type": "object",
+            "properties": {
+                "contact": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/business.Contact"
+                    }
+                },
+                "ico": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name_label": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "vat_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "business.BusinessArray": {
+            "type": "object",
+            "properties": {
+                "business": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/business.Business"
+                    }
+                }
+            }
+        },
+        "business.Contact": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         },
@@ -522,6 +799,98 @@ const docTemplate = `{
                 "socket_name": {
                     "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example",
                     "type": "string"
+                }
+            }
+        },
+        "finance.Account": {
+            "type": "object",
+            "properties": {
+                "account_currency": {
+                    "type": "string"
+                },
+                "account_iban": {
+                    "type": "string"
+                },
+                "account_items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/finance.Item"
+                    }
+                },
+                "account_name": {
+                    "type": "string"
+                },
+                "account_number": {
+                    "type": "string"
+                },
+                "account_owner": {
+                    "type": "string"
+                },
+                "account_swift_bic": {
+                    "type": "string"
+                },
+                "bank_code": {
+                    "description": "bank codes like \"0100\" would be invalid as type int",
+                    "type": "string"
+                }
+            }
+        },
+        "finance.Finance": {
+            "type": "object",
+            "properties": {
+                "accounts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/finance.Account"
+                    }
+                }
+            }
+        },
+        "finance.Item": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "billing_date": {
+                    "type": "string"
+                },
+                "currency_code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "misc": {
+                    "type": "string"
+                }
+            }
+        },
+        "groups.Group": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "groups.Groups": {
+            "type": "object",
+            "properties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/groups.Group"
+                    }
                 }
             }
         },

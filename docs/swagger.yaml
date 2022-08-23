@@ -1,5 +1,14 @@
 basePath: /
 definitions:
+  alvax.AlvaxCommands:
+    properties:
+      command_list:
+        items:
+          $ref: '#/definitions/alvax.Command'
+        type: array
+      user:
+        type: string
+    type: object
   alvax.Command:
     properties:
       alias_names:
@@ -17,6 +26,39 @@ definitions:
         type: string
       required_argument:
         type: boolean
+    type: object
+  business.Business:
+    properties:
+      contact:
+        items:
+          $ref: '#/definitions/business.Contact'
+        type: array
+      ico:
+        type: string
+      id:
+        type: string
+      name_label:
+        type: string
+      role:
+        type: string
+      username:
+        type: string
+      vat_id:
+        type: string
+    type: object
+  business.BusinessArray:
+    properties:
+      business:
+        items:
+          $ref: '#/definitions/business.Business'
+        type: array
+    type: object
+  business.Contact:
+    properties:
+      content:
+        type: string
+      type:
+        type: string
     type: object
   depot.Depot:
     properties:
@@ -85,6 +127,66 @@ definitions:
     - host_name
     - port_tcp
     - socket_id
+    type: object
+  finance.Account:
+    properties:
+      account_currency:
+        type: string
+      account_iban:
+        type: string
+      account_items:
+        items:
+          $ref: '#/definitions/finance.Item'
+        type: array
+      account_name:
+        type: string
+      account_number:
+        type: string
+      account_owner:
+        type: string
+      account_swift_bic:
+        type: string
+      bank_code:
+        description: bank codes like "0100" would be invalid as type int
+        type: string
+    type: object
+  finance.Finance:
+    properties:
+      accounts:
+        items:
+          $ref: '#/definitions/finance.Account'
+        type: array
+    type: object
+  finance.Item:
+    properties:
+      amount:
+        type: number
+      billing_date:
+        type: string
+      currency_code:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      misc:
+        type: string
+    type: object
+  groups.Group:
+    properties:
+      id:
+        type: string
+      nickname:
+        type: string
+      role:
+        type: string
+    type: object
+  groups.Groups:
+    properties:
+      groups:
+        items:
+          $ref: '#/definitions/groups.Group'
+        type: array
     type: object
   users.User:
     properties:
@@ -191,7 +293,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/alvax.Command'
+            $ref: '#/definitions/alvax.AlvaxCommands'
       summary: Get all alvax's commands
       tags:
       - alvax
@@ -206,6 +308,62 @@ paths:
       summary: Upload alvax dump backup -- restores all loaded commands
       tags:
       - alvax
+  /business:
+    get:
+      description: get business complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.BusinessArray'
+      summary: Get all businesses
+      tags:
+      - business
+    post:
+      description: add new business
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/business.Business'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Add new business to the array
+      tags:
+      - business
+  /business/{ico}:
+    get:
+      description: get business by :ico param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Get business by its ICO (ID)
+      tags:
+      - business
+  /business/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload business JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload business dump backup -- restores all businesses
+      tags:
+      - business
   /depots:
     get:
       description: get depot complete list
@@ -344,6 +502,89 @@ paths:
           description: OK
       tags:
       - dish
+  /finance:
+    get:
+      description: get finance complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Finance'
+      summary: Get all finance accounts
+      tags:
+      - finance
+  /finance/accounts/{owner}:
+    get:
+      description: get finance account by :owner param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Get finance account by its Owner
+      tags:
+      - finance
+  /finance/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload accounts JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload finance accounts dump backup -- restores all finance accounts
+      tags:
+      - finance
+  /group:
+    post:
+      description: add new group to groups array
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/groups.Group'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/groups.Group'
+      summary: Add new group to groups array
+      tags:
+      - groups
+  /groups:
+    get:
+      description: get groups complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/groups.Groups'
+      summary: Get all groups
+      tags:
+      - groups
+  /groups/{id}:
+    get:
+      description: get group by :id param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/groups.Group'
+      summary: Get group by ID
+      tags:
+      - groups
   /users:
     get:
       description: get users complete list
@@ -389,7 +630,7 @@ paths:
       summary: Get user by Name
       tags:
       - users
-  /users/{user}/keys/ssh:
+  /users/{name}/keys/ssh:
     get:
       description: fetch :user ssh key array output in plain text
       produces:

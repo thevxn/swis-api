@@ -12,7 +12,7 @@ import (
 // @Description get command array for alvax
 // @Tags alvax
 // @Produce  json
-// @Success 200 {object} alvax.Command
+// @Success 200 {object} alvax.AlvaxCommands
 // @Router /alvax/commands [get]
 // GetSocketList GET method
 // GetCommandList returns JSON serialized list of commands for the alvax backend.

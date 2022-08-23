@@ -8,6 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get all finance accounts
+// @Description get finance complete list
+// @Tags finance
+// @Produce  json
+// @Success 200 {object} finance.Finance
+// @Router /finance [get]
 func GetAccounts(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,
@@ -16,6 +22,12 @@ func GetAccounts(c *gin.Context) {
 	})
 }
 
+// @Summary Get finance account by its Owner
+// @Description get finance account by :owner param
+// @Tags finance
+// @Produce  json
+// @Success 200 {object} finance.Account
+// @Router /finance/accounts/{owner} [get]
 func GetAccountByOwner(c *gin.Context) {
 	owner := c.Param("owner")
 
@@ -34,6 +46,12 @@ func GetAccountByOwner(c *gin.Context) {
 	})
 }
 
+// @Summary Upload finance accounts dump backup -- restores all finance accounts
+// @Description upload accounts JSON dump
+// @Tags finance
+// @Accept json
+// @Produce json
+// @Router /finance/restore [post]
 func PostDumpRestore(c *gin.Context) {
 	var importFinance Finance
 

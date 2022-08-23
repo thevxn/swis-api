@@ -126,7 +126,7 @@ func PostDumpRestore(c *gin.Context) {
 // @Produce json
 // @Param request body string true "query params"
 // @Success 200 {object} users.User
-// @Router /users/{user}/keys/ssh [post]
+// @Router /users/{name}/keys/ssh [post]
 // PostUsersSSHKeys method adds (rewrites) SSH key array by user.Name
 func PostUsersSSHKeys(c *gin.Context) {
 	var index, user = findUserByName(c)
@@ -150,7 +150,7 @@ func PostUsersSSHKeys(c *gin.Context) {
 // @Tags users
 // @Produce json
 // @Success 200 {object} users.User
-// @Router /users/{user}/keys/ssh [get]
+// @Router /users/{name}/keys/ssh [get]
 // GetUsersSSHKeysRaw
 func GetUsersSSHKeysRaw(c *gin.Context) {
 	var _, user = findUserByName(c)
