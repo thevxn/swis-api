@@ -153,7 +153,7 @@ paths:
     head:
       responses:
         "200":
-          description: ""
+          description: OK
       tags:
       - dish
 swagger: "2.0"

@@ -10,6 +10,7 @@
 
 PROJECT_NAME?=swapi
 DOCKER_COMPOSE_FILE?=./docker-compose.yml
+SWAG_BINARY?=~/go/bin/swag
 
 # define standard colors
 # https://gist.github.com/rsperl/d2dfe88a520968fbc1f49db0a29345b9
@@ -92,3 +93,11 @@ push:
 	@echo -e "\n${YELLOW} (re)tagging project and pushing to master... ${RESET}\n"
 	@git tag -fa v${SWAPI_VERSION} -m "v${SWAPI_VERSION}"
 	@git push --follow-tags origin master
+
+.PHONY: docs
+docs:
+	@echo -e "\n${YELLOW} Regenerating documentation for swagger... ${RESET}\n"
+	@go get -u github.com/swaggo/swag/cmd/swag
+	@go install github.com/swaggo/swag/cmd/swag@latest
+	@${SWAG_BINARY} init
+
