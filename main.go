@@ -32,7 +32,7 @@ import (
 
 // @title swis-api v5
 // @version 5.1
-// @description dish swapi module
+// @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support

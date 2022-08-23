@@ -335,6 +335,20 @@
             ]
         },
         {
+	    "socket_id": "http_docs_swapi_savla_su",
+            "socket_name": "swapi docs test HTTP",
+            "host_name": "http://swapi.savla.su",
+            "port_tcp": 80,
+	    "comment": "silenced as HEAD request causes 404",
+            "expected_http_code_array": [
+                200
+            ],
+            "path_http": "/docs/index.html",
+            "dish_target": [
+                "talion"
+            ]
+        },
+        {
 	    "socket_id": "https_savla_dev",
             "socket_name": "savla-dev HTTPS",
             "host_name": "https://savla.dev",
