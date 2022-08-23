@@ -6,7 +6,9 @@
             "roles": [
                 "admin",
                 "developer",
-                "domains"
+                "domains", 
+		"frontend", 
+		"swife"
             ],
             "token_base64": "",
             "github_username": "Tackx",
@@ -15,7 +17,7 @@
             "wireguard_vpn": [
                 {
                     "device_name": "tack-pc-win",
-                    "public_key": "",
+                    "public_key": "Z+CeopTJI4bQVLQdT2Rh2UQrOkMqcOZZOqIbC6xQuXc=",
                     "private_key": "",
                     "ip_address": "10.4.5.132",
                     "allowed_ips": null,
@@ -23,7 +25,7 @@
                 },
                 {
                     "device_name": "tack-phone",
-                    "public_key": "",
+                    "public_key": "rTxRBWmtrW0nxzgI3qu+qty5MegVt4PaqadsOtyw7yU=",
                     "private_key": "",
                     "ip_address": "10.4.5.135",
                     "allowed_ips": null,
@@ -31,7 +33,7 @@
                 },
                 {
                     "device_name": "talion",
-                    "public_key": "",
+                    "public_key": "rD6SMGwWRd2XYdEt/YO8uWu/Qb11JNZkOBVpZ86ww0A=",
                     "private_key": "",
                     "ip_address": "10.4.5.136",
                     "allowed_ips": null,
@@ -63,7 +65,7 @@
             "wireguard_vpn": [
                 {
                     "device_name": "krustyboks-mac",
-                    "public_key": "",
+                    "public_key": "qq9M5TabirKjRH7KlYp8SLXPCAyvBpYzeHod/J+vNyA=",
                     "private_key": "",
                     "ip_address": "10.4.5.131",
                     "allowed_ips": null,
@@ -71,7 +73,7 @@
                 },
                 {
                     "device_name": "krustyPhone-iOS",
-                    "public_key": "",
+                    "public_key": "sr9+lQzdAVaHkzKCRzg9jGdadFQQLnfud++Wcipv3R0=",
                     "private_key": "",
                     "ip_address": "10.4.5.134",
                     "allowed_ips": null,
@@ -182,7 +184,7 @@
             "wireguard_vpn": [
                 {
                     "device_name": "fgre-macbook",
-                    "public_key": "",
+                    "public_key": "wTcPbgnEe+KLvs2Cy0lMb60VrS7s9G4wjZhAaiLjsgg=",
                     "private_key": "",
                     "ip_address": "10.4.5.133",
                     "allowed_ips": null,
