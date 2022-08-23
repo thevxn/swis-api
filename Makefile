@@ -6,6 +6,7 @@
 # VARS
 #
 
+include .env.example
 -include .env
 
 PROJECT_NAME?=swapi

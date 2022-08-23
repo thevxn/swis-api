@@ -56,7 +56,7 @@ func fetchRSSContents(s *Source) (i *[]Item) {
 // @Description fetch and parse news for :user param
 // @Tags news
 // @Produce  json
-// @Success 200 {object} news.News
+// @Success 200 {object} news.Item
 // @Router /news/{name} [get]
 // GetNewsByUser returns all possible news from all sources loaded in memory
 func GetNewsByUser(c *gin.Context) {
