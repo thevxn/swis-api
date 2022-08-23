@@ -8,6 +8,24 @@ sakalWeb (v5) Information System RESTful API
 
 [module documentation TBD]()
 
+## documentation
+
+swagger 2.0 is used to document API scheme
+
+```
+# at project root run
+swag init .
+
+# build local binary
+go build swis-api
+
+# run server
+./swis-api
+
+# view
+http://localhost:8049/swagger/index.html
+```
+
 ## importing
 
 At start, swapi instance memory is cleared and ready for any data import (until the next restart). Any data stored in runtime memory should be dumped using GET methods at particular paths. This approach should make `swapi` instance universal (while omitting custom packages/modules).

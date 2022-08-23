@@ -1,0 +1,30 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "dish swapi module",
+        "title": "swis-api v5",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://savla.dev/swapi",
+            "email": "info@savla.dev"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "5.1"
+    },
+    "basePath": "/dish",
+    "paths": {
+        "/dish/test": {
+            "head": {
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    }
+}

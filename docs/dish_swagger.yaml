@@ -1,0 +1,20 @@
+basePath: /dish
+info:
+  contact:
+    email: info@savla.dev
+    name: API Support
+    url: http://savla.dev/swapi
+  description: dish swapi module
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: swis-api v5
+  version: "5.1"
+paths:
+  /dish/test:
+    head:
+      responses:
+        "200":
+          description: ""
+swagger: "2.0"

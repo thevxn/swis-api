@@ -7,6 +7,11 @@ import (
 	//"github.com/savla-dev/savla-dish/socket"
 )
 
+// @Summary
+// @Description
+// @Tags dish
+// @Success 200
+// @Router /dish/test [head]
 // HeadTest is the HEAD HTTP method for savla-dish service, that acts like a testing endpoint
 func HeadTest(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
@@ -14,6 +19,12 @@ func HeadTest(c *gin.Context) {
 	})
 }
 
+// @Summary Get all sockets list
+// @Description get socket list, socket array
+// @Tags dish
+// @Produce  json
+// @Success 200 {object} string "ok"
+// @Router /dish/sockets [get]
 // GetSocketList GET method
 func GetSocketList(c *gin.Context) {
 	//var sockets = socket.Sockets{
@@ -24,6 +35,13 @@ func GetSocketList(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, sockets)
 }
 
+// @Summary Get socket list by host
+// @Description get socket list by Host
+// @Tags dish
+// @Produce  json
+// @Param   host     path    string     true        "dish instance name"
+// @Success 200 {string} string	"ok"
+// @Router /dish/sockets/{host} [get]
 // GetSocketListByHost GET
 func GetSocketListByHost(c *gin.Context) {
 	host := c.Param("host")
@@ -52,6 +70,13 @@ func GetSocketListByHost(c *gin.Context) {
 
 }
 
+// @Summary Adding new socket to socket array
+// @Description add new socket to socket array
+// @Tags dish
+// @Produce json
+// @Param request body dish.Socket true "query params"
+// @Success 200 {object} dish.Socket
+// @Router /dish/sockets [post]
 func PostNewSocket(c *gin.Context) {
 	var newSocket Socket
 
@@ -84,6 +109,13 @@ func PostNewSocket(c *gin.Context) {
 	})
 }
 
+// @Summary Update socket by its ID
+// @Description update socket by its ID
+// @Tags dish
+// @Produce json
+// @Param request body dish.Socket.ID true "query params"
+// @Success 200 {object} dish.Socket
+// @Router /dish/sockets/{id} [put]
 func UpdateSocketByID(c *gin.Context) {
 	var updatedSocket Socket
 
@@ -107,6 +139,12 @@ func UpdateSocketByID(c *gin.Context) {
 
 }
 
+// @Summary Delete socket by its ID
+// @Description delete socket by its ID
+// @Tags dish
+// @Produce json
+// @Success 200 {string} string "ok"
+// @Router /dish/sockets/{id} [delete]
 func DeleteSocketByID(c *gin.Context) {
 	i, s := findSocketByID(c)
 
@@ -130,6 +168,12 @@ func DeleteSocketByID(c *gin.Context) {
 	})
 }
 
+// @Summary Upload dish dump backup -- restores all loaded sockets
+// @Description update dish JSON dump
+// @Tags dish
+// @Accept json
+// @Produce json
+// @Router /dish/restore [post]
 func PostDumpRestore(c *gin.Context) {
 	var importSockets Sockets
 

@@ -5,6 +5,7 @@ package main
 
 import (
 	// golang libs
+
 	"net/http"
 	"time"
 
@@ -14,6 +15,7 @@ import (
 	"swis-api/business"
 	"swis-api/depot"
 	"swis-api/dish"
+	"swis-api/docs"
 	"swis-api/finance"
 	"swis-api/groups"
 	"swis-api/infra"
@@ -24,7 +26,24 @@ import (
 
 	// remote dependencies
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+// @title swis-api v5
+// @version 5.1
+// @description dish swapi module
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://savla.dev/swapi
+// @contact.email info@savla.dev
+
+// @license.name MIT
+// @license.url https://github.com/savla-dev/swis-api/blob/master/LICENSE
+
+// @host swapi.savla.su
+// @BasePath /
 
 func main() {
 	// blank gin without any middleware
@@ -117,6 +136,14 @@ func main() {
 	// import "swis-api/webui"
 	//webuiRouter := router.Group("/webui")
 	//webui.Routes(webuiRouter)
+
+	// swagger documentation
+	ginSwagger.WrapHandler(swaggerFiles.Handler,
+		ginSwagger.URL("http://0.0.0.0:8049/swagger/doc.json"),
+		ginSwagger.DefaultModelsExpandDepth(-1))
+
+	docs.SwaggerInfo.BasePath = "/"
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// attach router to http.Server and start it
 	// https://pkg.go.dev/net/http#Server
