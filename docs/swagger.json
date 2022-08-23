@@ -18,6 +18,98 @@
     "host": "swapi.savla.su",
     "basePath": "/",
     "paths": {
+        "/alvax/commands": {
+            "get": {
+                "description": "get command array for alvax",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "Get all alvax's commands",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/alvax.Command"
+                        }
+                    }
+                }
+            }
+        },
+        "/alvax/commands/restore": {
+            "post": {
+                "description": "update alvax JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "Upload alvax dump backup -- restores all loaded commands",
+                "responses": {}
+            }
+        },
+        "/depots": {
+            "get": {
+                "description": "get depot complete list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depot"
+                ],
+                "summary": "Get all depots and their users/owners",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depot.Depots"
+                        }
+                    }
+                }
+            }
+        },
+        "/depots/restore": {
+            "post": {
+                "description": "upload depot JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depot"
+                ],
+                "summary": "Upload depot dump backup -- restores all depots",
+                "responses": {}
+            }
+        },
+        "/depots/{owner}": {
+            "get": {
+                "description": "get depot list by :owner param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depot"
+                ],
+                "summary": "Get depot list by Owner",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depot.Depot"
+                        }
+                    }
+                }
+            }
+        },
         "/dish/restore": {
             "post": {
                 "description": "update dish JSON dump",
@@ -172,9 +264,212 @@
                     }
                 }
             }
+        },
+        "/users": {
+            "get": {
+                "description": "get users complete list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get all users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.Users"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new user to users array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Add new user to users array",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/restore": {
+            "post": {
+                "description": "update users JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Upload users dump backup -- restores all users",
+                "responses": {}
+            }
+        },
+        "/users/{name}": {
+            "get": {
+                "description": "get user by their :name param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get user by Name",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user}/keys/ssh": {
+            "get": {
+                "description": "fetch :user ssh key array output in plain text",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get User's SSH keys in plain text",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new SSH keys to :user param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Add SSH public keys to User",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "alvax.Command": {
+            "type": "object",
+            "properties": {
+                "alias_names": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "argument_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "description": "name as in the '/name' Telegram command syntax",
+                    "type": "string"
+                },
+                "parent_class": {
+                    "type": "string"
+                },
+                "required_argument": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "depot.Depot": {
+            "type": "object",
+            "properties": {
+                "depot_items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/depot.Item"
+                    }
+                },
+                "owner_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "depot.Depots": {
+            "type": "object",
+            "properties": {
+                "depots": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/depot.Depot"
+                    }
+                }
+            }
+        },
+        "depot.Item": {
+            "type": "object",
+            "properties": {
+                "depot": {
+                    "type": "string"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "misc": {
+                    "type": "string"
+                }
+            }
+        },
         "dish.Socket": {
             "type": "object",
             "required": [
@@ -219,6 +514,114 @@
                 },
                 "socket_name": {
                     "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example",
+                    "type": "string"
+                }
+            }
+        },
+        "users.User": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "country": {
+                    "description": "Country of origin -- to help maintain global contacts.",
+                    "type": "string"
+                },
+                "discord_username": {
+                    "description": "Discord account/profile name.",
+                    "type": "string"
+                },
+                "full_name": {
+                    "description": "Full Name of such user.",
+                    "type": "string"
+                },
+                "gdpr_consent": {
+                    "description": "Important GDPR consent boolean -- if false, user's details should be omitted!\nSEE more -- https://gdpr.eu/checklist/",
+                    "type": "boolean"
+                },
+                "github_username": {
+                    "description": "GitHub account/profile name (used for SSH public keys importing).",
+                    "type": "string"
+                },
+                "gpg_keys": {
+                    "description": "User's GPG public keys array.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "description": "ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property).\nID       \tstring \t\t`json:\"id\"`",
+                    "type": "string"
+                },
+                "roles": {
+                    "description": "User's given roles -- a role labels array.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ssh_keys": {
+                    "description": "User's SSH public keys array.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "token_base64": {
+                    "description": "Unique token used for auth purposes, base64'd.",
+                    "type": "string"
+                },
+                "wireguard_vpn": {
+                    "description": "All Wireguard config objects -- an array.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/users.Wireguard"
+                    }
+                }
+            }
+        },
+        "users.Users": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "description": "An array of User objects",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/users.User"
+                    }
+                }
+            }
+        },
+        "users.Wireguard": {
+            "type": "object",
+            "properties": {
+                "allowed_ips": {
+                    "description": "Allowed IP address(es) list on the side of server (vpn_gateway_server).",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "device_name": {
+                    "description": "Unique device name (for such user).",
+                    "type": "string"
+                },
+                "ip_address": {
+                    "description": "User's private IP address.",
+                    "type": "string"
+                },
+                "permission": {
+                    "description": "Is the user given permission to dial a connection?",
+                    "type": "boolean"
+                },
+                "private_key": {
+                    "description": "Wireguard private key.\nTODO: should be encrypted?",
+                    "type": "string"
+                },
+                "public_key": {
+                    "description": "Wireguard public key.",
                     "type": "string"
                 }
             }

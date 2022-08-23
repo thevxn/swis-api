@@ -139,11 +139,11 @@ func main() {
 
 	// swagger documentation
 	ginSwagger.WrapHandler(swaggerFiles.Handler,
-		ginSwagger.URL("http://0.0.0.0:8049/swagger/doc.json"),
+		ginSwagger.URL("http://0.0.0.0:8049/docs/doc.json"),
 		ginSwagger.DefaultModelsExpandDepth(-1))
 
 	docs.SwaggerInfo.BasePath = "/"
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// attach router to http.Server and start it
 	// https://pkg.go.dev/net/http#Server

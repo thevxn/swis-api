@@ -1,5 +1,50 @@
 basePath: /
 definitions:
+  alvax.Command:
+    properties:
+      alias_names:
+        items:
+          type: string
+        type: array
+      argument_list:
+        items:
+          type: string
+        type: array
+      name:
+        description: name as in the '/name' Telegram command syntax
+        type: string
+      parent_class:
+        type: string
+      required_argument:
+        type: boolean
+    type: object
+  depot.Depot:
+    properties:
+      depot_items:
+        items:
+          $ref: '#/definitions/depot.Item'
+        type: array
+      owner_name:
+        type: string
+    type: object
+  depot.Depots:
+    properties:
+      depots:
+        items:
+          $ref: '#/definitions/depot.Depot'
+        type: array
+    type: object
+  depot.Item:
+    properties:
+      depot:
+        type: string
+      desc:
+        type: string
+      id:
+        type: integer
+      misc:
+        type: string
+    type: object
   dish.Socket:
     properties:
       dish_target:
@@ -41,6 +86,88 @@ definitions:
     - port_tcp
     - socket_id
     type: object
+  users.User:
+    properties:
+      country:
+        description: Country of origin -- to help maintain global contacts.
+        type: string
+      discord_username:
+        description: Discord account/profile name.
+        type: string
+      full_name:
+        description: Full Name of such user.
+        type: string
+      gdpr_consent:
+        description: |-
+          Important GDPR consent boolean -- if false, user's details should be omitted!
+          SEE more -- https://gdpr.eu/checklist/
+        type: boolean
+      github_username:
+        description: GitHub account/profile name (used for SSH public keys importing).
+        type: string
+      gpg_keys:
+        description: User's GPG public keys array.
+        items:
+          type: string
+        type: array
+      name:
+        description: "ID not used anymore as indexing is used differently now (searching
+          by Name, index respects array implicit property).\nID       \tstring \t\t`json:\"id\"`"
+        type: string
+      roles:
+        description: User's given roles -- a role labels array.
+        items:
+          type: string
+        type: array
+      ssh_keys:
+        description: User's SSH public keys array.
+        items:
+          type: string
+        type: array
+      token_base64:
+        description: Unique token used for auth purposes, base64'd.
+        type: string
+      wireguard_vpn:
+        description: All Wireguard config objects -- an array.
+        items:
+          $ref: '#/definitions/users.Wireguard'
+        type: array
+    required:
+    - name
+    type: object
+  users.Users:
+    properties:
+      users:
+        description: An array of User objects
+        items:
+          $ref: '#/definitions/users.User'
+        type: array
+    type: object
+  users.Wireguard:
+    properties:
+      allowed_ips:
+        description: Allowed IP address(es) list on the side of server (vpn_gateway_server).
+        items:
+          type: string
+        type: array
+      device_name:
+        description: Unique device name (for such user).
+        type: string
+      ip_address:
+        description: User's private IP address.
+        type: string
+      permission:
+        description: Is the user given permission to dial a connection?
+        type: boolean
+      private_key:
+        description: |-
+          Wireguard private key.
+          TODO: should be encrypted?
+        type: string
+      public_key:
+        description: Wireguard public key.
+        type: string
+    type: object
 host: swapi.savla.su
 info:
   contact:
@@ -55,6 +182,67 @@ info:
   title: swis-api v5
   version: "5.1"
 paths:
+  /alvax/commands:
+    get:
+      description: get command array for alvax
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/alvax.Command'
+      summary: Get all alvax's commands
+      tags:
+      - alvax
+  /alvax/commands/restore:
+    post:
+      consumes:
+      - application/json
+      description: update alvax JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload alvax dump backup -- restores all loaded commands
+      tags:
+      - alvax
+  /depots:
+    get:
+      description: get depot complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depot.Depots'
+      summary: Get all depots and their users/owners
+      tags:
+      - depot
+  /depots/{owner}:
+    get:
+      description: get depot list by :owner param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depot.Depot'
+      summary: Get depot list by Owner
+      tags:
+      - depot
+  /depots/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload depot JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload depot dump backup -- restores all depots
+      tags:
+      - depot
   /dish/restore:
     post:
       consumes:
@@ -156,4 +344,92 @@ paths:
           description: OK
       tags:
       - dish
+  /users:
+    get:
+      description: get users complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.Users'
+      summary: Get all users
+      tags:
+      - users
+    post:
+      description: add new user to users array
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/users.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Add new user to users array
+      tags:
+      - users
+  /users/{name}:
+    get:
+      description: get user by their :name param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Get user by Name
+      tags:
+      - users
+  /users/{user}/keys/ssh:
+    get:
+      description: fetch :user ssh key array output in plain text
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Get User's SSH keys in plain text
+      tags:
+      - users
+    post:
+      description: add new SSH keys to :user param
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Add SSH public keys to User
+      tags:
+      - users
+  /users/restore:
+    post:
+      consumes:
+      - application/json
+      description: update users JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload users dump backup -- restores all users
+      tags:
+      - users
 swagger: "2.0"

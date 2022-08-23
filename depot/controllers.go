@@ -9,6 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get all depots and their users/owners
+// @Description get depot complete list
+// @Tags depot
+// @Produce  json
+// @Success 200 {object} depot.Depots
+// @Router /depots [get]
+// GetSocketList GET method
 func GetDepots(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -17,6 +24,13 @@ func GetDepots(c *gin.Context) {
 	})
 }
 
+// @Summary Get depot list by Owner
+// @Description get depot list by :owner param
+// @Tags depot
+// @Produce  json
+// @Success 200 {object} depot.Depot
+// @Router /depots/{owner} [get]
+// GetSocketList GET method
 func GetDepotByOwner(c *gin.Context) {
 	owner := c.Param("owner")
 
@@ -41,6 +55,12 @@ func GetDepotByOwner(c *gin.Context) {
 	})
 }
 
+// @Summary Upload depot dump backup -- restores all depots
+// @Description upload depot JSON dump
+// @Tags depot
+// @Accept json
+// @Produce json
+// @Router /depots/restore [post]
 func PostDumpRestore(c *gin.Context) {
 	var importDepots Depots
 

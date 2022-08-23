@@ -27,6 +27,13 @@ func findUserByName(c *gin.Context) (index *int, u *User) {
 	return nil, nil
 }
 
+// @Summary Get all users
+// @Description get users complete list
+// @Tags users
+// @Produce  json
+// @Success 200 {object} users.Users
+// @Router /users [get]
+// GetSocketList GET method
 // GetUsers returns JSON serialized list of users and their properties.
 func GetUsers(c *gin.Context) {
 	// serialize struct to JSON
@@ -36,6 +43,12 @@ func GetUsers(c *gin.Context) {
 	})
 }
 
+// @Summary Get user by Name
+// @Description get user by their :name param
+// @Tags users
+// @Produce  json
+// @Success 200 {object} users.User
+// @Router /users/{name} [get]
 // GetUserByName returns user's properties, given sent name exists in database.
 func GetUserByName(c *gin.Context) {
 	if _, user := findUserByName(c); user != nil {
@@ -46,6 +59,13 @@ func GetUserByName(c *gin.Context) {
 	//c.IndentedJSON(http.StatusNotFound, gin.H{"message": "user not found"})
 }
 
+// @Summary Add new user to users array
+// @Description add new user to users array
+// @Tags users
+// @Produce json
+// @Param request body users.User true "query params"
+// @Success 200 {object} users.User
+// @Router /users [post]
 // PostNewUser enables one to add new user to users model.
 func PostNewUser(c *gin.Context) {
 	var newUser User
@@ -70,6 +90,12 @@ func PostNewUser(c *gin.Context) {
 	})
 }
 
+// @Summary Upload users dump backup -- restores all users
+// @Description update users JSON dump
+// @Tags users
+// @Accept json
+// @Produce json
+// @Router /users/restore [post]
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
 	var importUsers Users
@@ -94,6 +120,13 @@ func PostDumpRestore(c *gin.Context) {
 	})
 }
 
+// @Summary Add SSH public keys to User
+// @Description add new SSH keys to :user param
+// @Tags users
+// @Produce json
+// @Param request body string true "query params"
+// @Success 200 {object} users.User
+// @Router /users/{user}/keys/ssh [post]
 // PostUsersSSHKeys method adds (rewrites) SSH key array by user.Name
 func PostUsersSSHKeys(c *gin.Context) {
 	var index, user = findUserByName(c)
@@ -112,6 +145,12 @@ func PostUsersSSHKeys(c *gin.Context) {
 	c.IndentedJSON(http.StatusAccepted, *user)
 }
 
+// @Summary Get User's SSH keys in plain text
+// @Description fetch :user ssh key array output in plain text
+// @Tags users
+// @Produce json
+// @Success 200 {object} users.User
+// @Router /users/{user}/keys/ssh [get]
 // GetUsersSSHKeysRaw
 func GetUsersSSHKeysRaw(c *gin.Context) {
 	var _, user = findUserByName(c)

@@ -94,10 +94,12 @@ push:
 	@git tag -fa v${SWAPI_VERSION} -m "v${SWAPI_VERSION}"
 	@git push --follow-tags origin master
 
+# dev/local usage only
 .PHONY: docs
 docs:
-	@echo -e "\n${YELLOW} Regenerating documentation for swagger... ${RESET}\n"
-	@go get -u github.com/swaggo/swag/cmd/swag
-	@go install github.com/swaggo/swag/cmd/swag@latest
+	@echo -e "\n${YELLOW} Regenerating documentation for swagger and rebuilding binary file... ${RESET}\n"
+#@go get -u github.com/swaggo/swag/cmd/swag
+#@go install github.com/swaggo/swag/cmd/swag@latest
 	@${SWAG_BINARY} init
+	@go build swis-api
 
