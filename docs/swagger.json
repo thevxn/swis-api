@@ -338,6 +338,35 @@
                 }
             }
         },
+        "/dish/sockets/{id}/mute": {
+            "put": {
+                "description": "mute/unmute socket by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Mute/unmute socket by its ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dish ID",
+                        "name": "host",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
+            }
+        },
         "/dish/test": {
             "head": {
                 "tags": [

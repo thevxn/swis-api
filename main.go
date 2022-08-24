@@ -1,3 +1,18 @@
+// @title swis-api v5
+// @version 5.2
+// @description sakalWeb Information System v5 RESTful API documentation
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://savla.dev/swapi
+// @contact.email info@savla.dev
+
+// @license.name MIT
+// @license.url https://github.com/savla-dev/swis-api/blob/master/LICENSE
+
+// @host swapi.savla.su
+// @BasePath /
+
 // Package swis-api is RESTful API core backend aka 'sakalWeb Information System v5'.
 // Basically it is a system of high modularity, where each module (package in golang terminology)
 // has its routes, models, and controllers (handler functions) defined in its own folder.
@@ -26,26 +41,11 @@ import (
 	"swis-api/users"
 
 	// remote dependencies
-
 	gin "github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title swis-api v5
-// @version 5.2
-// @description sakalWeb Information System v5 RESTful API documentation
-// @termsOfService http://swagger.io/terms/
-
-// @contact.name API Support
-// @contact.url http://savla.dev/swapi
-// @contact.email info@savla.dev
-
-// @license.name MIT
-// @license.url https://github.com/savla-dev/swis-api/blob/master/LICENSE
-
-// @host swapi.savla.su
-// @BasePath /
 func main() {
 	// blank gin without any middleware
 	router := gin.New()
@@ -116,8 +116,8 @@ func main() {
 			"title":     "sakalWebIS v5 RESTful API -- root route",
 			"message":   "welcome to sakalWeb API (swapi) root",
 			"code":      http.StatusOK,
-			"timestamp": time.Now(),
 			"bearer":    auth.Params.BearerToken,
+			"timestamp": time.Now().Unix(),
 		})
 	})
 

@@ -643,6 +643,25 @@ paths:
       summary: Update socket by its ID
       tags:
       - dish
+  /dish/sockets/{id}/mute:
+    put:
+      description: mute/unmute socket by its ID
+      parameters:
+      - description: dish ID
+        in: path
+        name: host
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Mute/unmute socket by its ID
+      tags:
+      - dish
   /dish/test:
     head:
       responses:
