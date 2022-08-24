@@ -113,8 +113,9 @@ func PostNewSocket(c *gin.Context) {
 // @Description mute/unmute socket by its ID
 // @Tags dish
 // @Produce json
+// @Param  host  path  string  true  "dish ID"
 // @Success 200 {object} dish.Socket
-// @Router /dish/sockets/{id} [put]
+// @Router /dish/sockets/{id}/mute [put]
 func MuteToggleSocketByID(c *gin.Context) {
 	var updatedSocket Socket
 

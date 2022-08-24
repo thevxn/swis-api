@@ -5,13 +5,13 @@ package main
 
 import (
 	// golang libs
-
 	"net/http"
 	"time"
 
 	// swapi modules -- very local dependencies
 	"swis-api/alvax"
 	"swis-api/auth"
+
 	//"swis-api/auth"
 	"swis-api/business"
 	"swis-api/depot"
@@ -113,10 +113,11 @@ func main() {
 	// root path --- auth required
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"title":   "sakalWebIS v5 RESTful API -- root route",
-			"message": "welcome to sakalWeb API (swapi) root",
-			"code":    http.StatusOK,
-			"bearer":  auth.Params.BearerToken,
+			"title":     "sakalWebIS v5 RESTful API -- root route",
+			"message":   "welcome to sakalWeb API (swapi) root",
+			"code":      http.StatusOK,
+			"timestamp": time.Now(),
+			"bearer":    auth.Params.BearerToken,
 		})
 	})
 
