@@ -54,7 +54,8 @@ func GetSocketListByHost(c *gin.Context) {
 
 	// loop over socketArray, find
 	for _, s := range socketArray {
-		if contains(s.DishTarget, host) {
+		// export only unmuted sockets
+		if contains(s.DishTarget, host) && !s.Muted {
 			// clear the dish source list for the client (dish)
 			s.DishTarget = []string{host}
 			sockets.Sockets = append(sockets.Sockets, s)
