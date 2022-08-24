@@ -9,9 +9,10 @@ import (
 	"net/http"
 	"time"
 
-	// swapi modules
+	// swapi modules -- very local dependencies
 	"swis-api/alvax"
 	"swis-api/auth"
+	//"swis-api/auth"
 	"swis-api/business"
 	"swis-api/depot"
 	"swis-api/dish"
@@ -25,7 +26,8 @@ import (
 	"swis-api/users"
 
 	// remote dependencies
-	"github.com/gin-gonic/gin"
+
+	gin "github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -44,7 +46,6 @@ import (
 
 // @host swapi.savla.su
 // @BasePath /
-
 func main() {
 	// blank gin without any middleware
 	router := gin.New()
@@ -57,12 +58,60 @@ func main() {
 	// Recovery middleware recovers from any panics and writes a 500 if there was one.
 	router.Use(gin.Recovery())
 
-	//authRouter := router.Group("/")
+	// use custom swapi Auth middleware
+	//router.Use(auth.SwapiAuth())
+
+	// JWT middleware
+	/*
+		authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
+			Realm:           "swapi-dev-zone",
+			Key:             []byte("sekret tve mamy"),
+			Timeout:         time.Hour,
+			MaxRefresh:      time.Hour,
+			IdentityKey:     auth.IdentityKey,
+			PayloadFunc:     auth.PayloadFunc,
+			IdentityHandler: auth.IdentityHandler,
+			Authenticator:   auth.Authenticator,
+			Authorizator:    auth.Authorizator,
+			Unauthorized:    auth.Unauthorized,
+
+			// TokenLookup is a string in the form of "<source>:<name>" that is used
+			// to extract token from the request.
+			// Optional. Default value "header:Authorization".
+			// Possible values:
+			// - "header:<name>"
+			TokenLookup: "header:<name>",
+			// - "query:<name>"
+			// - "cookie:<name>"
+			// - "param:<name>"
+			//TokenLookup: "header: Authorization, query: token, cookie: jwt",
+			// TokenLookup: "query:token",
+			// TokenLookup: "cookie:token",
+
+			// TokenHeadName is a string in the header. Default value is "Bearer"
+			TokenHeadName: "Bearer",
+
+			// TimeFunc provides the current time. You can override it to use another time value. This is useful for testing or if your server uses a different time zone than your tokens.
+			TimeFunc: time.Now,
+		})
+
+		if err != nil {
+			log.Fatal("JWT Error:" + err.Error())
+		}
+
+		// When you use jwt.New(), the function is already automatically called for checking,
+		// which means you don't need to call it again.
+		errInit := authMiddleware.MiddlewareInit()
+
+		if errInit != nil {
+			log.Fatal("authMiddleware.MiddlewareInit() Error:" + errInit.Error())
+		}*/
+
+	//router.GET("/refresh_token", authMiddleware.RefreshHandler)
+	//router.POST("/login", authMiddleware.LoginHandler)
 
 	// root path --- auth required
 	router.GET("/", func(c *gin.Context) {
-		//auth.SetAuthHeaders(c)
-
 		c.JSON(http.StatusOK, gin.H{
 			"title":   "sakalWebIS v5 RESTful API -- root route",
 			"message": "welcome to sakalWeb API (swapi) root",
@@ -129,6 +178,7 @@ func main() {
 
 	// users CRUD
 	usersRouter := router.Group("/users")
+	//usersRouter.Use(authMiddleware.MiddlewareFunc())
 	users.Routes(usersRouter)
 
 	// webui CRUD

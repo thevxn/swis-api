@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "dish swapi module",
+        "description": "sakalWeb Information System v5 RESTful API documentation",
         "title": "swis-api v5",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.1"
+        "version": "5.2"
     },
     "host": "swapi.savla.su",
     "basePath": "/",
@@ -607,7 +607,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.News"
+                            "$ref": "#/definitions/news.Item"
                         }
                     }
                 }
@@ -1032,6 +1032,10 @@
                     "description": "Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)",
                     "type": "string"
                 },
+                "muted": {
+                    "description": "Muted bool indicates that the socket is not propagated to any dish",
+                    "type": "boolean"
+                },
                 "path_http": {
                     "description": "PathHTTP is any URL the site is about to be tested on, e.g. /dish/sockets",
                     "type": "string"
@@ -1242,6 +1246,27 @@
                     "type": "string"
                 },
                 "network_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "news.Item": {
+            "type": "object",
+            "properties": {
+                "link": {
+                    "description": "Server\tstring",
+                    "type": "string"
+                },
+                "parse_date_rfc1123z": {
+                    "type": "string"
+                },
+                "perex": {
+                    "type": "string"
+                },
+                "pub_date": {
+                    "type": "string"
+                },
+                "title": {
                     "type": "string"
                 }
             }

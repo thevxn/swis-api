@@ -614,7 +614,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.News"
+                            "$ref": "#/definitions/news.Item"
                         }
                     }
                 }
@@ -1039,6 +1039,10 @@ const docTemplate = `{
                     "description": "Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)",
                     "type": "string"
                 },
+                "muted": {
+                    "description": "Muted bool indicates that the socket is not propagated to any dish",
+                    "type": "boolean"
+                },
                 "path_http": {
                     "description": "PathHTTP is any URL the site is about to be tested on, e.g. /dish/sockets",
                     "type": "string"
@@ -1253,6 +1257,27 @@ const docTemplate = `{
                 }
             }
         },
+        "news.Item": {
+            "type": "object",
+            "properties": {
+                "link": {
+                    "description": "Server\tstring",
+                    "type": "string"
+                },
+                "parse_date_rfc1123z": {
+                    "type": "string"
+                },
+                "perex": {
+                    "type": "string"
+                },
+                "pub_date": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
         "news.News": {
             "type": "object",
             "properties": {
@@ -1454,12 +1479,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.1",
+	Version:          "5.2",
 	Host:             "swapi.savla.su",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "swis-api v5",
-	Description:      "dish swapi module",
+	Description:      "sakalWeb Information System v5 RESTful API documentation",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

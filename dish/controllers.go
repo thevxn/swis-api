@@ -109,6 +109,30 @@ func PostNewSocket(c *gin.Context) {
 	})
 }
 
+// @Summary Mute/unmute socket by its ID
+// @Description mute/unmute socket by its ID
+// @Tags dish
+// @Produce json
+// @Success 200 {object} dish.Socket
+// @Router /dish/sockets/{id} [put]
+func MuteToggleSocketByID(c *gin.Context) {
+	var updatedSocket Socket
+
+	i, _ := findSocketByID(c)
+	updatedSocket = socketArray[*i]
+
+	// inverse the Muted field value
+	updatedSocket.Muted = !updatedSocket.Muted
+
+	socketArray[*i] = updatedSocket
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "socket mute toggle pressed!",
+		"socket":  updatedSocket,
+	})
+	return
+}
+
 // @Summary Update socket by its ID
 // @Description update socket by its ID
 // @Tags dish

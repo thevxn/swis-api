@@ -25,6 +25,10 @@ func Routes(g *gin.RouterGroup) {
 	// edit existing socket by ID
 	g.PUT("/sockets/:id", UpdateSocketByID)
 
+	// (PUT /sockets/{id}/mute)
+	// edit existing socket by ID
+	g.PUT("/sockets/:id/mute", MuteToggleSocketByID)
+
 	// (PATCH /sockets/{id})
 	// edit existing socket by ID
 	g.PATCH("/sockets/:id", UpdateSocketByID)

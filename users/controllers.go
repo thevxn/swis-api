@@ -9,6 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetUserTokens() (_ *[]string) {
+	var tokens []string
+	for _, u := range users {
+		tokens = append(tokens, u.TokenBase64)
+	}
+
+	return &tokens
+}
+
 // findUserByName is a private, hellper function for users array struct browsing.
 // *gin.Context should contain the 'name' parameter (extracted from HTTP path string).
 func findUserByName(c *gin.Context) (index *int, u *User) {

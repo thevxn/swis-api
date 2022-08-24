@@ -457,8 +457,42 @@
             "status": null
         },
         {
+	    "socket_id": "https_defekt_jadra_savla_dev",
+            "socket_name": "defekt-jadra-savla-dev HTTPS",
+            "host_name": "https://defekt-jadra.savla.dev",
+            "port_tcp": 443,
+            "expected_http_code_array": [
+                200,
+                301,
+		520
+            ],
+            "path_http": "/",
+            "dish_target": [
+                "talion",
+                "ravn"
+            ],
+            "status": null
+        },
+        {
+	    "socket_id": "https_krajni_domek_savla_dev",
+            "socket_name": "krajni-domek-savla-dev HTTPS",
+            "host_name": "https://krajni-domek.savla.dev",
+            "port_tcp": 443,
+            "expected_http_code_array": [
+                200,
+                301,
+		520
+            ],
+            "path_http": "/",
+            "dish_target": [
+                "talion",
+                "ravn"
+            ],
+            "status": null
+        },
+        {
 	    "socket_id": "https_krusty_savla_dev",
-            "socket_name": "krusty-dev HTTPS",
+            "socket_name": "krusty-savla-dev HTTPS",
             "host_name": "https://krusty.savla.dev",
             "port_tcp": 443,
             "expected_http_code_array": [

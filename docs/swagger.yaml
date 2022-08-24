@@ -105,6 +105,10 @@ definitions:
       host_name:
         description: Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)
         type: string
+      muted:
+        description: Muted bool indicates that the socket is not propagated to any
+          dish
+        type: boolean
       path_http:
         description: PathHTTP is any URL the site is about to be tested on, e.g. /dish/sockets
         type: string
@@ -260,6 +264,20 @@ definitions:
       network_name:
         type: string
     type: object
+  news.Item:
+    properties:
+      link:
+        description: "Server\tstring"
+        type: string
+      parse_date_rfc1123z:
+        type: string
+      perex:
+        type: string
+      pub_date:
+        type: string
+      title:
+        type: string
+    type: object
   news.News:
     properties:
       news_sources:
@@ -406,13 +424,13 @@ info:
     email: info@savla.dev
     name: API Support
     url: http://savla.dev/swapi
-  description: dish swapi module
+  description: sakalWeb Information System v5 RESTful API documentation
   license:
     name: MIT
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: "5.1"
+  version: "5.2"
 paths:
   /alvax/commands:
     get:
@@ -787,7 +805,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/news.News'
+            $ref: '#/definitions/news.Item'
       summary: Get news by User
       tags:
       - news

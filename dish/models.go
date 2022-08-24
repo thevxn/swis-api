@@ -33,6 +33,9 @@ type Socket struct {
 	// to be refered e.g. /dish/sockets/frank
 	DishTarget []string `json:"dish_target"`
 
+	// Muted bool indicates that the socket is not propagated to any dish
+	Muted bool `json:"muted" default:false`
+
 	// Status object for dish results to be returned/updated (by dish itself)
 	// Note: discontinued as dish now reports to pushgateway of prometheus'
 	//Status []bool `json:"status"`
