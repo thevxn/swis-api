@@ -2,11 +2,9 @@
 
 [![swis-api CI/CD pipeline](https://github.com/savla-dev/swis-api/actions/workflows/docker-image.yml/badge.svg)](https://github.com/savla-dev/swis-api/actions/workflows/docker-image.yml)
 
-sakalWeb (v5) Information System RESTful API
+[sakalWeb (v5) Information System RESTful API (intranet)](http://swapi.savla.su)
 
-+ http://swapi.savla.su (intranet)
-
-[module documentation TBD]()
+[package documentation (intranet)](http://swapi.savla.su/docs/index.html)
 
 ## documentation
 
