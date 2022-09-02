@@ -64,10 +64,10 @@ func main() {
 	// root path
 	router.GET("/", func(c *gin.Context) {
 		c.IndentedJSON(http.StatusOK, gin.H{
-			"title":     "sakalWebIS v5 RESTful API -- root route",
-			"message":   "welcome to swis, " + auth.Params.User.Name + "!",
-			"code":      http.StatusOK,
-			"bearer":    auth.Params.BearerToken,
+			"title":   "sakalWebIS v5 RESTful API -- root route",
+			"message": "welcome to swis, " + auth.Params.User.Name + "!",
+			"code":    http.StatusOK,
+			//"bearer":    auth.Params.BearerToken,
 			"timestamp": time.Now().Unix(),
 		})
 	})

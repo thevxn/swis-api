@@ -25,12 +25,17 @@ func AuthMiddleware() gin.HandlerFunc {
 		log.Fatal("root token cannot be blank!")
 	}
 
+	// flush params --- does nothing
+	Params.BearerToken = ""
+
 	return func(c *gin.Context) {
-		c.ShouldBindHeader(&Params)
+		Params.BearerToken = c.Request.Header.Get("X-Auth-Token")
+		//c.ShouldBindHeader(&Params)
 
 		// empty token is disallowed
 		if Params.BearerToken == "" {
 			respondWithError(c, http.StatusUnauthorized, "empty token")
+			return
 		}
 
 		// try root token

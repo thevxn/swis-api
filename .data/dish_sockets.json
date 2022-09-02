@@ -370,6 +370,7 @@
             "socket_name": "passbolt.savla.su HTTP",
             "host_name": "http://passbolt.savla.su",
             "port_tcp": 80,
+	    "muted": true,
             "expected_http_code_array": [
                 200,
                 301
