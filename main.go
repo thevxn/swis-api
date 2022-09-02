@@ -10,7 +10,7 @@
 // @license.name MIT
 // @license.url https://github.com/savla-dev/swis-api/blob/master/LICENSE
 
-// @host swapi.savla.su
+// @host swis-api-server:8049
 // @BasePath /
 
 // @securityDefinitions.apikey X-Auth-Token
