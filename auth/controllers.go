@@ -1,17 +1,55 @@
 package auth
 
 import (
-	//"fmt"
-	//"net/http"
+	"log"
+	"net/http"
+	"os"
+
+	"swis-api/users"
 
 	"github.com/gin-gonic/gin"
 )
 
-// SetAuthHeaders
-func SetAuthHeaders(c *gin.Context) (_ *AuthParams) {
-	if err := c.ShouldBindHeader(&Params); err != nil {
-		c.JSON(500, err)
+func respondWithError(c *gin.Context, code int, message interface{}) {
+	c.AbortWithStatusJSON(code, gin.H{
+		"message": message,
+		"code":    code,
+	})
+}
+
+// https://sosedoff.com/2014/12/21/gin-middleware.html
+func AuthMiddleware() gin.HandlerFunc {
+	rootToken := os.Getenv("ROOT_TOKEN")
+
+	if rootToken == "" {
+		log.Fatal("root token cannot be blank!")
 	}
 
-	return &Params
+	return func(c *gin.Context) {
+		c.ShouldBindHeader(&Params)
+
+		// empty token is disallowed
+		if Params.BearerToken == "" {
+			respondWithError(c, http.StatusUnauthorized, "empty token")
+		}
+
+		// try root token
+		if Params.BearerToken == rootToken {
+			// pass root name and continue
+			Params.User = users.User{Name: "root"}
+			c.Next()
+			return
+		}
+
+		// look for token's non-root owner
+		if authUser := users.FindUserByToken(Params.BearerToken); authUser == nil {
+			respondWithError(c, http.StatusUnauthorized, "invalid token")
+			return
+		} else {
+			// found, ergo assign that user to auth context
+			Params.User = *authUser
+		}
+
+		//c.Next()
+	}
 }

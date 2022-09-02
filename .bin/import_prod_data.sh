@@ -31,7 +31,7 @@ DATA_DIR=./.data
 [ ! -f "$(which jq)" ] && die "'jq' tool not found on runtime"
 
 # use explicitly POST method (-X), hide conn progress info (-s), follow locations (-L)
-alias curlp="$(which curl) -sLX POST"
+alias curlp="$(which curl) -sLX POST -H 'X-Auth-Token: ${ROOT_TOKEN}'"
 alias jq="$(which jq)"
 
 #

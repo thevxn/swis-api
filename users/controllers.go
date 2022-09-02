@@ -18,6 +18,16 @@ func GetUserTokens() (_ *[]string) {
 	return &tokens
 }
 
+func FindUserByToken(token string) (u *User) {
+	// Loop over all loaded users.
+	for _, a := range users {
+		if a.TokenBase64 == token {
+			return &a
+		}
+	}
+	return nil
+}
+
 // findUserByName is a private, hellper function for users array struct browsing.
 // *gin.Context should contain the 'name' parameter (extracted from HTTP path string).
 func findUserByName(c *gin.Context) (index *int, u *User) {

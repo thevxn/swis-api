@@ -24,6 +24,7 @@ services:
         DOCKER_DEV_PORT: ${DOCKER_APP_PORT} 
         DOCKER_USER: ${DOCKER_USER}
         GIN_MODE: ${GIN_MODE}
+        ROOT_TOKEN: ${ROOT_TOKEN}
         TZ: ${TZ}
     restart: unless-stopped
     volumes: 

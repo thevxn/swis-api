@@ -58,63 +58,14 @@ func main() {
 	// Recovery middleware recovers from any panics and writes a 500 if there was one.
 	router.Use(gin.Recovery())
 
-	// use custom swapi Auth middleware
-	//router.Use(auth.SwapiAuth())
+	// use custom swapi Auth middleware --- token auth
+	router.Use(auth.AuthMiddleware())
 
-	// JWT middleware
-	/*
-		authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
-			Realm:           "swapi-dev-zone",
-			Key:             []byte("sekret tve mamy"),
-			Timeout:         time.Hour,
-			MaxRefresh:      time.Hour,
-			IdentityKey:     auth.IdentityKey,
-			PayloadFunc:     auth.PayloadFunc,
-			IdentityHandler: auth.IdentityHandler,
-			Authenticator:   auth.Authenticator,
-			Authorizator:    auth.Authorizator,
-			Unauthorized:    auth.Unauthorized,
-
-			// TokenLookup is a string in the form of "<source>:<name>" that is used
-			// to extract token from the request.
-			// Optional. Default value "header:Authorization".
-			// Possible values:
-			// - "header:<name>"
-			TokenLookup: "header:<name>",
-			// - "query:<name>"
-			// - "cookie:<name>"
-			// - "param:<name>"
-			//TokenLookup: "header: Authorization, query: token, cookie: jwt",
-			// TokenLookup: "query:token",
-			// TokenLookup: "cookie:token",
-
-			// TokenHeadName is a string in the header. Default value is "Bearer"
-			TokenHeadName: "Bearer",
-
-			// TimeFunc provides the current time. You can override it to use another time value. This is useful for testing or if your server uses a different time zone than your tokens.
-			TimeFunc: time.Now,
-		})
-
-		if err != nil {
-			log.Fatal("JWT Error:" + err.Error())
-		}
-
-		// When you use jwt.New(), the function is already automatically called for checking,
-		// which means you don't need to call it again.
-		errInit := authMiddleware.MiddlewareInit()
-
-		if errInit != nil {
-			log.Fatal("authMiddleware.MiddlewareInit() Error:" + errInit.Error())
-		}*/
-
-	//router.GET("/refresh_token", authMiddleware.RefreshHandler)
-	//router.POST("/login", authMiddleware.LoginHandler)
-
-	// root path --- auth required
+	// root path
 	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
+		c.IndentedJSON(http.StatusOK, gin.H{
 			"title":     "sakalWebIS v5 RESTful API -- root route",
-			"message":   "welcome to sakalWeb API (swapi) root",
+			"message":   "welcome to swis, " + auth.Params.User.Name + "!",
 			"code":      http.StatusOK,
 			"bearer":    auth.Params.BearerToken,
 			"timestamp": time.Now().Unix(),

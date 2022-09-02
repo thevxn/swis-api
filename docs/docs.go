@@ -359,7 +359,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "dish ID",
-                        "name": "host",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
