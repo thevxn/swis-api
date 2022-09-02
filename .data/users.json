@@ -268,7 +268,21 @@
                 "bot",
                 "dish"
             ],
-            "token_base256": "d3f63d5abc123be44ef2d5bc4af7abc1bf80261e81663079c7f7034ed9f3c4a1",
+            "token_base64": "d3f63d5abc123be44ef2d5bc4af7abc1bf80261e81663079c7f7034ed9f3c4a1",
+            "github_username": "",
+            "discord_username": "",
+            "country": "FI",
+            "wireguard_vpn": null,
+            "ssh_keys": null,
+            "gpg_keys": null,
+            "gdpr_consent": false
+        },
+        {
+            "name": "swife",
+            "roles": [
+                "bot"
+            ],
+            "token_base64": "61829585f34348baa0ea3a1d3d1b5e9e2738505bf025d438d87e6c08fefb159c7bf524699a000fc687091782e3d3e561",
             "github_username": "",
             "discord_username": "",
             "country": "FI",
