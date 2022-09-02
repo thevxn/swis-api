@@ -60,7 +60,7 @@ services:
     volumes: 
       - "./docs/swagger.json:/tmp/swagger.json"
     labels:
-      - "traefik.http.routers.${APP_NAME}.rule=Host(`swapi-docs.savla.su`)"
-      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=8999"
+      - "traefik.http.routers.${APP_NAME}-swagger.rule=Host(`swapi-docs.savla.su`)"
+      - "traefik.http.services.${APP_NAME}-swagger.loadbalancer.server.port=8999"
       - "traefik.docker.network=${DOCKER_NETWORK_NAME}"
 
