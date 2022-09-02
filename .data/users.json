@@ -264,7 +264,6 @@
         },
         {
             "name": "ravn-dish",
-            "full_name": "",
             "roles": [
                 "bot",
                 "dish"

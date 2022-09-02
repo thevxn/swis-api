@@ -47,7 +47,7 @@ function import_generic {
   [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
 
   echo "importing $2..."
-  curlp --data @${DATA_FILE} --url ${URL} | jq .
+  curlp --data @${DATA_FILE} --url ${URL} | jq
 }
 
 import_generic "/users/restore" "/users.json" \
