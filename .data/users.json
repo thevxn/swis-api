@@ -261,6 +261,22 @@
             "ssh_keys": [],
             "gpg_keys": [],
             "gdpr_consent": false
+        },
+        {
+            "name": "ravn-dish",
+            "full_name": "",
+            "roles": [
+                "bot",
+                "dish"
+            ],
+            "token_base256": "d3f63d5abc123be44ef2d5bc4af7abc1bf80261e81663079c7f7034ed9f3c4a1",
+            "github_username": "",
+            "discord_username": "",
+            "country": "FI",
+            "wireguard_vpn": null,
+            "ssh_keys": null,
+            "gpg_keys": null,
+            "gdpr_consent": false
         }
     ]
 }

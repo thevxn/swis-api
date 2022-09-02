@@ -13,6 +13,10 @@
 // @host swapi.savla.su
 // @BasePath /
 
+// @securityDefinitions.apikey X-Auth-Token
+// @in header
+// @name Authorization
+
 // Package swis-api is RESTful API core backend aka 'sakalWeb Information System v5'.
 // Basically it is a system of high modularity, where each module (package in golang terminology)
 // has its routes, models, and controllers (handler functions) defined in its own folder.
@@ -31,7 +35,6 @@ import (
 	"swis-api/business"
 	"swis-api/depot"
 	"swis-api/dish"
-	"swis-api/docs"
 	"swis-api/finance"
 	"swis-api/groups"
 	"swis-api/infra"
@@ -42,8 +45,6 @@ import (
 
 	// remote dependencies
 	gin "github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -138,14 +139,6 @@ func main() {
 	// import "swis-api/webui"
 	//webuiRouter := router.Group("/webui")
 	//webui.Routes(webuiRouter)
-
-	// swagger documentation
-	ginSwagger.WrapHandler(swaggerFiles.Handler,
-		ginSwagger.URL("http://0.0.0.0:8049/docs/doc.json"),
-		ginSwagger.DefaultModelsExpandDepth(-1))
-
-	docs.SwaggerInfo.BasePath = "/"
-	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// attach router to http.Server and start it
 	// https://pkg.go.dev/net/http#Server

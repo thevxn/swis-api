@@ -1010,4 +1010,9 @@ paths:
       summary: Upload users dump backup -- restores all users
       tags:
       - users
+securityDefinitions:
+  X-Auth-Token:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

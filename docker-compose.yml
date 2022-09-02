@@ -44,3 +44,23 @@ services:
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${DOCKER_APP_PORT}"
       - "traefik.docker.network=${DOCKER_NETWORK_NAME}"
 
+  swagger_ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-swapi
+    ports: 
+      - target: 8080
+        published: 8999
+        mode: host
+        protocol: tcp
+    environment: 
+      BASE_URL: "/"
+      SWAGGER_JSON: "/tmp/swagger.json"
+    networks: 
+      - ${DOCKER_NETWORK_NAME}
+    volumes: 
+      - "./docs/swagger.json:/tmp/swagger.json"
+    labels:
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`swis-docs.savla.su`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=8999"
+      - "traefik.docker.network=${DOCKER_NETWORK_NAME}"
+
