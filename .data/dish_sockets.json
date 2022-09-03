@@ -327,7 +327,8 @@
             "host_name": "http://swapi.savla.su",
             "port_tcp": 80,
             "expected_http_code_array": [
-                200
+                200, 
+		401
             ],
             "path_http": "/dish/test",
             "dish_target": [
@@ -583,8 +584,6 @@
             ],
             "path_http": "/",
             "dish_target": [
-                "talion",
-                "ravn"
             ]
         },
         {

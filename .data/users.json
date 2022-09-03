@@ -115,33 +115,6 @@
             "gdpr_consent": false
         },
         {
-            "name": "painkiller",
-            "full_name": "Josh Mond",
-            "roles": [
-                "developer",
-                "extern",
-                "bakend",
-                "frontend"
-            ],
-            "token_base64": "",
-            "github_username": "joshmond",
-            "discord_username": "Painkiller#8190",
-            "country": "UK",
-            "wireguard_vpn": [
-                {
-                    "device_name": "",
-                    "public_key": "",
-                    "private_key": "",
-                    "ip_address": "",
-                    "allowed_ips": null,
-                    "permission": false
-                }
-            ],
-            "ssh_keys": null,
-            "gpg_keys": null,
-            "gdpr_consent": false
-        },
-        {
             "name": "stepis",
             "full_name": "Štěpán Beran",
             "roles": [

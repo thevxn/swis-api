@@ -13,8 +13,8 @@ services:
     image: ${DOCKER_IMAGE_TAG}
     container_name: ${DOCKER_CONTAINER_NAME}
     build:
-      context: ./.docker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: .docker/Dockerfile
       args: 
         GOLANG_VERSION: ${GOLANG_VERSION} 
         ALPINE_VERSION: ${ALPINE_VERSION}
