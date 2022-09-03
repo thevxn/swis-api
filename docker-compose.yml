@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.9'
 
 networks:
   traefik_savla:
@@ -13,7 +13,7 @@ services:
     image: ${DOCKER_IMAGE_TAG}
     container_name: ${DOCKER_CONTAINER_NAME}
     build:
-      context: .
+      context: ./.docker
       dockerfile: Dockerfile
       args: 
         GOLANG_VERSION: ${GOLANG_VERSION} 
@@ -61,6 +61,8 @@ services:
       - "./docs/swagger.json:/tmp/swagger.json"
     labels:
       - "traefik.http.routers.${APP_NAME}-swagger.rule=Host(`swapi-docs.savla.su`)"
+      #- "traefik.http.routers.${APP_NAME}-swagger.rule=Host(`swapi-docs.savla.su`) && PathPrefix(`/docs`)"
       - "traefik.http.services.${APP_NAME}-swagger.loadbalancer.server.port=8080"
+      #- "traefik.http.middlewares.${APP_NAME}.stripprefix.prefixes=/docs"
       - "traefik.docker.network=${DOCKER_NETWORK_NAME}"
 
