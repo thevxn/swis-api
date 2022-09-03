@@ -1505,9 +1505,9 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
-        "X-Auth-Token": {
+        "apiKey": {
             "type": "apiKey",
-            "name": "Authorization",
+            "name": "X-Auth-Token",
             "in": "header"
         }
     }
@@ -1516,7 +1516,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "5.2",
-	Host:             "swapi.savla.su",
+	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "swis-api v5",

@@ -15,7 +15,7 @@
         },
         "version": "5.2"
     },
-    "host": "swis-api-server:8049",
+    "host": "swapi.savla.su:8049",
     "basePath": "/",
     "paths": {
         "/alvax/commands": {
@@ -1498,9 +1498,9 @@
         }
     },
     "securityDefinitions": {
-        "X-Auth-Token": {
+        "apiKey": {
             "type": "apiKey",
-            "name": "Authorization",
+            "name": "X-Auth-Token",
             "in": "header"
         }
     }

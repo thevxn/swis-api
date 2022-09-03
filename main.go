@@ -10,12 +10,14 @@
 // @license.name MIT
 // @license.url https://github.com/savla-dev/swis-api/blob/master/LICENSE
 
-// @host swis-api-server:8049
+// @host swapi.savla.su:8049
 // @BasePath /
 
-// @securityDefinitions.apikey X-Auth-Token
+// @securityDefinitions.apikey apiKey
+// @type apiKey
+// @name X-Auth-Token
 // @in header
-// @name Authorization
+// @securityScheme authRequired
 
 // Package swis-api is RESTful API core backend aka 'sakalWeb Information System v5'.
 // Basically it is a system of high modularity, where each module (package in golang terminology)
