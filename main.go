@@ -26,6 +26,7 @@ package main
 
 import (
 	// golang libs
+	"fmt"
 	"net/http"
 	"time"
 
@@ -51,12 +52,26 @@ import (
 
 func main() {
 	// blank gin without any middleware
+	gin.DisableConsoleColor()
 	router := gin.New()
 
 	// Global middleware
 	// Logger middleware will write the logs to gin.DefaultWriter even if you set with GIN_MODE=release.
 	// by default gin.DefaultWriter = os.Stdout
-	router.Use(gin.Logger())
+	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+		// custom logging format
+		return fmt.Sprintf("%s [%s] | %s %s | %s | %d | %s | \"%s\" %s\"\n",
+			param.ClientIP,
+			param.TimeStamp.Format(time.RFC1123),
+			param.Method,
+			param.Path,
+			param.Request.Proto,
+			param.StatusCode,
+			param.Latency,
+			param.Request.UserAgent(),
+			param.ErrorMessage,
+		)
+	}))
 
 	// Recovery middleware recovers from any panics and writes a 500 if there was one.
 	router.Use(gin.Recovery())
