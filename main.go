@@ -60,8 +60,9 @@ func main() {
 	// by default gin.DefaultWriter = os.Stdout
 	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
 		// custom logging format
-		return fmt.Sprintf("%s [%s] | %s %s | %s | %d | %s | \"%s\" %s\"\n",
+		return fmt.Sprintf("%s (%s) [%s] | %s %s | %s | %d | %s | \"%s\" %s\"\n",
 			param.ClientIP,
+			auth.Params.User.Name,
 			param.TimeStamp.Format(time.RFC1123),
 			param.Method,
 			param.Path,
