@@ -67,7 +67,8 @@ fmt:
 .PHONY: build
 build: 
 	@echo -e "\n${YELLOW} Building project (docker compose build)... ${RESET}\n"
-	@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
+	@docker compose --file $(DOCKER_COMPOSE_FILE) build
+#@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
 
 .PHONY: run
 run:

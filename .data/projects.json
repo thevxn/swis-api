@@ -12,15 +12,26 @@
       "project_deploy_target": "brikule.savla.su"
     },
     {
-      "project_id": "kanban", 
+      "project_id": "savla-kanban", 
       "project_name": "Kanboard", 
       "project_desc": "Kanboard simple kanban project management tool",
       "project_docs_link": "http://docs.savla.su/infra/kanban",
       "project_manager": "krusty",
       "project_published": false,
-      "project_repo": "",
+      "project_repo": "https://github.com/savla-dev/savla-kanban",
       "project_url": "http://kanban.savla.su",
       "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "savla-redmine", 
+      "project_name": "savla-redmine", 
+      "project_desc": "dockerized redmine instance",
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/savla-redmine",
+      "project_url": "",
+      "project_deploy_target": "frank.savla.su"
     },
     {
       "project_id": "docs", 
@@ -96,8 +107,85 @@
       "project_manager": "krusty",
       "project_published": false,
       "project_repo": "github.com/savla-dev/static-sites",
+      "project_url": "http://ks.savla.su",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "vast", 
+      "project_name": "vast", 
+      "project_desc": "visualization and scraping tool, BE+FE inmplicit",
+      "project_docs_link": "",
+      "project_manager": "tack",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/vast",
+      "project_url": "",
+      "project_deploy_target": "ravn.savla.su"
+    },
+    {
+      "project_id": "swife", 
+      "project_name": "swis-api-front", 
+      "project_desc": "swfie frontend for swapi",
+      "project_docs_link": "",
+      "project_manager": "tack",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/swis-front-web",
+      "project_url": "http://swife.savla.su",
+      "project_deploy_target": "ravn.savla.su"
+    },
+    {
+      "project_id": "hugo-scratch", 
+      "project_name": "hugo-scratch", 
+      "project_desc": "dockerized hugo site binary",
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": true,
+      "project_repo": "github.com/savla-dev/hugo-scratch",
       "project_url": "",
       "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "defekt-jadra", 
+      "project_name": "defekt-jadra", 
+      "project_desc": "",
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/defekt-jadra",
+      "project_url": "https://defekt-jadra.savla.dev",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "srajni-domek", 
+      "project_name": "krajni-domek", 
+      "project_desc": "",
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/krajni-domek-demo",
+      "project_url": "https://krajni-domek.savla.dev",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "krusty-space", 
+      "project_name": "krusty-space", 
+      "project_desc": "",
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/krusty-savla-dev",
+      "project_url": "https://krusty-savla.dev",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "six", 
+      "project_name": "six", 
+      "project_desc": "savla-ics caldav server instance",
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/six",
+      "project_url": "",
+      "project_deploy_target": "hermes.savla.su"
     }
   ]
 }

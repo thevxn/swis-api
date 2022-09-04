@@ -21,14 +21,12 @@ func respondWithError(c *gin.Context, code int, message interface{}) {
 func AuthMiddleware() gin.HandlerFunc {
 	rootToken := os.Getenv("ROOT_TOKEN")
 
+	// stop server if root token environment var is not set
 	if rootToken == "" {
 		log.Fatal("root token cannot be blank!")
 	}
-
-	// flush params --- does nothing
-	Params.BearerToken = ""
-
 	return func(c *gin.Context) {
+		Params.BearerToken = ""
 		Params.BearerToken = c.Request.Header.Get("X-Auth-Token")
 		//c.ShouldBindHeader(&Params)
 
