@@ -1,7 +1,5 @@
 package users
 
-import "swis-api/roles"
-
 // High-level Users struct mainly for users restore batch importing.
 type Users struct {
 	// An array of User objects
@@ -18,7 +16,8 @@ type User struct {
 	FullName string `json:"full_name"`
 
 	// User's given roles -- a role labels array.
-	Roles []roles.Role `json:"roles"`
+	//Roles []roles.Role `json:"roles"`
+	Roles []string `json:"roles"`
 
 	// Presence/Absence boolean. If 'absent', one is not allowed to log in, to interract with savla-dev infra in general (by default).
 	State string `json:"state" default:"absent"`
