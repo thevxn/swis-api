@@ -37,10 +37,10 @@ var news = []News{
 
 // XML exported Item
 type Item struct {
-	Title string `xml:"title" json:"title"`
-	Perex string `xml:"description" json:"perex"`
-	//Server	string
+	Title     string    `xml:"title" json:"title"`
+	Perex     string    `xml:"description" json:"perex"`
 	Link      string    `xml:"link" json:"link"`
+	Server    string    `json:"server"`
 	PubDate   string    `xml:"pubDate" json:"pub_date"`
 	ParseDate time.Time `json:"parse_date_rfc1123z"`
 }

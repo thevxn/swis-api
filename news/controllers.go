@@ -5,6 +5,7 @@ import (
 	"encoding/xml"
 	"log"
 	"net/http"
+	"net/url"
 	"sort"
 	"time"
 
@@ -77,6 +78,11 @@ func GetNewsByUser(c *gin.Context) {
 		for _, item := range *cont {
 			// time layouts (date template constants) --> https://go.dev/src/time/format.go
 			item.ParseDate, _ = time.Parse(time.RFC1123Z, item.PubDate)
+
+			// convert news link to server/hostname
+			u, _ := url.Parse(item.Link)
+			item.Server = string(u.Hostname())
+
 			items = append(items, item)
 		}
 	}

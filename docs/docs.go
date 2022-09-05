@@ -736,6 +736,26 @@ const docTemplate = `{
                 }
             }
         },
+        "/swife": {
+            "get": {
+                "description": "get frontends complete list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "swife"
+                ],
+                "summary": "Get all fronteds",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swife.Frontend"
+                        }
+                    }
+                }
+            }
+        },
         "/swife/restore": {
             "post": {
                 "description": "upload frontend JSON dump and restore the data model",
@@ -1290,7 +1310,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "link": {
-                    "description": "Server\tstring",
                     "type": "string"
                 },
                 "parse_date_rfc1123z": {
@@ -1300,6 +1319,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "pub_date": {
+                    "type": "string"
+                },
+                "server": {
                     "type": "string"
                 },
                 "title": {

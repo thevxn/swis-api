@@ -233,6 +233,22 @@
             "wireguard_vpn": [],
             "ssh_keys": [],
             "gpg_keys": [],
+            "gdpr_consent": true
+        },
+        {
+            "name": "coredeceft",
+            "full_name": "Adam",
+            "roles": [
+		"extern",
+		"blogger", 
+		"hugo"
+            ],
+            "token_base64": "",
+            "github_username": "CoreDefect",
+            "country": "CZ",
+            "wireguard_vpn": [],
+            "ssh_keys": [],
+            "gpg_keys": [],
             "gdpr_consent": false
         },
         {

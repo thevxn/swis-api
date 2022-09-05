@@ -267,13 +267,14 @@ definitions:
   news.Item:
     properties:
       link:
-        description: "Server\tstring"
         type: string
       parse_date_rfc1123z:
         type: string
       perex:
         type: string
       pub_date:
+        type: string
+      server:
         type: string
       title:
         type: string
@@ -898,6 +899,19 @@ paths:
       summary: Upload projects dump -- restore projects
       tags:
       - projects
+  /swife:
+    get:
+      description: get frontends complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swife.Frontend'
+      summary: Get all fronteds
+      tags:
+      - swife
   /swife/{sitename}:
     get:
       description: get frontend details by :sitename param
