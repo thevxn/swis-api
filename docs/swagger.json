@@ -435,77 +435,6 @@
                 "responses": {}
             }
         },
-        "/group": {
-            "post": {
-                "description": "add new group to groups array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "groups"
-                ],
-                "summary": "Add new group to groups array",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/groups.Group"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/groups.Group"
-                        }
-                    }
-                }
-            }
-        },
-        "/groups": {
-            "get": {
-                "description": "get groups complete list",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "groups"
-                ],
-                "summary": "Get all groups",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/groups.Groups"
-                        }
-                    }
-                }
-            }
-        },
-        "/groups/{id}": {
-            "get": {
-                "description": "get group by :id param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "groups"
-                ],
-                "summary": "Get group by ID",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/groups.Group"
-                        }
-                    }
-                }
-            }
-        },
         "/infra": {
             "get": {
                 "description": "get all infrastructure details",
@@ -727,6 +656,91 @@
                         }
                     }
                 }
+            }
+        },
+        "/role/{name}": {
+            "get": {
+                "description": "get role by :id param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Get role by Name",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles": {
+            "get": {
+                "description": "get roules complete list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Get all roles",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Roles"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new role to roles array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Add new role to roles array",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles/restore": {
+            "post": {
+                "description": "update roles JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Upload roles dump backup -- restores all roles",
+                "responses": {}
             }
         },
         "/swife": {
@@ -1174,31 +1188,6 @@
                 }
             }
         },
-        "groups.Group": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "nickname": {
-                    "type": "string"
-                },
-                "role": {
-                    "type": "string"
-                }
-            }
-        },
-        "groups.Groups": {
-            "type": "object",
-            "properties": {
-                "groups": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/groups.Group"
-                    }
-                }
-            }
-        },
         "infra.Host": {
             "type": "object",
             "required": [
@@ -1389,6 +1378,37 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/projects.Project"
+                    }
+                }
+            }
+        },
+        "roles.Role": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "active": {
+                    "description": "Role status, by default it is inactive.",
+                    "type": "boolean"
+                },
+                "description": {
+                    "description": "Role description to make more sense when listing those.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Role name is its unique description, acts like an ID too.",
+                    "type": "string"
+                }
+            }
+        },
+        "roles.Roles": {
+            "type": "object",
+            "properties": {
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/roles.Role"
                     }
                 }
             }

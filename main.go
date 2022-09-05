@@ -39,10 +39,10 @@ import (
 	"swis-api/depot"
 	"swis-api/dish"
 	"swis-api/finance"
-	"swis-api/groups"
 	"swis-api/infra"
 	"swis-api/news"
 	"swis-api/projects"
+	"swis-api/roles"
 	"swis-api/swife"
 	"swis-api/users"
 
@@ -127,10 +127,6 @@ func main() {
 	financeRouter := router.Group("/finance")
 	finance.Routes(financeRouter)
 
-	// groups CRUD
-	groupsRouter := router.Group("/groups")
-	groups.Routes(groupsRouter)
-
 	// infra CRUD
 	infraRouter := router.Group("/infra")
 	infra.Routes(infraRouter)
@@ -142,6 +138,10 @@ func main() {
 	// projects CRUD
 	projectsRouter := router.Group("/projects")
 	projects.Routes(projectsRouter)
+
+	// roles CRUD
+	rolesRouter := router.Group("/roles")
+	roles.Routes(rolesRouter)
 
 	// swife CRUD
 	swifeRouter := router.Group("/swife")

@@ -176,22 +176,6 @@ definitions:
       misc:
         type: string
     type: object
-  groups.Group:
-    properties:
-      id:
-        type: string
-      nickname:
-        type: string
-      role:
-        type: string
-    type: object
-  groups.Groups:
-    properties:
-      groups:
-        items:
-          $ref: '#/definitions/groups.Group'
-        type: array
-    type: object
   infra.Host:
     properties:
       children:
@@ -323,6 +307,27 @@ definitions:
       projects:
         items:
           $ref: '#/definitions/projects.Project'
+        type: array
+    type: object
+  roles.Role:
+    properties:
+      active:
+        description: Role status, by default it is inactive.
+        type: boolean
+      description:
+        description: Role description to make more sense when listing those.
+        type: string
+      name:
+        description: Role name is its unique description, acts like an ID too.
+        type: string
+    required:
+    - name
+    type: object
+  roles.Roles:
+    properties:
+      roles:
+        items:
+          $ref: '#/definitions/roles.Role'
         type: array
     type: object
   swife.Frontend:
@@ -707,52 +712,6 @@ paths:
       summary: Upload finance accounts dump backup -- restores all finance accounts
       tags:
       - finance
-  /group:
-    post:
-      description: add new group to groups array
-      parameters:
-      - description: query params
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/groups.Group'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/groups.Group'
-      summary: Add new group to groups array
-      tags:
-      - groups
-  /groups:
-    get:
-      description: get groups complete list
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/groups.Groups'
-      summary: Get all groups
-      tags:
-      - groups
-  /groups/{id}:
-    get:
-      description: get group by :id param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/groups.Group'
-      summary: Get group by ID
-      tags:
-      - groups
   /infra:
     get:
       description: get all infrastructure details
@@ -899,6 +858,62 @@ paths:
       summary: Upload projects dump -- restore projects
       tags:
       - projects
+  /role/{name}:
+    get:
+      description: get role by :id param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Get role by Name
+      tags:
+      - roles
+  /roles:
+    get:
+      description: get roules complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Roles'
+      summary: Get all roles
+      tags:
+      - roles
+    post:
+      description: add new role to roles array
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/roles.Role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Add new role to roles array
+      tags:
+      - roles
+  /roles/restore:
+    post:
+      consumes:
+      - application/json
+      description: update roles JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload roles dump backup -- restores all roles
+      tags:
+      - roles
   /swife:
     get:
       description: get frontends complete list

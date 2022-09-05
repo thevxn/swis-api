@@ -252,6 +252,21 @@
             "gdpr_consent": false
         },
         {
+            "name": "milly",
+            "full_name": "Miluše Šarová",
+            "roles": [
+		"blogger", 
+		"hugo"
+            ],
+            "token_base64": "",
+            "github_username": "",
+            "country": "CZ",
+            "wireguard_vpn": [],
+            "ssh_keys": [],
+            "gpg_keys": [],
+            "gdpr_consent": false
+        },
+        {
             "name": "ravn-dish",
             "roles": [
                 "bot",
