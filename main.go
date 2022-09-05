@@ -55,6 +55,12 @@ func main() {
 	gin.DisableConsoleColor()
 	router := gin.New()
 
+	// Recovery middleware recovers from any panics and writes a 500 if there was one.
+	router.Use(gin.Recovery())
+
+	// use custom swapi Auth middleware --- token auth
+	router.Use(auth.AuthMiddleware())
+
 	// Global middleware
 	// Logger middleware will write the logs to gin.DefaultWriter even if you set with GIN_MODE=release.
 	// by default gin.DefaultWriter = os.Stdout
@@ -73,12 +79,6 @@ func main() {
 			param.ErrorMessage,
 		)
 	}))
-
-	// Recovery middleware recovers from any panics and writes a 500 if there was one.
-	router.Use(gin.Recovery())
-
-	// use custom swapi Auth middleware --- token auth
-	router.Use(auth.AuthMiddleware())
 
 	// root path
 	router.GET("/", func(c *gin.Context) {

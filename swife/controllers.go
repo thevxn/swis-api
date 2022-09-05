@@ -21,6 +21,22 @@ func findFrontendBySiteName(c *gin.Context) (f *Frontend) {
 	return nil
 }
 
+// @Summary Get all fronteds
+// @Description get frontends complete list
+// @Tags swife
+// @Produce  json
+// @Success 200 {object} swife.Frontend
+// @Router /swife [get]
+// GetSocketList GET method
+// GetUsers returns JSON serialized list of frontends and their properties.
+func GetFrontends(c *gin.Context) {
+	// serialize struct to JSON
+	// net/http response code
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"frontends": swives,
+	})
+}
+
 // @Summary Get frontend by Sitename
 // @Description get frontend details by :sitename param
 // @Tags swife
