@@ -19,7 +19,7 @@ func GetRoles(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "ok, listing roles",
-		"users":   users,
+		"roles":   roles,
 	})
 }
 

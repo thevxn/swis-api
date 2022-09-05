@@ -1478,7 +1478,7 @@ const docTemplate = `{
                     "description": "User's given roles -- a role labels array.",
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/roles.Role"
                     }
                 },
                 "ssh_keys": {
@@ -1487,6 +1487,11 @@ const docTemplate = `{
                     "items": {
                         "type": "string"
                     }
+                },
+                "state": {
+                    "description": "Presence/Absence boolean. If 'absent', one is not allowed to log in, to interract with savla-dev infra in general (by default).",
+                    "type": "string",
+                    "default": "absent"
                 },
                 "token_base64": {
                     "description": "Unique token used for auth purposes, base64'd.",
