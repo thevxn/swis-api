@@ -1391,9 +1391,6 @@ const docTemplate = `{
         },
         "roles.Role": {
             "type": "object",
-            "required": [
-                "name"
-            ],
             "properties": {
                 "active": {
                     "description": "Role status, by default it is inactive.",

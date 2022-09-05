@@ -6,7 +6,7 @@ type Roles struct {
 
 type Role struct {
 	// Role name is its unique description, acts like an ID too.
-	Name string `json:"name" binding:"required"`
+	Name string `json:"name"`
 
 	// Role description to make more sense when listing those.
 	Description string `json:"description"`

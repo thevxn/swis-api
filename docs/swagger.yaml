@@ -320,8 +320,6 @@ definitions:
       name:
         description: Role name is its unique description, acts like an ID too.
         type: string
-    required:
-    - name
     type: object
   roles.Roles:
     properties:
