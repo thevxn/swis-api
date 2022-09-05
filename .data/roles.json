@@ -1,0 +1,85 @@
+{
+    "roles": [
+        {
+                "name": "admin",
+		"description": "generic administrator role",
+		"active": true
+	},{
+                "name": "bot",
+		"description": "role used for bots, automatic scriptlet executors, crontabees and more",
+		"active": true
+	},{
+                "name": "backend",
+		"description": "special developer role for backenders",
+		"active": true
+	},{
+		"name": "blogger", 
+		"description": "externist writing and accessing a blogging platform",
+		"active": true
+	},{
+                "name": "developer",
+		"description": "generic developer role",
+		"active": true
+	},{
+                "name": "dish",
+		"description": "special bot role for savla-dish instances",
+		"active": true
+	},{
+                "name": "domains", 
+		"description": "purchased domains maintaineer",
+		"active": true
+	},{
+		"name": "extern",
+		"description": "generic externist role",
+		"active": true
+	},{
+		"name": "frontend", 
+		"description": "special developer role for frontenders",
+		"active": true
+	},{
+                "name": "gdpr",
+		"description": "role for those maintaining GDPR permissions and data accessors",
+		"active": true
+	},{
+		"name": "hugo",
+		"description": "generic blogger using Hugo framework",
+		"active": true
+	},{
+                "name": "inactive",
+		"description": "generic disallowed/blocked/absent folks role",
+		"active": true
+	},{
+                "name": "infra",
+		"description": "infrastructure maintainers, special operator role",
+		"active": true
+	},{
+                "name": "intern",
+		"description": "special internist role for members",
+		"active": true
+	},{
+                "name": "linux",
+		"description": "special-skilled role for linux folks",
+		"active": true
+	},{
+                "name": "low-level",
+		"description": "special backend developer role for low-level (e.g. C/C++) enthusiasts",
+		"active": true
+	},{
+                "name": "operator",
+		"description": "generic operator role for people interested in DevOps machinery",
+		"active": true
+	},{
+                "name": "student",
+		"description": "generic student role",
+		"active": true
+	},{
+		"name": "swife",
+		"description": "special frontend developer role with an interest in sakalWeb IS frontends",
+		"active": true
+	},{
+                "name": "swis",
+		"description": "special backend developer role for those interested in swapi development", 
+		"active": true
+	}
+    ]
+}

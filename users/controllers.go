@@ -58,7 +58,9 @@ func GetUsers(c *gin.Context) {
 	// serialize struct to JSON
 	// net/http response code
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"users": users,
+		"code":    http.StatusOK,
+		"message": "ok, listing users",
+		"users":   users,
 	})
 }
 

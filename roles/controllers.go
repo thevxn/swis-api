@@ -16,7 +16,11 @@ import (
 // @Router /roles [get]
 // GetGroups returns JSON serialized list of roles and their properties.
 func GetRoles(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, roles)
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "ok, listing roles",
+		"users":   users,
+	})
 }
 
 // @Summary Get role by Name
@@ -30,9 +34,13 @@ func GetRoleByName(c *gin.Context) {
 	// loop over roles
 	for _, r := range roles {
 		if r.Name == c.Param("name") {
-			c.IndentedJSON(http.StatusOK, r)
-			return
+			c.IndentedJSON(http.StatusOK, gin.H{
+				"code":    http.StatusOK,
+				"message": "ok, listin role's details",
+				"role":    r,
+			})
 		}
+		return
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "role not found"})
 }

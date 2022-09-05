@@ -95,4 +95,6 @@ import_generic "/projects/restore" "/projects.json" \
 	|| die "cannot import users"
 import_generic "/swife/restore" "/swife_frontends.json" \
 	|| die "cannot import swife frontends"
+import_generic "/roles/restore" "/roles.json" \
+	|| die "cannot import roles"
 
