@@ -31,6 +31,12 @@ type User struct {
 	// Discord account/profile name.
 	DiscordUser string `json:"discord_username"`
 
+	// Email address main, personal
+	EmailMain string `json:"email_main"`
+
+	// Email alias in cloudflare email routing
+	EmailAlias string `json:"email_alias"`
+
 	// Country of origin -- to help maintain global contacts.
 	Country string `json:"country"`
 

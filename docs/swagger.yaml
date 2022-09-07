@@ -348,6 +348,12 @@ definitions:
       discord_username:
         description: Discord account/profile name.
         type: string
+      email_alias:
+        description: Email alias in cloudflare email routing
+        type: string
+      email_main:
+        description: Email address main, personal
+        type: string
       full_name:
         description: Full Name of such user.
         type: string
@@ -369,9 +375,11 @@ definitions:
           by Name, index respects array implicit property).\nID       \tstring \t\t`json:\"id\"`"
         type: string
       roles:
-        description: User's given roles -- a role labels array.
+        description: |-
+          User's given roles -- a role labels array.
+          Roles []roles.Role `json:"roles"`
         items:
-          $ref: '#/definitions/roles.Role'
+          type: string
         type: array
       ssh_keys:
         description: User's SSH public keys array.

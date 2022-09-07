@@ -1448,6 +1448,14 @@ const docTemplate = `{
                     "description": "Discord account/profile name.",
                     "type": "string"
                 },
+                "email_alias": {
+                    "description": "Email alias in cloudflare email routing",
+                    "type": "string"
+                },
+                "email_main": {
+                    "description": "Email address main, personal",
+                    "type": "string"
+                },
                 "full_name": {
                     "description": "Full Name of such user.",
                     "type": "string"
@@ -1472,10 +1480,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "roles": {
-                    "description": "User's given roles -- a role labels array.",
+                    "description": "User's given roles -- a role labels array.\nRoles []roles.Role ` + "`" + `json:\"roles\"` + "`" + `",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/roles.Role"
+                        "type": "string"
                     }
                 },
                 "ssh_keys": {

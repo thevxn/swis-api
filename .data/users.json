@@ -12,7 +12,9 @@
             ],
             "token_base64": "",
             "github_username": "Tackx",
-            "discord_username": "",
+            "discord_username": "Tack#3625",
+	    "email_main": "vlk.patrik@centrum.cz",
+	    "email_alias": "tack@savla.dev",
             "country": "CZ",
             "wireguard_vpn": [
                 {
@@ -58,9 +60,11 @@
                 "gdpr",
                 "swis"
             ],
-            "token_base64": "676c1618a631cfaeea14e42ecfac7e77da8cfbcf4b69d6a3999828e9b0181ade",
+            "token_base64": "676c1618a631cffdsf5554xy545n4oo55q33ppvxcx555sa623a5aeea14e42ecfac7e77da8cfbcf4b69d6a3999828e9b0181ade",
             "github_username": "krustowski",
             "discord_username": "krusty#8743",
+	    "email_main": "krusty@n0p.cz",
+	    "email_alias": "krusty@savla.dev",
             "country": "CZ",
             "wireguard_vpn": [
                 {
@@ -123,7 +127,9 @@
             ],
             "token_base64": "",
             "github_username": "stepiiis",
-            "discord_username": "",
+            "discord_username": "stepis#7336",
+  	    "email_main": "beranstepan@icloud.com",
+            "email_alias": "stepis@savla.dev",
             "country": "CZ",
             "wireguard_vpn": [
                 {
@@ -180,6 +186,8 @@
             "token_base64": "",
             "github_username": "senorbeast",
             "discord_username": "Beastyy#3756",
+            "email_main": "beasty@tuta.io",
+            "email_alias": "beasty@savla.dev",
             "country": "IN",
             "wireguard_vpn": null,
             "ssh_keys": null,
@@ -229,6 +237,8 @@
             "token_base64": "",
             "github_username": "Krixlion",
             "discord_username": "Krixlion#5904",
+            "email_main": "konstanty.cyran.k@gmail.com",
+            "email_alias": "krixlion@savla.dev",
             "country": "PL",
             "wireguard_vpn": [],
             "ssh_keys": [],
@@ -260,6 +270,8 @@
             ],
             "token_base64": "",
             "github_username": "",
+            "email_main": "miluskasarova@seznam.cz",
+            "email_alias": "",
             "country": "CZ",
             "wireguard_vpn": [],
             "ssh_keys": [],
