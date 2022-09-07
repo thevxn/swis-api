@@ -20,7 +20,7 @@ func GetDepots(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "dumping depots",
-		"depots":  depots,
+		"depots":  depots.Depots,
 	})
 }
 
