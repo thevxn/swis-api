@@ -1440,6 +1440,11 @@ const docTemplate = `{
                 "name"
             ],
             "properties": {
+                "active": {
+                    "description": "Presence/Absence boolean. If false, one is not allowed to log-in (token is rejected),\nto interract with savla-dev infra in general (by default).",
+                    "type": "string",
+                    "default": "false"
+                },
                 "country": {
                     "description": "Country of origin -- to help maintain global contacts.",
                     "type": "string"
@@ -1486,17 +1491,16 @@ const docTemplate = `{
                         "type": "string"
                     }
                 },
+                "spotify_link": {
+                    "description": "Spotify link to one's profile.",
+                    "type": "string"
+                },
                 "ssh_keys": {
                     "description": "User's SSH public keys array.",
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
-                },
-                "state": {
-                    "description": "Presence/Absence boolean. If 'absent', one is not allowed to log in, to interract with savla-dev infra in general (by default).",
-                    "type": "string",
-                    "default": "absent"
                 },
                 "token_base64": {
                     "description": "Unique token used for auth purposes, base64'd.",

@@ -13,9 +13,11 @@
             "token_base64": "",
             "github_username": "Tackx",
             "discord_username": "Tack#3625",
+	    "spotify_link": "https://open.spotify.com/user/11139699268?si=b14d839d6521442c",
 	    "email_main": "vlk.patrik@centrum.cz",
 	    "email_alias": "tack@savla.dev",
             "country": "CZ",
+	    "active": true,
             "wireguard_vpn": [
                 {
                     "device_name": "tack-pc-win",
@@ -50,6 +52,8 @@
             "gpg_keys": null,
             "gdpr_consent": true
         },
+
+
         {
             "name": "krusty",
             "full_name": "Kryštof Šara",
@@ -63,9 +67,11 @@
             "token_base64": "676c1618a631cffdsf5554xy545n4oo55q33ppvxcx555sa623a5aeea14e42ecfac7e77da8cfbcf4b69d6a3999828e9b0181ade",
             "github_username": "krustowski",
             "discord_username": "krusty#8743",
+	    "spotify_link": "https://open.spotify.com/user/vm4srurp7tviucve4rvprqeys?si=c0c67b3fdb2c4656",
 	    "email_main": "krusty@n0p.cz",
 	    "email_alias": "krusty@savla.dev",
             "country": "CZ",
+	    "active": true,
             "wireguard_vpn": [
                 {
                     "device_name": "krustyboks-mac",
@@ -92,6 +98,8 @@
             "gpg_keys": null,
             "gdpr_consent": false
         },
+
+
         {
             "name": "cruelmelody",
             "full_name": "Barbora",
@@ -101,9 +109,10 @@
                 "student"
             ],
             "token_base64": "",
-            "github_username": "cruelmelody",
+            "github_username": "",
             "discord_username": "",
             "country": "CZ",
+	    "active": false,
             "wireguard_vpn": [
                 {
                     "device_name": "",
@@ -118,6 +127,8 @@
             "gpg_keys": null,
             "gdpr_consent": false
         },
+
+
         {
             "name": "stepis",
             "full_name": "Štěpán Beran",
@@ -131,6 +142,7 @@
   	    "email_main": "beranstepan@icloud.com",
             "email_alias": "stepis@savla.dev",
             "country": "CZ",
+	    "active": true,
             "wireguard_vpn": [
                 {
                     "device_name": "",
@@ -149,6 +161,8 @@
             "gpg_keys": null,
             "gdpr_consent": true
         },
+
+
         {
             "name": "fgre",
             "full_name": "Filip Gregor",
@@ -160,6 +174,7 @@
             "github_username": "",
             "discord_username": "",
             "country": "CZ",
+	    "active": false,
             "wireguard_vpn": [
                 {
                     "device_name": "fgre-macbook",
@@ -174,6 +189,8 @@
             "gpg_keys": null,
             "gdpr_consent": false
         },
+
+
         {
             "name": "beastyy",
             "full_name": "Hrishikesh Sawant",
@@ -189,11 +206,14 @@
             "email_main": "beasty@tuta.io",
             "email_alias": "beasty@savla.dev",
             "country": "IN",
+	    "active": true,
             "wireguard_vpn": null,
             "ssh_keys": null,
             "gpg_keys": null,
             "gdpr_consent": false
         },
+
+
         {
             "name": "matejnesuta",
             "full_name": "Matěj Nešuta",
@@ -204,12 +224,15 @@
             "token_base64": "",
             "github_username": "matejnesuta",
             "discord_username": "",
+            "spotify_link": "https://open.spotify.com/user/21cerqw53pkyxp2agyis4aekq?si=ab097f5e2c6c46ad",
             "country": "CZ",
             "wireguard_vpn": null,
             "ssh_keys": null,
             "gpg_keys": null,
             "gdpr_consent": false
         },
+
+
         {
             "name": "ridlees",
             "full_name": "Martin Kodada",
@@ -226,6 +249,8 @@
             "gpg_keys": null,
             "gdpr_consent": false
         },
+
+
         {
             "name": "Krixlion",
             "full_name": "Konstanty Cyran",
@@ -245,6 +270,8 @@
             "gpg_keys": [],
             "gdpr_consent": true
         },
+
+
         {
             "name": "coredeceft",
             "full_name": "Adam",
@@ -261,12 +288,15 @@
             "gpg_keys": [],
             "gdpr_consent": false
         },
+
+
         {
             "name": "milly",
             "full_name": "Miluše Šarová",
             "roles": [
 		"blogger", 
-		"hugo"
+		"hugo", 
+		"extern"
             ],
             "token_base64": "",
             "github_username": "",
@@ -278,6 +308,8 @@
             "gpg_keys": [],
             "gdpr_consent": false
         },
+
+
         {
             "name": "ravn-dish",
             "roles": [
@@ -293,8 +325,10 @@
             "gpg_keys": null,
             "gdpr_consent": false
         },
+
+
         {
-            "name": "swife",
+            "name": "swis-frontend",
             "roles": [
                 "bot"
             ],

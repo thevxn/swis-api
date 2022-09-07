@@ -4,8 +4,8 @@
       {
 	"id": "hel1_viking",
 	"hostname_short": "viking",
-	"hostname_fqdn": "viking.savla.su", 
-	"domain": "savla.su", 
+	"hostname_fqdn": "viking.savla.net", 
+	"domain": "savla.net", 
 	"ansible_roles": [
 	  "base",
 	  "hyp"
@@ -44,8 +44,8 @@
       {
 	"id": "brn1_squabbit",
 	"hostname_short": "squabbit",
-	"hostname_fqdn": "squabbit.savla.su",
-	"domain": "savla.su",
+	"hostname_fqdn": "squabbit.savla.net",
+	"domain": "savla.net",
 	"ansible_groups": [ "squabbit_intranet" ],
 	"ansible_roles": [ 
 	  "base",
@@ -84,8 +84,8 @@
       {
 	"id": "fra1_frank",
 	"hostname_short": "frank",
-	"hostname_fqdn": "frank.savla.su",
-	"domain": "savla.su",
+	"hostname_fqdn": "frank.savla.net",
+	"domain": "savla.net",
 	"ansible_groups": [ "intranet_edge" ],
         "roles": [
  	  "gateway",
@@ -131,8 +131,8 @@
       {
 	"id": "brn1_stokrle",
 	"hostname_short": "stokrle",
-	"hostname_fqdn": "stokrle.savla.su",
-	"domain": "savla.su",
+	"hostname_fqdn": "stokrle.savla.net",
+	"domain": "savla.net",
 	"ansible_groups": [ "squabbit_intranet" ],
         "ansible_roles": [
 	  "runner",
@@ -154,8 +154,8 @@
       {
 	"id": "brn1_tackbox",
 	"hostname_short": "tackbox",
-	"hostname_fqdn": "tackbox.savla.su",
-	"domain": "savla.su",
+	"hostname_fqdn": "tackbox.savla.net",
+	"domain": "savla.net",
 	"ansible_groups": [ "squabbit_intranet" ],
         "ansible_roles": [
 	  "container",
@@ -175,8 +175,8 @@
       {
 	"id": "brn1_fgrebox",
 	"hostname_short": "fgrebox",
-	"hostname_fqdn": "fgrebox.savla.su",
-	"domain": "savla.su",
+	"hostname_fqdn": "fgrebox.savla.net",
+	"domain": "savla.net",
 	"ansible_groups": [ "squabbit_intranet" ],
         "ansible_roles": [
 	  "private",
@@ -195,8 +195,8 @@
       {
 	"id": "hel1_brikule",
 	"hostname_short": "brikule",
-	"hostname_fqdn": "brikule.savla.su",
-	"domain": "savla.su",
+	"hostname_fqdn": "brikule.savla.net",
+	"domain": "savla.net",
 	"ansible_groups": [ "viking_intranet" ],
         "ansible_roles": [
 	  "container",
@@ -216,8 +216,8 @@
       {
 	"id": "hel1_ravn",
 	"hostname_short": "ravn",
-	"hostname_fqdn": "ravn.savla.su",
-	"domain": "savla.su",
+	"hostname_fqdn": "ravn.savla.net",
+	"domain": "savla.net",
 	"ansible_groups": [ "viking_intranet" ],
         "ansibleroles": [
 	  "container",
@@ -237,8 +237,8 @@
       {
 	"id": "hel1_hermes",
 	"hostname_short": "hermes",
-	"hostname_fqdn": "hermes.savla.su",
-	"domain": "savla.su",
+	"hostname_fqdn": "hermes.savla.net",
+	"domain": "savla.net",
 	"ansible_groups": [ "viking_intranet" ],
         "ansible_roles": [
 	  "container",
@@ -258,24 +258,38 @@
 
     "networks": [
       {
-	"hash": "",
+	"hash": "net_virbr0_sq",
 	"network_name": "squabbit virbr0 intranet",
 	"interface_name": "virbr0",
 	"network_address": "10.4.5.0/25",
 	"network_cidr_block": "25"
       },
       {
-	"hash": "",
+	"hash": "net_br32_vik",
 	"network_name": "viking br32 network",
 	"interface_name": "br32",
 	"network_address": "10.4.6.32/27",
 	"network_cidr_block": "27"
       },
       {
-	"hash": "",
-	"network_name": "intranet VPN frank network",
-	"interface_name": "wg0",
-	"network_address": "10.4.5.128/25",
+	"hash": "net_br64_vik",
+	"network_name": "viking br64 network",
+	"interface_name": "br64",
+	"network_address": "10.4.6.64/27",
+	"network_cidr_block": "27"
+      },
+      {
+	"hash": "net_wg_inmonke_fr",
+	"network_name": "intra-monkeVPN network on frank",
+	"interface_name": "wg_inmonke5_128",
+	"network_address": "10.4.5.128/26",
+	"network_cidr_block": "25"
+      },
+      {
+	"hash": "net_wg_exmonke_fr",
+	"network_name": "extra-monkeVPN network on frank-viking",
+	"interface_name": "wg_exmonke5_192",
+	"network_address": "10.4.5.192/26",
 	"network_cidr_block": "25"
       }
     ]

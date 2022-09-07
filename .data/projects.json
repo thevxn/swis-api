@@ -18,7 +18,7 @@
       "project_docs_link": "http://docs.savla.su/infra/kanban",
       "project_manager": "krusty",
       "project_published": false,
-      "project_repo": "https://github.com/savla-dev/savla-kanban",
+      "project_repo": "github.com/savla-dev/savla-kanban",
       "project_url": "http://kanban.savla.su",
       "project_deploy_target": "brikule.savla.su"
     },

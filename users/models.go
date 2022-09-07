@@ -19,8 +19,9 @@ type User struct {
 	//Roles []roles.Role `json:"roles"`
 	Roles []string `json:"roles"`
 
-	// Presence/Absence boolean. If 'absent', one is not allowed to log in, to interract with savla-dev infra in general (by default).
-	State string `json:"state" default:"absent"`
+	// Presence/Absence boolean. If false, one is not allowed to log-in (token is rejected),
+	// to interract with savla-dev infra in general (by default).
+	Active string `json:"active" default:"false"`
 
 	// Unique token used for auth purposes, base64'd.
 	TokenBase64 string `json:"token_base64"`
@@ -30,6 +31,9 @@ type User struct {
 
 	// Discord account/profile name.
 	DiscordUser string `json:"discord_username"`
+
+	// Spotify link to one's profile.
+	SpotifyLink string `json:"spotify_link"`
 
 	// Email address main, personal
 	EmailMain string `json:"email_main"`

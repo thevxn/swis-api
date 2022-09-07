@@ -44,7 +44,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// look for token's non-root owner
+		// look for token's non-root _active_ owner
 		if authUser := users.FindUserByToken(Params.BearerToken); authUser == nil {
 			respondWithError(c, http.StatusUnauthorized, "invalid token")
 			return
