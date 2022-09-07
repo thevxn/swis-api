@@ -21,7 +21,7 @@ type User struct {
 
 	// Presence/Absence boolean. If false, one is not allowed to log-in (token is rejected),
 	// to interract with savla-dev infra in general (by default).
-	Active string `json:"active" default:"false"`
+	Active bool `json:"active" default:false`
 
 	// Unique token used for auth purposes, base64'd.
 	TokenBase64 string `json:"token_base64"`
