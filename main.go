@@ -26,7 +26,7 @@ package main
 
 import (
 	// golang libs
-	"fmt"
+
 	"net/http"
 	"time"
 
@@ -58,12 +58,9 @@ func main() {
 	// Recovery middleware recovers from any panics and writes a 500 if there was one.
 	router.Use(gin.Recovery())
 
-	// use custom swapi Auth middleware --- token auth
-	router.Use(auth.AuthMiddleware())
-
-	// Global middleware
 	// Logger middleware will write the logs to gin.DefaultWriter even if you set with GIN_MODE=release.
 	// by default gin.DefaultWriter = os.Stdout
+	/* -- slows down swapi really bad
 	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
 		// custom logging format
 		return fmt.Sprintf("%s (%s) [%s] | %s %s | %s | %d | %s | \"%s\" %s\"\n",
@@ -79,6 +76,11 @@ func main() {
 			param.ErrorMessage,
 		)
 	}))
+	*/
+	router.Use(gin.Logger())
+
+	// use custom swapi Auth middleware --- token auth
+	router.Use(auth.AuthMiddleware())
 
 	// root path
 	router.GET("/", func(c *gin.Context) {
