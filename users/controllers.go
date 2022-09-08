@@ -9,20 +9,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetUserTokens() (_ *[]string) {
-	var tokens []string
-	for _, u := range users {
-		tokens = append(tokens, u.TokenBase64)
-	}
-
-	return &tokens
-}
-
-func FindUserByToken(token string) (u *User) {
+func FindUserByToken(token string) *User {
 	// Loop over all loaded users.
-	for _, a := range users {
-		if a.TokenBase64 == token {
-			return &a
+	for _, u := range users {
+		if u.TokenHMAC == token && u.Active {
+			return &u
 		}
 	}
 	return nil

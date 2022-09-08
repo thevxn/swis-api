@@ -1342,31 +1342,48 @@
         "projects.Project": {
             "type": "object",
             "properties": {
+                "kanban_link": {
+                    "description": "URL to kanboard/kanban project's page.",
+                    "type": "string"
+                },
                 "project_deploy_target": {
+                    "description": "Target internal node of deployment.",
                     "type": "string"
                 },
                 "project_desc": {
+                    "description": "Brief project description.",
                     "type": "string"
                 },
                 "project_docs_link": {
+                    "description": "URL to documentation page(s).",
                     "type": "string"
                 },
                 "project_id": {
+                    "description": "Project's unique identificator.",
                     "type": "string"
                 },
                 "project_manager": {
+                    "description": "Project manager's name/username.",
                     "type": "string"
                 },
                 "project_name": {
+                    "description": "Project name.",
                     "type": "string"
                 },
                 "project_published": {
+                    "description": "Published boolean.",
                     "type": "boolean"
                 },
                 "project_repo": {
+                    "description": "Git repository link (not URL, without HTTP scheme).",
                     "type": "string"
                 },
                 "project_url": {
+                    "description": "URL to base page of the project (project's URL).",
+                    "type": "string"
+                },
+                "redmine_link": {
+                    "description": "URL to redmine project overview.",
                     "type": "string"
                 }
             }
@@ -1435,8 +1452,7 @@
             "properties": {
                 "active": {
                     "description": "Presence/Absence boolean. If false, one is not allowed to log-in (token is rejected),\nto interract with savla-dev infra in general (by default).",
-                    "type": "string",
-                    "default": "false"
+                    "type": "boolean"
                 },
                 "country": {
                     "description": "Country of origin -- to help maintain global contacts.",
@@ -1495,8 +1511,8 @@
                         "type": "string"
                     }
                 },
-                "token_base64": {
-                    "description": "Unique token used for auth purposes, base64'd.",
+                "token_hmac": {
+                    "description": "Unique token used for auth purposes, SHA?-HMAC.",
                     "type": "string"
                 },
                 "wireguard_vpn": {
