@@ -12,10 +12,9 @@ func findHostByHostname(c *gin.Context) (index *int, h *Host) {
 	// loop over hosts
 	var hosts = infrastructure.Hosts
 
-	for i, a := range hosts {
-		if a.HostnameShort == c.Param("hostname") || a.HostnameFQDN == c.Param("hostname") {
-			//c.IndentedJSON(http.StatusOK, a)
-			return &i, &a
+	for i, h := range hosts {
+		if h.HostnameShort == c.Param("hostname") || h.HostnameFQDN == c.Param("hostname") {
+			return &i, &h
 		}
 	}
 
@@ -34,6 +33,7 @@ func findHostByHostname(c *gin.Context) (index *int, h *Host) {
 // @Router /infra [get]
 func GetInfrastructure(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":           http.StatusOK,
 		"infrastructure": infrastructure,
 	})
 }
@@ -46,6 +46,7 @@ func GetInfrastructure(c *gin.Context) {
 // @Router /infra/hosts [get]
 func GetHosts(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":  http.StatusOK,
 		"hosts": infrastructure.Hosts,
 	})
 }
@@ -58,6 +59,7 @@ func GetHosts(c *gin.Context) {
 // @Router /infra/networks [get]
 func GetNetworks(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":     http.StatusOK,
 		"networks": infrastructure.Networks,
 	})
 }
@@ -71,7 +73,10 @@ func GetNetworks(c *gin.Context) {
 func GetHostByHostname(c *gin.Context) {
 	if _, host := findHostByHostname(c); host != nil {
 		// host found
-		c.IndentedJSON(http.StatusOK, host)
+		c.IndentedJSON(http.StatusOK, gin.H{
+			"code": http.StatusOK,
+			"host": host,
+		})
 	}
 }
 

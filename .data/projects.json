@@ -303,6 +303,17 @@
       "project_repo": "github.com/savla-dev/six",
       "project_url": "",
       "project_deploy_target": ""
+    },
+    {
+      "project_id": "litter", 
+      "project_name": "litter nanoblogger", 
+      "project_desc": "litter -- because the has to be stored somewhere",
+      "project_docs_link": "https://krusty.savla.dev/projects/litter/",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/krustowski/litter",
+      "project_url": "http://kyrspa.wz.cz/litter/?page=login",
+      "project_deploy_target": ""
     }
   ]
 }

@@ -6,7 +6,7 @@
 	"hostname_short": "viking",
 	"hostname_fqdn": "viking.savla.net", 
 	"domain": "savla.net", 
-	"ansible_roles": [
+	"roles": [
 	  "base",
 	  "hyp"
 	],
@@ -47,7 +47,7 @@
 	"hostname_fqdn": "squabbit.savla.net",
 	"domain": "savla.net",
 	"ansible_groups": [ "squabbit_intranet" ],
-	"ansible_roles": [ 
+	"roles": [ 
 	  "base",
 	  "hyp" 
 	],
@@ -91,6 +91,7 @@
  	  "gateway",
 	  "container",
 	  "runner",
+	  "dish",
 	  "webserver_nginx",
 	  "vpn_gateway",
 	  "dns"
@@ -134,7 +135,7 @@
 	"hostname_fqdn": "stokrle.savla.net",
 	"domain": "savla.net",
 	"ansible_groups": [ "squabbit_intranet" ],
-        "ansible_roles": [
+        "roles": [
 	  "runner",
 	  "webserver_traefik",
 	  "container",
@@ -157,7 +158,7 @@
 	"hostname_fqdn": "tackbox.savla.net",
 	"domain": "savla.net",
 	"ansible_groups": [ "squabbit_intranet" ],
-        "ansible_roles": [
+        "roles": [
 	  "container",
 	  "webserver_nginx",
 	  "virtual"
@@ -178,7 +179,7 @@
 	"hostname_fqdn": "fgrebox.savla.net",
 	"domain": "savla.net",
 	"ansible_groups": [ "squabbit_intranet" ],
-        "ansible_roles": [
+        "roles": [
 	  "private",
 	  "virtual"
 	],
@@ -198,7 +199,7 @@
 	"hostname_fqdn": "brikule.savla.net",
 	"domain": "savla.net",
 	"ansible_groups": [ "viking_intranet" ],
-        "ansible_roles": [
+        "roles": [
 	  "container",
 	  "webserver_traefik",
 	  "virtual"
@@ -219,10 +220,11 @@
 	"hostname_fqdn": "ravn.savla.net",
 	"domain": "savla.net",
 	"ansible_groups": [ "viking_intranet" ],
-        "ansibleroles": [
+        "roles": [
 	  "container",
 	  "webserver_traefik",
-	  "virtual"
+	  "virtual", 
+	  "dish"
 	],
         "ip_address": [
  	  "10.4.6.44/27"
@@ -240,7 +242,7 @@
 	"hostname_fqdn": "hermes.savla.net",
 	"domain": "savla.net",
 	"ansible_groups": [ "viking_intranet" ],
-        "ansible_roles": [
+        "roles": [
 	  "container",
 	  "webserver_traefik",
 	  "virtual"
@@ -279,18 +281,18 @@
 	"network_cidr_block": "27"
       },
       {
-	"hash": "net_wg_inmonke_fr",
+	"hash": "net_wg_monke_in_fr",
 	"network_name": "intra-monkeVPN network on frank",
-	"interface_name": "wg_inmonke5_128",
+	"interface_name": "wg_monke_in_5_128",
 	"network_address": "10.4.5.128/26",
-	"network_cidr_block": "25"
+	"network_cidr_block": "26"
       },
       {
-	"hash": "net_wg_exmonke_fr",
+	"hash": "net_wg_monke_ex_fr",
 	"network_name": "extra-monkeVPN network on frank-viking",
-	"interface_name": "wg_exmonke5_192",
+	"interface_name": "wg_monke_ex_5_192",
 	"network_address": "10.4.5.192/26",
-	"network_cidr_block": "25"
+	"network_cidr_block": "26"
       }
     ]
   }

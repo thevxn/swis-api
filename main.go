@@ -59,24 +59,6 @@ func main() {
 	router.Use(gin.Recovery())
 
 	// Logger middleware will write the logs to gin.DefaultWriter even if you set with GIN_MODE=release.
-	// by default gin.DefaultWriter = os.Stdout
-	/* -- slows down swapi really bad
-	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
-		// custom logging format
-		return fmt.Sprintf("%s (%s) [%s] | %s %s | %s | %d | %s | \"%s\" %s\"\n",
-			param.ClientIP,
-			auth.Params.User.Name,
-			param.TimeStamp.Format(time.RFC1123),
-			param.Method,
-			param.Path,
-			param.Request.Proto,
-			param.StatusCode,
-			param.Latency,
-			param.Request.UserAgent(),
-			param.ErrorMessage,
-		)
-	}))
-	*/
 	router.Use(gin.Logger())
 
 	// use custom swapi Auth middleware --- token auth

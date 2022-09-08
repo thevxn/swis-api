@@ -1,6 +1,7 @@
 {
   "business": [
     {
+      "id": "sara_krystof_bc",
       "ico": "14444968",
       "vat_id": "CZ9605144648",
       "name_label": "Bc. Kryštof Šara",
@@ -42,6 +43,7 @@
       ]
     },
     {
+      "id": "mathesio_sro",
       "ico": "29321824",
       "vat_id": "CZ29321824",
       "name_label": "Mathesio, s.r.o.",
