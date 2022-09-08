@@ -277,7 +277,8 @@
             "wireguard_vpn": [],
             "ssh_keys": [],
             "gpg_keys": [],
-            "gdpr_consent": false
+            "gdpr_consent": false,
+	    "active": true
         },
         {
             "name": "milly",
