@@ -10,7 +10,7 @@
 		"frontend", 
 		"swife"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "Tackx",
             "discord_username": "Tack#3625",
 	    "spotify_link": "https://open.spotify.com/user/11139699268?si=b14d839d6521442c",
@@ -62,7 +62,7 @@
                 "gdpr",
                 "swis"
             ],
-            "token_base64": "676c1618a631cffdsf5554xy545n4oo55q33ppvxcx555sa623a5aeea14e42ecfac7e77da8cfbcf4b69d6a3999828e9b0181ade",
+            "token_hmac": "676c1618a631cffdsf5554xy545n4oo55q33ppvxcx555sa623a5aeea14e42ecfac7e77da8cfbcf4b69d6a3999828e9b0181ade",
             "github_username": "krustowski",
             "discord_username": "krusty#8743",
 	    "spotify_link": "https://open.spotify.com/user/vm4srurp7tviucve4rvprqeys?si=c0c67b3fdb2c4656",
@@ -106,7 +106,7 @@
                 "intern",
                 "student"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "",
             "discord_username": "",
             "country": "CZ",
@@ -134,7 +134,7 @@
                 "developer",
                 "intern"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "stepiiis",
             "discord_username": "stepis#7336",
   	    "email_main": "beranstepan@icloud.com",
@@ -168,7 +168,7 @@
                 "operator",
                 "inactive"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "",
             "discord_username": "",
             "country": "CZ",
@@ -198,7 +198,7 @@
                 "backend",
                 "linux"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "senorbeast",
             "discord_username": "Beastyy#3756",
             "email_main": "beasty@tuta.io",
@@ -217,7 +217,7 @@
                 "developer",
                 "inactive"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "matejnesuta",
             "discord_username": "",
             "spotify_link": "https://open.spotify.com/user/21cerqw53pkyxp2agyis4aekq?si=ab097f5e2c6c46ad",
@@ -234,7 +234,7 @@
                 "developer",
                 "inactive"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "ridlees",
             "discord_username": "",
             "country": "CZ",
@@ -251,7 +251,7 @@
                 "low-level",
                 "clang"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "Krixlion",
             "discord_username": "Krixlion#5904",
             "email_main": "konstanty.cyran.k@gmail.com",
@@ -271,7 +271,7 @@
 		"blogger", 
 		"hugo"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "CoreDefect",
             "country": "CZ",
             "wireguard_vpn": [],
@@ -288,7 +288,7 @@
 		"hugo", 
 		"extern"
             ],
-            "token_base64": "",
+            "token_hmac": "",
             "github_username": "",
             "email_main": "miluskasarova@seznam.cz",
             "email_alias": "",
@@ -304,28 +304,30 @@
                 "bot",
                 "dish"
             ],
-            "token_base64": "d3f63d5abc123be44ef2d5bc4af7abc1bf80261e81663079c7f7034ed9f3c4a1",
+            "token_hmac": "d3f63d5abc123be44ef2d5bc4af7abc1bf80261e81663079c7f7034ed9f3c4a1",
             "github_username": "",
             "discord_username": "",
             "country": "FI",
             "wireguard_vpn": null,
             "ssh_keys": null,
             "gpg_keys": null,
-            "gdpr_consent": false
+            "gdpr_consent": false,
+	    "active": true
         },
         {
             "name": "swis-frontend",
             "roles": [
                 "bot"
             ],
-            "token_base64": "61829585f34348baa0ea3a1d3d1b5e9e2738505bf025d438d87e6c08fefb159c7bf524699a000fc687091782e3d3e561",
+            "token_hmac": "61829585f34348baa0ea3a1d3d1b5e9e2738505bf025d438d87e6c08fefb159c7bf524699a000fc687091782e3d3e561",
             "github_username": "",
             "discord_username": "",
             "country": "FI",
             "wireguard_vpn": null,
             "ssh_keys": null,
             "gpg_keys": null,
-            "gdpr_consent": false
+            "gdpr_consent": false,
+	    "active": true
         }
     ]
 }

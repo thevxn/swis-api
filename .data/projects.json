@@ -94,17 +94,6 @@
       "project_deploy_target": "ravn.savla.net"
     },
     {
-      "project_id": "platispivo", 
-      "project_name": "platispivo.cz", 
-      "project_desc": "Beer CSS powered frontend for vast, parked domain",
-      "project_docs_link": "",
-      "project_manager": "tack",
-      "project_published": false,
-      "project_repo": "github.com/savla-dev/vast",
-      "project_url": "http://platispivo.cz",
-      "project_deploy_target": ""
-    },
-    {
       "project_id": "n0p-wiki", 
       "project_name": "n0p.cz / wiki", 
       "project_desc": "DokuWiki documentation system web app mainly for the n0p.cz infra, legacy, public site",
@@ -127,14 +116,37 @@
       "project_deploy_target": "brikule.savla.net"
     },
     {
-      "project_id": "vast", 
-      "project_name": "vast", 
-      "project_desc": "visualization and scraping tool, BE+FE inmplicit",
+      "project_id": "platispivo", 
+      "project_name": "platispivo.cz VAST", 
+      "project_desc": "Beer CSS powered frontend for VAST, parked domain",
       "project_docs_link": "",
       "project_manager": "tack",
       "project_published": false,
       "project_repo": "github.com/savla-dev/vast",
-      "project_url": "http://hydro.savla.su",
+      "project_url": "http://platispivo.cz",
+      "project_deploy_target": ""
+    },
+    {
+      "project_id": "vast-be", 
+      "project_name": "vast-be", 
+      "project_desc": "visualization and scraping tool, backend",
+      "project_docs_link": "",
+      "project_manager": "Krixlion",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/vast-be",
+      "project_url": "",
+      "redmine_link": "https://redmine.savla.dev/projects/vast",
+      "project_deploy_target": "ravn.savla.net"
+    },
+    {
+      "project_id": "vast-fe", 
+      "project_name": "vast-fe", 
+      "project_desc": "visualization and scraping tool, frontend",
+      "project_docs_link": "",
+      "project_manager": "tack",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/vast-fe",
+      "project_url": "",
       "redmine_link": "https://redmine.savla.dev/projects/vast",
       "project_deploy_target": "ravn.savla.net"
     },
@@ -229,7 +241,7 @@
     {
       "project_id": "swapp", 
       "project_name": "swapp", 
-      "project_decs": "swis mobile PWA app concept", 
+      "project_desc": "swis mobile PWA app concept", 
       "project_docs_link": "",
       "project_manager": "krusty",
       "project_published": false,
@@ -240,7 +252,7 @@
     {
       "project_id": "infra-dns", 
       "project_name": "internal DNS", 
-      "project_decs": "Bind9 internal DNS server", 
+      "project_desc": "Bind9 internal DNS server", 
       "project_docs_link": "http://docs.savla.su/infra/dns",
       "project_manager": "krusty",
       "project_published": false,
@@ -251,7 +263,7 @@
     {
       "project_id": "swis-django", 
       "project_name": "swjango", 
-      "project_decs": "swis bootstrap frontend in Django framework", 
+      "project_desc": "swis bootstrap frontend in Django framework", 
       "project_docs_link": "",
       "project_manager": "krusty",
       "project_published": false,
@@ -260,9 +272,20 @@
       "project_deploy_target": "hermes.savla.net"
     },
     {
+      "project_id": "ansible-mgmt", 
+      "project_name": "infra ansible management", 
+      "project_desc": "repo for ansible mgmt IaC ", 
+      "project_docs_link": "http://docs.savla.su/howto/savla-ansible",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/infra-ansible-mgmt",
+      "project_url": "",
+      "project_deploy_target": ""
+    },
+    {
       "project_id": "savla-dev-web", 
       "project_name": "savla-dev-web", 
-      "project_decs": "savla.dev public website", 
+      "project_desc": "savla.dev public website", 
       "project_docs_link": "",
       "project_manager": "tack",
       "project_published": false,
