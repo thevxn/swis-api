@@ -5,39 +5,73 @@ import (
 )
 
 func Routes(g *gin.RouterGroup) {
-	// (HEAD /test)
-	// testing route for dish
+	// @Summary
+	// @Description
+	// @Tags dish
+	// @Success 200
+	// @Router /dish/test [head]
 	g.HEAD("/test", HeadTest)
 
-	// (GET /sockets)
-	// get all sockets loaded
+	// @Summary Get all sockets list
+	// @Description get socket list, socket array
+	// @Tags dish
+	// @Produce  json
+	// @Success 200 {object} string "ok"
+	// @Router /dish/sockets [get]
 	g.GET("/sockets", GetSocketList)
 
-	// (GET /sockets/{host})
-	// get sockets by hostname/dish-name
+	// @Summary Get socket list by host
+	// @Description get socket list by Host
+	// @Tags dish
+	// @Produce  json
+	// @Param   host     path    string     true        "dish instance name"
+	// @Success 200 {string} string	"ok"
+	// @Router /dish/sockets/{host} [get]
 	g.GET("/sockets/:host", GetSocketListByHost)
 
-	// (POST /sockets)
-	// add new socket to the list
+	// @Summary Adding new socket to socket array
+	// @Description add new socket to socket array
+	// @Tags dish
+	// @Produce json
+	// @Param request body dish.Socket true "query params"
+	// @Success 200 {object} dish.Socket
 	g.POST("/sockets", PostNewSocket)
 
-	// (PUT /sockets/{id})
-	// edit existing socket by ID
+	// @Summary Update socket by its ID
+	// @Description update socket by its ID
+	// @Tags dish
+	// @Produce json
+	// @Param request body dish.Socket.ID true "query params"
+	// @Success 200 {object} dish.Socket
+	// @Router /dish/sockets/{id} [put]
 	g.PUT("/sockets/:id", UpdateSocketByID)
-
-	// (PUT /sockets/{id}/mute)
-	// edit existing socket by ID
-	g.PUT("/sockets/:id/mute", MuteToggleSocketByID)
 
 	// (PATCH /sockets/{id})
 	// edit existing socket by ID
 	g.PATCH("/sockets/:id", UpdateSocketByID)
 
-	// (DELETE /sockets/{id})
-	// remove existing socket by ID
+	// @Summary Mute/unmute socket by its ID
+	// @Description mute/unmute socket by its ID
+	// @Tags dish
+	// @Produce json
+	// @Param  id  path  string  true  "dish ID"
+	// @Success 200 {object} dish.Socket
+	// @Router /dish/sockets/{id}/mute [put]
+	g.PUT("/sockets/:id/mute", MuteToggleSocketByID)
+
+	// @Summary Delete socket by its ID
+	// @Description delete socket by its ID
+	// @Tags dish
+	// @Produce json
+	// @Success 200 {string} string "ok"
+	// @Router /dish/sockets/{id} [delete]
 	g.DELETE("/sockets/:id", DeleteSocketByID)
 
-	// (POST /sockets/restore)
-	// restore all sockets from JSON dump (JSON-bind)
+	// @Summary Upload dish dump backup -- restores all loaded sockets
+	// @Description update dish JSON dump
+	// @Tags dish
+	// @Accept json
+	// @Produce json
+	// @Router /dish/restore [post]
 	g.POST("/sockets/restore", PostDumpRestore)
 }

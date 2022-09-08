@@ -195,190 +195,6 @@
                 }
             }
         },
-        "/dish/restore": {
-            "post": {
-                "description": "update dish JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Upload dish dump backup -- restores all loaded sockets",
-                "responses": {}
-            }
-        },
-        "/dish/sockets": {
-            "get": {
-                "description": "get socket list, socket array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Get all sockets list",
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new socket to socket array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Adding new socket to socket array",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
-                        }
-                    }
-                }
-            }
-        },
-        "/dish/sockets/{host}": {
-            "get": {
-                "description": "get socket list by Host",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Get socket list by host",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "dish instance name",
-                        "name": "host",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/dish/sockets/{id}": {
-            "put": {
-                "description": "update socket by its ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Update socket by its ID",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "delete socket by its ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Delete socket by its ID",
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/dish/sockets/{id}/mute": {
-            "put": {
-                "description": "mute/unmute socket by its ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Mute/unmute socket by its ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "dish ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
-                        }
-                    }
-                }
-            }
-        },
-        "/dish/test": {
-            "head": {
-                "tags": [
-                    "dish"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
         "/finance": {
             "get": {
                 "description": "get finance complete list",
@@ -1031,12 +847,14 @@
             "type": "object",
             "properties": {
                 "depot_items": {
+                    "description": "Generic array of depot Items.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/depot.Item"
                     }
                 },
                 "owner_name": {
+                    "description": "Depot owner's name.",
                     "type": "string"
                 }
             }
@@ -1056,67 +874,19 @@
             "type": "object",
             "properties": {
                 "depot": {
+                    "description": "Location name of such Item.",
                     "type": "string"
                 },
                 "desc": {
+                    "description": "Item descripton, name, ammount, type etc.",
                     "type": "string"
                 },
                 "id": {
+                    "description": "Numeric unique ID of such Item.",
                     "type": "integer"
                 },
                 "misc": {
-                    "type": "string"
-                }
-            }
-        },
-        "dish.Socket": {
-            "type": "object",
-            "required": [
-                "host_name",
-                "port_tcp",
-                "socket_id"
-            ],
-            "properties": {
-                "dish_target": {
-                    "description": "DishTarget is a string array, usually containing dish's host short name (e.g. frank)\nto be refered e.g. /dish/sockets/frank",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "expected_http_code_array": {
-                    "description": "If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response codes are okay and not to alert upon",
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                },
-                "host_name": {
-                    "description": "Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)",
-                    "type": "string"
-                },
-                "muted": {
-                    "description": "Muted bool indicates that the socket is not propagated to any dish",
-                    "type": "boolean"
-                },
-                "path_http": {
-                    "description": "PathHTTP is any URL the site is about to be tested on, e.g. /dish/sockets",
-                    "type": "string"
-                },
-                "port_tcp": {
-                    "description": "Socket TCP port part\nEven default port 80 should be added here",
-                    "type": "integer"
-                },
-                "socket_description": {
-                    "description": "More verbose name/description of the socket",
-                    "type": "string"
-                },
-                "socket_id": {
-                    "description": "Socket ID, snake_cased for socket editing and deleting",
-                    "type": "string"
-                },
-                "socket_name": {
-                    "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example",
+                    "description": "More information, e.g. the more precise location specification.",
                     "type": "string"
                 }
             }
