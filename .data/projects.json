@@ -9,6 +9,8 @@
       "project_published": false,
       "project_repo": "github.com/savla-dev/swis-api",
       "project_url": "http://swapi.savla.su",
+      "redmine_link": "",
+      "kanban_link": "http://kanban.savla.su/?controller=BoardViewController&action=show&project_id=7",
       "project_deploy_target": "brikule.savla.su"
     },
     {
@@ -42,6 +44,7 @@
       "project_published": false,
       "project_repo": "github.com/savla-dev/infra-docs",
       "project_url": "http://docs.savla.su",
+      "kanban_link": "http://kanban.savla.su/?controller=BoardViewController&action=show&project_id=5",
       "project_deploy_target": "brikule.savla.su"
     },
     {
@@ -64,6 +67,8 @@
       "project_published": false,
       "project_repo": "github.com/savla-dev/elden-bling",
       "project_url": "http://elden-bling.savla.su",
+      "redmine_link": "https://redmine.savla.dev/projects/eldenbling-net",
+      "kanban_link": "http://kanban.savla.su/?controller=BoardViewController&action=show&project_id=9",
       "project_deploy_target": "brikule.savla.su"
     },
     {
@@ -74,17 +79,28 @@
       "project_manager": "tack",
       "project_published": false,
       "project_repo": "github.com/savla-dev/savla-bot-telegram",
-      "project_url": "691243ca1b28451f4e6599-telegram.n0p.cz",
+      "project_url": "https://691243ca1b28451f4e6599-telegram.n0p.cz",
+      "project_deploy_target": "brikule.savla.su"
+    },
+    {
+      "project_id": "a2", 
+      "project_name": "alvax iteration 2", 
+      "project_desc": "Second iteration of alvax bot",
+      "project_docs_link": "http://docs.savla.su/projects/a2",
+      "project_manager": "tack",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/alvax-2",
+      "project_url": "",
       "project_deploy_target": "brikule.savla.su"
     },
     {
       "project_id": "platispivo", 
       "project_name": "platispivo.cz", 
-      "project_desc": "",
+      "project_desc": "Beer CSS powered website for vast",
       "project_docs_link": "",
       "project_manager": "tack",
       "project_published": false,
-      "project_repo": "",
+      "project_repo": "github.com/savla-dev/vast",
       "project_url": "http://platispivo.cz",
       "project_deploy_target": "frank.savla.su"
     },
@@ -92,9 +108,9 @@
       "project_id": "n0p-wiki", 
       "project_name": "n0p.cz / wiki", 
       "project_desc": "DokuWiki documentation system web app mainly for the n0p.cz infra, legacy",
-      "project_docs_link": "",
+      "project_docs_link": "https://wiki.n0p.cz",
       "project_manager": "krusty",
-      "project_published": true,
+      "project_published": false,
       "project_repo": "github.com/n0p-tester/dokuwiki",
       "project_url": "https://wiki.n0p.cz/",
       "project_deploy_target": "frank.savla.su"
@@ -103,7 +119,7 @@
       "project_id": "static-sites", 
       "project_name": "static-sites", 
       "project_desc": "dockerized old HTML/PHP7.4 sites",
-      "project_docs_link": "",
+      "project_docs_link": "http://docs.savla.su/projects/static-sites",
       "project_manager": "krusty",
       "project_published": false,
       "project_repo": "github.com/savla-dev/static-sites",
@@ -118,7 +134,8 @@
       "project_manager": "tack",
       "project_published": false,
       "project_repo": "github.com/savla-dev/vast",
-      "project_url": "",
+      "project_url": "http://hydro.savla.su",
+      "redmine_link": "https://redmine.savla.dev/projects/vast",
       "project_deploy_target": "ravn.savla.su"
     },
     {

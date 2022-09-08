@@ -52,8 +52,6 @@
             "gpg_keys": null,
             "gdpr_consent": true
         },
-
-
         {
             "name": "krusty",
             "full_name": "Kryštof Šara",
@@ -96,7 +94,7 @@
                 "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCRbuDN3QwHj1FL0YWcxPOs6bDan7maQDRD3Tnkl7vKD1F1V0BrZKvI2tgeIwMNw/3Q4pr7X/2f1sm1YuMvsl9ZbSk1IAH4WVasq//ZRyl+vkfUJUrumn62s+4qDMWEpOuDJ68o0dqJlKDspgKN0ilslvBVJwbGi9a03SABSxi9v+avXtRdPk7B4C3qVedB0FyfyeNShwAHZZJ/rRzbsZVS+eWWm962sdVpzEseMSW9XP6NDn08CPkSIUDYiAuVXW93oLMhzkQUEeyt9ATcaNIzNUxoLgjeAal/b9ueMMP+8B0Zh/+Owqu0S2h965hUdBs/Hn0D/REkcEMSVkMuH7Xmyw7kyHBn6TBzG9dNFEr9SN6OPgU8WeUcCqYS9ZLMZzoY4tgdLOAcQtlpwsjjolijPMKRqMGlLwQOIg0jixYYjNw9OKk2TgfmYs8bT9flDqojN1gmOTHhoVPMMv4ej0WMrC5OXPnlTXgEaa+r7Op40kmMDW9jZZV4axgHbV7UrmM= krusty@krustyboks"
             ],
             "gpg_keys": null,
-            "gdpr_consent": false
+            "gdpr_consent": true
         },
 
 
@@ -212,8 +210,6 @@
             "gpg_keys": null,
             "gdpr_consent": false
         },
-
-
         {
             "name": "matejnesuta",
             "full_name": "Matěj Nešuta",
@@ -231,8 +227,6 @@
             "gpg_keys": null,
             "gdpr_consent": false
         },
-
-
         {
             "name": "ridlees",
             "full_name": "Martin Kodada",
@@ -249,8 +243,6 @@
             "gpg_keys": null,
             "gdpr_consent": false
         },
-
-
         {
             "name": "Krixlion",
             "full_name": "Konstanty Cyran",
@@ -268,10 +260,9 @@
             "wireguard_vpn": [],
             "ssh_keys": [],
             "gpg_keys": [],
-            "gdpr_consent": true
+            "gdpr_consent": true,
+	    "active": true
         },
-
-
         {
             "name": "coredeceft",
             "full_name": "Adam",
@@ -288,8 +279,6 @@
             "gpg_keys": [],
             "gdpr_consent": false
         },
-
-
         {
             "name": "milly",
             "full_name": "Miluše Šarová",
@@ -308,8 +297,6 @@
             "gpg_keys": [],
             "gdpr_consent": false
         },
-
-
         {
             "name": "ravn-dish",
             "roles": [
@@ -325,8 +312,6 @@
             "gpg_keys": null,
             "gdpr_consent": false
         },
-
-
         {
             "name": "swis-frontend",
             "roles": [
