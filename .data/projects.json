@@ -11,7 +11,7 @@
       "project_url": "http://swapi.savla.su",
       "redmine_link": "",
       "kanban_link": "http://kanban.savla.su/?controller=BoardViewController&action=show&project_id=7",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": "brikule.savla.net"
     },
     {
       "project_id": "savla-kanban", 
@@ -22,18 +22,18 @@
       "project_published": false,
       "project_repo": "github.com/savla-dev/savla-kanban",
       "project_url": "http://kanban.savla.su",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": "brikule.savla.net"
     },
     {
       "project_id": "savla-redmine", 
       "project_name": "savla-redmine", 
-      "project_desc": "dockerized redmine instance",
+      "project_desc": "dockerized redmine instance, public site",
       "project_docs_link": "",
       "project_manager": "krusty",
-      "project_published": false,
+      "project_published": true,
       "project_repo": "github.com/savla-dev/savla-redmine",
-      "project_url": "",
-      "project_deploy_target": "frank.savla.su"
+      "project_url": "https://redmine.savla.dev",
+      "project_deploy_target": "frank.savla.net"
     },
     {
       "project_id": "docs", 
@@ -45,31 +45,31 @@
       "project_repo": "github.com/savla-dev/infra-docs",
       "project_url": "http://docs.savla.su",
       "kanban_link": "http://kanban.savla.su/?controller=BoardViewController&action=show&project_id=5",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": "brikule.savla.net"
     },
     {
-      "project_id": "dish", 
+      "project_id": "savla-dish", 
       "project_name": "savla-dish", 
-      "project_desc": "Simple TCP socket one-shot tester",
+      "project_desc": "simple HTTP/TCP socket one-shot tester, public repo",
       "project_docs_link": "http://docs.savla.su/projects/savla-dish",
       "project_manager": "krusty",
       "project_published": true,
       "project_repo": "github.com/savla-dev/savla-dish",
-      "project_url": "",
-      "project_deploy_target": "frank.savla.su"
+      "project_url": "https://krusty.savla.dev/projects/savla-dish/",
+      "project_deploy_target": "ravn.savla.net"
     },
     {
       "project_id": "elden-bling", 
       "project_name": "Elden Bling", 
-      "project_desc": "A web app allowing players of Elden Ring to upload/share their favorite Elden Ring characters and their fashion",
+      "project_desc": "a web app allowing players of Elden Ring to upload/share their favorite Elden Ring characters and their fashion, public site",
       "project_docs_link": "http://docs.savla.su/projects/elden-bling",
       "project_manager": "tack",
-      "project_published": false,
+      "project_published": true,
       "project_repo": "github.com/savla-dev/elden-bling",
-      "project_url": "http://elden-bling.savla.su",
+      "project_url": "http://eldenbling.net",
       "redmine_link": "https://redmine.savla.dev/projects/eldenbling-net",
       "kanban_link": "http://kanban.savla.su/?controller=BoardViewController&action=show&project_id=9",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": "brikule.savla.net"
     },
     {
       "project_id": "alvax-bot", 
@@ -80,7 +80,7 @@
       "project_published": false,
       "project_repo": "github.com/savla-dev/savla-bot-telegram",
       "project_url": "https://691243ca1b28451f4e6599-telegram.n0p.cz",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": "brikule.savla.net"
     },
     {
       "project_id": "a2", 
@@ -91,29 +91,29 @@
       "project_published": false,
       "project_repo": "github.com/savla-dev/alvax-2",
       "project_url": "",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": "ravn.savla.net"
     },
     {
       "project_id": "platispivo", 
       "project_name": "platispivo.cz", 
-      "project_desc": "Beer CSS powered website for vast",
+      "project_desc": "Beer CSS powered frontend for vast, parked domain",
       "project_docs_link": "",
       "project_manager": "tack",
       "project_published": false,
       "project_repo": "github.com/savla-dev/vast",
       "project_url": "http://platispivo.cz",
-      "project_deploy_target": "frank.savla.su"
+      "project_deploy_target": ""
     },
     {
       "project_id": "n0p-wiki", 
       "project_name": "n0p.cz / wiki", 
-      "project_desc": "DokuWiki documentation system web app mainly for the n0p.cz infra, legacy",
-      "project_docs_link": "https://wiki.n0p.cz",
+      "project_desc": "DokuWiki documentation system web app mainly for the n0p.cz infra, legacy, public site",
+      "project_docs_link": "https://wiki.n0p.cz/postupy/wiki",
       "project_manager": "krusty",
-      "project_published": false,
+      "project_published": true,
       "project_repo": "github.com/n0p-tester/dokuwiki",
       "project_url": "https://wiki.n0p.cz/",
-      "project_deploy_target": "frank.savla.su"
+      "project_deploy_target": "frank.savla.net"
     }, 
     {
       "project_id": "static-sites", 
@@ -124,7 +124,7 @@
       "project_published": false,
       "project_repo": "github.com/savla-dev/static-sites",
       "project_url": "http://ks.savla.su",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": "brikule.savla.net"
     },
     {
       "project_id": "vast", 
@@ -136,62 +136,139 @@
       "project_repo": "github.com/savla-dev/vast",
       "project_url": "http://hydro.savla.su",
       "redmine_link": "https://redmine.savla.dev/projects/vast",
-      "project_deploy_target": "ravn.savla.su"
+      "project_deploy_target": "ravn.savla.net"
     },
     {
       "project_id": "swife", 
       "project_name": "swis-api-front", 
-      "project_desc": "swfie frontend for swapi",
+      "project_desc": "swife frontend for swapi",
       "project_docs_link": "",
       "project_manager": "tack",
       "project_published": false,
       "project_repo": "github.com/savla-dev/swis-front-web",
       "project_url": "http://swife.savla.su",
-      "project_deploy_target": "ravn.savla.su"
+      "project_deploy_target": "ravn.savla.net"
     },
     {
       "project_id": "hugo-scratch", 
       "project_name": "hugo-scratch", 
-      "project_desc": "dockerized hugo site binary",
+      "project_desc": "dockerized hugo site binary, public template repo",
       "project_docs_link": "",
       "project_manager": "krusty",
       "project_published": true,
       "project_repo": "github.com/savla-dev/hugo-scratch",
       "project_url": "",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": ""
     },
     {
       "project_id": "defekt-jadra", 
       "project_name": "defekt-jadra", 
-      "project_desc": "",
+      "project_desc": "blog about chemistry and its beauty, public site",
       "project_docs_link": "",
       "project_manager": "krusty",
-      "project_published": false,
+      "project_published": true,
       "project_repo": "github.com/savla-dev/defekt-jadra",
       "project_url": "https://defekt-jadra.savla.dev",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": "brikule.savla.net"
     },
     {
-      "project_id": "srajni-domek", 
-      "project_name": "krajni-domek", 
-      "project_desc": "",
+      "project_id": "krajni-domek", 
+      "project_name": "krajni-domek Petrov", 
+      "project_desc": "blog about mother's hobbies, public site",
       "project_docs_link": "",
       "project_manager": "krusty",
-      "project_published": false,
+      "project_published": true,
       "project_repo": "github.com/savla-dev/krajni-domek-demo",
       "project_url": "https://krajni-domek.savla.dev",
-      "project_deploy_target": "brikule.savla.su"
+      "project_deploy_target": "brikule.savla.net"
     },
     {
       "project_id": "krusty-space", 
       "project_name": "krusty-space", 
-      "project_desc": "",
+      "project_desc": "blog about krusty and his projects and hobbies, public site",
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": true,
+      "project_repo": "github.com/savla-dev/krusty-savla-dev",
+      "project_url": "https://krusty.savla.dev",
+      "project_deploy_target": "brikule.savla.net"
+    },
+    {
+      "project_id": "infra-voip", 
+      "project_name": "infra-voip", 
+      "project_desc": "internal VoIP Asterisk server concept", 
       "project_docs_link": "",
       "project_manager": "krusty",
       "project_published": false,
-      "project_repo": "github.com/savla-dev/krusty-savla-dev",
-      "project_url": "https://krusty-savla.dev",
-      "project_deploy_target": "brikule.savla.su"
+      "project_repo": "github.com/savla-dev/infra-voip",
+      "project_url": "",
+      "project_deploy_target": ""
+    },
+    {
+      "project_id": "monke-vpn", 
+      "project_name": "monkeVPN", 
+      "project_desc": "simple VPN engine, network, deploy", 
+      "project_docs_link": "https://krusty.savla.dev/projects/monke-vpn/",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/monke-vpn",
+      "project_url": "https://monke.wtf",
+      "project_deploy_target": ""
+    },
+    {
+      "project_id": "savlatos", 
+      "project_name": "savla TUI OS", 
+      "project_desc": "simple linux-kernel-based operation system", 
+      "project_docs_link": "",
+      "project_manager": "tack",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/savlatos",
+      "project_url": "",
+      "project_deploy_target": ""
+    },
+    {
+      "project_id": "swapp", 
+      "project_name": "swapp", 
+      "project_decs": "swis mobile PWA app concept", 
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/swapp",
+      "project_url": "",
+      "project_deploy_target": ""
+    },
+    {
+      "project_id": "infra-dns", 
+      "project_name": "internal DNS", 
+      "project_decs": "Bind9 internal DNS server", 
+      "project_docs_link": "http://docs.savla.su/infra/dns",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/infra-dns",
+      "project_url": "",
+      "project_deploy_target": "frank.savla.net"
+    },
+    {
+      "project_id": "swis-django", 
+      "project_name": "swjango", 
+      "project_decs": "swis bootstrap frontend in Django framework", 
+      "project_docs_link": "",
+      "project_manager": "krusty",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/swis-django",
+      "project_url": "http://swjango.savla.su",
+      "project_deploy_target": "hermes.savla.net"
+    },
+    {
+      "project_id": "savla-dev-web", 
+      "project_name": "savla-dev-web", 
+      "project_decs": "savla.dev public website", 
+      "project_docs_link": "",
+      "project_manager": "tack",
+      "project_published": false,
+      "project_repo": "github.com/savla-dev/savla-dev-web",
+      "project_url": "http://savla.dev",
+      "project_deploy_target": "ravn.savla.net"
     },
     {
       "project_id": "six", 
@@ -202,7 +279,7 @@
       "project_published": false,
       "project_repo": "github.com/savla-dev/six",
       "project_url": "",
-      "project_deploy_target": "hermes.savla.su"
+      "project_deploy_target": ""
     }
   ]
 }
