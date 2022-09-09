@@ -68,7 +68,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "backup"
+                    "backups"
                 ],
                 "summary": "Get all backups status",
                 "responses": {
@@ -1122,6 +1122,10 @@ const docTemplate = `{
                 "active": {
                     "description": "Boolean indicating if the service is to be backuped.",
                     "type": "boolean"
+                },
+                "backup_size": {
+                    "description": "Size of the gzip/tar archive.",
+                    "type": "string"
                 },
                 "description": {
                     "description": "More verbose description of such service backup.",

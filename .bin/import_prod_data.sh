@@ -83,6 +83,7 @@ function import_ssh_keys {
 
 declare -a paths=(
 	"/alvax/commands/restore"
+	"/backups/restore"
 	"/business/restore"
 	"/depots/restore"
 	"/dish/sockets/restore"
@@ -95,6 +96,7 @@ declare -a paths=(
 )
 declare -a files=(
 	"/alvax_command_list.json"
+	"/backups.json"
 	"/business_array.json"
 	"/depots.json"
 	"/dish_sockets.json"

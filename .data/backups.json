@@ -1,0 +1,19 @@
+{
+	"backups": [
+		{
+			"service_name": "savla-redmine",
+			"description": "savla-dev redmine instance",
+			"active": true
+		},
+		{
+			"service_name": "savla-kanban",
+			"description": "savla-dev kanboard instance",
+			"active": true
+		},
+		{
+			"service_name": "ebnet",
+			"description": "eldenbling.net production",
+			"active": true
+		}
+	]
+}

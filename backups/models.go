@@ -18,6 +18,9 @@ type Backup struct {
 	// UNIX timestamp of the last provided backup.
 	Timestamp int `json:"timestamp"`
 
+	// Size of the gzip/tar archive.
+	Size string `json:"backup_size"`
+
 	// Boolean indicating if the service is to be backuped.
 	Active bool `json:"active" default:false`
 }

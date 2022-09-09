@@ -22,7 +22,7 @@ func findBackupByServiceName(c *gin.Context) (index *int, backup *Backup) {
 
 // @Summary Get all backups status
 // @Description get backups actual status
-// @Tags backup
+// @Tags backups
 // @Produce  json
 // @Success 200 {object} string "ok"
 // @Router /backups [get]
@@ -93,7 +93,7 @@ func PostBackupService(c *gin.Context) {
 func UpdateBackupStatusByServiceName(c *gin.Context) {
 	var updatedBackup Backup
 
-	i, _ := findBackupByServiceName(c.Copy())
+	i, b := findBackupByServiceName(c.Copy())
 
 	if err := c.BindJSON(&updatedBackup); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
@@ -103,11 +103,24 @@ func UpdateBackupStatusByServiceName(c *gin.Context) {
 		return
 	}
 
-	backups.Backups[*i] = updatedBackup
+	if !b.Active {
+		c.IndentedJSON(http.StatusForbidden, gin.H{
+			"code":    http.StatusForbidden,
+			"message": "this service is set to inactive",
+		})
+		return
+	}
+
+	// update only some fields, not everything!
+	backupToUpdate := backups.Backups[*i]
+	backupToUpdate.LastStatus = b.LastStatus
+	backupToUpdate.Timestamp = b.Timestamp
+	backups.Backups[*i] = backupToUpdate
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "backup status updated",
-		"backup":  updatedBackup,
+		"backup":  backups.Backups[*i],
 	})
 	return
 }
