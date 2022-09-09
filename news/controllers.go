@@ -98,6 +98,21 @@ func GetNewsByUser(c *gin.Context) {
 	})
 }
 
+// @Summary Get news source list
+// @Description get all news sources
+// @Tags news
+// @Produce  json
+// @Success 200 {object} news.News.Sources
+// @Router /news/sources/ [get]
+// GetSources
+func GetSources(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"message": "ok, dumping news sources",
+		"code":    http.StatusOK,
+		"sources": sources,
+	})
+}
+
 // @Summary Get news source list by Username
 // @Description get news sources by their :name param
 // @Tags news
@@ -105,10 +120,44 @@ func GetNewsByUser(c *gin.Context) {
 // @Success 200 {object} news.News.Sources
 // @Router /news/sources/{name} [get]
 // GetSources
-func GetSources(c *gin.Context) {
+func GetSourcesByUser(c *gin.Context) {
+	userSources := findSourcesByUser(c)
+	if userSources == nil {
+		return
+	}
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"message": "ok, dumping news sources",
 		"code":    http.StatusOK,
-		"news":    news,
+		"sources": *userSources,
+	})
+}
+
+// @Summary Upload news sources dump backup -- restores all sources
+// @Description update news sources JSON dump
+// @Tags news
+// @Accept json
+// @Produce json
+// @Router /news/sources/restore [post]
+// PostDumpRestore
+func PostDumpRestore(c *gin.Context) {
+	var importSources []News //News.Sources
+
+	// bind received JSON to newUser
+	if err := c.BindJSON(&importSources); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	// restore sources
+	news = importSources
+
+	// HTTP 201 Created
+	c.IndentedJSON(http.StatusCreated, gin.H{
+		"code":    http.StatusCreated,
+		"message": "sources imported successfully",
 	})
 }

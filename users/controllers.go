@@ -141,7 +141,11 @@ func PostDumpRestore(c *gin.Context) {
 // @Router /users/{name}/keys/ssh [post]
 // PostUsersSSHKeys method adds (rewrites) SSH key array by user.Name
 func PostUsersSSHKeys(c *gin.Context) {
+	// shoud be safe, findeUserByName should not return a nil
 	var index, user = findUserByName(c)
+	if user == nil {
+		return
+	}
 
 	// load SSH keys from POST request
 	if err := c.BindJSON(user); err != nil {
@@ -154,7 +158,11 @@ func PostUsersSSHKeys(c *gin.Context) {
 
 	// write changes to users array
 	users[*index] = *user
-	c.IndentedJSON(http.StatusAccepted, *user)
+	c.IndentedJSON(http.StatusAccepted, gin.H{
+		"code":    http.StatusAccepted,
+		"message": "ssh keys for user imported",
+		"user":    *user,
+	})
 }
 
 // @Summary Get User's SSH keys in plain text

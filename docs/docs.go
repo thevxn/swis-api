@@ -325,6 +325,33 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "description": "delete socket by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Delete socket by its ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dish ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
             }
         },
         "/dish/test": {
@@ -488,6 +515,42 @@ const docTemplate = `{
                     "infra"
                 ],
                 "summary": "Upload infrastructure JSON dump",
+                "responses": {}
+            }
+        },
+        "/news/sources/": {
+            "get": {
+                "description": "get all news sources",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Get news source list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/news.News"
+                        }
+                    }
+                }
+            }
+        },
+        "/news/sources/restore": {
+            "post": {
+                "description": "update news sources JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Upload news sources dump backup -- restores all sources",
                 "responses": {}
             }
         },

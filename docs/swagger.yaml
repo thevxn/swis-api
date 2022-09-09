@@ -654,6 +654,24 @@ paths:
       tags:
       - dish
   /dish/sockets/{id}/mute:
+    delete:
+      description: delete socket by its ID
+      parameters:
+      - description: dish ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Delete socket by its ID
+      tags:
+      - dish
     put:
       description: mute/unmute socket by its ID
       parameters:
@@ -792,6 +810,19 @@ paths:
       summary: Get news by User
       tags:
       - news
+  /news/sources/:
+    get:
+      description: get all news sources
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/news.News'
+      summary: Get news source list
+      tags:
+      - news
   /news/sources/{name}:
     get:
       description: get news sources by their :name param
@@ -803,6 +834,17 @@ paths:
           schema:
             $ref: '#/definitions/news.News'
       summary: Get news source list by Username
+      tags:
+      - news
+  /news/sources/restore:
+    post:
+      consumes:
+      - application/json
+      description: update news sources JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload news sources dump backup -- restores all sources
       tags:
       - news
   /projects:

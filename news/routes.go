@@ -8,4 +8,5 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/:user", GetNewsByUser)
 	g.GET("/sources", GetSources)
+	g.GET("/sources/:user", GetSourcesByUser)
 }
