@@ -185,7 +185,7 @@ func MuteToggleSocketByID(c *gin.Context) {
 	return
 }
 
-// (DELETE /sockets/{id})
+// (DELETE /dish/sockets/{id})
 // remove existing socket by ID
 // @Summary Delete socket by its ID
 // @Description delete socket by its ID
@@ -193,7 +193,7 @@ func MuteToggleSocketByID(c *gin.Context) {
 // @Produce json
 // @Param  id  path  string  true  "dish ID"
 // @Success 200 {object} dish.Socket
-// @Router /dish/sockets/{id}/mute [delete]
+// @Router /dish/sockets/{id} [delete]
 func DeleteSocketByID(c *gin.Context) {
 	i, s := findSocketByID(c)
 

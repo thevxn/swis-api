@@ -27,6 +27,23 @@ definitions:
       required_argument:
         type: boolean
     type: object
+  backups.Backup:
+    properties:
+      active:
+        description: Boolean indicating if the service is to be backuped.
+        type: boolean
+      last_status:
+        description: Last status string of such backup (e.g. success, failure).
+        type: string
+      service_name:
+        description: Backuped service name -- unique identifier.
+        type: string
+      timestamp:
+        description: UNIX timestamp of the last provided backup.
+        type: integer
+    required:
+    - service_name
+    type: object
   business.Business:
     properties:
       contact:
@@ -497,6 +514,81 @@ paths:
       summary: Upload alvax dump backup -- restores all loaded commands
       tags:
       - alvax
+  /backups:
+    get:
+      description: get backups actual status
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get all backups status
+      tags:
+      - backup
+  /backups/{service}:
+    delete:
+      description: delete backup service by its Name
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Delete backup service by its Name
+      tags:
+      - backups
+    put:
+      description: update backup status by service
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/backups.Backup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/backups.Backup'
+      summary: Update backup status by service
+      tags:
+      - backups
+  /backups/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload backups JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload backups dump backup -- restores all backup services
+      tags:
+      - backups
+  /backups/status/{service}:
+    get:
+      description: get backup status by project/service
+      parameters:
+      - description: dish instance name
+        in: path
+        name: host
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get backup status by project/service
+      tags:
+      - backups
   /business:
     get:
       description: get business complete list
@@ -634,6 +726,24 @@ paths:
       tags:
       - dish
   /dish/sockets/{id}:
+    delete:
+      description: delete socket by its ID
+      parameters:
+      - description: dish ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Delete socket by its ID
+      tags:
+      - dish
     put:
       description: update socket by its ID
       parameters:
@@ -654,24 +764,6 @@ paths:
       tags:
       - dish
   /dish/sockets/{id}/mute:
-    delete:
-      description: delete socket by its ID
-      parameters:
-      - description: dish ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dish.Socket'
-      summary: Delete socket by its ID
-      tags:
-      - dish
     put:
       description: mute/unmute socket by its ID
       parameters:

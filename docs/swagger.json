@@ -54,6 +54,120 @@
                 "responses": {}
             }
         },
+        "/backups": {
+            "get": {
+                "description": "get backups actual status",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backup"
+                ],
+                "summary": "Get all backups status",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/backups/restore": {
+            "post": {
+                "description": "upload backups JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Upload backups dump backup -- restores all backup services",
+                "responses": {}
+            }
+        },
+        "/backups/status/{service}": {
+            "get": {
+                "description": "get backup status by project/service",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Get backup status by project/service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dish instance name",
+                        "name": "host",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/backups/{service}": {
+            "put": {
+                "description": "update backup status by service",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Update backup status by service",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/backups.Backup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/backups.Backup"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete backup service by its Name",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Delete backup service by its Name",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/business": {
             "get": {
                 "description": "get business complete list",
@@ -289,18 +403,16 @@
                         }
                     }
                 }
-            }
-        },
-        "/dish/sockets/{id}/mute": {
-            "put": {
-                "description": "mute/unmute socket by its ID",
+            },
+            "delete": {
+                "description": "delete socket by its ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "dish"
                 ],
-                "summary": "Mute/unmute socket by its ID",
+                "summary": "Delete socket by its ID",
                 "parameters": [
                     {
                         "type": "string",
@@ -318,16 +430,18 @@
                         }
                     }
                 }
-            },
-            "delete": {
-                "description": "delete socket by its ID",
+            }
+        },
+        "/dish/sockets/{id}/mute": {
+            "put": {
+                "description": "mute/unmute socket by its ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "dish"
                 ],
-                "summary": "Delete socket by its ID",
+                "summary": "Mute/unmute socket by its ID",
                 "parameters": [
                     {
                         "type": "string",
@@ -989,6 +1103,30 @@
                 },
                 "required_argument": {
                     "type": "boolean"
+                }
+            }
+        },
+        "backups.Backup": {
+            "type": "object",
+            "required": [
+                "service_name"
+            ],
+            "properties": {
+                "active": {
+                    "description": "Boolean indicating if the service is to be backuped.",
+                    "type": "boolean"
+                },
+                "last_status": {
+                    "description": "Last status string of such backup (e.g. success, failure).",
+                    "type": "string"
+                },
+                "service_name": {
+                    "description": "Backuped service name -- unique identifier.",
+                    "type": "string"
+                },
+                "timestamp": {
+                    "description": "UNIX timestamp of the last provided backup.",
+                    "type": "integer"
                 }
             }
         },
