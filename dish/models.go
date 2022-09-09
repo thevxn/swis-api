@@ -1,7 +1,5 @@
 package dish
 
-// Sockets and Socket structs has to refer to savla-dish/zasuvka --- should be imported
-// https://github.com/savla-dev/savla-dish/blob/master/socket/socket.go
 type Sockets struct {
 	Sockets []Socket `json:"sockets"`
 }

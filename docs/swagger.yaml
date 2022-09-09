@@ -93,6 +93,51 @@ definitions:
         description: More information, e.g. the more precise location specification.
         type: string
     type: object
+  dish.Socket:
+    properties:
+      dish_target:
+        description: |-
+          DishTarget is a string array, usually containing dish's host short name (e.g. frank)
+          to be refered e.g. /dish/sockets/frank
+        items:
+          type: string
+        type: array
+      expected_http_code_array:
+        description: If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response
+          codes are okay and not to alert upon
+        items:
+          type: integer
+        type: array
+      host_name:
+        description: Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)
+        type: string
+      muted:
+        description: Muted bool indicates that the socket is not propagated to any
+          dish
+        type: boolean
+      path_http:
+        description: PathHTTP is any URL the site is about to be tested on, e.g. /dish/sockets
+        type: string
+      port_tcp:
+        description: |-
+          Socket TCP port part
+          Even default port 80 should be added here
+        type: integer
+      socket_description:
+        description: More verbose name/description of the socket
+        type: string
+      socket_id:
+        description: Socket ID, snake_cased for socket editing and deleting
+        type: string
+      socket_name:
+        description: GEneric name of the socket, to be used in dish results as failed
+          one endpoint for example
+        type: string
+    required:
+    - host_name
+    - port_tcp
+    - socket_id
+    type: object
   finance.Account:
     properties:
       account_currency:
@@ -545,6 +590,95 @@ paths:
       summary: Upload depot dump backup -- restores all depots
       tags:
       - depot
+  /dish/restore:
+    post:
+      consumes:
+      - application/json
+      description: update dish JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload dish dump backup -- restores all loaded sockets
+      tags:
+      - dish
+  /dish/sockets:
+    get:
+      description: get socket list, socket array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get all sockets list
+      tags:
+      - dish
+  /dish/sockets/{host}:
+    get:
+      description: get socket list by Host
+      parameters:
+      - description: dish instance name
+        in: path
+        name: host
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get socket list by host
+      tags:
+      - dish
+  /dish/sockets/{id}:
+    put:
+      description: update socket by its ID
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dish.Socket'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Update socket by its ID
+      tags:
+      - dish
+  /dish/sockets/{id}/mute:
+    put:
+      description: mute/unmute socket by its ID
+      parameters:
+      - description: dish ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Mute/unmute socket by its ID
+      tags:
+      - dish
+  /dish/test:
+    head:
+      responses:
+        "200":
+          description: OK
+      tags:
+      - dish
   /finance:
     get:
       description: get finance complete list

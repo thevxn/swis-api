@@ -1,8 +1,6 @@
 package roles
 
 import (
-	//b64 "encoding/base64"
-	//"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

@@ -1,8 +1,6 @@
 package depot
 
 import (
-	//b64 "encoding/base64"
-	//"encoding/json"
 	"net/http"
 	"sort"
 

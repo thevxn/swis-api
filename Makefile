@@ -102,6 +102,7 @@ docs:
 	@echo -e "\n${YELLOW} Regenerating documentation for swagger and rebuilding binary file... ${RESET}\n"
 #@go get -u github.com/swaggo/swag/cmd/swag
 #@go install github.com/swaggo/swag/cmd/swag@latest
+	@go install github.com/swaggo/swag/cmd/swag@latest
 	@${SWAG_BINARY} init
 	@go build swis-api
 
