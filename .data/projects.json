@@ -86,7 +86,7 @@
       "project_id": "a2", 
       "project_name": "alvax iteration 2", 
       "project_desc": "Second iteration of alvax bot",
-      "project_docs_link": "http://docs.savla.su/projects/a2",
+      "project_docs_link": "http://docs.savla.su/projects/telegram-bots",
       "project_manager": "tack",
       "project_published": false,
       "project_repo": "github.com/savla-dev/alvax-2",

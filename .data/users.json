@@ -328,6 +328,21 @@
             "gpg_keys": null,
             "gdpr_consent": false,
 	    "active": true
+        },
+        {
+            "name": "chief-backuping-officer",
+            "roles": [
+                "bot"
+            ],
+            "token_hmac": "i1d67db229e54a3f73047d84cc4faea850c7ed38ae3c3069c9952731ffe20744ef798feda3c559075ebc2f3f350f5dedbc56ee8a7453537d401531c32881860b0",
+            "github_username": "",
+            "discord_username": "",
+            "country": "FI",
+            "wireguard_vpn": null,
+            "ssh_keys": null,
+            "gpg_keys": null,
+            "gdpr_consent": false,
+	    "active": true
         }
     ]
 }

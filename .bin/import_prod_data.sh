@@ -34,6 +34,7 @@ DATA_DIR=./.data
 alias curlp="$(which curl) -sLX POST -H 'X-Auth-Token: ${ROOT_TOKEN}'"
 alias jq="$(which jq)"
 
+
 #
 # import blocks (to differenciate the script/workflow better...)
 # should be self-documenting
@@ -44,14 +45,12 @@ function import_generic {
   URL="${DEST_URL}${POST_PATH}"
 
   DATA_FILE="${DATA_DIR}$2"
-  [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
+  [ ! -f "${DATA_FILE}" ] && die "[import_generic] DATA_FILE (${DATA_FILE}) of a no existence"
 
-  echo "importing $2..."
-  curlp --data @${DATA_FILE} --url ${URL} | jq
+  printf "importing $2...\n\t"
+  curlp --data @${DATA_FILE} --url ${URL} | jq -r '. | {code,message} | join(" ")'
+  echo
 }
-
-import_generic "/users/restore" "/users.json" \
-	|| die "cannot import users"
 
 function import_ssh_keys {
   # template:
@@ -70,31 +69,48 @@ function import_ssh_keys {
     URL="${DEST_URL}${POST_PATH}"
 
     DATA_FILE=${DATA_DIR}/ssh_keys_${USER}.json
-    [ ! -f "${DATA_FILE}" ] && die "DATA_FILE (${DATA_FILE}) of a no existence"
+    [ ! -f "${DATA_FILE}" ] && die "[import_ssh_keys] DATA_FILE (${DATA_FILE}) of a no existence"
 
-    echo "imporitng SSH keys to ${USER}..."
-    curlp --data @${DATA_FILE} --url ${URL} | jq .
+    #echo "imporitng SSH keys to ${USER}..."
+    curlp --data @${DATA_FILE} --url ${URL} | jq '. | {code,message} | join(" ")'
   done
 }
 
-import_ssh_keys
 
-import_generic "/depots/restore" "/depots.json" \
-	|| die "cannot import depots"
-import_generic "/alvax/commands/restore" "/alvax_command_list.json" \
-	|| die "cannot import alvax commands"
-import_generic "/dish/sockets/restore" "/dish_sockets.json" \
-	|| die "cannot import dish sockets"
-import_generic "/infra/restore" "/infra.json" \
-	|| die "cannot import infra"
-import_generic "/finance/restore" "/finance_accounts.json" \
-	|| die "cannot import finance accounts"
-import_generic "/business/restore" "/business_array.json" \
-	|| die "cannot import business array"
-import_generic "/projects/restore" "/projects.json" \
-	|| die "cannot import users"
-import_generic "/swife/restore" "/swife_frontends.json" \
-	|| die "cannot import swife frontends"
-import_generic "/roles/restore" "/roles.json" \
-	|| die "cannot import roles"
+#
+# importing
+#
+
+declare -a paths=(
+	"/alvax/commands/restore"
+	"/business/restore"
+	"/depots/restore"
+	"/dish/sockets/restore"
+	"/infra/restore"
+	"/finance/restore"
+	"/projects/restore"
+	"/roles/restore"
+	"/swife/restore"
+	"/users/restore"
+)
+declare -a files=(
+	"/alvax_command_list.json"
+	"/business_array.json"
+	"/depots.json"
+	"/dish_sockets.json"
+	"/infra.json"
+	"/finance_accounts.json"
+	"/projects.json"
+	"/roles.json"
+	"/swife_frontends.json"
+	"/users.json"
+)
+
+# restore all paths with files
+for (( i=0; i<${#paths[@]}; i++ )); do
+	import_generic ${paths[$i]} ${files[$i]} || die "problem importing ${files[$i]}"
+done
+
+# eventually import SSH keys too
+import_ssh_keys
 
