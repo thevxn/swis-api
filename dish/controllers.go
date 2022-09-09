@@ -155,7 +155,6 @@ func UpdateSocketByID(c *gin.Context) {
 		"socket":  updatedSocket,
 	})
 	return
-
 }
 
 // (PUT /dish/sockets/{id}/mute)

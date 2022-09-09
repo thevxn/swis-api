@@ -33,8 +33,7 @@ import (
 	// swapi modules -- very local dependencies
 	"swis-api/alvax"
 	"swis-api/auth"
-
-	//"swis-api/auth"
+	"swis-api/backups"
 	"swis-api/business"
 	"swis-api/depot"
 	"swis-api/dish"
@@ -94,6 +93,10 @@ func main() {
 	// alvax CRUD
 	alvaxRouter := router.Group("/alvax")
 	alvax.Routes(alvaxRouter)
+
+	// backups CRUD
+	backupsRouter := router.Group("/backups")
+	backups.Routes(backupsRouter)
 
 	// business CRUD
 	businessRouter := router.Group("/business")

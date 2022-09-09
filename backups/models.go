@@ -7,7 +7,10 @@ type Backups struct {
 
 type Backup struct {
 	// Backuped service name -- unique identifier.
-	ServiceName string `json:"service_name" binding:"required"`
+	ServiceName string `json:"service_name" binding:"required" validation:"required"`
+
+	// More verbose description of such service backup.
+	Description string `json:"description"`
 
 	// Last status string of such backup (e.g. success, failure).
 	LastStatus string `json:"last_status"`

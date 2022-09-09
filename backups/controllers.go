@@ -6,6 +6,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func findBackupByServiceName(c *gin.Context) (index *int, backup *Backup) {
+	for i, b := range backups.Backups {
+		if b.ServiceName == c.Param("service") {
+			return &i, &b
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{
+		"code":    http.StatusNotFound,
+		"message": "backuped service not found",
+	})
+	return nil, nil
+}
+
 // @Summary Get all backups status
 // @Description get backups actual status
 // @Tags backup
@@ -27,7 +41,18 @@ func GetBackupsStatus(c *gin.Context) {
 // @Param   host     path    string     true        "dish instance name"
 // @Success 200 {string} string	"ok"
 // @Router /backups/status/{service} [get]
-func GetBackupStatusByService(c *gin.Context) {}
+func GetBackupStatusByServiceName(c *gin.Context) {
+	_, backup := findBackupByServiceName(c.Copy())
+	if backup == nil {
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "ok, returning found backup status",
+		"backup":  *backup,
+	})
+}
 
 // @Summary Adding new backuped serivce
 // @Description add new backuped service
@@ -35,7 +60,28 @@ func GetBackupStatusByService(c *gin.Context) {}
 // @Produce json
 // @Param request body backups.Backup true "query params"
 // @Success 200 {object} backups.Backup
-func PostBackupService(c *gin.Context) {}
+func PostBackupService(c *gin.Context) {
+	var newBackup Backup
+
+	// bind JSON to newSocket
+	if err := c.BindJSON(&newBackup); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	// add new backup
+	backups.Backups = append(backups.Backups, newBackup)
+
+	// HTTP 201 Created
+	c.IndentedJSON(http.StatusCreated, gin.H{
+		"code":    http.StatusCreated,
+		"message": "backup added",
+		"backup":  newBackup,
+	})
+}
 
 // @Summary Update backup status by service
 // @Description update backup status by service
@@ -44,7 +90,27 @@ func PostBackupService(c *gin.Context) {}
 // @Param request body backups.Backup.ServiceName true "query params"
 // @Success 200 {object} backups.Backup
 // @Router /backups/{service} [put]
-func UpdateBackupStatusByService(c *gin.Context) {}
+func UpdateBackupStatusByServiceName(c *gin.Context) {
+	var updatedBackup Backup
+
+	i, _ := findBackupByServiceName(c.Copy())
+
+	if err := c.BindJSON(&updatedBackup); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	backups.Backups[*i] = updatedBackup
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "backup status updated",
+		"backup":  updatedBackup,
+	})
+	return
+}
 
 // @Summary Delete backup service by its Name
 // @Description delete backup service by its Name
@@ -52,7 +118,28 @@ func UpdateBackupStatusByService(c *gin.Context) {}
 // @Produce json
 // @Success 200 {string} string "ok"
 // @Router /backups/{service} [delete]
-func DeleteBackupByService(c *gin.Context) {}
+func DeleteBackupByServiceName(c *gin.Context) {
+	i, b := findBackupByServiceName(c.Copy())
+
+	// delete an element from the array
+	// https://www.educative.io/answers/how-to-delete-an-element-from-an-array-in-golang
+	newLength := 0
+	for index := range backups.Backups {
+		if *i != index {
+			backups.Backups[newLength] = backups.Backups[index]
+			newLength++
+		}
+	}
+
+	// reslice the array to remove extra index
+	backups.Backups = backups.Backups[:newLength]
+
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "backup deleted by ServiceName",
+		"backup":  *b,
+	})
+}
 
 // @Summary Upload backups dump backup -- restores all backup services
 // @Description upload backups JSON dump
@@ -60,4 +147,23 @@ func DeleteBackupByService(c *gin.Context) {}
 // @Accept json
 // @Produce json
 // @Router /backups/restore [post]
-func PostDumpRestore(c *gin.Context) {}
+func PostDumpRestore(c *gin.Context) {
+	var importBackups Backups
+
+	// bind received JSON to importBackups
+	if err := c.BindJSON(&importBackups); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	backups = importBackups
+
+	// HTTP 201 Created
+	c.IndentedJSON(http.StatusCreated, gin.H{
+		"code":    http.StatusCreated,
+		"message": "backups imported successfully",
+	})
+}

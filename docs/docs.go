@@ -1123,6 +1123,10 @@ const docTemplate = `{
                     "description": "Boolean indicating if the service is to be backuped.",
                     "type": "boolean"
                 },
+                "description": {
+                    "description": "More verbose description of such service backup.",
+                    "type": "string"
+                },
                 "last_status": {
                     "description": "Last status string of such backup (e.g. success, failure).",
                     "type": "string"
