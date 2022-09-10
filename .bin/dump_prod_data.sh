@@ -22,9 +22,9 @@ function die {
 
 DEST_URL="${APP_URL:-http://swapi.savla.su}"
 #DATA_DIR="${APP_ROOT:-./.data}"
-DATA_DIR=./.dumps
-[ ! -d "${DATA_DIR}" ] && die "DATA_DIR (${DATA_DIR}) of a no existence"
+DATA_DIR=/mnt/backups/swis-api
 
+mkdir -p ${DATA_DIR}
 
 # tools test
 [ ! -f "$(which curl)" ] && die "'curl' tool not found on runtime"
