@@ -312,6 +312,9 @@ definitions:
     type: object
   projects.Project:
     properties:
+      backuped:
+        description: Projects backuped boolean.
+        type: boolean
       kanban_link:
         description: URL to kanboard/kanban project's page.
         type: string
@@ -345,6 +348,8 @@ definitions:
       redmine_link:
         description: URL to redmine project overview.
         type: string
+    required:
+    - project_id
     type: object
   projects.Projects:
     properties:
@@ -563,6 +568,25 @@ paths:
           schema:
             $ref: '#/definitions/backups.Backup'
       summary: Update backup status by service
+      tags:
+      - backups
+  /backups/{service}/active:
+    put:
+      description: active/inactive backup toggle by its ServiceName
+      parameters:
+      - description: service name
+        in: path
+        name: service_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/backups.Backup'
+      summary: Acitive/inactive backup toggle by its ServiceName
       tags:
       - backups
   /backups/restore:

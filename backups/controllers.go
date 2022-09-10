@@ -125,6 +125,32 @@ func UpdateBackupStatusByServiceName(c *gin.Context) {
 	return
 }
 
+// (PUT /backups/{service}/active)
+// @Summary Acitive/inactive backup toggle by its ServiceName
+// @Description active/inactive backup toggle by its ServiceName
+// @Tags backups
+// @Produce json
+// @Param  service_name  path  string  true  "service name"
+// @Success 200 {object} backups.Backup
+// @Router /backups/{service}/active [put]
+func ActiveToggleBackupByServiceName(c *gin.Context) {
+	var updatedBackup Backup
+
+	i, _ := findBackupByServiceName(c.Copy())
+	updatedBackup = backups.Backups[*i]
+
+	// inverse the Muted field value
+	updatedBackup.Active = !updatedBackup.Active
+
+	backups.Backups[*i] = updatedBackup
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "backup service activated toggle pressed!",
+		"backup":  updatedBackup,
+	})
+	return
+}
+
 // @Summary Delete backup service by its Name
 // @Description delete backup service by its Name
 // @Tags backups

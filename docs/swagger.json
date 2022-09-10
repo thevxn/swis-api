@@ -168,6 +168,35 @@
                 }
             }
         },
+        "/backups/{service}/active": {
+            "put": {
+                "description": "active/inactive backup toggle by its ServiceName",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Acitive/inactive backup toggle by its ServiceName",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "service name",
+                        "name": "service_name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/backups.Backup"
+                        }
+                    }
+                }
+            }
+        },
         "/business": {
             "get": {
                 "description": "get business complete list",
@@ -1509,7 +1538,14 @@
         },
         "projects.Project": {
             "type": "object",
+            "required": [
+                "project_id"
+            ],
             "properties": {
+                "backuped": {
+                    "description": "Projects backuped boolean.",
+                    "type": "boolean"
+                },
                 "kanban_link": {
                     "description": "URL to kanboard/kanban project's page.",
                     "type": "string"

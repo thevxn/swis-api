@@ -34,6 +34,7 @@ func Routes(g *gin.RouterGroup) {
 	// @Success 200 {object} backups.Backup
 	// @Router /backups/{service} [put]
 	g.PUT("/:service", UpdateBackupStatusByServiceName)
+	g.PUT("/:service/active", ActiveToggleBackupByServiceName)
 
 	// @Summary Delete backup service by its Name
 	// @Description delete backup service by its Name
