@@ -24,6 +24,9 @@ type Backup struct {
 	// Name of the compressed backup file.
 	FileName string `json:"file_name"`
 
+	// Dumping script, git URL.
+	ExecutorURL string `json:"executor_url"`
+
 	// Boolean indicating if the service is to be backuped.
 	Active bool `json:"active" default:false`
 }
