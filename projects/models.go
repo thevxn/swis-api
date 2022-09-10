@@ -6,7 +6,7 @@ type Projects struct {
 
 type Project struct {
 	// Project's unique identificator.
-	ID string `json:"project_id"`
+	ID string `json:"project_id" binding:"required"`
 
 	// Project name.
 	Name string `json:"project_name"`
@@ -31,6 +31,9 @@ type Project struct {
 
 	// URL to kanboard/kanban project's page.
 	Kanban string `json:"kanban_link"`
+
+	// Projects backuped boolean.
+	Backuped bool `json:"backuped" default:false`
 
 	// URL to base page of the project (project's URL).
 	URL string `json:"project_url"`

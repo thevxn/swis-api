@@ -22,6 +22,7 @@
       "project_published": false,
       "project_repo": "github.com/savla-dev/savla-kanban",
       "project_url": "http://kanban.savla.su",
+      "backuped": true,
       "project_deploy_target": "brikule.savla.net"
     },
     {
@@ -33,6 +34,7 @@
       "project_published": true,
       "project_repo": "github.com/savla-dev/savla-redmine",
       "project_url": "https://redmine.savla.dev",
+      "backuped": true,
       "project_deploy_target": "frank.savla.net"
     },
     {
@@ -69,6 +71,7 @@
       "project_url": "http://eldenbling.net",
       "redmine_link": "https://redmine.savla.dev/projects/eldenbling-net",
       "kanban_link": "http://kanban.savla.su/?controller=BoardViewController&action=show&project_id=9",
+      "backuped": true,
       "project_deploy_target": "brikule.savla.net"
     },
     {
