@@ -13,20 +13,21 @@ function die {
 
 
 #
-# vars
+# directory settings
 #
 
-# needs (but has defaults):
-# APP_URL -> DEST_URL
-# APP_ROOT -> DATA_DIR
-
 DEST_URL="${APP_URL:-http://swapi.savla.su}"
-#DATA_DIR="${APP_ROOT:-./.data}"
-DATA_DIR=/mnt/backups/swis-api
+
+[ -z ${DUMP_DIR} ] && die "DUMP_DIR constant unset!"
+DATA_DIR=${DUMP_DIR}
 
 mkdir -p ${DATA_DIR}
 
-# tools test
+
+#
+# tools test and reconfig
+#
+
 [ ! -f "$(which curl)" ] && die "'curl' tool not found on runtime"
 [ ! -f "$(which jq)" ] && die "'jq' tool not found on runtime"
 
@@ -41,7 +42,7 @@ function dump_generic {
   URL="${DEST_URL}${REQ_PATH}"
 
   printf "dumping $2...\n\t"
-  curlp --url ${URL} | tee -a .dumps/$2 | jq -r '. | {code,message} | join(" ")'
+  curlp --url ${URL} | tee -a ${DATA_DIR}/$2 | jq -r '. | {code,message} | join(" ")'
   echo
 }
 

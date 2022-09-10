@@ -14,19 +14,21 @@ function die {
 
 
 #
-# vars
+# directory settings
 #
 
-# needs (but has defaults):
-# APP_URL -> DEST_URL
-# APP_ROOT -> DATA_DIR
-
 DEST_URL="${APP_URL:-http://swapi.savla.su}"
-#DATA_DIR="${APP_ROOT:-./.data}"
-DATA_DIR=./.dumps
-[ ! -d "${DATA_DIR}" ] && die "DATA_DIR (${DATA_DIR}) of a no existence"
 
-# tools test
+[ -z ${DUMP_DIR} ] && die "DUMP_DIR constant unset!"
+DATA_DIR=${DUMP_DIR}
+
+mkdir -p ${DATA_DIR}
+
+
+#
+# tools test and reconfig
+#
+
 [ ! -f "$(which curl)" ] && die "'curl' tool not found on runtime"
 [ ! -f "$(which jq)" ] && die "'jq' tool not found on runtime"
 
@@ -52,6 +54,7 @@ function import_generic {
   echo
 }
 
+# deprecated -- to be deleted
 function import_ssh_keys {
   # template:
   #curl -d @.data/ssh_keys_tack.json -sLX POST http://swapi.savla.su/users/tack/keys/ssh | jq .
@@ -112,7 +115,4 @@ declare -a files=(
 for (( i=0; i<${#paths[@]}; i++ )); do
 	import_generic ${paths[$i]} ${files[$i]} || die "problem importing ${files[$i]}"
 done
-
-# eventually import SSH keys too
-import_ssh_keys
 
