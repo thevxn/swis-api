@@ -1153,9 +1153,18 @@
                     "description": "More verbose description of such service backup.",
                     "type": "string"
                 },
+                "executor_url": {
+                    "description": "Dumping script, git URL.",
+                    "type": "string"
+                },
+                "file_name": {
+                    "description": "Name of the compressed backup file.",
+                    "type": "string"
+                },
                 "last_status": {
                     "description": "Last status string of such backup (e.g. success, failure).",
-                    "type": "string"
+                    "type": "string",
+                    "default": "unknown"
                 },
                 "service_name": {
                     "description": "Backuped service name -- unique identifier.",

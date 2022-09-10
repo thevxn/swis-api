@@ -1,5 +1,9 @@
 package swife
 
+type Frontends struct {
+	Frontends []Frontend `json:"frontends"`
+}
+
 type Frontend struct {
 	// SiteName or hostname to get details for.
 	SiteName string `json:"site_name"`

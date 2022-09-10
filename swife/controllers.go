@@ -62,7 +62,7 @@ func GetFrontendBySiteName(c *gin.Context) {
 // @Produce json
 // @Router /swife/restore [post]
 func PostDumpRestore(c *gin.Context) {
-	var importFrontends []Frontend
+	var importFrontends Frontends
 
 	if err := c.BindJSON(&importFrontends); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
@@ -73,7 +73,7 @@ func PostDumpRestore(c *gin.Context) {
 	}
 
 	//depots = append(depots, importDepot)
-	swives = importFrontends
+	swives = importFrontends.Frontends
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
