@@ -78,6 +78,21 @@ http://localhost:8049/swagger/index.html
 
 Swapi uses token-based authentication for any request to be authenticated, For initial importing, `ROOT_TOKEN` (see [`.env`](/.env) file) is used by importing executable. For any request, the header `X-Auth-Token` has to be sent with a custom HTTP request.
 
+## service backup report example
+
+```shell
+SIZE=$(du -shx ${BACKUP_TARGET_DIR}/${TIMESTAMP}.sqlite.gz | awk '{ print $1 }')
+STATUS=success
+
+# report back to swapi/backups
+SERVICE_NAME=generic-sqlite-service
+TIMESTAMP=$(date +%s)
+TOKEN=xxx
+curl -X PUT -sL -H "X-Auth-Token: $TOKEN" \
+        --data "{\"service_name\":\"$SERVICE_NAME\", \"timestamp\": $TIMESTAMP, \"last_status\": \"$STATUS\", \"backup_size\": \"$SIZE\", \"filename\": \"${TIMESTAMP}.sqlite.gz\" }" \
+        http://swis-api-hostname/backups/${SERVICE_NAME}
+```
+
 ## importing
 
 At start, swapi instance memory is cleared and ready for any data import (until the next restart). Any data stored in runtime memory should be dumped using GET methods at particular paths. This approach should make `swapi` instance universal (while omitting custom packages/modules).
