@@ -11,8 +11,13 @@
 			"active": true
 		},
 		{
-			"service_name": "ebnet",
+			"service_name": "elden-bling",
 			"description": "eldenbling.net production",
+			"active": true
+		},
+		{
+			"service_name": "swis-api",
+			"description": "sakalWeb 5 Information System",
 			"active": true
 		}
 	]

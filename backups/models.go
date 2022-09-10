@@ -13,13 +13,16 @@ type Backup struct {
 	Description string `json:"description"`
 
 	// Last status string of such backup (e.g. success, failure).
-	LastStatus string `json:"last_status"`
+	LastStatus string `json:"last_status" default:"unknown"`
 
 	// UNIX timestamp of the last provided backup.
 	Timestamp int `json:"timestamp"`
 
 	// Size of the gzip/tar archive.
 	Size string `json:"backup_size"`
+
+	// Name of the compressed backup file.
+	FileName string `json:"file_name"`
 
 	// Boolean indicating if the service is to be backuped.
 	Active bool `json:"active" default:false`
