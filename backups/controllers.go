@@ -115,6 +115,7 @@ func UpdateBackupStatusByServiceName(c *gin.Context) {
 	backups.Backups[*i].LastStatus = updatedBackup.LastStatus
 	backups.Backups[*i].Timestamp = updatedBackup.Timestamp
 	backups.Backups[*i].Size = updatedBackup.Size
+	backups.Backups[*i].FileName = updatedBackup.FileName
 
 	c.IndentedJSON(http.StatusAccepted, gin.H{
 		"code":    http.StatusAccepted,
