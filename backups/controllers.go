@@ -112,15 +112,15 @@ func UpdateBackupStatusByServiceName(c *gin.Context) {
 	}
 
 	// update only some fields, not everything!
-	backupToUpdate := backups.Backups[*i]
-	backupToUpdate.LastStatus = b.LastStatus
-	backupToUpdate.Timestamp = b.Timestamp
-	backups.Backups[*i] = backupToUpdate
+	backups.Backups[*i].LastStatus = updatedBackup.LastStatus
+	backups.Backups[*i].Timestamp = updatedBackup.Timestamp
+	backups.Backups[*i].Size = updatedBackup.Size
 
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
+	c.IndentedJSON(http.StatusAccepted, gin.H{
+		"code":    http.StatusAccepted,
 		"message": "backup status updated",
-		"backup":  backups.Backups[*i],
+		//"backup":  backups.Backups[*i],
+		"backup": backups.Backups[*i],
 	})
 	return
 }
