@@ -42,7 +42,7 @@ function dump_generic {
   URL="${DEST_URL}${REQ_PATH}"
 
   printf "dumping $2...\n\t"
-  curlp --url ${URL} | tee -a ${DATA_DIR}/$2 | jq -r '. | {code,message} | join(" ")'
+  curlp --url ${URL} | tee ${DATA_DIR}/$2 | jq -r '. | {code,message} | join(" ")'
   echo
 }
 

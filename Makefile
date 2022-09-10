@@ -87,8 +87,13 @@ stop:
 
 .PHONY: dump
 dump: 
-	@echo -e "\n${YELLOW} Dumping prod data to .dumps/... ${RESET}\n"
+	@echo -e "\n${YELLOW} Dumping prod data to ${DUMP_DIR}... ${RESET}\n"
 	@.bin/dump_prod_data.sh
+
+.PHONY: backup
+backup: dump
+	@echo -e "\n${YELLOW} Archiving and compressing dumped data... ${RESET}\n"
+	@.bin/backup_dumped_files.sh
 
 .PHONY: import_prod_static_data
 import_prod_static_data: 
