@@ -10,6 +10,7 @@ function die() {
 
 # loaded by Makefile -- make backup to ensure having env const. loaded
 [ -z ${DUMP_DIR} ] && die "DUMP_DIR not set"
+
 BACKUP_TARGET_DIR=${DUMP_DIR}/archives
 TIMESTAMP=$(date +"%d-%m-%Y_%H-%M-%S")
 STATUS=failure
@@ -18,7 +19,6 @@ SIZE=""
 mkdir -p ${BACKUP_TARGET_DIR}
 
 tar --exclude='*.tar.gz' -czvf ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz ${BACKUP_TARGET_DIR}/.. 
-
 [[ $? -ne 0 ]] && die "backup error" || {
 	SIZE=$(du -shx ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz | awk '{ print $1 }')
 	STATUS=success

@@ -212,6 +212,18 @@ definitions:
       misc:
         type: string
     type: object
+  infra.Domain:
+    properties:
+      domain_fqdn:
+        description: Fully qualified domain name.
+        type: string
+      domain_id:
+        description: Unique domain identifier.
+        type: string
+      domain_owner:
+        description: Domain's owner (user)name.
+        type: string
+    type: object
   infra.Host:
     properties:
       children:
@@ -261,8 +273,11 @@ definitions:
     type: object
   infra.Infrastructure:
     properties:
+      domains:
+        items:
+          $ref: '#/definitions/infra.Domain'
+        type: array
       hosts:
-        description: "Users\t\t[]User\nGroups\t[]Group"
         items:
           $ref: '#/definitions/infra.Host'
         type: array
@@ -274,14 +289,19 @@ definitions:
   infra.Network:
     properties:
       hash:
+        description: Unique network's identifier
         type: string
       interface:
+        description: Interface(s) of such network.
         type: string
       network_address:
+        description: Netowrk IP address.
         type: string
       network_cidr_block:
+        description: CIDR block of netmask.
         type: string
       network_name:
+        description: Network name, verbose ID.
         type: string
     type: object
   news.Item:

@@ -1401,6 +1401,23 @@ const docTemplate = `{
                 }
             }
         },
+        "infra.Domain": {
+            "type": "object",
+            "properties": {
+                "domain_fqdn": {
+                    "description": "Fully qualified domain name.",
+                    "type": "string"
+                },
+                "domain_id": {
+                    "description": "Unique domain identifier.",
+                    "type": "string"
+                },
+                "domain_owner": {
+                    "description": "Domain's owner (user)name.",
+                    "type": "string"
+                }
+            }
+        },
         "infra.Host": {
             "type": "object",
             "required": [
@@ -1466,8 +1483,13 @@ const docTemplate = `{
         "infra.Infrastructure": {
             "type": "object",
             "properties": {
+                "domains": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/infra.Domain"
+                    }
+                },
                 "hosts": {
-                    "description": "Users\t\t[]User\nGroups\t[]Group",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/infra.Host"
@@ -1485,18 +1507,23 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "hash": {
+                    "description": "Unique network's identifier",
                     "type": "string"
                 },
                 "interface": {
+                    "description": "Interface(s) of such network.",
                     "type": "string"
                 },
                 "network_address": {
+                    "description": "Netowrk IP address.",
                     "type": "string"
                 },
                 "network_cidr_block": {
+                    "description": "CIDR block of netmask.",
                     "type": "string"
                 },
                 "network_name": {
+                    "description": "Network name, verbose ID.",
                     "type": "string"
                 }
             }

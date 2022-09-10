@@ -139,12 +139,6 @@ func main() {
 	//usersRouter.Use(authMiddleware.MiddlewareFunc())
 	users.Routes(usersRouter)
 
-	// webui CRUD
-	// only a small proposal for simple swapi fronted to browse swapi data quickly
-	// import "swis-api/webui"
-	//webuiRouter := router.Group("/webui")
-	//webui.Routes(webuiRouter)
-
 	// attach router to http.Server and start it
 	// https://pkg.go.dev/net/http#Server
 	server := &http.Server{

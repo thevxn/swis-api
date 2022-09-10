@@ -5,43 +5,25 @@ type Infrastructures struct {
 }
 
 type Infrastructure struct {
-	//Users		[]User
-	//Groups	[]Group
+	Domains  []Domain  `json:"domains"`
 	Hosts    []Host    `json:"hosts"`
 	Networks []Network `json:"networks"`
 }
 
-type Network struct {
-	Hash      string `json:"hash"`
-	Name      string `json:"network_name"`
-	Address   string `json:"network_address"`
-	Interface string `json:"interface"`
-	CIDRBlock string `json:"network_cidr_block"`
+type Domains struct {
+	Domains []Domain `json:"domains"`
 }
 
-/*
- * IP address alocation (CIDR) count + possible supernetwork "expandability"
- * https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks
- *
- * /24 -- 256-2
- * /25 -- 128-2
- * /26 -- 64-2 (bigger lan networks)
- * /27 -- 32-2 (small lan networks)
- *
- */
+type Domain struct {
+	// Unique domain identifier.
+	ID string `json:"domain_id"`
 
-/*
-var networks = []Network{
-	{Name: "squabbit virbr0 network", Address: "10.4.5.0", CIDRBlock: "27"},
-	{Name: "-vacant virbr32 network", Address: "10.4.5.32", CIDRBlock: "27"},
-	{Name: "-vacant virbr32 network", Address: "10.4.5.64", CIDRBlock: "27"},
-	{Name: "-vacant network", Address: "10.4.5.96", CIDRBlock: "27"},
-	{Name: "-vacant network", Address: "10.4.5.128", CIDRBlock: "27"},
-	{Name: "VPN external dish network", Address: "10.4.5.160", CIDRBlock: "27"},
-	{Name: "VPN private intranet", Address: "10.4.5.192", CIDRBlock: "27"},
-	{Name: "VPN client route-all-traffic network", Address: "10.4.5.224", CIDRBlock: "27"},
+	// Fully qualified domain name.
+	FQDN string `json:"domain_fqdn"`
+
+	// Domain's owner (user)name.
+	Owner string `json:"domain_owner"`
 }
-*/
 
 // High-level struct for batch []Host array importing.
 type Hosts struct {
@@ -77,6 +59,10 @@ type Host struct {
 
 var infrastructure = Infrastructure{}
 
+var squabbitVMs = []Host{
+	{HostnameShort: "stokrle", Domain: "savla.su", Roles: []string{"build", "deploy"}, IPAddress: []string{"10.4.5.55/25"}},
+}
+
 //var hosts = []Host{}
 //var networks = []Network{}
 
@@ -90,13 +76,19 @@ type Virtual struct {
 	Host
 }
 
-var squabbitVMs = []Host{
-	{HostnameShort: "stokrle", Domain: "savla.su", Roles: []string{"build", "deploy"}, IPAddress: []string{"10.4.5.55/25"}},
-}
+type Network struct {
+	// Unique network's identifier
+	Hash string `json:"hash"`
 
-// demo Hosts data
-/*
-var hosts = Hosts{
-	{Hostname: "squabbit", Domain: "savla.su", Role: "hypervisor", IPAddress: []string{"10.4.5.1/25", "10.4.5.129/25"}, VMs: []Host},
+	// Network name, verbose ID.
+	Name string `json:"network_name"`
+
+	// Netowrk IP address.
+	Address string `json:"network_address"`
+
+	// Interface(s) of such network.
+	Interface string `json:"interface"`
+
+	// CIDR block of netmask.
+	CIDRBlock string `json:"network_cidr_block"`
 }
-*/
