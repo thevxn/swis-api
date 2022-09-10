@@ -85,6 +85,11 @@ stop:
 	@echo -e "\n${YELLOW} Stopping and purging project (docker compose down)... ${RESET}\n"
 	@docker compose --file $(DOCKER_COMPOSE_FILE) down
 
+.PHONY: dump
+dump: 
+	@echo -e "\n${YELLOW} Dumping prod data to .dumps/... ${RESET}\n"
+	@.bin/dump_prod_data.sh
+
 .PHONY: import_prod_static_data
 import_prod_static_data: 
 	@echo -e "\n${YELLOW} Import stored data to backend... ${RESET}\n"
