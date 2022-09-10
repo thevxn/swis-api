@@ -14,9 +14,16 @@ jobs:
     - name: Build new swapi image (with staging)
       run: make build
 
-  redeployment:
+  dump_data:
     runs-on: [ self-hosted, internal, docker ]
     needs: [ build ]
+    steps:
+    - name: Dump production data
+      run: make dump
+
+  redeployment:
+    runs-on: [ self-hosted, internal, docker ]
+    needs: [ dump_data ]
     steps:
     - name: Redeploy docker container, recreate container with fresh image
       run: make run
