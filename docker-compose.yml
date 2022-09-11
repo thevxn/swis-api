@@ -9,7 +9,7 @@ volumes:
     name: swis-data
 
 services:
-  swis-api:
+  swis-api-run:
     image: ${DOCKER_IMAGE_TAG}
     container_name: ${DOCKER_CONTAINER_NAME}
     build:
@@ -18,18 +18,18 @@ services:
       args: 
         GOLANG_VERSION: ${GOLANG_VERSION} 
         ALPINE_VERSION: ${ALPINE_VERSION}
-        APP_FLAGS: ${APP_NAME}
         APP_NAME: ${APP_NAME}
         APP_ROOT: ${APP_ROOT}
-        DOCKER_DEV_PORT: ${DOCKER_APP_PORT} 
+        DOCKER_INTERNAL_PORT: ${DOCKER_INTERNAL_PORT} 
         DOCKER_USER: ${DOCKER_USER}
-        GIN_MODE: ${GIN_MODE}
-        ROOT_TOKEN: ${ROOT_TOKEN}
-        TZ: ${TZ}
     restart: unless-stopped
+    command: ${APP_FLAGS}
     environment:
       - APP_ENVIRONMENT=${APP_ENVIRONMENT}
       - APP_VERSION=${APP_VERSION}
+      - GIN_MODE=${GIN_MODE}
+      - ROOT_TOKEN=${ROOT_TOKEN}
+      - TZ=${TZ}
     volumes: 
       - "swis-data:${APP_ROOT}"
     cpus: 0.33
@@ -39,7 +39,7 @@ services:
       - 1.0.0.2
     mem_reservation: 128m
     ports:
-      - "${DOCKER_EXPOSE_PORT}:${DOCKER_APP_PORT}/tcp"
+      - "${DOCKER_EXTERNAL_PORT}:${DOCKER_INTERNAL_PORT}/tcp"
     networks:
       - ${DOCKER_NETWORK_NAME}
     labels:
