@@ -7,3 +7,5 @@ go.mod
 go.sum
 */Makefile
 */swis-api
+.env
+.env.example

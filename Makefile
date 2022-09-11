@@ -103,7 +103,7 @@ import_prod_static_data:
 .PHONY: push
 push:
 	@echo -e "\n${YELLOW} (re)tagging project and pushing to master... ${RESET}\n"
-	@git tag -fa v${SWAPI_VERSION} -m "v${SWAPI_VERSION}"
+	@git tag -fa v${APP_VERSION} -m "v${APP_VERSION}"
 	@git push --follow-tags origin master
 
 # dev/local usage only

@@ -60,19 +60,25 @@ YAML-formated file for docker-compose stack. Contains defitions for docker conta
 [swagger 2.0 is used to document API scheme](http://swapi-docs.savla.su)
 
 ```
-# at project root run
+# at project root run 
+go install github.com/swaggo/swag/cmd/swag@latest
 swag init .
-make docs
 
-# build local binary
-go build swis-api
+# generate docs, build local binary (implicitly)
+make docs
 
 # run server
 ./swis-api
 
 # view
-http://localhost:8049/swagger/index.html
+http://localhost:8999/
 ```
+
+## staging and deployment
+
+As far as the deployment architecture is concerned, the codebase is designed to follow (mostly) [12factor guidelines](https://12factor.net). Thus there is a difference between a build and release and runtime stages.
+
+![swis-api-pipeline](./.assets/swis-api-pipeline.png)
 
 ## authentication
 

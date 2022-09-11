@@ -3,7 +3,7 @@
 #
 
 #
-# stage 0 -- build image
+# stage 0 -- build image executable, combine codes and resource links
 #
 
 # https://hub.docker.com/_/golang
@@ -31,10 +31,10 @@ RUN go install ${APP_NAME}
 
 
 #
-# stage 1 -- prod image
+# stage 1 -- release, combine build image and config(s)
 #
 
-FROM alpine:${ALPINE_VERSION} as swapi-prod
+FROM alpine:${ALPINE_VERSION} as swapi-release
 
 ARG APP_FLAGS
 ARG APP_NAME
@@ -55,6 +55,7 @@ ENV TZ ${TZ}
 RUN apk --no-cache add tzdata
 RUN adduser -D -h ${APP_ROOT} -s /bin/sh ${DOCKER_USER}
 
+# compose release image
 COPY --from=swapi-build /go/bin/${APP_NAME} /bin/${APP_NAME}
 
 WORKDIR ${APP_ROOT}

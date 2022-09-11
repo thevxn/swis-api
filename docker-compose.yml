@@ -27,6 +27,9 @@ services:
         ROOT_TOKEN: ${ROOT_TOKEN}
         TZ: ${TZ}
     restart: unless-stopped
+    environment:
+      - APP_ENVIRONMENT=${APP_ENVIRONMENT}
+      - APP_VERSION=${APP_VERSION}
     volumes: 
       - "swis-data:${APP_ROOT}"
     cpus: 0.33
