@@ -132,6 +132,32 @@ func PostDumpRestore(c *gin.Context) {
 	})
 }
 
+// (PUT /users/{name}/active)
+// @Summary Toggle active boolean for {user}
+// @Description toggle active boolean for {user}
+// @Tags users
+// @Produce json
+// @Param  id  path  string  true  "username"
+// @Success 200 {object} users.User
+// @Router /users/{name}/active [put]
+func ActiveToggleUserByName(c *gin.Context) {
+	var updatedUser User
+
+	i, _ := findUserByName(c.Copy())
+	updatedUser = users[*i]
+
+	// inverse the Muted field value
+	updatedUser.Active = !updatedUser.Active
+
+	users[*i] = updatedUser
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "user active toggle pressed!",
+		"user":    updatedUser,
+	})
+	return
+}
+
 // @Summary Add SSH public keys to User
 // @Description add new SSH keys to :user param
 // @Tags users

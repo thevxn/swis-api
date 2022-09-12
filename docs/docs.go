@@ -1050,6 +1050,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/users/{name}/active": {
+            "put": {
+                "description": "toggle active boolean for {user}",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Toggle active boolean for {user}",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "username",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
+            }
+        },
         "/users/{name}/keys/ssh": {
             "get": {
                 "description": "fetch :user ssh key array output in plain text",

@@ -1191,6 +1191,25 @@ paths:
       summary: Get user by Name
       tags:
       - users
+  /users/{name}/active:
+    put:
+      description: toggle active boolean for {user}
+      parameters:
+      - description: username
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Toggle active boolean for {user}
+      tags:
+      - users
   /users/{name}/keys/ssh:
     get:
       description: fetch :user ssh key array output in plain text

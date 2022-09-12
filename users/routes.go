@@ -8,6 +8,7 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/", GetUsers)
 	g.GET("/:name", GetUserByName)
+	g.PUT("/:name/active", ActiveToggleUserByName)
 	g.POST("/", PostNewUser)
 	g.POST("/:name/keys/ssh", PostUsersSSHKeys)
 	g.GET("/:name/keys/ssh", GetUsersSSHKeysRaw)
