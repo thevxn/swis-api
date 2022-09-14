@@ -52,7 +52,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		} else {
 			// found, ergo assign that user to auth context
 			Params.User = *authUser
-			Params.Roles = *authUser.Roles
+			Params.Roles = authUser.Roles
 		}
 
 		//c.Next()

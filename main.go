@@ -26,6 +26,7 @@ package main
 
 import (
 	// golang libs
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -144,10 +145,14 @@ func main() {
 	//usersRouter.Use(authMiddleware.MiddlewareFunc())
 	users.Routes(usersRouter)
 
-	// attach router to http.Server and start it
+	// attach router to http.Server and start it, check for DOCKER_INTERNAL_PORT constant
+	if os.Getenv("DOCKER_INTERNAL_PORT") == "" {
+		log.Fatal("DOCKER_INTERNAL_PORT environment variable not provided! stopping the server now...")
+	}
+
 	// https://pkg.go.dev/net/http#Server
 	server := &http.Server{
-		Addr:         "0.0.0.0:" + os.env.Get("DOCKER_INTERNAL_PORT"),
+		Addr:         "0.0.0.0:" + os.Getenv("DOCKER_INTERNAL_PORT"),
 		Handler:      router,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
