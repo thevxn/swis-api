@@ -23,8 +23,9 @@ func AuthMiddleware() gin.HandlerFunc {
 
 	// stop server if root token environment var is not set
 	if rootToken == "" {
-		log.Fatal("root token cannot be blank!")
+		log.Fatal("ROOT_TOKEN environment variable not provided! stopping the server now...")
 	}
+
 	return func(c *gin.Context) {
 		Params.BearerToken = ""
 		Params.BearerToken = c.Request.Header.Get("X-Auth-Token")
@@ -51,6 +52,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		} else {
 			// found, ergo assign that user to auth context
 			Params.User = *authUser
+			Params.Roles = *authUser.Roles
 		}
 
 		//c.Next()

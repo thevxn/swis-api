@@ -26,7 +26,6 @@ package main
 
 import (
 	// golang libs
-
 	"net/http"
 	"os"
 	"time"
@@ -61,6 +60,14 @@ func main() {
 	// Logger middleware will write the logs to gin.DefaultWriter even if you set with GIN_MODE=release.
 	router.Use(gin.Logger())
 
+	// serve savla-dev internal favicon
+	router.StaticFile("/favicon.ico", "./.assets/favicon.ico")
+
+	// very simple LE support --- https://github.com/gin-gonic/gin#support-lets-encrypt
+	router.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
+	})
+
 	// use custom swapi Auth middleware --- token auth
 	router.Use(auth.AuthMiddleware())
 
@@ -76,11 +83,6 @@ func main() {
 		})
 	})
 
-	// very simple LE support --- https://github.com/gin-gonic/gin#support-lets-encrypt
-	router.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
-	})
-
 	// default 404 route
 	router.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -89,8 +91,9 @@ func main() {
 		})
 	})
 
-	// serve savla-dev internal favicon
-	router.StaticFile("/favicon.ico", "./.assets/favicon.ico")
+	//
+	// swis modules
+	//
 
 	// alvax CRUD
 	alvaxRouter := router.Group("/alvax")
@@ -144,7 +147,7 @@ func main() {
 	// attach router to http.Server and start it
 	// https://pkg.go.dev/net/http#Server
 	server := &http.Server{
-		Addr:         "0.0.0.0:8049",
+		Addr:         "0.0.0.0:" + os.env.Get("DOCKER_INTERNAL_PORT"),
 		Handler:      router,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
