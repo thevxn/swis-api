@@ -107,43 +107,9 @@ At start, swapi instance memory is cleared and ready for any data import (until 
 # run local instance (redeployment CI/CD job)
 make build run
 
+# dump production data locally
+make dump
+
 # import prod data -- local .data files to swapi.savla.su prod URL (import_data CI/CD job)
 make import_prod_static_data
 ```
-
-```shell
-# (manual) import depot items example
-curl -d @.data/depot.json -sLX POST http://localhost:8003/depot/restore | jq .
-
-# (manual) import users example
-curl -d @.data/users.json -sLX POST http://localhost:8003/users/restore | jq .
-
-# (manual) import alvax command list example
-curl -d @.data/alvax_command_list.json -sLX POST http://localhost:8003/alvax/commands/restore | jq .
-
-# (manual) import SSH keys example
-curl -d @.data/krusty_ssh_keys.json -sLX POST http://swapi.savla.su/users/krusty/keys/ssh
-```
-
-
-### legacy MariaDB export (n0p_depot)
-
-```shell
-# export legacy table contents, and reformat result lines into JSON array items
-mysql -u n0p_sysadm -p n0p_core -sNe 'select JSON_ARRAY(id, n0p_depot.desc, misc, depot) from n0p_depot;' > n0p_depot.export.json
-
-# check correctness of a JSON file (has to pass, ergo exitcode == 0)
-jq . n0p_depot.export.json
-
-# regexp for bracket change: [ -> {, ] -> }
-2,$s/\[/\{/g
-2,$s/\]/\}/g
-
-# insert a comma ',' at the EOL
-2,$s/^\(.*\)$/\1,/
-
-# take all for array items and convert them into a JSON object
-2,342s/^{\(.*\),[ ]\(".*"\),[ ]\(".*"\),[ ]\(".*"\)\},$/\{"id": \1, "desc": \2, "misc": \3, "depot": \4},/
-```
-
-

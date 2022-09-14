@@ -26,6 +26,7 @@ services:
     command: ${APP_FLAGS}
     environment:
       - APP_ENVIRONMENT=${APP_ENVIRONMENT}
+      - APP_NAME=${APP_NAME}
       - APP_VERSION=${APP_VERSION}
       - GIN_MODE=${GIN_MODE}
       - ROOT_TOKEN=${ROOT_TOKEN}

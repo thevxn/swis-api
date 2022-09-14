@@ -9,7 +9,7 @@
 include .env.example
 -include .env
 
-PROJECT_NAME?=swapi
+PROJECT_NAME?=${APP_NAME}
 DOCKER_COMPOSE_FILE?=./docker-compose.yml
 SWAG_BINARY?=~/go/bin/swag
 
