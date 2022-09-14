@@ -48,15 +48,25 @@ export
 info: 
 	@echo -e "\n${GREEN} ${PROJECT_NAME} / Makefile ${RESET}\n"
 
-	@echo -e "${YELLOW} make fmt     --- reformat the go source (gofmt) ${RESET}"
-	@echo -e "${YELLOW} make doc     --- render documentation from code (go doc) ${RESET}\n"
+	@echo -e "${YELLOW} make --- show this helper ${RESET}\n"
 
-	@echo -e "${YELLOW} make build   --- build project (docker image) ${RESET}"
-	@echo -e "${YELLOW} make run     --- run project ${RESET}"
-	@echo -e "${YELLOW} make logs    --- fetch container's logs ${RESET}"
-	@echo -e "${YELLOW} make stop    --- stop and purge project (only docker containers!) ${RESET}"
+	@echo -e "${YELLOW} make fmt  --- reformat the go source (gofmt) ${RESET}"
+	@echo -e "${YELLOW} make docs --- render documentation from code (swagger OA docs) ${RESET}\n"
+
+	@echo -e "${YELLOW} make build --- build project (docker image) ${RESET}"
+	@echo -e "${YELLOW} make run   --- run project ${RESET}"
+	@echo -e "${YELLOW} make logs  --- fetch container's logs ${RESET}"
+	@echo -e "${YELLOW} make stop  --- stop and purge project (only docker containers!) ${RESET}\n"
+
+	@echo -e "${YELLOW} make import_dump --- import dumped data (locally) into runtime ${RESET}"
+	@echo -e "${YELLOW} make dump        --- dump runtime data to DUMP_DIR ${RESET}"
+	@echo -e "${YELLOW} make backup      --- execute data dump and tar/gzip data backup ${RESET}"
 	@echo -e ""
 
+.PHONY: version
+version: 
+	@echo -e "\n${YELLOW} Updating app's version (docs) according to dot-env file... ${RESET}\n"
+	@sed -i 's/\(\/\/[ ]@version\) .*/\1 ${APP_VERSION}/' main.go
 
 .PHONY: fmt
 fmt:
@@ -65,7 +75,7 @@ fmt:
 	@find . -name "*.go" -exec gofmt {} \;
 
 .PHONY: build
-build: 
+build:  version
 	@echo -e "\n${YELLOW} Building project (docker compose build)... ${RESET}\n"
 	@docker compose --file $(DOCKER_COMPOSE_FILE) build
 #@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
@@ -96,8 +106,8 @@ backup: dump
 	@.bin/backup_dumped_files.sh
 
 .PHONY: import_prod_static_data
-import_prod_static_data: 
-	@echo -e "\n${YELLOW} Import stored data to backend... ${RESET}\n"
+import_dump: 
+	@echo -e "\n${YELLOW} Import stored data (${DUMP_DIR}) to backend... ${RESET}\n"
 	@.bin/import_prod_data.sh
 
 .PHONY: push

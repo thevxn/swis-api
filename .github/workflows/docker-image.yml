@@ -21,7 +21,7 @@ jobs:
     - name: Dump production data
       run: make dump
 
-  redeployment:
+  redeploy:
     runs-on: [ self-hosted, internal, docker ]
     needs: [ dump_data ]
     steps:
@@ -30,7 +30,7 @@ jobs:
 
   import_data:
     runs-on: [ self-hosted, internal, docker ]
-    needs: [ redeployment ]
+    needs: [ redeploy ]
     steps:
-    - name: Import static data to production
-      run: make import_prod_static_data
+    - name: Import dumped data to production
+      run: make import_dump
