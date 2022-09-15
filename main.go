@@ -43,6 +43,7 @@ import (
 	"swis-api/news"
 	"swis-api/projects"
 	"swis-api/roles"
+	"swis-api/six"
 	"swis-api/swife"
 	"swis-api/users"
 
@@ -135,6 +136,10 @@ func main() {
 	// roles CRUD
 	rolesRouter := router.Group("/roles")
 	roles.Routes(rolesRouter)
+
+	// six CRUD
+	sixRouter := router.Group("/six")
+	six.Routes(sixRouter)
 
 	// swife CRUD
 	swifeRouter := router.Group("/swife")

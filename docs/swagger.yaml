@@ -404,6 +404,52 @@ definitions:
           $ref: '#/definitions/roles.Role'
         type: array
     type: object
+  six.Calendar:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/six.Item'
+        type: array
+      owner_name:
+        type: string
+    type: object
+  six.Item:
+    properties:
+      description:
+        type: string
+      do_repeat:
+        type: boolean
+      end_date:
+        type: string
+      item_type:
+        type: string
+      name:
+        type: string
+      repeat_freq:
+        type: string
+      start_date:
+        type: string
+    type: object
+  six.SixStruct:
+    properties:
+      calendars:
+        items:
+          $ref: '#/definitions/six.Calendar'
+        type: array
+      todo_lists:
+        items:
+          $ref: '#/definitions/six.TodoList'
+        type: array
+    type: object
+  six.TodoList:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/six.Item'
+        type: array
+      owner_name:
+        type: string
+    type: object
   swife.Frontend:
     properties:
       description:
@@ -526,7 +572,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: "5.2"
+  version: 5.2.2
 paths:
   /alvax/commands:
     get:
@@ -1109,6 +1155,19 @@ paths:
       summary: Upload roles dump backup -- restores all roles
       tags:
       - roles
+  /six:
+    get:
+      description: get the six struct
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/six.SixStruct'
+      summary: Get the six struct
+      tags:
+      - six
   /swife:
     get:
       description: get frontends complete list

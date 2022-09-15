@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.2"
+        "version": "5.2.2"
     },
     "host": "swapi.savla.su:8049",
     "basePath": "/",
@@ -902,6 +902,26 @@
                 "responses": {}
             }
         },
+        "/six": {
+            "get": {
+                "description": "get the six struct",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "six"
+                ],
+                "summary": "Get the six struct",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/six.SixStruct"
+                        }
+                    }
+                }
+            }
+        },
         "/swife": {
             "get": {
                 "description": "get frontends complete list",
@@ -1693,6 +1713,77 @@
                     "items": {
                         "$ref": "#/definitions/roles.Role"
                     }
+                }
+            }
+        },
+        "six.Calendar": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/six.Item"
+                    }
+                },
+                "owner_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "six.Item": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "do_repeat": {
+                    "type": "boolean"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "item_type": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "repeat_freq": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "six.SixStruct": {
+            "type": "object",
+            "properties": {
+                "calendars": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/six.Calendar"
+                    }
+                },
+                "todo_lists": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/six.TodoList"
+                    }
+                }
+            }
+        },
+        "six.TodoList": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/six.Item"
+                    }
+                },
+                "owner_name": {
+                    "type": "string"
                 }
             }
         },

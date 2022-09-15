@@ -1,8 +1,6 @@
 package finance
 
 import (
-	//b64 "encoding/base64"
-	//"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -40,6 +38,7 @@ func GetAccountByOwner(c *gin.Context) {
 			return
 		}
 	}
+
 	c.IndentedJSON(http.StatusNotFound, gin.H{
 		"code":    http.StatusNotFound,
 		"message": "account not found",

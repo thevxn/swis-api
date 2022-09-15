@@ -909,6 +909,26 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/six": {
+            "get": {
+                "description": "get the six struct",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "six"
+                ],
+                "summary": "Get the six struct",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/six.SixStruct"
+                        }
+                    }
+                }
+            }
+        },
         "/swife": {
             "get": {
                 "description": "get frontends complete list",
@@ -1703,6 +1723,77 @@ const docTemplate = `{
                 }
             }
         },
+        "six.Calendar": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/six.Item"
+                    }
+                },
+                "owner_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "six.Item": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "do_repeat": {
+                    "type": "boolean"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "item_type": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "repeat_freq": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "six.SixStruct": {
+            "type": "object",
+            "properties": {
+                "calendars": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/six.Calendar"
+                    }
+                },
+                "todo_lists": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/six.TodoList"
+                    }
+                }
+            }
+        },
+        "six.TodoList": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/six.Item"
+                    }
+                },
+                "owner_name": {
+                    "type": "string"
+                }
+            }
+        },
         "swife.Frontend": {
             "type": "object",
             "properties": {
@@ -1856,7 +1947,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2",
+	Version:          "5.2.2",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},
