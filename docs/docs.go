@@ -929,6 +929,22 @@ const docTemplate = `{
                 }
             }
         },
+        "/six/restore": {
+            "post": {
+                "description": "upload six JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "six"
+                ],
+                "summary": "Upload six dump backup -- restores all loaded calendars and todo lists",
+                "responses": {}
+            }
+        },
         "/swife": {
             "get": {
                 "description": "get frontends complete list",
@@ -1740,6 +1756,9 @@ const docTemplate = `{
         "six.Item": {
             "type": "object",
             "properties": {
+                "constraint": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -1758,7 +1777,10 @@ const docTemplate = `{
                 "repeat_freq": {
                     "type": "string"
                 },
-                "start_date": {
+                "start": {
+                    "type": "string"
+                },
+                "title": {
                     "type": "string"
                 }
             }

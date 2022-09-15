@@ -415,6 +415,8 @@ definitions:
     type: object
   six.Item:
     properties:
+      constraint:
+        type: string
       description:
         type: string
       do_repeat:
@@ -427,7 +429,9 @@ definitions:
         type: string
       repeat_freq:
         type: string
-      start_date:
+      start:
+        type: string
+      title:
         type: string
     type: object
   six.SixStruct:
@@ -1166,6 +1170,17 @@ paths:
           schema:
             $ref: '#/definitions/six.SixStruct'
       summary: Get the six struct
+      tags:
+      - six
+  /six/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload six JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload six dump backup -- restores all loaded calendars and todo lists
       tags:
       - six
   /swife:

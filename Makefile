@@ -105,7 +105,7 @@ backup: dump
 	@echo -e "\n${YELLOW} Archiving and compressing dumped data... ${RESET}\n"
 	@.bin/backup_dumped_files.sh
 
-.PHONY: import_prod_static_data
+.PHONY: import_dump
 import_dump: 
 	@echo -e "\n${YELLOW} Import stored data (${DUMP_DIR}) to backend... ${RESET}\n"
 	@.bin/import_prod_data.sh
