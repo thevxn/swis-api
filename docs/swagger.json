@@ -296,7 +296,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depot.Depots"
+                            "$ref": "#/definitions/depots.Depots"
                         }
                     }
                 }
@@ -332,7 +332,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depot.Depot"
+                            "$ref": "#/definitions/depots.Depot"
                         }
                     }
                 }
@@ -1147,12 +1147,14 @@
             "type": "object",
             "properties": {
                 "command_list": {
+                    "description": "User's defined command list.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/alvax.Command"
                     }
                 },
                 "user": {
+                    "description": "Target user's name (e.g. alvax-bot-ravn).",
                     "type": "string"
                 }
             }
@@ -1161,25 +1163,33 @@
             "type": "object",
             "properties": {
                 "alias_names": {
+                    "description": "Command aliases, e.g. 'fname', 'lname' etc.",
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
                 },
                 "argument_list": {
+                    "description": "List of arguments for such command to be read.",
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
                 },
+                "command_base64": {
+                    "description": "Command logic, structure as base64 encoded string.",
+                    "type": "string"
+                },
                 "name": {
-                    "description": "name as in the '/name' Telegram command syntax",
+                    "description": "Command name as in '/name' in Telegram command syntax.",
                     "type": "string"
                 },
                 "parent_class": {
+                    "description": "Parent class for TS implementation to be loaded.",
                     "type": "string"
                 },
                 "required_argument": {
+                    "description": "Is argument(s) required boolean.",
                     "type": "boolean"
                 }
             }
@@ -1227,29 +1237,39 @@
         },
         "business.Business": {
             "type": "object",
+            "required": [
+                "id"
+            ],
             "properties": {
                 "contact": {
+                    "description": "Array of contacts of different type.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/business.Contact"
                     }
                 },
                 "ico": {
+                    "description": "Czech Company ICO/ID number.",
                     "type": "string"
                 },
                 "id": {
+                    "description": "Busines unique identifier.",
                     "type": "string"
                 },
                 "name_label": {
+                    "description": "Company's business name.",
                     "type": "string"
                 },
                 "role": {
+                    "description": "Business role to such organization (e.g. partner, owner)",
                     "type": "string"
                 },
                 "username": {
+                    "description": "User's name linked to such business.",
                     "type": "string"
                 },
                 "vat_id": {
+                    "description": "Czech company DICO/VAT ID number/string.",
                     "type": "string"
                 }
             }
@@ -1258,6 +1278,7 @@
             "type": "object",
             "properties": {
                 "business": {
+                    "description": "Array of business records.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/business.Business"
@@ -1269,21 +1290,23 @@
             "type": "object",
             "properties": {
                 "content": {
+                    "description": "Contact field contents.",
                     "type": "string"
                 },
                 "type": {
+                    "description": "Type of contact field (e.g. e-mail address, street address, telephone number etc).",
                     "type": "string"
                 }
             }
         },
-        "depot.Depot": {
+        "depots.Depot": {
             "type": "object",
             "properties": {
                 "depot_items": {
                     "description": "Generic array of depot Items.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/depot.Item"
+                        "$ref": "#/definitions/depots.Item"
                     }
                 },
                 "owner_name": {
@@ -1292,18 +1315,18 @@
                 }
             }
         },
-        "depot.Depots": {
+        "depots.Depots": {
             "type": "object",
             "properties": {
                 "depots": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/depot.Depot"
+                        "$ref": "#/definitions/depots.Depot"
                     }
                 }
             }
         },
-        "depot.Item": {
+        "depots.Item": {
             "type": "object",
             "properties": {
                 "depot": {
@@ -1380,31 +1403,38 @@
             "type": "object",
             "properties": {
                 "account_currency": {
+                    "description": "Account currency name (e.g. CZK, GBP, EUR, USD)",
                     "type": "string"
                 },
                 "account_iban": {
+                    "description": "Account IBAN code for international payments.",
                     "type": "string"
                 },
                 "account_items": {
+                    "description": "Account items like (incoming/outcoming) payments.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/finance.Item"
                     }
                 },
                 "account_name": {
+                    "description": "Account name/unique ID.",
                     "type": "string"
                 },
                 "account_number": {
+                    "description": "Account number.",
                     "type": "string"
                 },
                 "account_owner": {
+                    "description": "Owner's name/username to link account to.",
                     "type": "string"
                 },
                 "account_swift_bic": {
+                    "description": "Account SWIFT/BIC code for international payments.",
                     "type": "string"
                 },
                 "bank_code": {
-                    "description": "bank codes like \"0100\" would be invalid as type int",
+                    "description": "Universal in-state bank code (CZ mainly).\nBank codes such as \"0100\" would be invalid as type int!",
                     "type": "string"
                 }
             }
@@ -1413,6 +1443,7 @@
             "type": "object",
             "properties": {
                 "accounts": {
+                    "description": "Finance accounts list.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/finance.Account"
@@ -1424,21 +1455,27 @@
             "type": "object",
             "properties": {
                 "amount": {
+                    "description": "Payment amount in defined currency (often the account's currency).",
                     "type": "number"
                 },
                 "billing_date": {
+                    "description": "Billing date of the payment.",
                     "type": "string"
                 },
-                "currency_code": {
+                "currency": {
+                    "description": "Payment currency name (e.g. CZK, GBP, EUR, USD)",
                     "type": "string"
                 },
                 "description": {
+                    "description": "Payment/item description.",
                     "type": "string"
                 },
                 "id": {
+                    "description": "Item unique ID (e.g. datetime timestamp plus currency etc).",
                     "type": "integer"
                 },
                 "misc": {
+                    "description": "Mescellaneous information about the payment (e.g. foreign currency and amount).",
                     "type": "string"
                 }
             }
@@ -1526,18 +1563,21 @@
             "type": "object",
             "properties": {
                 "domains": {
+                    "description": "Domains linked to such infrastructure.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/infra.Domain"
                     }
                 },
                 "hosts": {
+                    "description": "Hosts/nodes linked to such infrastructure.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/infra.Host"
                     }
                 },
                 "networks": {
+                    "description": "Networks linked to such infrastructure.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/infra.Network"
@@ -1574,21 +1614,27 @@
             "type": "object",
             "properties": {
                 "link": {
+                    "description": "Link to such item -- to the actual article usually.",
                     "type": "string"
                 },
                 "parse_date_rfc1123z": {
+                    "description": "Special date of issue format to reparse/order all news items altogether.",
                     "type": "string"
                 },
                 "perex": {
+                    "description": "Item's short description (perex).",
                     "type": "string"
                 },
                 "pub_date": {
+                    "description": "Date of issue, formatted by issuer.",
                     "type": "string"
                 },
                 "server": {
+                    "description": "Issuer server name (hostname with subdomain).",
                     "type": "string"
                 },
                 "title": {
+                    "description": "Item's title (headline).",
                     "type": "string"
                 }
             }
@@ -1597,12 +1643,14 @@
             "type": "object",
             "properties": {
                 "news_sources": {
+                    "description": "Actual user's news sources.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/news.Source"
                     }
                 },
                 "news_user": {
+                    "description": "News sources linked username.",
                     "type": "string"
                 }
             }
@@ -1611,12 +1659,15 @@
             "type": "object",
             "properties": {
                 "source_id": {
+                    "description": "Source unique identificator.",
                     "type": "string"
                 },
                 "source_name": {
+                    "description": "Source's more natural name.",
                     "type": "string"
                 },
                 "source_url": {
+                    "description": "RSS URL to the source.",
                     "type": "string"
                 }
             }

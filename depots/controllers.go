@@ -1,4 +1,4 @@
-package depot
+package depots
 
 import (
 	"net/http"
@@ -10,14 +10,14 @@ import (
 // @Summary Get all depots and their users/owners
 // @Description get depot complete list
 // @Tags depot
-// @Produce  json
-// @Success 200 {object} depot.Depots
+// @Produce json
+// @Success 200 {object} depots.Depots
 // @Router /depots [get]
 // GetSocketList GET method
 func GetDepots(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "dumping depots",
+		"message": "ok, dumping depots",
 		"depots":  depots.Depots,
 	})
 }
@@ -25,24 +25,25 @@ func GetDepots(c *gin.Context) {
 // @Summary Get depot list by Owner
 // @Description get depot list by :owner param
 // @Tags depot
-// @Produce  json
-// @Success 200 {object} depot.Depot
+// @Produce json
+// @Success 200 {object} depots.Depot
 // @Router /depots/{owner} [get]
 // GetSocketList GET method
 func GetDepotByOwner(c *gin.Context) {
 	owner := c.Param("owner")
 
-	for _, d := range depots.Depots {
-		if d.Owner == owner {
+	for _, depot := range depots.Depots {
+		if depot.Owner == owner {
+			// order items ASC alphabetically
 			// https://pkg.go.dev/sort#Slice
-			sort.Slice(d.DepotItems, func(i, j int) bool {
-				return (d.DepotItems[i].Description < d.DepotItems[j].Description)
+			sort.Slice(depot.DepotItems, func(i, j int) bool {
+				return (depot.DepotItems[i].Description < depot.DepotItems[j].Description)
 			})
 
 			c.IndentedJSON(http.StatusOK, gin.H{
 				"code":    http.StatusOK,
-				"message": "dumping user's depot, alphabetically sorted",
-				"depot":   d,
+				"message": "ok, dumping user's depot, alphabetically sorted",
+				"depot":   depot,
 			})
 			return
 		}
@@ -76,6 +77,5 @@ func PostDumpRestore(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "depots imported, omitting output",
-		//"depots": importDepots.Depots,
 	})
 }

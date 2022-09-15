@@ -6,8 +6,12 @@ import (
 
 // projects CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/", GetProjects)
-	g.GET("/:id", GetProjectByID)
-	g.POST("/", PostProject)
-	g.POST("/restore", PostDumpRestore)
+	g.GET("/",
+		GetProjects)
+	g.GET("/:id",
+		GetProjectByID)
+	g.POST("/",
+		PostProject)
+	g.POST("/restore",
+		PostDumpRestore)
 }

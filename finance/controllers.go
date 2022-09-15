@@ -9,7 +9,7 @@ import (
 // @Summary Get all finance accounts
 // @Description get finance complete list
 // @Tags finance
-// @Produce  json
+// @Produce json
 // @Success 200 {object} finance.Finance
 // @Router /finance [get]
 func GetAccounts(c *gin.Context) {
@@ -23,17 +23,17 @@ func GetAccounts(c *gin.Context) {
 // @Summary Get finance account by its Owner
 // @Description get finance account by :owner param
 // @Tags finance
-// @Produce  json
+// @Produce json
 // @Success 200 {object} finance.Account
 // @Router /finance/accounts/{owner} [get]
 func GetAccountByOwner(c *gin.Context) {
 	owner := c.Param("owner")
 
-	for _, f := range finance.Accounts {
-		if f.Owner == owner {
+	for _, acc := range finance.Accounts {
+		if acc.Owner == owner {
 			c.IndentedJSON(http.StatusOK, gin.H{
 				"code":    http.StatusOK,
-				"account": f,
+				"account": acc,
 			})
 			return
 		}

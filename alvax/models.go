@@ -1,25 +1,33 @@
 package alvax
 
 type AlvaxCommands struct {
-	User        string    `json:"user"`
+	// Target user's name (e.g. alvax-bot-ravn).
+	User string `json:"user"`
+
+	// User's defined command list.
 	CommandList []Command `json:"command_list"`
 }
 
 type Command struct {
-	// name as in the '/name' Telegram command syntax
-	Name         string   `json:"name"`
-	AliasNames   []string `json:"alias_names"`
+	// Command name as in '/name' in Telegram command syntax.
+	Name string `json:"name"`
+
+	// Command aliases, e.g. 'fname', 'lname' etc.
+	AliasNames []string `json:"alias_names"`
+
+	// List of arguments for such command to be read.
 	ArgumentList []string `json:"argument_list"`
-	ParentClass  string   `json:"parent_class"`
-	RequiredArg  bool     `json:"required_argument" default:false`
+
+	// Is argument(s) required boolean.
+	RequiredArg bool `json:"required_argument" default:false`
+
+	// Parent class for TS implementation to be loaded.
+	ParentClass string `json:"parent_class"`
+
+	// Command logic, structure as base64 encoded string.
+	CommandBase64 string `json:"command_base64"`
 }
 
 // flush alvax commands on start
 //var commandList = AlvaxCommands.CommandList{}
-var commandList = []Command{
-	{Name: "bomb", ParentClass: "Bomb", ArgumentList: []string{"red", "green", "blue"}, RequiredArg: false},
-	{Name: "dish", ParentClass: "Dish", ArgumentList: []string{"enable", "disable", "mute", "search"}, RequiredArg: true},
-	{Name: "kanban", ParentClass: "Kanban", ArgumentList: []string{"getAllProjects"}, RequiredArg: true},
-	{Name: "memes", ParentClass: "Memes", ArgumentList: []string{"megamind", "chad"}, RequiredArg: true},
-	{Name: "rating", ParentClass: "Rating", ArgumentList: []string{"good", "bad"}, AliasNames: []string{"badbot", "goodbot"}},
-}
+var commandList = []Command{}

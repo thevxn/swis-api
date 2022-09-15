@@ -36,7 +36,7 @@ import (
 	"swis-api/auth"
 	"swis-api/backups"
 	"swis-api/business"
-	"swis-api/depot"
+	"swis-api/depots"
 	"swis-api/dish"
 	"swis-api/finance"
 	"swis-api/infra"
@@ -112,9 +112,9 @@ func main() {
 	businessRouter := router.Group("/business")
 	business.Routes(businessRouter)
 
-	// depot/depots CRUD
-	depotRouter := router.Group("/depots")
-	depot.Routes(depotRouter)
+	// depots CRUD
+	depotsRouter := router.Group("/depots")
+	depots.Routes(depotsRouter)
 
 	// dish CRUD
 	dishRouter := router.Group("/dish")

@@ -23,7 +23,7 @@ func findBackupByServiceName(c *gin.Context) (index *int, backup *Backup) {
 // @Summary Get all backups status
 // @Description get backups actual status
 // @Tags backups
-// @Produce  json
+// @Produce json
 // @Success 200 {object} string "ok"
 // @Router /backups [get]
 func GetBackupsStatus(c *gin.Context) {
@@ -120,8 +120,7 @@ func UpdateBackupStatusByServiceName(c *gin.Context) {
 	c.IndentedJSON(http.StatusAccepted, gin.H{
 		"code":    http.StatusAccepted,
 		"message": "backup status updated",
-		//"backup":  backups.Backups[*i],
-		"backup": backups.Backups[*i],
+		"backup":  backups.Backups[*i],
 	})
 	return
 }

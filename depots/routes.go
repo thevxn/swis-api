@@ -1,15 +1,15 @@
-package swife
+package depots
 
 import (
 	"github.com/gin-gonic/gin"
 )
 
-// swife CRUD -- functions in controllers.go
+// depot CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
-		GetFrontends)
-	g.GET("/:sitename",
-		GetFrontendBySiteName)
+		GetDepots)
+	g.GET("/:owner",
+		GetDepotByOwner)
 	g.POST("/restore",
 		PostDumpRestore)
 }

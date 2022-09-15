@@ -1,17 +1,19 @@
 package infra
 
 type Infrastructures struct {
+	// Whole infrastructure object.
 	Infrastructure Infrastructure `json:"infrastructure"`
 }
 
 type Infrastructure struct {
-	Domains  []Domain  `json:"domains"`
-	Hosts    []Host    `json:"hosts"`
-	Networks []Network `json:"networks"`
-}
-
-type Domains struct {
+	// Domains linked to such infrastructure.
 	Domains []Domain `json:"domains"`
+
+	// Hosts/nodes linked to such infrastructure.
+	Hosts []Host `json:"hosts"`
+
+	// Networks linked to such infrastructure.
+	Networks []Network `json:"networks"`
 }
 
 type Domain struct {
@@ -58,13 +60,6 @@ type Host struct {
 }
 
 var infrastructure = Infrastructure{}
-
-var squabbitVMs = []Host{
-	{HostnameShort: "stokrle", Domain: "savla.su", Roles: []string{"build", "deploy"}, IPAddress: []string{"10.4.5.55/25"}},
-}
-
-//var hosts = []Host{}
-//var networks = []Network{}
 
 // Hyper struct to model hypervisor machine
 type Hyper struct {

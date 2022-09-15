@@ -1,23 +1,39 @@
 package business
 
 type BusinessArray struct {
+	// Array of business records.
 	BusinessArray []Business `json:"business"`
 }
 
 // Business structure
 type Business struct {
-	ID        string    `json:"id"`
-	ICO       string    `json:"ico"`
-	VAT       string    `json:"vat_id"`
-	NameLabel string    `json:"name_label"`
-	Contact   []Contact `json:"contact"`
-	Role      string    `json:"role"`
-	UserName  string    `json:"username"`
-	//TokenBase64		string 	`json:"token_base64"`
+	// Busines unique identifier.
+	ID string `json:"id" binding:"required"`
+
+	// Czech Company ICO/ID number.
+	ICO string `json:"ico"`
+
+	// Czech company DICO/VAT ID number/string.
+	VAT string `json:"vat_id"`
+
+	// Company's business name.
+	NameLabel string `json:"name_label"`
+
+	// Array of contacts of different type.
+	Contact []Contact `json:"contact"`
+
+	// Business role to such organization (e.g. partner, owner)
+	Role string `json:"role"`
+
+	// User's name linked to such business.
+	UserName string `json:"username"`
 }
 
 type Contact struct {
-	Type    string `json:"type"`
+	// Type of contact field (e.g. e-mail address, street address, telephone number etc).
+	Type string `json:"type"`
+
+	// Contact field contents.
 	Content string `json:"content"`
 }
 

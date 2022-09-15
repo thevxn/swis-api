@@ -19,6 +19,8 @@ import (
 func GetCommandList(c *gin.Context) {
 	// serialize struct to JSON
 	c.IndentedJSON(http.StatusOK, gin.H{
+		"message":      "ok, dumping all alvax defined commands (command list)",
+		"code":         http.StatusOK,
 		"command_list": commandList,
 	})
 }

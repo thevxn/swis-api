@@ -3,28 +3,37 @@ definitions:
   alvax.AlvaxCommands:
     properties:
       command_list:
+        description: User's defined command list.
         items:
           $ref: '#/definitions/alvax.Command'
         type: array
       user:
+        description: Target user's name (e.g. alvax-bot-ravn).
         type: string
     type: object
   alvax.Command:
     properties:
       alias_names:
+        description: Command aliases, e.g. 'fname', 'lname' etc.
         items:
           type: string
         type: array
       argument_list:
+        description: List of arguments for such command to be read.
         items:
           type: string
         type: array
+      command_base64:
+        description: Command logic, structure as base64 encoded string.
+        type: string
       name:
-        description: name as in the '/name' Telegram command syntax
+        description: Command name as in '/name' in Telegram command syntax.
         type: string
       parent_class:
+        description: Parent class for TS implementation to be loaded.
         type: string
       required_argument:
+        description: Is argument(s) required boolean.
         type: boolean
     type: object
   backups.Backup:
@@ -60,25 +69,35 @@ definitions:
   business.Business:
     properties:
       contact:
+        description: Array of contacts of different type.
         items:
           $ref: '#/definitions/business.Contact'
         type: array
       ico:
+        description: Czech Company ICO/ID number.
         type: string
       id:
+        description: Busines unique identifier.
         type: string
       name_label:
+        description: Company's business name.
         type: string
       role:
+        description: Business role to such organization (e.g. partner, owner)
         type: string
       username:
+        description: User's name linked to such business.
         type: string
       vat_id:
+        description: Czech company DICO/VAT ID number/string.
         type: string
+    required:
+    - id
     type: object
   business.BusinessArray:
     properties:
       business:
+        description: Array of business records.
         items:
           $ref: '#/definitions/business.Business'
         type: array
@@ -86,29 +105,32 @@ definitions:
   business.Contact:
     properties:
       content:
+        description: Contact field contents.
         type: string
       type:
+        description: Type of contact field (e.g. e-mail address, street address, telephone
+          number etc).
         type: string
     type: object
-  depot.Depot:
+  depots.Depot:
     properties:
       depot_items:
         description: Generic array of depot Items.
         items:
-          $ref: '#/definitions/depot.Item'
+          $ref: '#/definitions/depots.Item'
         type: array
       owner_name:
         description: Depot owner's name.
         type: string
     type: object
-  depot.Depots:
+  depots.Depots:
     properties:
       depots:
         items:
-          $ref: '#/definitions/depot.Depot'
+          $ref: '#/definitions/depots.Depot'
         type: array
     type: object
-  depot.Item:
+  depots.Item:
     properties:
       depot:
         description: Location name of such Item.
@@ -171,28 +193,38 @@ definitions:
   finance.Account:
     properties:
       account_currency:
+        description: Account currency name (e.g. CZK, GBP, EUR, USD)
         type: string
       account_iban:
+        description: Account IBAN code for international payments.
         type: string
       account_items:
+        description: Account items like (incoming/outcoming) payments.
         items:
           $ref: '#/definitions/finance.Item'
         type: array
       account_name:
+        description: Account name/unique ID.
         type: string
       account_number:
+        description: Account number.
         type: string
       account_owner:
+        description: Owner's name/username to link account to.
         type: string
       account_swift_bic:
+        description: Account SWIFT/BIC code for international payments.
         type: string
       bank_code:
-        description: bank codes like "0100" would be invalid as type int
+        description: |-
+          Universal in-state bank code (CZ mainly).
+          Bank codes such as "0100" would be invalid as type int!
         type: string
     type: object
   finance.Finance:
     properties:
       accounts:
+        description: Finance accounts list.
         items:
           $ref: '#/definitions/finance.Account'
         type: array
@@ -200,16 +232,23 @@ definitions:
   finance.Item:
     properties:
       amount:
+        description: Payment amount in defined currency (often the account's currency).
         type: number
       billing_date:
+        description: Billing date of the payment.
         type: string
-      currency_code:
+      currency:
+        description: Payment currency name (e.g. CZK, GBP, EUR, USD)
         type: string
       description:
+        description: Payment/item description.
         type: string
       id:
+        description: Item unique ID (e.g. datetime timestamp plus currency etc).
         type: integer
       misc:
+        description: Mescellaneous information about the payment (e.g. foreign currency
+          and amount).
         type: string
     type: object
   infra.Domain:
@@ -274,14 +313,17 @@ definitions:
   infra.Infrastructure:
     properties:
       domains:
+        description: Domains linked to such infrastructure.
         items:
           $ref: '#/definitions/infra.Domain'
         type: array
       hosts:
+        description: Hosts/nodes linked to such infrastructure.
         items:
           $ref: '#/definitions/infra.Host'
         type: array
       networks:
+        description: Networks linked to such infrastructure.
         items:
           $ref: '#/definitions/infra.Network'
         type: array
@@ -307,34 +349,46 @@ definitions:
   news.Item:
     properties:
       link:
+        description: Link to such item -- to the actual article usually.
         type: string
       parse_date_rfc1123z:
+        description: Special date of issue format to reparse/order all news items
+          altogether.
         type: string
       perex:
+        description: Item's short description (perex).
         type: string
       pub_date:
+        description: Date of issue, formatted by issuer.
         type: string
       server:
+        description: Issuer server name (hostname with subdomain).
         type: string
       title:
+        description: Item's title (headline).
         type: string
     type: object
   news.News:
     properties:
       news_sources:
+        description: Actual user's news sources.
         items:
           $ref: '#/definitions/news.Source'
         type: array
       news_user:
+        description: News sources linked username.
         type: string
     type: object
   news.Source:
     properties:
       source_id:
+        description: Source unique identificator.
         type: string
       source_name:
+        description: Source's more natural name.
         type: string
       source_url:
+        description: RSS URL to the source.
         type: string
     type: object
   projects.Project:
@@ -757,7 +811,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depot.Depots'
+            $ref: '#/definitions/depots.Depots'
       summary: Get all depots and their users/owners
       tags:
       - depot
@@ -770,7 +824,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depot.Depot'
+            $ref: '#/definitions/depots.Depot'
       summary: Get depot list by Owner
       tags:
       - depot

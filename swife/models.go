@@ -16,7 +16,10 @@ type Frontend struct {
 }
 
 const (
-	savlaDevMail   string = "info@savla.dev"
+	// savla.dev info e-mail address
+	savlaDevMail string = "info@savla.dev"
+
+	// savla.dev github.com link
 	savlaDevGithub string = "https://github.com/savla-dev"
 )
 

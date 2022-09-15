@@ -27,12 +27,12 @@ func findFrontendBySiteName(c *gin.Context) (f *Frontend) {
 // @Produce  json
 // @Success 200 {object} swife.Frontend
 // @Router /swife [get]
-// GetSocketList GET method
-// GetUsers returns JSON serialized list of frontends and their properties.
+// GetFrontends GET method
+// GetFrontends returns JSON serialized list of frontends and their properties.
 func GetFrontends(c *gin.Context) {
-	// serialize struct to JSON
-	// net/http response code
 	c.IndentedJSON(http.StatusOK, gin.H{
+		"message":   "ok, dumping swife frontends",
+		"code":      http.StatusOK,
 		"frontends": swives,
 	})
 }
@@ -51,7 +51,11 @@ func GetFrontendBySiteName(c *gin.Context) {
 		//	EncodeToString([]byte(fmt.Sprintf("%s", frontend.Title)))
 		//frontend.Description = b64.StdEncoding.
 		//	EncodeToString([]byte(fmt.Sprintf("%s", frontend.Description)))
-		c.IndentedJSON(http.StatusOK, frontend)
+		c.IndentedJSON(http.StatusOK, gin.H{
+			"message":  "ok dumping specific site's frontend base64",
+			"code":     http.StatusOK,
+			"frontend": frontend,
+		})
 	}
 }
 

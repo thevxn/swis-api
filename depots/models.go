@@ -1,4 +1,4 @@
-package depot
+package depots
 
 type Depots struct {
 	Depots []Depot `json:"depots"`

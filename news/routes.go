@@ -6,7 +6,12 @@ import (
 
 // news CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/:user", GetNewsByUser)
-	g.GET("/sources", GetSources)
-	g.GET("/sources/:user", GetSourcesByUser)
+	g.GET("/:user",
+		GetNewsByUser)
+	g.GET("/sources",
+		GetSources)
+	g.GET("/sources/:user",
+		GetSourcesByUser)
+	g.POST("/sources/restore",
+		PostDumpRestore)
 }
