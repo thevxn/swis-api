@@ -63,6 +63,7 @@ declare -a paths=(
 	"/projects/"
 	"/roles/"
 
+	"/six/"
 	"/swife/"
 	"/users/"
 )
@@ -79,6 +80,7 @@ declare -a files=(
 	"/projects.json"
 	"/roles.json"
 
+	"/six_struct.json"
 	"/swife_frontends.json"
 	"/users.json"
 )
