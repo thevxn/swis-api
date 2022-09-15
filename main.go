@@ -62,6 +62,9 @@ func main() {
 	// Logger middleware will write the logs to gin.DefaultWriter even if you set with GIN_MODE=release.
 	router.Use(gin.Logger())
 
+	// CORS Middleware
+	router.Use(CORSMiddleware())
+
 	// serve savla-dev internal favicon
 	router.StaticFile("/favicon.ico", "./.assets/favicon.ico")
 
