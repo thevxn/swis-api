@@ -3,17 +3,21 @@ package news
 import "time"
 
 var (
-	sources = []Source{}
-	news    = []News{}
+	//sources = []Source{}
+	news = NewsSources{}
 )
 
 //
 // Sources
 //
 
-type News struct {
+type NewsSources struct {
+	UserSources []UserSource `json:"user_sources"`
+}
+
+type UserSource struct {
 	// News sources linked username.
-	User string `json:"news_user"`
+	User string `json:"user_name"`
 
 	// Actual user's news sources.
 	Sources []Source `json:"news_sources"`

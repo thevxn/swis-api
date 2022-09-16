@@ -675,7 +675,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.News"
+                            "$ref": "#/definitions/news.NewsSources"
                         }
                     }
                 }
@@ -711,7 +711,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.News"
+                            "$ref": "#/definitions/news.NewsSources"
                         }
                     }
                 }
@@ -924,6 +924,24 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/six.SixStruct"
+                        }
+                    }
+                }
+            }
+        },
+        "/six/calendar/{owner_name}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "six"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/six.Calendar"
                         }
                     }
                 }
@@ -1662,19 +1680,14 @@ const docTemplate = `{
                 }
             }
         },
-        "news.News": {
+        "news.NewsSources": {
             "type": "object",
             "properties": {
-                "news_sources": {
-                    "description": "Actual user's news sources.",
+                "user_sources": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/news.Source"
+                        "$ref": "#/definitions/news.UserSource"
                     }
-                },
-                "news_user": {
-                    "description": "News sources linked username.",
-                    "type": "string"
                 }
             }
         },
@@ -1691,6 +1704,22 @@ const docTemplate = `{
                 },
                 "source_url": {
                     "description": "RSS URL to the source.",
+                    "type": "string"
+                }
+            }
+        },
+        "news.UserSource": {
+            "type": "object",
+            "properties": {
+                "news_sources": {
+                    "description": "Actual user's news sources.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/news.Source"
+                    }
+                },
+                "user_name": {
+                    "description": "News sources linked username.",
                     "type": "string"
                 }
             }
@@ -1755,6 +1784,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "projects": {
+                    "description": "Array ob Project objects.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/projects.Project"

@@ -13,7 +13,7 @@ import (
 )
 
 func findSourcesByUser(c *gin.Context) (s *[]Source) {
-	for _, n := range news {
+	for _, n := range news.UserSources {
 		if n.User == c.Param("user") {
 			//c.IndentedJSON(http.StatusOK, a)
 			return &n.Sources
@@ -102,14 +102,14 @@ func GetNewsByUser(c *gin.Context) {
 // @Description get all news sources
 // @Tags news
 // @Produce  json
-// @Success 200 {object} news.News.Sources
+// @Success 200 {object} news.NewsSources.Sources
 // @Router /news/sources/ [get]
 // GetSources
 func GetSources(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"message": "ok, dumping news sources",
-		"code":    http.StatusOK,
-		"sources": sources,
+		"message":      "ok, dumping news sources",
+		"code":         http.StatusOK,
+		"news_sources": news.UserSources,
 	})
 }
 
@@ -117,7 +117,7 @@ func GetSources(c *gin.Context) {
 // @Description get news sources by their :name param
 // @Tags news
 // @Produce  json
-// @Success 200 {object} news.News.Sources
+// @Success 200 {object} news.NewsSources.Sources
 // @Router /news/sources/{name} [get]
 // GetSources
 func GetSourcesByUser(c *gin.Context) {
@@ -141,7 +141,7 @@ func GetSourcesByUser(c *gin.Context) {
 // @Router /news/sources/restore [post]
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
-	var importSources []News //News.Sources
+	var importSources NewsSources //News.Sources
 
 	// bind received JSON to newUser
 	if err := c.BindJSON(&importSources); err != nil {

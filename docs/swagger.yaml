@@ -368,16 +368,12 @@ definitions:
         description: Item's title (headline).
         type: string
     type: object
-  news.News:
+  news.NewsSources:
     properties:
-      news_sources:
-        description: Actual user's news sources.
+      user_sources:
         items:
-          $ref: '#/definitions/news.Source'
+          $ref: '#/definitions/news.UserSource'
         type: array
-      news_user:
-        description: News sources linked username.
-        type: string
     type: object
   news.Source:
     properties:
@@ -389,6 +385,17 @@ definitions:
         type: string
       source_url:
         description: RSS URL to the source.
+        type: string
+    type: object
+  news.UserSource:
+    properties:
+      news_sources:
+        description: Actual user's news sources.
+        items:
+          $ref: '#/definitions/news.Source'
+        type: array
+      user_name:
+        description: News sources linked username.
         type: string
     type: object
   projects.Project:
@@ -435,6 +442,7 @@ definitions:
   projects.Projects:
     properties:
       projects:
+        description: Array ob Project objects.
         items:
           $ref: '#/definitions/projects.Project'
         type: array
@@ -1072,7 +1080,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/news.News'
+            $ref: '#/definitions/news.NewsSources'
       summary: Get news source list
       tags:
       - news
@@ -1085,7 +1093,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/news.News'
+            $ref: '#/definitions/news.NewsSources'
       summary: Get news source list by Username
       tags:
       - news
@@ -1224,6 +1232,17 @@ paths:
           schema:
             $ref: '#/definitions/six.SixStruct'
       summary: Get the six struct
+      tags:
+      - six
+  /six/calendar/{owner_name}:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/six.Calendar'
       tags:
       - six
   /six/restore:
