@@ -21,10 +21,11 @@ type Item struct {
 	Description string `json:"description"`
 	Type        string `json:"item_type"`
 	Start       string `json:"start"`
-	End         string `json:"end_date"`
+	End         string `json:"end"`
 	Repeat      bool   `json:"do_repeat" default:false`
 	RepeatFreq  string `json:"repeat_freq"`
 	Constraint  string `json:"constraint"`
+	URL         string `json:"url"`
 }
 
 var sixStruct = SixStruct{}

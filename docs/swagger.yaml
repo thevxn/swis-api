@@ -483,7 +483,7 @@ definitions:
         type: string
       do_repeat:
         type: boolean
-      end_date:
+      end:
         type: string
       item_type:
         type: string
@@ -494,6 +494,8 @@ definitions:
       start:
         type: string
       title:
+        type: string
+      url:
         type: string
     type: object
   six.SixStruct:

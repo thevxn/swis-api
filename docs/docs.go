@@ -1846,7 +1846,7 @@ const docTemplate = `{
                 "do_repeat": {
                     "type": "boolean"
                 },
-                "end_date": {
+                "end": {
                     "type": "string"
                 },
                 "item_type": {
@@ -1862,6 +1862,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "title": {
+                    "type": "string"
+                },
+                "url": {
                     "type": "string"
                 }
             }
