@@ -262,6 +262,9 @@ definitions:
       domain_owner:
         description: Domain's owner (user)name.
         type: string
+      expiration_date:
+        description: Domain's expiration date
+        type: string
     type: object
   infra.Host:
     properties:
@@ -640,7 +643,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.2
+  version: 5.2.3
 paths:
   /alvax/commands:
     get:

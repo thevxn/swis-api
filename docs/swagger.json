@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.2.2"
+        "version": "5.2.3"
     },
     "host": "swapi.savla.su:8049",
     "basePath": "/",
@@ -1558,6 +1558,10 @@
                 },
                 "domain_owner": {
                     "description": "Domain's owner (user)name.",
+                    "type": "string"
+                },
+                "expiration_date": {
+                    "description": "Domain's expiration date",
                     "type": "string"
                 }
             }

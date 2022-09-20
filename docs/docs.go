@@ -1566,6 +1566,10 @@ const docTemplate = `{
                 "domain_owner": {
                     "description": "Domain's owner (user)name.",
                     "type": "string"
+                },
+                "expiration_date": {
+                    "description": "Domain's expiration date",
+                    "type": "string"
                 }
             }
         },
@@ -2084,7 +2088,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.2",
+	Version:          "5.2.3",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},
