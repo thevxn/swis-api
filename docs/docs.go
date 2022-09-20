@@ -947,6 +947,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/six/calendar/{user}": {
+            "post": {
+                "description": "add new item to user's calendar",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Add new item to user's calendar",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/six.Item"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/six.Item"
+                        }
+                    }
+                }
+            }
+        },
         "/six/restore": {
             "post": {
                 "description": "upload six JSON dump",
