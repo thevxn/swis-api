@@ -40,6 +40,7 @@ import (
 	"swis-api/dish"
 	"swis-api/finance"
 	"swis-api/infra"
+	"swis-api/links"
 	"swis-api/news"
 	"swis-api/projects"
 	"swis-api/roles"
@@ -127,6 +128,10 @@ func main() {
 	// infra CRUD
 	infraRouter := router.Group("/infra")
 	infra.Routes(infraRouter)
+
+	// links CRUD
+	linksRouter := router.Group("/links")
+	links.Routes(linksRouter)
 
 	// news CRUD
 	newsRouter := router.Group("/news")

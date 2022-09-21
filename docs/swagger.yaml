@@ -346,6 +346,27 @@ definitions:
         description: Network name, verbose ID.
         type: string
     type: object
+  links.Link:
+    properties:
+      active:
+        description: Link's activated status.
+        type: boolean
+      description:
+        description: Link's more verbose name/description.
+        type: string
+      hash:
+        description: Link's unique hash ID.
+        type: string
+      name:
+        description: Link's name/placeholder.
+        type: string
+      url:
+        description: Link's URL to link to.
+        type: string
+    required:
+    - hash
+    - url
+    type: object
   news.Item:
     properties:
       link:
@@ -1060,6 +1081,118 @@ paths:
       summary: Upload infrastructure JSON dump
       tags:
       - infra
+  /links:
+    get:
+      description: get links complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Get all links
+      tags:
+      - links
+    post:
+      description: add new link to links array
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/links.Link'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Add new link to links
+      tags:
+      - links
+  /links/{hash}:
+    delete:
+      description: delete link by its Hash
+      parameters:
+      - description: link Hash
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Delete link by its Hash
+      tags:
+      - links
+    get:
+      description: get link by its :hash param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Get link by :hash
+      tags:
+      - links
+    put:
+      description: update link by its Hash
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/links.Link'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Update link by its Hash
+      tags:
+      - links
+  /links/{hash}/active:
+    put:
+      description: toggle active boolean for {hash}
+      parameters:
+      - description: hash
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Toggle active boolean for {hash}
+      tags:
+      - links
+  /links/restore:
+    post:
+      consumes:
+      - application/json
+      description: update links JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload links dump backup -- restores all links
+      tags:
+      - links
   /news/{name}:
     get:
       description: fetch and parse news for :user param

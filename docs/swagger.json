@@ -654,6 +654,176 @@
                 "responses": {}
             }
         },
+        "/links": {
+            "get": {
+                "description": "get links complete list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Get all links",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new link to links array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Add new link to links",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
+            }
+        },
+        "/links/restore": {
+            "post": {
+                "description": "update links JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Upload links dump backup -- restores all links",
+                "responses": {}
+            }
+        },
+        "/links/{hash}": {
+            "get": {
+                "description": "get link by its :hash param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Get link by :hash",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update link by its Hash",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Update link by its Hash",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete link by its Hash",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Delete link by its Hash",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "link Hash",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
+            }
+        },
+        "/links/{hash}/active": {
+            "put": {
+                "description": "toggle active boolean for {hash}",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Toggle active boolean for {hash}",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "hash",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
+            }
+        },
         "/news/sources/": {
             "get": {
                 "description": "get all news sources",
@@ -1640,6 +1810,35 @@
                 },
                 "network_name": {
                     "description": "Network name, verbose ID.",
+                    "type": "string"
+                }
+            }
+        },
+        "links.Link": {
+            "type": "object",
+            "required": [
+                "hash",
+                "url"
+            ],
+            "properties": {
+                "active": {
+                    "description": "Link's activated status.",
+                    "type": "boolean"
+                },
+                "description": {
+                    "description": "Link's more verbose name/description.",
+                    "type": "string"
+                },
+                "hash": {
+                    "description": "Link's unique hash ID.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Link's name/placeholder.",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "Link's URL to link to.",
                     "type": "string"
                 }
             }
