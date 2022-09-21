@@ -90,10 +90,13 @@ declare -a paths=(
 	"/business/restore"
 	"/depots/restore"
 	"/dish/sockets/restore"
+
 	"/infra/restore"
+	"/links/restore"
 	"/news/sources/restore"
 	"/finance/restore"
 	"/projects/restore"
+
 	"/roles/restore"
 	"/six/restore"
 	"/swife/restore"
@@ -105,10 +108,13 @@ declare -a files=(
 	"/business_array.json"
 	"/depots.json"
 	"/dish_sockets.json"
+
 	"/infra.json"
+	"/links.json"
 	"/news_sources.json"
 	"/finance_accounts.json"
 	"/projects.json"
+
 	"/roles.json"
 	"/six_struct.json"
 	"/swife_frontends.json"

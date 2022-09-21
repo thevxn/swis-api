@@ -59,10 +59,11 @@ declare -a paths=(
 
 	"/finance/"
 	"/infra/"
+	"/links/"
 	"/news/sources"
 	"/projects/"
-	"/roles/"
 
+	"/roles/"
 	"/six/"
 	"/swife/"
 	"/users/"
@@ -76,10 +77,11 @@ declare -a files=(
 
 	"/finance_accounts.json"
 	"/infra.json"
+	"/links.json"
 	"/news_sources.json"
 	"/projects.json"
-	"/roles.json"
 
+	"/roles.json"
 	"/six_struct.json"
 	"/swife_frontends.json"
 	"/users.json"

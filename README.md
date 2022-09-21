@@ -41,12 +41,21 @@ Dev/build recipe for GNU `make` tool. Listing (Jan 14, 2022):
 ```shell
 $ make
 
- swis-core-api / Makefile 
+ swis-api / Makefile 
 
- make build   --- build project (docker image) 
- make run     --- run project 
- make log     --- fetch container's log 
- make stop    --- stop and purge project (only docker containers!) 
+ make --- show this helper 
+
+ make fmt  --- reformat the go source (gofmt) 
+ make docs --- render documentation from code (swagger OA docs) 
+
+ make build --- build project (docker image) 
+ make run   --- run project 
+ make logs  --- fetch container's logs 
+ make stop  --- stop and purge project (only docker containers!) 
+
+ make import_dump --- import dumped data (locally) into runtime 
+ make dump        --- dump runtime data to DUMP_DIR 
+ make backup      --- execute data dump and tar/gzip data backup 
 
 ```
 
