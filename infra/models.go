@@ -25,6 +25,9 @@ type Domain struct {
 
 	// Domain's owner (user)name.
 	Owner string `json:"domain_owner"`
+
+	// Domain's expiration date
+	ExpirationDate string `json:"expiration_date"`
 }
 
 // High-level struct for batch []Host array importing.

@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.2.2"
+        "version": "5.2.3"
     },
     "host": "swapi.savla.su:8049",
     "basePath": "/",
@@ -1110,6 +1110,37 @@
                 }
             }
         },
+        "/six/calendar/{user}": {
+            "post": {
+                "description": "add new item to user's calendar",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Add new item to user's calendar",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/six.Item"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/six.Item"
+                        }
+                    }
+                }
+            }
+        },
         "/six/restore": {
             "post": {
                 "description": "upload six JSON dump",
@@ -1697,6 +1728,10 @@
                 },
                 "domain_owner": {
                     "description": "Domain's owner (user)name.",
+                    "type": "string"
+                },
+                "expiration_date": {
+                    "description": "Domain's expiration date",
                     "type": "string"
                 }
             }

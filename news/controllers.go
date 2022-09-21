@@ -109,7 +109,7 @@ func GetSources(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"message":      "ok, dumping news sources",
 		"code":         http.StatusOK,
-		"news_sources": news.UserSources,
+		"user_sources": news.UserSources,
 	})
 }
 

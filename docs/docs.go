@@ -1117,6 +1117,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/six/calendar/{user}": {
+            "post": {
+                "description": "add new item to user's calendar",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Add new item to user's calendar",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/six.Item"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/six.Item"
+                        }
+                    }
+                }
+            }
+        },
         "/six/restore": {
             "post": {
                 "description": "upload six JSON dump",
@@ -1705,6 +1736,10 @@ const docTemplate = `{
                 "domain_owner": {
                     "description": "Domain's owner (user)name.",
                     "type": "string"
+                },
+                "expiration_date": {
+                    "description": "Domain's expiration date",
+                    "type": "string"
                 }
             }
         },
@@ -2252,7 +2287,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.2",
+	Version:          "5.2.3",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},
