@@ -6,17 +6,17 @@ type SixStruct struct {
 }
 
 type Calendar struct {
-	Owner string `json:"owner_name"`
+	Owner string `json:"owner_name" binding:"required"`
 	Items []Item `json:"items"`
 }
 
 type TodoList struct {
-	Owner string `json:"owner_name"`
+	Owner string `json:"owner_name" binding:"required"`
 	Items []Item `json:"items"`
 }
 
 type Item struct {
-	Name        string `json:"name"`
+	Name        string `json:"name" binding:"required"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	Type        string `json:"item_type"`

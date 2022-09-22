@@ -1,6 +1,10 @@
 package main
 
-import gin "github.com/gin-gonic/gin"
+import (
+	"net/http"
+
+	gin "github.com/gin-gonic/gin"
+)
 
 // https://stackoverflow.com/a/29439630
 func CORSMiddleware() gin.HandlerFunc {
@@ -11,7 +15,8 @@ func CORSMiddleware() gin.HandlerFunc {
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE, UPDATE")
 
 		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(200)
+			//c.AbortWithStatus(http.StatusOK)
+			c.AbortWithStatus(http.StatusNoContent)
 			return
 		}
 

@@ -6,5 +6,6 @@ func Routes(g *gin.RouterGroup) {
 	g.GET("/", GetSixStruct)
 	g.GET("/calendar/:owner_name", GetCalendarByUser)
 	g.POST("/calendar/:owner_name", PostCalendarItemByUser)
+	g.DELETE("/calendar/:owner_name/item/:item_name", DeleteCalendarItemNameByUser)
 	g.POST("/restore", PostDumpRestore)
 }

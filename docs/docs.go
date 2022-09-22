@@ -1115,27 +1115,54 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/six/calendar/{user}": {
+            },
             "post": {
                 "description": "add new item to user's calendar",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "six"
                 ],
                 "summary": "Add new item to user's calendar",
                 "parameters": [
                     {
-                        "description": "query params",
+                        "description": "six.Item",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/six.Item"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/six.Item"
+                        }
+                    }
+                }
+            }
+        },
+        "/six/calendar/{owner_name}/item/{item_name}": {
+            "delete": {
+                "description": "delete calendar item by its name",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "six"
+                ],
+                "summary": "Delete calendar item by its name",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "item_name",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2056,6 +2083,9 @@ const docTemplate = `{
         },
         "six.Calendar": {
             "type": "object",
+            "required": [
+                "owner_name"
+            ],
             "properties": {
                 "items": {
                     "type": "array",
@@ -2070,6 +2100,9 @@ const docTemplate = `{
         },
         "six.Item": {
             "type": "object",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "constraint": {
                     "type": "string"
@@ -2122,6 +2155,9 @@ const docTemplate = `{
         },
         "six.TodoList": {
             "type": "object",
+            "required": [
+                "owner_name"
+            ],
             "properties": {
                 "items": {
                     "type": "array",
@@ -2287,7 +2323,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.3",
+	Version:          "5.2.4",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},

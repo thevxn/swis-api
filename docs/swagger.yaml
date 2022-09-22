@@ -498,6 +498,8 @@ definitions:
         type: array
       owner_name:
         type: string
+    required:
+    - owner_name
     type: object
   six.Item:
     properties:
@@ -521,6 +523,8 @@ definitions:
         type: string
       url:
         type: string
+    required:
+    - name
     type: object
   six.SixStruct:
     properties:
@@ -541,6 +545,8 @@ definitions:
         type: array
       owner_name:
         type: string
+    required:
+    - owner_name
     type: object
   swife.Frontend:
     properties:
@@ -664,7 +670,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.3
+  version: 5.2.4
 paths:
   /alvax/commands:
     get:
@@ -1383,11 +1389,10 @@ paths:
             $ref: '#/definitions/six.Calendar'
       tags:
       - six
-  /six/calendar/{user}:
     post:
       description: add new item to user's calendar
       parameters:
-      - description: query params
+      - description: six.Item
         in: body
         name: request
         required: true
@@ -1402,7 +1407,26 @@ paths:
             $ref: '#/definitions/six.Item'
       summary: Add new item to user's calendar
       tags:
-      - users
+      - six
+  /six/calendar/{owner_name}/item/{item_name}:
+    delete:
+      description: delete calendar item by its name
+      parameters:
+      - description: item_name
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/six.Item'
+      summary: Delete calendar item by its name
+      tags:
+      - six
   /six/restore:
     post:
       consumes:
