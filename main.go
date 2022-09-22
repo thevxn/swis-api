@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.2.3
+// @version 5.2.4
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -91,7 +91,7 @@ func main() {
 
 	// default 404 route
 	router.NoRoute(func(c *gin.Context) {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
 			"message": "unknown route, or disallowed method",
 		})

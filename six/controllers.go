@@ -6,6 +6,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func findCalendarByUser(c *gin.Context) (*int, *Calendar) {
+	for idx, cal := range sixStruct.Calendars {
+		if cal.Owner == c.Param("owner_name") {
+			return &idx, &cal
+			break
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{
+		"message": "user's calendar not found",
+		"code":    http.StatusNotFound,
+	})
+	return nil, nil
+}
+
 // (GET /six)
 // @Summary Get the six struct
 // @Description get the six struct
@@ -30,18 +45,8 @@ func GetSixStruct(c *gin.Context) {
 // @Router /six/calendar/{owner_name} [get]
 // GetCalendarByUser
 func GetCalendarByUser(c *gin.Context) {
-	var userCalendar Calendar
-
-	for _, cal := range sixStruct.Calendars {
-		if cal.Owner == c.Param("owner_name") {
-			userCalendar = cal
-			break
-		}
-
-		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"message": "user's calendar not found",
-			"code":    http.StatusNotFound,
-		})
+	_, userCalendar := findCalendarByUser(c.Copy())
+	if userCalendar == nil {
 		return
 	}
 
@@ -49,6 +54,45 @@ func GetCalendarByUser(c *gin.Context) {
 		"message":  "ok, showing user's calendar items",
 		"code":     http.StatusOK,
 		"calendar": userCalendar.Items,
+	})
+}
+
+// @Summary Add new item to user's calendar
+// @Description add new item to user's calendar
+// @Tags six
+// @Produce json
+// @Param request body six.Item true "six.Item"
+// @Success 200 {object} six.Item
+// @Router /six/calendar/{owner_name} [post]
+func PostCalendarItemByUser(c *gin.Context) {
+	var newItem Item
+
+	// bind received JSON to newItem
+	if err := c.BindJSON(&newItem); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	// add new user
+	calIdx, cal := findCalendarByUser(c.Copy())
+	if calIdx == nil || cal == nil {
+		return
+	}
+
+	// add item to calendar
+	cal.Items = append(cal.Items, newItem)
+
+	// update calendar
+	sixStruct.Calendars[*calIdx] = *cal
+
+	// HTTP 201 Created
+	c.IndentedJSON(http.StatusCreated, gin.H{
+		"code":    http.StatusCreated,
+		"message": "item added",
+		"user":    newItem,
 	})
 }
 
