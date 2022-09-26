@@ -22,10 +22,6 @@ COPY . .
 RUN go mod init ${APP_NAME}
 RUN go mod tidy
 
-# swagger documentation generation
-RUN go install github.com/swaggo/swag/cmd/swag@latest && \
-	swag init .
-
 RUN go install ${APP_NAME}
 
 

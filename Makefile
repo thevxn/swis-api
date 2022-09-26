@@ -98,17 +98,17 @@ stop:
 .PHONY: dump
 dump: 
 	@echo -e "\n${YELLOW} Dumping prod data to ${DUMP_DIR}... ${RESET}\n"
-	@.bin/dump_prod_data.sh
+	@.script/dump_prod_data.sh
 
 .PHONY: backup
 backup: dump
 	@echo -e "\n${YELLOW} Archiving and compressing dumped data... ${RESET}\n"
-	@.bin/backup_dumped_files.sh
+	@.script/backup_dumped_files.sh
 
 .PHONY: import_dump
 import_dump: 
 	@echo -e "\n${YELLOW} Import stored data (${DUMP_DIR}) to backend... ${RESET}\n"
-	@.bin/import_prod_data.sh
+	@.script/import_prod_data.sh
 
 .PHONY: push
 push:
@@ -116,12 +116,9 @@ push:
 	@git tag -fa v${APP_VERSION} -m "v${APP_VERSION}"
 	@git push --follow-tags origin master
 
-# dev/local usage only
 .PHONY: docs
 docs:
 	@echo -e "\n${YELLOW} Regenerating documentation for swagger and rebuilding binary file... ${RESET}\n"
-#@go get -u github.com/swaggo/swag/cmd/swag
-#@go install github.com/swaggo/swag/cmd/swag@latest
-	@${SWAG_BINARY} init . || go install github.com/swaggo/swag/cmd/swag@latest
-	@go build swis-api
+	@go install github.com/swaggo/swag/cmd/swag@latest
+	@${SWAG_BINARY} init . 
 

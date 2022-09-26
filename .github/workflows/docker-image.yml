@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build new swapi image (with staging)
-      run: make build
+      run: make docs && make build
 
   dump_data:
     runs-on: [ self-hosted, internal, docker ]
