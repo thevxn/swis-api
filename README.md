@@ -10,33 +10,31 @@
 
 This folder contains static assets like images (favicon), that are served by server statically (not dynamically).
 
-### .bin
+### .script
 
-This folder contains executables for swapi package management, like data importing batch script.
+This folder contains executables for swapi package management, like data importing batch script and backuping script(s).
 
-### .data
+### .env / .env.example
 
-Crutial folder for all data to be imported to a running instance, for this purpose, .bin/ importing scriped is used. This folder is used as temporary data backup.
-
-### .env
-
-Capital configuration file containing environment constants for `Makefile` and other linked files like `docker-compose.yml`.
+Important configuration file containing environment constants for `Makefile` and other linked files like `docker-compose.yml`. Some constants, like `ROOT_TOKEN` are essential for the app startup.
 
 ### main.go
 
-Main package's logic is coded there, main package's entrypoint.
+Main package's logic is coded there, main package's entrypoint, server router and its route groups (entrypoints for other modules) are present there as well.
 
 ### modules
 
 All swapi modules are stored in their folders. Every module has its `models.go` file with data structures, `controllers.go` with its methods and functions, and `routes.go` for gin router to serve module's handles.
 
-### Dockerfile
+More on swis-api modules in [this article](https://krusty.savla.dev/projects/swis-api/).
+
+### .docker/Dockerfile
 
 Recipe for docker image build using `docker build .`
 
 ### Makefile
 
-Dev/build recipe for GNU `make` tool. Listing (Jan 14, 2022):
+Dev/build recipe for GNU `make` tool.
 
 ```shell
 $ make
@@ -70,16 +68,19 @@ YAML-formated file for docker-compose stack. Contains defitions for docker conta
 
 ```
 # at project root run 
-go install github.com/swaggo/swag/cmd/swag@latest
-swag init .
+#go install github.com/swaggo/swag/cmd/swag@latest
+#swag init .
 
-# generate docs, build local binary (implicitly)
+# generate docs using swaggo/swag and restart swagger_ui container
 make docs
 
-# run server
-./swis-api
+# build docker image with server executable
+make build
 
-# view
+# run server
+make run
+
+# view swagger UI
 http://localhost:8999/
 ```
 
@@ -92,6 +93,8 @@ As far as the deployment architecture is concerned, the codebase is designed to 
 ## authentication
 
 Swapi uses token-based authentication for any request to be authenticated, For initial importing, `ROOT_TOKEN` (see [`.env`](/.env) file) is used by importing executable. For any request, the header `X-Auth-Token` has to be sent with a custom HTTP request.
+
+CORS is set only for http://swjango.savla.su at the moment.
 
 ## service backup report example
 
@@ -113,12 +116,30 @@ curl -X PUT -sL -H "X-Auth-Token: $TOKEN" \
 At start, swapi instance memory is cleared and ready for any data import (until the next restart). Any data stored in runtime memory should be dumped using GET methods at particular paths. This approach should make `swapi` instance universal (while omitting custom packages/modules).
 
 ```shell
-# run local instance (redeployment CI/CD job)
-make build run
+# build new image version
+make build
 
 # dump production data locally
 make dump
 
-# import prod data -- local .data files to swapi.savla.su prod URL (import_data CI/CD job)
-make import_prod_static_data
+# redeploy the running server with new image
+make run
+
+# import prod data from local DUMP_DIR (see .env)
+make import_dump
 ```
+
+## roadmap for v5.3 (public release)
+
++ rebase master branch (yeet sensitive commits)
++ deep refactor -- omit global vars, clean the code
++ use muxers -- save/dump runtime in-memory data
++ improve backuping -- introduce tiny go binary to backup all the data
++ add CRUD controllers to each module
+
+### nice-to-have(s)
+
++ try to implement generics/first class functions
++ implement 2FA (but only do store Google Auth keys) for frontend
++ improve data structure by using maps
++ auto-data-recovery after reboot

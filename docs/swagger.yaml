@@ -503,6 +503,8 @@ definitions:
     type: object
   six.Item:
     properties:
+      color:
+        type: string
       constraint:
         type: string
       description:
@@ -533,6 +535,7 @@ definitions:
           $ref: '#/definitions/six.Calendar'
         type: array
       todo_lists:
+        description: Calendars map[string][]Item
         items:
           $ref: '#/definitions/six.TodoList'
         type: array
@@ -670,7 +673,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.4
+  version: 5.2.5
 paths:
   /alvax/commands:
     get:

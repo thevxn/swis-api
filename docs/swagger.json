@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.2.4"
+        "version": "5.2.5"
     },
     "host": "swapi.savla.su:8049",
     "basePath": "/",
@@ -2124,6 +2124,9 @@
                 "name"
             ],
             "properties": {
+                "color": {
+                    "type": "string"
+                },
                 "constraint": {
                     "type": "string"
                 },
@@ -2166,6 +2169,7 @@
                     }
                 },
                 "todo_lists": {
+                    "description": "Calendars map[string][]Item",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/six.TodoList"

@@ -5,8 +5,9 @@ type Things struct {
 	// IoTs' owner name.
 	Owner string `json:"owner_name"`
 
-	// Array of Things.
+	// Array/map of Things.
 	Things []Thing `json:"things"`
+	//Things map[string]Thing `json:"things"`
 }
 
 type Thing struct {

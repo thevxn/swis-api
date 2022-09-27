@@ -2131,6 +2131,9 @@ const docTemplate = `{
                 "name"
             ],
             "properties": {
+                "color": {
+                    "type": "string"
+                },
                 "constraint": {
                     "type": "string"
                 },
@@ -2173,6 +2176,7 @@ const docTemplate = `{
                     }
                 },
                 "todo_lists": {
+                    "description": "Calendars map[string][]Item",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/six.TodoList"
@@ -2350,7 +2354,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.4",
+	Version:          "5.2.5",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},
