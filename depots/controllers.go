@@ -7,6 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var depots = Depots{}
+
 // @Summary Get all depots and their users/owners
 // @Description get depot complete list
 // @Tags depot

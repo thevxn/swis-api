@@ -14,6 +14,3 @@ type Role struct {
 	// Role status, by default it is inactive.
 	Active bool `json:"active" default:false`
 }
-
-// flush roles
-var roles = []Role{}

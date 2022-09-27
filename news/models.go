@@ -2,11 +2,6 @@ package news
 
 import "time"
 
-var (
-	//sources = []Source{}
-	news = NewsSources{}
-)
-
 //
 // Sources
 //

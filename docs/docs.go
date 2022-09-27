@@ -1147,6 +1147,33 @@ const docTemplate = `{
             }
         },
         "/six/calendar/{owner_name}/item/{item_name}": {
+            "put": {
+                "description": "update calendar item by its name",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "six"
+                ],
+                "summary": "Update calendar item by its name",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "item_name",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/six.Item"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "description": "delete calendar item by its name",
                 "produces": [

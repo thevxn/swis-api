@@ -22,6 +22,3 @@ const (
 	// savla.dev github.com link
 	savlaDevGithub string = "https://github.com/savla-dev"
 )
-
-// flush frontend
-var swives = []Frontend{}

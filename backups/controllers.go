@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var backups Backups = Backups{}
+
 func findBackupByServiceName(c *gin.Context) (index *int, backup *Backup) {
 	for i, b := range backups.Backups {
 		if b.ServiceName == c.Param("service") {

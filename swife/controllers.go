@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var swives = []Frontend{}
+
 func findFrontendBySiteName(c *gin.Context) (f *Frontend) {
 	for _, f := range swives {
 		if f.SiteName == c.Param("sitename") {

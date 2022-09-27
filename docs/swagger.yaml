@@ -1427,6 +1427,24 @@ paths:
       summary: Delete calendar item by its name
       tags:
       - six
+    put:
+      description: update calendar item by its name
+      parameters:
+      - description: item_name
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/six.Item'
+      summary: Update calendar item by its name
+      tags:
+      - six
   /six/restore:
     post:
       consumes:

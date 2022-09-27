@@ -8,6 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var businessArray = BusinessArray{}
+
 func findBusinessByICO(c *gin.Context) (b *Business) {
 	// loop over businesses
 	for _, b := range businessArray.BusinessArray {

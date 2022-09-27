@@ -38,6 +38,3 @@ type Socket struct {
 	// Note: discontinued as dish now reports to pushgateway of prometheus'
 	//Status []bool `json:"status"`
 }
-
-// flush dish socket list array at start
-var socketArray = []Socket{}

@@ -69,6 +69,11 @@ func main() {
 	// serve savla-dev internal favicon
 	router.StaticFile("/favicon.ico", "./.assets/favicon.ico")
 
+	// (GET /ping)
+	// @Summary Simple ping-pong route
+	// @Description Simple ping-pong route
+	// @Success 200
+	// @Router /ping [get]
 	// very simple LE support --- https://github.com/gin-gonic/gin#support-lets-encrypt
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")

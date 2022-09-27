@@ -10,6 +10,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var Params = AuthParams{
+	// Wipe Token string at every request not to allow token forgery.
+	BearerToken: "",
+}
+
 func respondWithError(c *gin.Context, code int, message interface{}) {
 	c.AbortWithStatusJSON(code, gin.H{
 		"message": message,

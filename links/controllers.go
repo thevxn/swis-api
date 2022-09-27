@@ -6,6 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var links = []Link{}
+
+//var links = make(map[string]Link)
+
 func findLinkByHash(c *gin.Context) (*int, *Link) {
 	for i, l := range links {
 		if l.Hash == c.Param("hash") {

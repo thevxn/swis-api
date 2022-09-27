@@ -30,5 +30,3 @@ type Backup struct {
 	// Boolean indicating if the service is to be backuped.
 	Active bool `json:"active" default:false`
 }
-
-var backups Backups = Backups{}

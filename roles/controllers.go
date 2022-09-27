@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var roles = []Role{}
+
 // @Summary Get all roles
 // @Description get roules complete list
 // @Tags roles

@@ -27,7 +27,3 @@ type Command struct {
 	// Command logic, structure as base64 encoded string.
 	CommandBase64 string `json:"command_base64"`
 }
-
-// flush alvax commands on start
-//var commandList = AlvaxCommands.CommandList{}
-var commandList = []Command{}

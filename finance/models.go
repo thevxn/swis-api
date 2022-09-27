@@ -52,6 +52,3 @@ type Item struct {
 	// Mescellaneous information about the payment (e.g. foreign currency and amount).
 	Misc string `json:"misc"`
 }
-
-// flush finance at start
-var finance = Finance{}

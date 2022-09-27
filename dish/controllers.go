@@ -8,6 +8,8 @@ import (
 	//"github.com/savla-dev/savla-dish/socket"
 )
 
+var socketArray = []Socket{}
+
 // (HEAD /dish/test)
 // @Summary
 // @Description

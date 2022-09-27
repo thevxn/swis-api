@@ -62,8 +62,6 @@ type Host struct {
 	Child []string `json:"children"`
 }
 
-var infrastructure = Infrastructure{}
-
 // Hyper struct to model hypervisor machine
 type Hyper struct {
 	Host

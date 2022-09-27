@@ -9,6 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var users = []User{} //equivalent to Users.Users{}
+
 func FindUserByToken(token string) *User {
 	// Loop over all loaded users.
 	for _, u := range users {

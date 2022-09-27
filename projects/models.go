@@ -42,6 +42,3 @@ type Project struct {
 	// Target internal node of deployment.
 	DeployTarget string `json:"project_deploy_target"`
 }
-
-// flush projects object/array
-var projects = Projects{}

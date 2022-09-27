@@ -8,6 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var projects = Projects{}
+
 func findProjectByID(c *gin.Context) (p *Project) {
 	// loop over projects
 	for _, p := range projects.Projects {

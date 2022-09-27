@@ -21,5 +21,3 @@ type Link struct {
 	// Link's activated status.
 	Active bool `json:"active" default:false`
 }
-
-var links = []Link{}

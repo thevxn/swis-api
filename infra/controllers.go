@@ -8,6 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var infrastructure = Infrastructure{}
+
 func findHostByHostname(c *gin.Context) (index *int, h *Host) {
 	// loop over hosts
 	var hosts = infrastructure.Hosts

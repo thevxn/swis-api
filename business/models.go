@@ -36,6 +36,3 @@ type Contact struct {
 	// Contact field contents.
 	Content string `json:"content"`
 }
-
-// flush businessArray at start
-var businessArray = BusinessArray{}

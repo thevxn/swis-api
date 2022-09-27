@@ -12,6 +12,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var (
+	//sources = []Source{}
+	news = NewsSources{}
+)
+
 func findSourcesByUser(c *gin.Context) (s *[]Source) {
 	for _, n := range news.UserSources {
 		if n.User == c.Param("user") {

@@ -33,6 +33,3 @@ type Location struct {
 	// More precise location information.
 	Misc string `json:"location_misc"`
 }
-
-// flush depots at start
-var depots = Depots{}

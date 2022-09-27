@@ -16,8 +16,3 @@ type AuthParams struct {
 	//Roles       roles.Roles
 	Roles []string
 }
-
-var Params = AuthParams{
-	// Wipe Token string at every request not to allow token forgery.
-	BearerToken: "",
-}

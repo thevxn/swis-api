@@ -79,6 +79,3 @@ type Wireguard struct {
 	// Is the user given permission to dial a connection?
 	Permission bool `json:"permission" default:false`
 }
-
-// Flush users pointer (sic!) at start -- see Makefile, import_prod[...] target, and .data/users.
-var users = []User{} //equivalent to Users.Users{}

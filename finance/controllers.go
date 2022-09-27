@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var finance = Finance{}
+
 // @Summary Get all finance accounts
 // @Description get finance complete list
 // @Tags finance

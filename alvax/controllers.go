@@ -1,12 +1,13 @@
 package alvax
 
 import (
-	//b64 "encoding/base64"
-	//"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
+
+//var commandList = AlvaxCommands.CommandList{}
+var commandList = []Command{}
 
 // @Summary Get all alvax's commands
 // @Description get command array for alvax
