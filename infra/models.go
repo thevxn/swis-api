@@ -28,6 +28,9 @@ type Domain struct {
 
 	// Domain's expiration date
 	ExpirationDate string `json:"expiration_date"`
+
+	// Cloudflare Zone ID
+	CfZoneID string `json:"cf_zone_id"`
 }
 
 // High-level struct for batch []Host array importing.
