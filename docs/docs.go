@@ -585,6 +585,26 @@ const docTemplate = `{
                 }
             }
         },
+        "/infra/domains": {
+            "get": {
+                "description": "get domain list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Get all domains",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Domain"
+                        }
+                    }
+                }
+            }
+        },
         "/infra/hosts": {
             "get": {
                 "description": "get hosts list",
@@ -1779,6 +1799,10 @@ const docTemplate = `{
         "infra.Domain": {
             "type": "object",
             "properties": {
+                "cf_zone_id": {
+                    "description": "Cloudflare Zone ID",
+                    "type": "string"
+                },
                 "domain_fqdn": {
                     "description": "Fully qualified domain name.",
                     "type": "string"
@@ -1793,6 +1817,14 @@ const docTemplate = `{
                 },
                 "expiration_date": {
                     "description": "Domain's expiration date",
+                    "type": "string"
+                },
+                "private_details": {
+                    "description": "Private details (e.g. addresses, phone number etc in WHOIS)",
+                    "type": "boolean"
+                },
+                "registrar_name": {
+                    "description": "Name of the current registrar",
                     "type": "string"
                 }
             }
@@ -2101,8 +2133,8 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "roles": {
-                    "type": "array",
-                    "items": {
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/roles.Role"
                     }
                 }

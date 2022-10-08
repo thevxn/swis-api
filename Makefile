@@ -6,6 +6,7 @@
 # VARS
 #
 
+# load example variables/constants, override by .env file if exists
 include .env.example
 -include .env
 

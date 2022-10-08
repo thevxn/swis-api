@@ -8,6 +8,8 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetInfrastructure)
+	g.GET("/domains",
+		GetDomains)
 	g.GET("/hosts",
 		GetHosts)
 	g.GET("/hosts/:hostname",

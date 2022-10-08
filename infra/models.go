@@ -29,6 +29,12 @@ type Domain struct {
 	// Domain's expiration date
 	ExpirationDate string `json:"expiration_date"`
 
+	// Name of the current registrar
+	RegistrarName string `json:"registrar_name"`
+
+	// Private details (e.g. addresses, phone number etc in WHOIS)
+	PrivateDetails bool `json:"private_details" default:false`
+
 	// Cloudflare Zone ID
 	CfZoneID string `json:"cf_zone_id"`
 }

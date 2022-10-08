@@ -253,6 +253,9 @@ definitions:
     type: object
   infra.Domain:
     properties:
+      cf_zone_id:
+        description: Cloudflare Zone ID
+        type: string
       domain_fqdn:
         description: Fully qualified domain name.
         type: string
@@ -264,6 +267,12 @@ definitions:
         type: string
       expiration_date:
         description: Domain's expiration date
+        type: string
+      private_details:
+        description: Private details (e.g. addresses, phone number etc in WHOIS)
+        type: boolean
+      registrar_name:
+        description: Name of the current registrar
         type: string
     type: object
   infra.Host:
@@ -486,9 +495,9 @@ definitions:
   roles.Roles:
     properties:
       roles:
-        items:
+        additionalProperties:
           $ref: '#/definitions/roles.Role'
-        type: array
+        type: object
     type: object
   six.Calendar:
     properties:
@@ -1041,6 +1050,19 @@ paths:
           schema:
             $ref: '#/definitions/infra.Infrastructure'
       summary: Get whole infrastructure
+      tags:
+      - infra
+  /infra/domains:
+    get:
+      description: get domain list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Domain'
+      summary: Get all domains
       tags:
       - infra
   /infra/hosts:

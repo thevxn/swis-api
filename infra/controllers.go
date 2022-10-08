@@ -40,6 +40,19 @@ func GetInfrastructure(c *gin.Context) {
 	})
 }
 
+// @Summary Get all domains
+// @Description get domain list
+// @Tags infra
+// @Produce  json
+// @Success 200 {object} infra.Domain
+// @Router /infra/domains [get]
+func GetDomains(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":  http.StatusOK,
+		"hosts": infrastructure.Domains,
+	})
+}
+
 // @Summary Get all hosts
 // @Description get hosts list
 // @Tags infra
