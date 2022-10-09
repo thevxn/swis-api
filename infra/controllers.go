@@ -1,8 +1,6 @@
 package infra
 
 import (
-	//b64 "encoding/base64"
-	//"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -48,8 +46,8 @@ func GetInfrastructure(c *gin.Context) {
 // @Router /infra/domains [get]
 func GetDomains(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":  http.StatusOK,
-		"hosts": infrastructure.Domains,
+		"code":    http.StatusOK,
+		"domains": infrastructure.Domains,
 	})
 }
 

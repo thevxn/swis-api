@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.2.5"
+        "version": "5.2.6"
     },
     "host": "swapi.savla.su:8049",
     "basePath": "/",
@@ -2126,8 +2126,8 @@
             "type": "object",
             "properties": {
                 "roles": {
-                    "type": "object",
-                    "additionalProperties": {
+                    "type": "array",
+                    "items": {
                         "$ref": "#/definitions/roles.Role"
                     }
                 }
