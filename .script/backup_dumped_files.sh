@@ -35,7 +35,7 @@ cat > ${TMP_FILE_NAME} <<-EOF
         "service_name": "${SERVICE_NAME}",
         "last_status":  "${STATUS}",
         "backup_size":  "${SIZE}",
-        "timestamp":    ${TIMESTAMP},
+        "timestamp":    $(date +%s),
         "file_name":    "${TIMESTAMP}.tar.gz"
 }
 EOF
