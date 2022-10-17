@@ -12,7 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build new swapi image (with staging)
-      #run: make docs && make build
       run: make build
 
   dump_data:
@@ -27,7 +26,7 @@ jobs:
     needs: [ dump_data ]
     steps:
     - name: Redeploy docker container, recreate container with fresh image
-      run: make run
+      run: APP_ENVIRONMENT=production make run
 
   import_data:
     runs-on: [ self-hosted, internal, docker ]

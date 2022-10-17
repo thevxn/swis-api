@@ -10,6 +10,7 @@
 include .env.example
 -include .env
 
+APP_ENVIRONMENT?=development
 PROJECT_NAME?=${APP_NAME}
 DOCKER_COMPOSE_FILE?=./docker-compose.yml
 SWAG_BINARY?=~/go/bin/swag

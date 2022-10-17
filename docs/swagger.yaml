@@ -512,8 +512,6 @@ definitions:
     type: object
   six.Item:
     properties:
-      color:
-        type: string
       constraint:
         type: string
       description:
@@ -544,7 +542,6 @@ definitions:
           $ref: '#/definitions/six.Calendar'
         type: array
       todo_lists:
-        description: Calendars map[string][]Item
         items:
           $ref: '#/definitions/six.TodoList'
         type: array
@@ -673,7 +670,7 @@ definitions:
 host: swapi.savla.su:8049
 info:
   contact:
-    email: info@savla.dev
+    email: krusty@savla.dev
     name: API Support
     url: http://savla.dev/swapi
   description: sakalWeb Information System v5 RESTful API documentation
@@ -682,7 +679,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.6
+  version: 5.2.7
 paths:
   /alvax/commands:
     get:
@@ -1450,24 +1447,6 @@ paths:
           schema:
             $ref: '#/definitions/six.Item'
       summary: Delete calendar item by its name
-      tags:
-      - six
-    put:
-      description: update calendar item by its name
-      parameters:
-      - description: item_name
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/six.Item'
-      summary: Update calendar item by its name
       tags:
       - six
   /six/restore:

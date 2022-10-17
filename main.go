@@ -1,11 +1,11 @@
 // @title swis-api v5
-// @version 5.2.6
+// @version 5.2.7
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support
 // @contact.url http://savla.dev/swapi
-// @contact.email info@savla.dev
+// @contact.email krusty@savla.dev
 
 // @license.name MIT
 // @license.url https://github.com/savla-dev/swis-api/blob/master/LICENSE

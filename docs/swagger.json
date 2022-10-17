@@ -7,13 +7,13 @@
         "contact": {
             "name": "API Support",
             "url": "http://savla.dev/swapi",
-            "email": "info@savla.dev"
+            "email": "krusty@savla.dev"
         },
         "license": {
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.2.6"
+        "version": "5.2.7"
     },
     "host": "swapi.savla.su:8049",
     "basePath": "/",
@@ -1160,33 +1160,6 @@
             }
         },
         "/six/calendar/{owner_name}/item/{item_name}": {
-            "put": {
-                "description": "update calendar item by its name",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "six"
-                ],
-                "summary": "Update calendar item by its name",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "item_name",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/six.Item"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "delete calendar item by its name",
                 "produces": [
@@ -2156,9 +2129,6 @@
                 "name"
             ],
             "properties": {
-                "color": {
-                    "type": "string"
-                },
                 "constraint": {
                     "type": "string"
                 },
@@ -2201,7 +2171,6 @@
                     }
                 },
                 "todo_lists": {
-                    "description": "Calendars map[string][]Item",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/six.TodoList"
