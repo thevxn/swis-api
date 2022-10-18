@@ -1,13 +1,17 @@
 package six
 
+import "sync"
+
 type SixStruct struct {
 	Calendars []Calendar `json:"calendars"`
+	//Calendars map[string][]Item
 	TodoLists []TodoList `json:"todo_lists"`
 }
 
 type Calendar struct {
 	Owner string `json:"owner_name" binding:"required"`
 	Items []Item `json:"items"`
+	mux   sync.Mutex
 }
 
 type TodoList struct {
@@ -26,6 +30,5 @@ type Item struct {
 	RepeatFreq  string `json:"repeat_freq"`
 	Constraint  string `json:"constraint"`
 	URL         string `json:"url"`
+	Color       string `json:"color"`
 }
-
-var sixStruct = SixStruct{}

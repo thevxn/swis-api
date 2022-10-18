@@ -1167,6 +1167,33 @@ const docTemplate = `{
             }
         },
         "/six/calendar/{owner_name}/item/{item_name}": {
+            "put": {
+                "description": "update calendar item by its name",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "six"
+                ],
+                "summary": "Update calendar item by its name",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "item_name",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/six.Item"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "description": "delete calendar item by its name",
                 "produces": [
@@ -2136,6 +2163,9 @@ const docTemplate = `{
                 "name"
             ],
             "properties": {
+                "color": {
+                    "type": "string"
+                },
                 "constraint": {
                     "type": "string"
                 },
@@ -2178,6 +2208,7 @@ const docTemplate = `{
                     }
                 },
                 "todo_lists": {
+                    "description": "Calendars map[string][]Item",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/six.TodoList"
@@ -2355,7 +2386,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.7",
+	Version:          "5.2.8",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},

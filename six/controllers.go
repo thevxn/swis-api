@@ -6,6 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var sixStruct = SixStruct{}
+
+//var calendars = make(map[string]Calendar)
+
 func findCalendarByUser(c *gin.Context) (*int, *Calendar) {
 	for idx, cal := range sixStruct.Calendars {
 		if cal.Owner == c.Param("owner_name") {
@@ -201,7 +205,53 @@ func DeleteCalendarItemNameByUser(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "socket deleted by ID",
+		"message": "item deleted by Name",
+		"item":    *item,
+	})
+}
+
+// (PUT /six/calendar/{owner_name}/item/{item_name})
+// @Summary Update calendar item by its name
+// @Description update calendar item by its name
+// @Tags six
+// @Produce json
+// @Param  id  path  string  true  "item_name"
+// @Success 200 {object} six.Item
+// @Router /six/calendar/{owner_name}/item/{item_name} [put]
+func UpdateCalendarItemNameByUser(c *gin.Context) {
+	var updatedItem Item
+
+	if err := c.BindJSON(&updatedItem); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	// find the right calendar
+	calIdx, cal := findCalendarByUser(c)
+	if calIdx == nil || cal == nil {
+		return
+	}
+
+	items := cal.Items
+
+	// find the right calendar item
+	itemIdx, item := findCalendarItemByName(c, *cal)
+	if itemIdx == nil || item == nil {
+		return
+	}
+
+	items[*itemIdx] = updatedItem
+	cal.Items = items
+
+	// update calendar
+	sixStruct.Calendars[*calIdx] = *cal
+
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "item updated by Name",
 		"item":    *item,
 	})
 }
