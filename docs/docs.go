@@ -1945,7 +1945,7 @@ const docTemplate = `{
         "links.Link": {
             "type": "object",
             "required": [
-                "hash",
+                "name",
                 "url"
             ],
             "properties": {
@@ -1957,12 +1957,8 @@ const docTemplate = `{
                     "description": "Link's more verbose name/description.",
                     "type": "string"
                 },
-                "hash": {
-                    "description": "Link's unique hash ID.",
-                    "type": "string"
-                },
                 "name": {
-                    "description": "Link's name/placeholder.",
+                    "description": "Link's name/placeholder, used as an unique key.",
                     "type": "string"
                 },
                 "url": {
@@ -2396,7 +2392,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.8",
+	Version:          "5.2.10",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},

@@ -6,22 +6,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var links = []Link{}
+var links = Links{
+	l: make(map[string]Link),
+}
 
-//var links = make(map[string]Link)
+func findLinkByHash(c *gin.Context) *Link {
+	// TODO: nil map test!
 
-func findLinkByHash(c *gin.Context) (*int, *Link) {
-	for i, l := range links {
-		if l.Hash == c.Param("hash") {
-			return &i, &l
-		}
+	hash := c.Param("hash")
+
+	links.RLock()
+	defer links.RUnlock()
+	if link, ok := links.l[hash]; ok {
+		return &link
 	}
 
 	c.IndentedJSON(http.StatusNotFound, gin.H{
 		"code":    http.StatusNotFound,
 		"message": "link not found",
 	})
-	return nil, nil
+	return nil
 }
 
 // @Summary Get all links
@@ -33,11 +37,16 @@ func findLinkByHash(c *gin.Context) (*int, *Link) {
 // GetLinks GET method
 // GetLinks returns JSON serialized list of links and their properties.
 func GetLinks(c *gin.Context) {
+
+	links.RLock()
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "ok, listing links",
-		"links":   links,
+		"links":   links.l,
 	})
+
+	links.RUnlock()
+	return
 }
 
 // @Summary Get link by :hash
@@ -48,11 +57,11 @@ func GetLinks(c *gin.Context) {
 // @Router /links/{hash} [get]
 // GetLinkByHash returns link's properties, given sent hash exists in database.
 func GetLinkByHash(c *gin.Context) {
-	if _, link := findLinkByHash(c); link != nil {
+	if link := findLinkByHash(c); link != nil {
 		c.IndentedJSON(http.StatusOK, gin.H{
 			"message": "ok, dumping given link's details",
 			"code":    http.StatusOK,
-			"link":    link,
+			"link":    *link,
 		})
 	}
 	return
@@ -78,12 +87,32 @@ func PostNewLink(c *gin.Context) {
 		return
 	}
 
-	links = append(links, newLink)
+	// hotfix for new hash name
+	hash := newLink.Name
+
+	links.RLock()
+	if _, found := links.l[hash]; found {
+		// Link already exists, such hash/name is already used...
+		c.IndentedJSON(http.StatusConflict, gin.H{
+			"code":    http.StatusConflict,
+			"message": "link hash name already used!",
+			"hash":    hash,
+		})
+		links.RUnlock()
+		return
+	}
+	links.RUnlock()
+
+	// add newLink to the hash map
+	links.Lock()
+	links.l[hash] = newLink
+	links.Unlock()
 
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "link added",
+		"hash":    hash,
 		"link":    newLink,
 	})
 }
@@ -106,7 +135,9 @@ func PostDumpRestore(c *gin.Context) {
 		return
 	}
 
-	links = importLinks.Links
+	links.Lock()
+	links.l = importLinks.l
+	links.Unlock()
 
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
@@ -124,19 +155,22 @@ func PostDumpRestore(c *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{hash}/active [put]
 func ActiveToggleByHash(c *gin.Context) {
-	var updatedLink Link
+	//var updatedLink Link
 
-	i, _ := findLinkByHash(c.Copy())
-	updatedLink = links[*i]
+	hash := c.Param("hash")
+	link := findLinkByHash(c)
 
 	// inverse the Active field value
-	updatedLink.Active = !updatedLink.Active
+	link.Active = !link.Active
 
-	links[*i] = updatedLink
+	links.Lock()
+	links.l[hash] = *link
+	links.Unlock()
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "link active toggle pressed!",
-		"link":    updatedLink,
+		"link":    *link,
 	})
 	return
 }
@@ -152,7 +186,8 @@ func ActiveToggleByHash(c *gin.Context) {
 func UpdateLinkByHash(c *gin.Context) {
 	var updatedLink Link
 
-	i, _ := findLinkByHash(c.Copy())
+	hash := c.Param("hash")
+	_ = findLinkByHash(c)
 
 	if err := c.BindJSON(&updatedLink); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
@@ -161,7 +196,10 @@ func UpdateLinkByHash(c *gin.Context) {
 		})
 		return
 	}
-	links[*i] = updatedLink
+
+	links.Lock()
+	links.l[hash] = updatedLink
+	links.Unlock()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -180,24 +218,18 @@ func UpdateLinkByHash(c *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{hash} [delete]
 func DeleteLinkByHash(c *gin.Context) {
-	i, l := findLinkByHash(c.Copy())
 
-	// delete an element from the array
-	// https://www.educative.io/answers/how-to-delete-an-element-from-an-array-in-golang
-	newLength := 0
-	for index := range links {
-		if *i != index {
-			links[newLength] = links[index]
-			newLength++
-		}
-	}
+	hash := c.Param("hash")
+	link := findLinkByHash(c)
 
-	// reslice the array to remove extra index
-	links = links[:newLength]
+	links.Lock()
+	delete(links.l, hash)
+	links.Unlock()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "link deleted by Hash",
-		"link":    *l,
+		"link":    *link,
 	})
+	return
 }

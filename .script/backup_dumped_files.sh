@@ -44,4 +44,4 @@ curl -X PUT -sL -H "X-Auth-Token: $TOKEN" \
         --data @${TMP_FILE_NAME} \
         http://swapi.savla.su/backups/${SERVICE_NAME}
 
-echo "backup successfull --- ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz"
+echo "backup successful --- ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz"

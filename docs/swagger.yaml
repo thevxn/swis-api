@@ -366,17 +366,14 @@ definitions:
       description:
         description: Link's more verbose name/description.
         type: string
-      hash:
-        description: Link's unique hash ID.
-        type: string
       name:
-        description: Link's name/placeholder.
+        description: Link's name/placeholder, used as an unique key.
         type: string
       url:
         description: Link's URL to link to.
         type: string
     required:
-    - hash
+    - name
     - url
     type: object
   news.Item:
@@ -693,7 +690,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.8
+  version: 5.2.10
 paths:
   /alvax/commands:
     get:
