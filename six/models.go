@@ -9,9 +9,14 @@ type SixStruct struct {
 }
 
 type Calendar struct {
+	// Uniqueu owner name, User.Name.
 	Owner string `json:"owner_name" binding:"required"`
+
+	// Calendar items.
 	Items []Item `json:"items"`
-	mux   sync.Mutex
+
+	// Muxer to control item access.
+	mux sync.Mutex
 }
 
 type TodoList struct {
@@ -19,16 +24,35 @@ type TodoList struct {
 	Items []Item `json:"items"`
 }
 
+// Item/even structure according to https://fullcalendar.io/docs/event-object.
 type Item struct {
-	Name        string `json:"name" binding:"required"`
-	Title       string `json:"title"`
+	// Unique item ID.
+	ID string `json:"id"`
+
+	// To-be-deleted soon -- title vs. ID.
+	Name string `json:"name" binding:"required"`
+
+	// Item title to be shown.
+	Title string `json:"title"`
+
+	// Item more verbouse description (pop-up windows text).
 	Description string `json:"description"`
-	Type        string `json:"item_type"`
-	Start       string `json:"start"`
-	End         string `json:"end"`
-	Repeat      bool   `json:"do_repeat" default:false`
-	RepeatFreq  string `json:"repeat_freq"`
-	Constraint  string `json:"constraint"`
-	URL         string `json:"url"`
-	Color       string `json:"color"`
+
+	// Start datetime string with timezone.
+	Start string `json:"start"`
+
+	// End datetime string with timezone.
+	End string `json:"end"`
+
+	// Boolean to set and
+	AllDay bool `json:"all_day", default:false`
+
+	// Item constrains, e.g. business hours.
+	Constraint string `json:"constraint" default:"businessHours"`
+
+	// Item URL link.
+	URL string `json:"url"`
+
+	// Item colour, RGB hex hash.
+	Color string `json:"color"`
 }

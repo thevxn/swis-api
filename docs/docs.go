@@ -2147,12 +2147,14 @@ const docTemplate = `{
             ],
             "properties": {
                 "items": {
+                    "description": "Calendar items.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/six.Item"
                     }
                 },
                 "owner_name": {
+                    "description": "Uniqueu owner name, User.Name.",
                     "type": "string"
                 }
             }
@@ -2163,37 +2165,45 @@ const docTemplate = `{
                 "name"
             ],
             "properties": {
+                "all_day": {
+                    "description": "Boolean to set and",
+                    "type": "boolean"
+                },
                 "color": {
+                    "description": "Item colour, RGB hex hash.",
                     "type": "string"
                 },
                 "constraint": {
-                    "type": "string"
+                    "description": "Item constrains, e.g. business hours.",
+                    "type": "string",
+                    "default": "businessHours"
                 },
                 "description": {
+                    "description": "Item more verbouse description (pop-up windows text).",
                     "type": "string"
-                },
-                "do_repeat": {
-                    "type": "boolean"
                 },
                 "end": {
+                    "description": "End datetime string with timezone.",
                     "type": "string"
                 },
-                "item_type": {
+                "id": {
+                    "description": "Unique item ID.",
                     "type": "string"
                 },
                 "name": {
-                    "type": "string"
-                },
-                "repeat_freq": {
+                    "description": "To-be-deleted soon -- title vs. ID.",
                     "type": "string"
                 },
                 "start": {
+                    "description": "Start datetime string with timezone.",
                     "type": "string"
                 },
                 "title": {
+                    "description": "Item title to be shown.",
                     "type": "string"
                 },
                 "url": {
+                    "description": "Item URL link.",
                     "type": "string"
                 }
             }
