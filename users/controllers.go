@@ -1,42 +1,44 @@
 package users
 
 import (
-	//b64 "encoding/base64"
-	//"encoding/json"
 	"net/http"
 	"strings"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 )
 
-var users = []User{} //equivalent to Users.Users{}
+var u sync.Map
 
 func FindUserByToken(token string) *User {
-	// Loop over all loaded users.
-	for _, u := range users {
-		if u.TokenHMAC == token && u.Active {
-			return &u
-		}
-	}
-	return nil
-}
+	var users = make(map[string]User)
+	var user *User = nil
 
-// findUserByName is a private, hellper function for users array struct browsing.
-// *gin.Context should contain the 'name' parameter (extracted from HTTP path string).
-func findUserByName(c *gin.Context) (index *int, u *User) {
-	// Loop over all loaded users.
-	for i, a := range users {
-		if a.Name == c.Param("name") {
-			//c.IndentedJSON(http.StatusOK, a)
-			return &i, &a
-		}
-	}
+	u.Range(func(rawKey, rawVal interface{}) bool {
+		// very insecure assert
+		k, ok := rawKey.(string)
+		v, ok := rawVal.(User)
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{
-		"code":    http.StatusNotFound,
-		"message": "user not found",
+		if !ok {
+			return false
+		}
+
+		// each token should be unique, to be generated from User.Name and other attributes + pepper
+		if v.TokenHMAC == token && v.Active {
+			users[k] = v
+
+			// if one token is shared between users, disallow both (this to be more discussed, please)
+			if len(users) > 1 {
+				return false
+			}
+
+			user = &v
+		}
+
+		return true
 	})
-	return nil, nil
+
+	return user
 }
 
 // @Summary Get all users
@@ -48,8 +50,21 @@ func findUserByName(c *gin.Context) (index *int, u *User) {
 // GetSocketList GET method
 // GetUsers returns JSON serialized list of users and their properties.
 func GetUsers(c *gin.Context) {
-	// serialize struct to JSON
-	// net/http response code
+	var users = make(map[string]User)
+
+	u.Range(func(rawKey, rawVal interface{}) bool {
+		// very insecure assert
+		k, ok := rawKey.(string)
+		v, ok := rawVal.(User)
+
+		if !ok {
+			return false
+		}
+
+		users[k] = v
+		return true
+	})
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "ok, listing users",
@@ -65,12 +80,26 @@ func GetUsers(c *gin.Context) {
 // @Router /users/{name} [get]
 // GetUserByName returns user's properties, given sent name exists in database.
 func GetUserByName(c *gin.Context) {
-	if _, user := findUserByName(c); user != nil {
-		// user found
-		c.IndentedJSON(http.StatusOK, user)
+	var name string = c.Param("name")
+	var user User
+
+	userRaw, ok := u.Load(name)
+	user, ok = userRaw.(User)
+
+	if !ok {
+		c.IndentedJSON(http.StatusConflict, gin.H{
+			"message": "user not found or the user object cannot be loaded",
+			"code":    http.StatusConflict,
+			"name":    name,
+		})
+		return
 	}
 
-	//c.IndentedJSON(http.StatusNotFound, gin.H{"message": "user not found"})
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"message": "ok, dumping user info",
+		"code":    http.StatusOK,
+		"user":    user,
+	})
 }
 
 // @Summary Add new user to users array
@@ -82,10 +111,10 @@ func GetUserByName(c *gin.Context) {
 // @Router /users [post]
 // PostNewUser enables one to add new user to users model.
 func PostNewUser(c *gin.Context) {
-	var newUser User
+	var newUser = &User{}
 
 	// bind received JSON to newUser
-	if err := c.BindJSON(&newUser); err != nil {
+	if err := c.BindJSON(newUser); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
@@ -93,8 +122,16 @@ func PostNewUser(c *gin.Context) {
 		return
 	}
 
-	// add new user
-	users = append(users, newUser)
+	if _, found := u.Load(newUser.Name); found {
+		c.IndentedJSON(http.StatusConflict, gin.H{
+			"message": "user already exists",
+			"code":    http.StatusConflict,
+			"name":    newUser.Name,
+		})
+		return
+	}
+
+	u.Store(newUser.Name, newUser)
 
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
@@ -112,20 +149,19 @@ func PostNewUser(c *gin.Context) {
 // @Router /users/restore [post]
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
-	var importUsers Users
+	var importUsers = &Users{}
 
 	// bind received JSON to newUser
-	if err := c.BindJSON(&importUsers); err != nil {
+	if err := c.BindJSON(importUsers); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
 	}
-
-	// add new user
-	users = importUsers.Users
-	//users = append(users, newUser)
+	for _, user := range importUsers.Users {
+		u.Store(user.Name, user)
+	}
 
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
@@ -143,19 +179,30 @@ func PostDumpRestore(c *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{name}/active [put]
 func ActiveToggleUserByName(c *gin.Context) {
-	var updatedUser User
+	var user User
+	var userName string = c.Param("name")
 
-	i, _ := findUserByName(c.Copy())
-	updatedUser = users[*i]
+	rawUser, ok := u.Load(userName)
+	user, ok = rawUser.(User)
 
-	// inverse the Muted field value
-	updatedUser.Active = !updatedUser.Active
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "user not found",
+			"code":    http.StatusNotFound,
+			"name":    userName,
+		})
+		return
+	}
 
-	users[*i] = updatedUser
+	// inverse the Active field value
+	user.Active = !user.Active
+
+	u.Store(userName, user)
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "user active toggle pressed!",
-		"user":    updatedUser,
+		"user":    user,
 	})
 	return
 }
@@ -169,14 +216,26 @@ func ActiveToggleUserByName(c *gin.Context) {
 // @Router /users/{name}/keys/ssh [post]
 // PostUsersSSHKeys method adds (rewrites) SSH key array by user.Name
 func PostUsersSSHKeys(c *gin.Context) {
-	// shoud be safe, findeUserByName should not return a nil
-	var index, user = findUserByName(c)
-	if user == nil {
+	var user User
+	var userName string = c.Param("name")
+
+	rawUser, ok := u.Load(userName)
+	user, ok = rawUser.(User)
+
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "user not found",
+			"code":    http.StatusNotFound,
+			"name":    userName,
+		})
 		return
 	}
 
+	// to be reimplemented later
+	var sshKeys []string
+
 	// load SSH keys from POST request
-	if err := c.BindJSON(user); err != nil {
+	if err := c.BindJSON(&sshKeys); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
@@ -184,13 +243,15 @@ func PostUsersSSHKeys(c *gin.Context) {
 		return
 	}
 
-	// write changes to users array
-	users[*index] = *user
+	user.SSHKeys = sshKeys
+	u.Store(userName, user)
+
 	c.IndentedJSON(http.StatusAccepted, gin.H{
 		"code":    http.StatusAccepted,
 		"message": "ssh keys for user imported",
-		"user":    *user,
+		"name":    userName,
 	})
+	return
 }
 
 // @Summary Get User's SSH keys in plain text
@@ -201,11 +262,24 @@ func PostUsersSSHKeys(c *gin.Context) {
 // @Router /users/{name}/keys/ssh [get]
 // GetUsersSSHKeysRaw
 func GetUsersSSHKeysRaw(c *gin.Context) {
-	var _, user = findUserByName(c)
+	var user User
+	var userName string = c.Param("name")
 
-	if user != nil {
-		var responseBody = strings.Join(user.SSHKeys, "\n")
-		c.String(http.StatusOK, responseBody)
+	rawUser, ok := u.Load(userName)
+	user, ok = rawUser.(User)
+
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "user not found",
+			"code":    http.StatusNotFound,
+			"name":    userName,
+		})
+		return
 	}
+
+	// return SSH keys as plaintext
+	var responseBody = strings.Join(user.SSHKeys, "\n")
+	c.String(http.StatusOK, responseBody)
+
 	return
 }

@@ -2350,7 +2350,7 @@ const docTemplate = `{
                     }
                 },
                 "name": {
-                    "description": "ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property).\nID       \tstring \t\t` + "`" + `json:\"id\"` + "`" + `",
+                    "description": "ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property).",
                     "type": "string"
                 },
                 "roles": {
@@ -2388,9 +2388,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "users": {
-                    "description": "An array of User objects",
-                    "type": "array",
-                    "items": {
+                    "description": "A map of User objects",
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/users.User"
                     }
                 }
@@ -2440,7 +2440,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.14",
+	Version:          "5.2.15",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},
