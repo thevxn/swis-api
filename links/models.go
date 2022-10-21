@@ -1,13 +1,5 @@
 package links
 
-import "sync"
-
-type Links struct {
-	// A map of links, hash-named.
-	l map[string]Link `json:"links"`
-	sync.RWMutex
-}
-
 type Link struct {
 	// Link's name/placeholder, used as an unique key.
 	Name string `json:"name" binding:"required"`

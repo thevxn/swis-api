@@ -2,31 +2,12 @@ package links
 
 import (
 	"net/http"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 )
 
-var links = Links{
-	l: make(map[string]Link),
-}
-
-func findLinkByHash(c *gin.Context) *Link {
-	// TODO: nil map test!
-
-	hash := c.Param("hash")
-
-	links.RLock()
-	defer links.RUnlock()
-	if link, ok := links.l[hash]; ok {
-		return &link
-	}
-
-	c.IndentedJSON(http.StatusNotFound, gin.H{
-		"code":    http.StatusNotFound,
-		"message": "link not found",
-	})
-	return nil
-}
+var l sync.Map
 
 // @Summary Get all links
 // @Description get links complete list
@@ -37,15 +18,26 @@ func findLinkByHash(c *gin.Context) *Link {
 // GetLinks GET method
 // GetLinks returns JSON serialized list of links and their properties.
 func GetLinks(c *gin.Context) {
+	var links = make(map[string]Link)
 
-	links.RLock()
+	l.Range(func(rawKey, rawVal interface{}) bool {
+		// very insecure assert
+		k, ok := rawKey.(string)
+		v, ok := rawVal.(Link)
+
+		if !ok {
+			return false
+		}
+
+		links[k] = v
+		return true
+	})
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "ok, listing links",
-		"links":   links.l,
+		"links":   links,
 	})
-
-	links.RUnlock()
 	return
 }
 
@@ -57,13 +49,22 @@ func GetLinks(c *gin.Context) {
 // @Router /links/{hash} [get]
 // GetLinkByHash returns link's properties, given sent hash exists in database.
 func GetLinkByHash(c *gin.Context) {
-	if link := findLinkByHash(c); link != nil {
-		c.IndentedJSON(http.StatusOK, gin.H{
-			"message": "ok, dumping given link's details",
-			"code":    http.StatusOK,
-			"link":    *link,
+
+	hash := c.Param("hash")
+	link, ok := l.Load(hash)
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "link not found",
+			"code":    http.StatusNotFound,
 		})
+		return
 	}
+
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"message": "ok, dumping given link's details",
+		"code":    http.StatusOK,
+		"link":    link,
+	})
 	return
 }
 
@@ -87,26 +88,19 @@ func PostNewLink(c *gin.Context) {
 		return
 	}
 
-	// hotfix for new hash name
 	hash := newLink.Name
-
-	links.RLock()
-	if _, found := links.l[hash]; found {
+	_, found := l.Load(hash)
+	if found {
 		// Link already exists, such hash/name is already used...
 		c.IndentedJSON(http.StatusConflict, gin.H{
 			"code":    http.StatusConflict,
 			"message": "link hash name already used!",
 			"hash":    hash,
 		})
-		links.RUnlock()
 		return
 	}
-	links.RUnlock()
 
-	// add newLink to the hash map
-	links.Lock()
-	links.l[hash] = newLink
-	links.Unlock()
+	l.Store(newLink.Name, newLink)
 
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
@@ -125,7 +119,7 @@ func PostNewLink(c *gin.Context) {
 // @Router /links/restore [post]
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
-	var importLinks Links
+	var importLinks []Link
 
 	if err := c.BindJSON(&importLinks); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -135,14 +129,15 @@ func PostDumpRestore(c *gin.Context) {
 		return
 	}
 
-	links.Lock()
-	links.l = importLinks.l
-	links.Unlock()
+	for _, link := range importLinks {
+		l.Store(link.Name, link)
+	}
 
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "links imported successfully",
+		"links":   l,
 	})
 }
 
@@ -155,22 +150,36 @@ func PostDumpRestore(c *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{hash}/active [put]
 func ActiveToggleByHash(c *gin.Context) {
-	//var updatedLink Link
+	var rawLink interface{}
 
 	hash := c.Param("hash")
-	link := findLinkByHash(c)
+	rawLink, ok := l.Load(hash)
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "links not found",
+			"code":    http.StatusNotFound,
+		})
+		return
+	}
+
+	link, typeOk := rawLink.(Link)
+	if !typeOk {
+		c.IndentedJSON(http.StatusConflict, gin.H{
+			"message": "stored link not type Link!",
+			"code":    http.StatusConflict,
+		})
+		return
+	}
 
 	// inverse the Active field value
 	link.Active = !link.Active
 
-	links.Lock()
-	links.l[hash] = *link
-	links.Unlock()
+	l.Store(hash, link)
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "link active toggle pressed!",
-		"link":    *link,
+		"link":    link,
 	})
 	return
 }
@@ -187,7 +196,14 @@ func UpdateLinkByHash(c *gin.Context) {
 	var updatedLink Link
 
 	hash := c.Param("hash")
-	_ = findLinkByHash(c)
+	_, ok := l.Load(hash)
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "links not found",
+			"code":    http.StatusNotFound,
+		})
+		return
+	}
 
 	if err := c.BindJSON(&updatedLink); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
@@ -197,9 +213,7 @@ func UpdateLinkByHash(c *gin.Context) {
 		return
 	}
 
-	links.Lock()
-	links.l[hash] = updatedLink
-	links.Unlock()
+	l.Store(hash, updatedLink)
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -220,16 +234,13 @@ func UpdateLinkByHash(c *gin.Context) {
 func DeleteLinkByHash(c *gin.Context) {
 
 	hash := c.Param("hash")
-	link := findLinkByHash(c)
 
-	links.Lock()
-	delete(links.l, hash)
-	links.Unlock()
+	l.Delete(hash)
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "link deleted by Hash",
-		"link":    *link,
+		"hash":    hash,
 	})
 	return
 }
