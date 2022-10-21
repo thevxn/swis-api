@@ -690,7 +690,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.11
+  version: 5.2.12
 paths:
   /alvax/commands:
     get:

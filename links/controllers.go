@@ -119,17 +119,17 @@ func PostNewLink(c *gin.Context) {
 // @Router /links/restore [post]
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
-	var importLinks []Link
+	var importLinks Links
 
 	if err := c.BindJSON(&importLinks); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": err,
 		})
 		return
 	}
 
-	for _, link := range importLinks {
+	for _, link := range importLinks.Links {
 		l.Store(link.Name, link)
 	}
 
