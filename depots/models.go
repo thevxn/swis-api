@@ -1,11 +1,11 @@
 package depots
 
 type Depots struct {
-	Depots []Depot `json:"depots"`
+	Depots map[string]Depot `json:"depots"`
 }
 
 type Depot struct {
-	// Depot owner's name.
+	// Depot owner's name, unique ID.
 	Owner string `json:"owner_name"`
 
 	// Generic array of depot Items.

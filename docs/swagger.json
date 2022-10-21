@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.2.13"
+        "version": "5.2.14"
     },
     "host": "swapi.savla.su:8049",
     "basePath": "/",
@@ -289,7 +289,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "depot"
+                    "depots"
                 ],
                 "summary": "Get all depots and their users/owners",
                 "responses": {
@@ -297,6 +297,35 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/depots.Depots"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new depot",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Add new depot",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/depots.Depot"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depots.Depot"
                         }
                     }
                 }
@@ -312,7 +341,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "depot"
+                    "depots"
                 ],
                 "summary": "Upload depot dump backup -- restores all depots",
                 "responses": {}
@@ -325,9 +354,36 @@
                     "application/json"
                 ],
                 "tags": [
-                    "depot"
+                    "depots"
                 ],
                 "summary": "Get depot list by Owner",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depots.Depot"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete depot by its Owner",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Delete depot by its owner",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "depot Owner",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1619,7 +1675,7 @@
                     }
                 },
                 "owner_name": {
-                    "description": "Depot owner's name.",
+                    "description": "Depot owner's name, unique ID.",
                     "type": "string"
                 }
             }
@@ -1628,8 +1684,8 @@
             "type": "object",
             "properties": {
                 "depots": {
-                    "type": "array",
-                    "items": {
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/depots.Depot"
                     }
                 }

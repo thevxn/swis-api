@@ -296,7 +296,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "depot"
+                    "depots"
                 ],
                 "summary": "Get all depots and their users/owners",
                 "responses": {
@@ -304,6 +304,35 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/depots.Depots"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new depot",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Add new depot",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/depots.Depot"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depots.Depot"
                         }
                     }
                 }
@@ -319,7 +348,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "depot"
+                    "depots"
                 ],
                 "summary": "Upload depot dump backup -- restores all depots",
                 "responses": {}
@@ -332,9 +361,36 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "depot"
+                    "depots"
                 ],
                 "summary": "Get depot list by Owner",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depots.Depot"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete depot by its Owner",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Delete depot by its owner",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "depot Owner",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1626,7 +1682,7 @@ const docTemplate = `{
                     }
                 },
                 "owner_name": {
-                    "description": "Depot owner's name.",
+                    "description": "Depot owner's name, unique ID.",
                     "type": "string"
                 }
             }
@@ -1635,8 +1691,8 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "depots": {
-                    "type": "array",
-                    "items": {
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/depots.Depot"
                     }
                 }
@@ -2384,7 +2440,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.13",
+	Version:          "5.2.14",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},

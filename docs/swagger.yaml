@@ -120,15 +120,15 @@ definitions:
           $ref: '#/definitions/depots.Item'
         type: array
       owner_name:
-        description: Depot owner's name.
+        description: Depot owner's name, unique ID.
         type: string
     type: object
   depots.Depots:
     properties:
       depots:
-        items:
+        additionalProperties:
           $ref: '#/definitions/depots.Depot'
-        type: array
+        type: object
     type: object
   depots.Item:
     properties:
@@ -685,7 +685,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.13
+  version: 5.2.14
 paths:
   /alvax/commands:
     get:
@@ -873,8 +873,45 @@ paths:
             $ref: '#/definitions/depots.Depots'
       summary: Get all depots and their users/owners
       tags:
-      - depot
+      - depots
+    post:
+      description: add new depot
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/depots.Depot'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depots.Depot'
+      summary: Add new depot
+      tags:
+      - depots
   /depots/{owner}:
+    delete:
+      description: delete depot by its Owner
+      parameters:
+      - description: depot Owner
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depots.Depot'
+      summary: Delete depot by its owner
+      tags:
+      - depots
     get:
       description: get depot list by :owner param
       produces:
@@ -886,7 +923,7 @@ paths:
             $ref: '#/definitions/depots.Depot'
       summary: Get depot list by Owner
       tags:
-      - depot
+      - depots
   /depots/restore:
     post:
       consumes:
@@ -897,7 +934,7 @@ paths:
       responses: {}
       summary: Upload depot dump backup -- restores all depots
       tags:
-      - depot
+      - depots
   /dish/restore:
     post:
       consumes:
