@@ -6,7 +6,10 @@ import (
 
 // finance CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/", GetAccounts)
-	g.GET("/accounts/:owner", GetAccountByOwner)
-	g.POST("/restore", PostDumpRestore)
+	g.GET("/",
+		GetAccounts)
+	g.GET("/accounts/:owner",
+		GetAccountByOwner)
+	g.POST("/restore",
+		PostDumpRestore)
 }

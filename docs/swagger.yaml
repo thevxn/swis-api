@@ -195,17 +195,20 @@ definitions:
       account_currency:
         description: Account currency name (e.g. CZK, GBP, EUR, USD)
         type: string
+      account_description:
+        description: Account more verbose name.
+        type: string
       account_iban:
         description: Account IBAN code for international payments.
+        type: string
+      account_id:
+        description: Account unique ID, snake_cased identifier.
         type: string
       account_items:
         description: Account items like (incoming/outcoming) payments.
         items:
           $ref: '#/definitions/finance.Item'
         type: array
-      account_name:
-        description: Account name/unique ID.
-        type: string
       account_number:
         description: Account number.
         type: string
@@ -220,14 +223,6 @@ definitions:
           Universal in-state bank code (CZ mainly).
           Bank codes such as "0100" would be invalid as type int!
         type: string
-    type: object
-  finance.Finance:
-    properties:
-      accounts:
-        description: Finance accounts list.
-        items:
-          $ref: '#/definitions/finance.Account'
-        type: array
     type: object
   finance.Item:
     properties:
@@ -690,7 +685,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.12
+  version: 5.2.13
 paths:
   /alvax/commands:
     get:
@@ -1019,7 +1014,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/finance.Finance'
+            $ref: '#/definitions/finance.Account'
       summary: Get all finance accounts
       tags:
       - finance

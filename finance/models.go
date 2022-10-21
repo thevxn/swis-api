@@ -1,13 +1,17 @@
 package finance
 
-type Finance struct {
+type Accounts struct {
 	// Finance accounts list.
-	Accounts []Account `json:"accounts"`
+	//Accounts []Account `json:"accounts"`
+	Accounts map[string]Account `json:"accounts"`
 }
 
 type Account struct {
-	// Account name/unique ID.
-	Name string `json:"account_name"`
+	// Account unique ID, snake_cased identifier.
+	ID string `json:"account_id"`
+
+	// Account more verbose name.
+	Description string `json:"account_description"`
 
 	// Account number.
 	AccountNumber string `json:"account_number"`

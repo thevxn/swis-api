@@ -49,8 +49,8 @@ func GetLinks(c *gin.Context) {
 // @Router /links/{hash} [get]
 // GetLinkByHash returns link's properties, given sent hash exists in database.
 func GetLinkByHash(c *gin.Context) {
+	var hash string = c.Param("hash")
 
-	hash := c.Param("hash")
 	link, ok := l.Load(hash)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
@@ -77,10 +77,10 @@ func GetLinkByHash(c *gin.Context) {
 // @Router /links [post]
 // PostNewLink enables one to add new link to links model.
 func PostNewLink(c *gin.Context) {
-	var newLink Link
+	var newLink = &Link{}
 
 	// bind received JSON to newLink
-	if err := c.BindJSON(&newLink); err != nil {
+	if err := c.BindJSON(newLink); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
@@ -88,7 +88,8 @@ func PostNewLink(c *gin.Context) {
 		return
 	}
 
-	hash := newLink.Name
+	var hash string = newLink.Name
+
 	_, found := l.Load(hash)
 	if found {
 		// Link already exists, such hash/name is already used...
@@ -119,9 +120,9 @@ func PostNewLink(c *gin.Context) {
 // @Router /links/restore [post]
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
-	var importLinks Links
+	var importLinks = &Links{}
 
-	if err := c.BindJSON(&importLinks); err != nil {
+	if err := c.BindJSON(importLinks); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": err,
@@ -150,9 +151,9 @@ func PostDumpRestore(c *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{hash}/active [put]
 func ActiveToggleByHash(c *gin.Context) {
-	var rawLink interface{}
+	var link Link
+	var hash string = c.Param("hash")
 
-	hash := c.Param("hash")
 	rawLink, ok := l.Load(hash)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
@@ -165,7 +166,7 @@ func ActiveToggleByHash(c *gin.Context) {
 	link, typeOk := rawLink.(Link)
 	if !typeOk {
 		c.IndentedJSON(http.StatusConflict, gin.H{
-			"message": "stored link not type Link!",
+			"message": "stored value is not type Link",
 			"code":    http.StatusConflict,
 		})
 		return
@@ -194,8 +195,8 @@ func ActiveToggleByHash(c *gin.Context) {
 // @Router /links/{hash} [put]
 func UpdateLinkByHash(c *gin.Context) {
 	var updatedLink Link
+	var hash string = c.Param("hash")
 
-	hash := c.Param("hash")
 	_, ok := l.Load(hash)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
@@ -232,8 +233,7 @@ func UpdateLinkByHash(c *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{hash} [delete]
 func DeleteLinkByHash(c *gin.Context) {
-
-	hash := c.Param("hash")
+	var hash string = c.Param("hash")
 
 	l.Delete(hash)
 

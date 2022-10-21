@@ -2,23 +2,39 @@ package finance
 
 import (
 	"net/http"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 )
 
-var finance = Finance{}
+var f sync.Map
 
 // @Summary Get all finance accounts
 // @Description get finance complete list
 // @Tags finance
 // @Produce json
-// @Success 200 {object} finance.Finance
+// @Success 200 {object} finance.Account
 // @Router /finance [get]
 func GetAccounts(c *gin.Context) {
+	var accounts = make(map[string]Account)
+
+	f.Range(func(rawKey, rawVal interface{}) bool {
+		// very insecure assert
+		k, ok := rawKey.(string)
+		v, ok := rawVal.(Account)
+
+		if !ok {
+			return false
+		}
+
+		accounts[k] = v
+		return true
+	})
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,
 		"message":  "dumping finance accounts",
-		"accounts": finance.Accounts,
+		"accounts": accounts,
 	})
 }
 
@@ -29,22 +45,30 @@ func GetAccounts(c *gin.Context) {
 // @Success 200 {object} finance.Account
 // @Router /finance/accounts/{owner} [get]
 func GetAccountByOwner(c *gin.Context) {
-	owner := c.Param("owner")
+	var accounts = make(map[string]Account)
+	var owner string = c.Param("owner")
 
-	for _, acc := range finance.Accounts {
-		if acc.Owner == owner {
-			c.IndentedJSON(http.StatusOK, gin.H{
-				"code":    http.StatusOK,
-				"account": acc,
-			})
-			return
+	f.Range(func(rawKey, rawVal interface{}) bool {
+		// very insecure assert
+		k, ok := rawKey.(string)
+		v, ok := rawVal.(Account)
+
+		if !ok {
+			return false
 		}
-	}
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{
-		"code":    http.StatusNotFound,
-		"message": "account not found",
+		if v.Owner == owner {
+			accounts[k] = v
+		}
+		return true
 	})
+
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":     http.StatusOK,
+		"message":  "dumping accouts by owner",
+		"accounts": accounts,
+	})
+	return
 }
 
 // @Summary Upload finance accounts dump backup -- restores all finance accounts
@@ -54,9 +78,9 @@ func GetAccountByOwner(c *gin.Context) {
 // @Produce json
 // @Router /finance/restore [post]
 func PostDumpRestore(c *gin.Context) {
-	var importFinance Finance
+	var importAccounts = &Accounts{}
 
-	if err := c.BindJSON(&importFinance); err != nil {
+	if err := c.BindJSON(importAccounts); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
@@ -64,10 +88,12 @@ func PostDumpRestore(c *gin.Context) {
 		return
 	}
 
-	finance = importFinance
+	for _, acc := range importAccounts.Accounts {
+		f.Store(acc.ID, acc)
+	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
-		"message": "finance imported, omitting output",
+		"message": "finance accounts imported, omitting output",
 	})
 }

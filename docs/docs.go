@@ -523,7 +523,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Finance"
+                            "$ref": "#/definitions/finance.Account"
                         }
                     }
                 }
@@ -1722,8 +1722,16 @@ const docTemplate = `{
                     "description": "Account currency name (e.g. CZK, GBP, EUR, USD)",
                     "type": "string"
                 },
+                "account_description": {
+                    "description": "Account more verbose name.",
+                    "type": "string"
+                },
                 "account_iban": {
                     "description": "Account IBAN code for international payments.",
+                    "type": "string"
+                },
+                "account_id": {
+                    "description": "Account unique ID, snake_cased identifier.",
                     "type": "string"
                 },
                 "account_items": {
@@ -1732,10 +1740,6 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/finance.Item"
                     }
-                },
-                "account_name": {
-                    "description": "Account name/unique ID.",
-                    "type": "string"
                 },
                 "account_number": {
                     "description": "Account number.",
@@ -1752,18 +1756,6 @@ const docTemplate = `{
                 "bank_code": {
                     "description": "Universal in-state bank code (CZ mainly).\nBank codes such as \"0100\" would be invalid as type int!",
                     "type": "string"
-                }
-            }
-        },
-        "finance.Finance": {
-            "type": "object",
-            "properties": {
-                "accounts": {
-                    "description": "Finance accounts list.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/finance.Account"
-                    }
                 }
             }
         },
@@ -2392,7 +2384,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.12",
+	Version:          "5.2.13",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},
