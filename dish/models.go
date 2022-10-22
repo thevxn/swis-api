@@ -1,7 +1,8 @@
 package dish
 
 type Sockets struct {
-	Sockets []Socket `json:"sockets"`
+	//Sockets []Socket `json:"sockets"`
+	Sockets map[string]Socket `json:"sockets"`
 }
 
 type Socket struct {

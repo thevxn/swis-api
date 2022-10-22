@@ -50,8 +50,10 @@ func GetLinks(c *gin.Context) {
 // GetLinkByHash returns link's properties, given sent hash exists in database.
 func GetLinkByHash(c *gin.Context) {
 	var hash string = c.Param("hash")
+	var link Link
 
-	link, ok := l.Load(hash)
+	rawLink, ok := l.Load(hash)
+	link, ok = rawLink.(Link)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "link not found",
@@ -90,8 +92,7 @@ func PostNewLink(c *gin.Context) {
 
 	var hash string = newLink.Name
 
-	_, found := l.Load(hash)
-	if found {
+	if _, found := l.Load(hash); found {
 		// Link already exists, such hash/name is already used...
 		c.IndentedJSON(http.StatusConflict, gin.H{
 			"code":    http.StatusConflict,
@@ -110,6 +111,7 @@ func PostNewLink(c *gin.Context) {
 		"hash":    hash,
 		"link":    newLink,
 	})
+	return
 }
 
 // @Summary Upload links dump backup -- restores all links
@@ -140,6 +142,7 @@ func PostDumpRestore(c *gin.Context) {
 		"message": "links imported successfully",
 		"links":   l,
 	})
+	return
 }
 
 // (PUT /links/{hash}/active)

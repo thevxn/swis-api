@@ -2,13 +2,13 @@ package dish
 
 import (
 	"net/http"
-	"swis-api/infra"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 	//"github.com/savla-dev/savla-dish/socket"
 )
 
-var socketArray = []Socket{}
+var s sync.Map
 
 // (HEAD /dish/test)
 // @Summary
@@ -18,9 +18,8 @@ var socketArray = []Socket{}
 // @Router /dish/test [head]
 // HeadTest is the HEAD HTTP method for savla-dish service, that acts like a testing endpoint.
 func HeadTest(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"test": true,
-	})
+	c.String(http.StatusOK, "ok")
+	return
 }
 
 // (GET /dish/sockets)
@@ -32,23 +31,27 @@ func HeadTest(c *gin.Context) {
 // @Router /dish/sockets [get]
 // Get all sockets loaded.
 func GetSocketList(c *gin.Context) {
+	var sockets = make(map[string]Socket)
+
+	s.Range(func(rawKey, rawVal interface{}) bool {
+		// very insecure assert?
+		k, ok := rawKey.(string)
+		v, ok := rawVal.(Socket)
+
+		if !ok {
+			return false
+		}
+
+		sockets[k] = v
+		return true
+	})
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "ok, dumping all sockets",
-		"sockets": socketArray,
+		"sockets": sockets,
 	})
-}
-
-// (GET /dish/targets)
-// GetTargetList GET method
-func GetTargetList(c *gin.Context) {
-	var targets = infra.Hosts{}
-
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"message": "ok, dumping all targets",
-		"targets": targets,
-	})
+	return
 }
 
 // (GET /dish/sockets/{host})
@@ -61,30 +64,39 @@ func GetTargetList(c *gin.Context) {
 // @Router /dish/sockets/{host} [get]
 // Get sockets by hostname/dish-name.
 func GetSocketListByHost(c *gin.Context) {
-	host := c.Param("host")
+	var host string = c.Param("host")
+	var sockets = make(map[string]Socket)
 
-	//var sockets = socket.Sockets{
-	var sockets = Sockets{}
-	/*var sockets = Sockets{
-		Sockets: []Socket{},
-	}*/
+	s.Range(func(rawKey, rawVal interface{}) bool {
+		// very insecure assert?
+		k, ok := rawKey.(string)
+		v, ok := rawVal.(Socket)
 
-	// loop over socketArray, find
-	for _, s := range socketArray {
-		// export only unmuted sockets
-		if contains(s.DishTarget, host) && !s.Muted {
-			// clear the dish source list for the client (dish)
-			s.DishTarget = []string{host}
-			sockets.Sockets = append(sockets.Sockets, s)
+		if !ok {
+			return false
 		}
-	}
 
-	if len(sockets.Sockets) > 0 {
-		c.IndentedJSON(http.StatusOK, sockets)
+		if contains(v.DishTarget, host) && !v.Muted {
+			sockets[k] = v
+		}
+		return true
+	})
+
+	if len(sockets) > 0 {
+		c.IndentedJSON(http.StatusOK, gin.H{
+			"message": "ok, dumping socket by host",
+			"code":    http.StatusOK,
+			"sockets": sockets,
+		})
 		return
 	}
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "no sockets for given 'hostname'"})
+	c.IndentedJSON(http.StatusNotFound, gin.H{
+		"message": "no sockets for given 'hostname'",
+		"code":    http.StatusNotFound,
+		"host":    host,
+	})
+	return
 
 }
 
@@ -97,10 +109,10 @@ func GetSocketListByHost(c *gin.Context) {
 // @Success 200 {object} dish.Socket
 // Add new socket to the list.
 func PostNewSocket(c *gin.Context) {
-	var newSocket Socket
+	var newSocket = &Socket{}
 
 	// bind JSON to newSocket
-	if err := c.BindJSON(&newSocket); err != nil {
+	if err := c.BindJSON(newSocket); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
@@ -108,24 +120,23 @@ func PostNewSocket(c *gin.Context) {
 		return
 	}
 
-	/*
-		if _, s := findSocketByID(c); s.ID == newSocket.ID {
-			c.JSON(http.StatusForbidden, gin.H{
-				"code":    http.StatusForbidden,
-				"message": "this socket ID already exists! not allowed to POST",
-			})
-		}
-	*/
+	if _, found := s.Load(newSocket.ID); found {
+		c.IndentedJSON(http.StatusConflict, gin.H{
+			"message": "dish socket already exists",
+			"code":    http.StatusConflict,
+			"id":      newSocket.ID,
+		})
+		return
+	}
 
-	// add new socket
-	socketArray = append(socketArray, newSocket)
+	s.Store(newSocket.ID, newSocket)
 
-	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "socket added",
 		"socket":  newSocket,
 	})
+	return
 }
 
 // (PUT /dish/sockets/{id})
@@ -138,11 +149,18 @@ func PostNewSocket(c *gin.Context) {
 // @Router /dish/sockets/{id} [put]
 // edit existing socket by ID
 func UpdateSocketByID(c *gin.Context) {
-	var updatedSocket Socket
+	var id string = c.Param("id")
+	var updatedSocket = &Socket{}
 
-	i, _ := findSocketByID(c)
+	if _, ok := s.Load(id); !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "socket not found",
+		})
+		return
+	}
 
-	if err := c.BindJSON(&updatedSocket); err != nil {
+	if err := c.BindJSON(updatedSocket); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
@@ -150,7 +168,8 @@ func UpdateSocketByID(c *gin.Context) {
 		return
 	}
 
-	socketArray[*i] = updatedSocket
+	s.Store(updatedSocket.ID, updatedSocket)
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "socket updated",
@@ -170,14 +189,25 @@ func UpdateSocketByID(c *gin.Context) {
 // edit existing socket by ID
 func MuteToggleSocketByID(c *gin.Context) {
 	var updatedSocket Socket
+	var id string = c.Param("id")
 
-	i, _ := findSocketByID(c)
-	updatedSocket = socketArray[*i]
+	rawSocket, ok := s.Load(id)
+	updatedSocket, ok = rawSocket.(Socket)
+
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "socket not found",
+			"id":      id,
+		})
+		return
+	}
 
 	// inverse the Muted field value
 	updatedSocket.Muted = !updatedSocket.Muted
 
-	socketArray[*i] = updatedSocket
+	s.Store(updatedSocket.ID, updatedSocket)
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "socket mute toggle pressed!",
@@ -196,26 +226,25 @@ func MuteToggleSocketByID(c *gin.Context) {
 // @Success 200 {object} dish.Socket
 // @Router /dish/sockets/{id} [delete]
 func DeleteSocketByID(c *gin.Context) {
-	i, s := findSocketByID(c)
+	var id string = c.Param("id")
 
-	// delete an element from the array
-	// https://www.educative.io/answers/how-to-delete-an-element-from-an-array-in-golang
-	newLength := 0
-	for index := range socketArray {
-		if *i != index {
-			socketArray[newLength] = socketArray[index]
-			newLength++
-		}
+	if _, ok := s.Load(id); !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "socket not found",
+			"id":      id,
+		})
+		return
 	}
 
-	// reslice the array to remove extra index
-	socketArray = socketArray[:newLength]
+	s.Delete(id)
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "socket deleted by ID",
-		"socket":  *s,
+		"id":      id,
 	})
+	return
 }
 
 // (POST /dish/sockets/restore)
@@ -225,11 +254,11 @@ func DeleteSocketByID(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Router /dish/restore [post]
-// restore all sockets from JSON dump (JSON-bind)
 func PostDumpRestore(c *gin.Context) {
-	var importSockets Sockets
+	var importSockets = &Sockets{}
+	var socket Socket
 
-	if err := c.BindJSON(&importSockets); err != nil {
+	if err := c.BindJSON(importSockets); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
@@ -237,11 +266,13 @@ func PostDumpRestore(c *gin.Context) {
 		return
 	}
 
-	//depots = append(depots, importDepot)
-	socketArray = importSockets.Sockets
+	for _, socket = range importSockets.Sockets {
+		s.Store(socket.ID, socket)
+	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "sockets imported, omitting output",
 	})
+	return
 }
