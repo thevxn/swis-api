@@ -7,12 +7,29 @@ on:
     branches: [ master ]
 
 jobs:
+
+  fmt_unit:
+    runs-on: [ self-hosted, internal, docker ]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: make fmt test
+
   build:
     runs-on: [ self-hosted, internal, docker ]
+    needs: [ fmt_unit ]
     steps:
     - uses: actions/checkout@v2
     - name: Build new swapi image (with staging)
       run: make build
+
+  dev_deploy:
+    runs-on: [ self-hosted, internal, docker ]
+    needs: [ build ]
+    steps:
+    - uses: actions/checkout@v2
+    - name: make error
+      run: make 
 
   dump_data:
     runs-on: [ self-hosted, internal, docker ]
@@ -23,7 +40,7 @@ jobs:
 
   redeploy:
     runs-on: [ self-hosted, internal, docker ]
-    needs: [ dump_data ]
+    needs: [ build, dump_data, dev_deploy ]
     steps:
     - name: Redeploy docker container, recreate container with fresh image
       run: APP_ENVIRONMENT=production make run

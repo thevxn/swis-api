@@ -64,21 +64,11 @@ YAML-formated file for docker-compose stack. Contains defitions for docker conta
 
 ## documentation
 
-[swagger 2.0 is used to document API scheme](http://swapi-docs.savla.su)
+[swagger 2.0 is used to document API scheme (priv)](http://swapi-docs.savla.su)
 
 ```
-# at project root run 
-#go install github.com/swaggo/swag/cmd/swag@latest
-#swag init .
-
 # generate docs using swaggo/swag and restart swagger_ui container
 make docs
-
-# build docker image with server executable
-make build
-
-# run server
-make run
 
 # view swagger UI
 http://localhost:8999/
@@ -133,9 +123,9 @@ make import_dump
 
 + rebase master branch (yeet sensitive commits)
 + deep refactor -- omit global vars, clean the code
-+ use muxers -- save/dump runtime in-memory data
++ ~~use muxers -- save/dump runtime in-memory data~~
 + improve backuping -- introduce tiny go binary to backup all the data
-+ add CRUD controllers to each module
++ add CRUD controllers to each module/package
 
 ### nice-to-have(s)
 
