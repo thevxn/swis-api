@@ -2276,6 +2276,10 @@ const docTemplate = `{
                     "description": "Role status, by default it is inactive.",
                     "type": "boolean"
                 },
+                "administrator": {
+                    "description": "Basic Access-Control List field.",
+                    "type": "boolean"
+                },
                 "description": {
                     "description": "Role description to make more sense when listing those.",
                     "type": "string"
