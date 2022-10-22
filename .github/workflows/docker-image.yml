@@ -8,16 +8,8 @@ on:
 
 jobs:
 
-  unit:
-    runs-on: [ self-hosted, internal, docker ]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run unit tests.
-      run: make unit
-
   build:
     runs-on: [ self-hosted, internal, docker ]
-    needs: [ unit ]
     steps:
     - uses: actions/checkout@v2
     - name: Build new swapi image (with staging).
