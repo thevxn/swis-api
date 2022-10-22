@@ -1180,26 +1180,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/role/{name}": {
-            "get": {
-                "description": "get role by :id param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roles"
-                ],
-                "summary": "Get role by Name",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/roles.Role"
-                        }
-                    }
-                }
-            }
-        },
         "/roles": {
             "get": {
                 "description": "get roules complete list",
@@ -1263,6 +1243,82 @@ const docTemplate = `{
                 ],
                 "summary": "Upload roles dump backup -- restores all roles",
                 "responses": {}
+            }
+        },
+        "/roles/{name}": {
+            "get": {
+                "description": "get role by :id param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Get role by Name",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update role by its Name",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Update role by its Name",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete role by its Name",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Delete role by its Name",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "role Name",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
             }
         },
         "/six": {
@@ -2212,6 +2268,9 @@ const docTemplate = `{
         },
         "roles.Role": {
             "type": "object",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "active": {
                     "description": "Role status, by default it is inactive.",
@@ -2231,8 +2290,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "roles": {
-                    "type": "array",
-                    "items": {
+                    "description": "Roles []Role ` + "`" + `json:\"roles\"` + "`" + `",
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/roles.Role"
                     }
                 }
@@ -2477,7 +2537,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.19",
+	Version:          "5.2.20",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},

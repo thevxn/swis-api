@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.2.19"
+        "version": "5.2.20"
     },
     "host": "swapi.savla.su:8049",
     "basePath": "/",
@@ -1173,26 +1173,6 @@
                 }
             }
         },
-        "/role/{name}": {
-            "get": {
-                "description": "get role by :id param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roles"
-                ],
-                "summary": "Get role by Name",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/roles.Role"
-                        }
-                    }
-                }
-            }
-        },
         "/roles": {
             "get": {
                 "description": "get roules complete list",
@@ -1256,6 +1236,82 @@
                 ],
                 "summary": "Upload roles dump backup -- restores all roles",
                 "responses": {}
+            }
+        },
+        "/roles/{name}": {
+            "get": {
+                "description": "get role by :id param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Get role by Name",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update role by its Name",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Update role by its Name",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete role by its Name",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Delete role by its Name",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "role Name",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
             }
         },
         "/six": {
@@ -2205,6 +2261,9 @@
         },
         "roles.Role": {
             "type": "object",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "active": {
                     "description": "Role status, by default it is inactive.",
@@ -2224,8 +2283,9 @@
             "type": "object",
             "properties": {
                 "roles": {
-                    "type": "array",
-                    "items": {
+                    "description": "Roles []Role `json:\"roles\"`",
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/roles.Role"
                     }
                 }

@@ -6,10 +6,16 @@ import (
 
 // roles CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/", GetRoles)
-	g.GET("/:id", GetRoleByName)
-	g.POST("/", PostRole)
-	//g.PUT("/:id", PutRoleByName)
-	//g.DELETE("/:id", DeleteRoleByName)
-	g.POST("/restore", PostDumpRestore)
+	g.GET("/",
+		GetRoles)
+	g.POST("/",
+		PostRole)
+	g.GET("/:name",
+		GetRoleByName)
+	g.PUT("/:name",
+		UpdateRoleByName)
+	g.DELETE("/:name",
+		DeleteRoleByName)
+	g.POST("/restore",
+		PostDumpRestore)
 }

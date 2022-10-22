@@ -195,4 +195,5 @@ func PostDumpRestore(c *gin.Context) {
 		"code":    http.StatusCreated,
 		"message": "projects imported/restored, omitting output",
 	})
+	return
 }

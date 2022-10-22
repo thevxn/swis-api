@@ -483,13 +483,16 @@ definitions:
       name:
         description: Role name is its unique description, acts like an ID too.
         type: string
+    required:
+    - name
     type: object
   roles.Roles:
     properties:
       roles:
-        items:
+        additionalProperties:
           $ref: '#/definitions/roles.Role'
-        type: array
+        description: Roles []Role `json:"roles"`
+        type: object
     type: object
   six.Calendar:
     properties:
@@ -673,7 +676,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.19
+  version: 5.2.20
 paths:
   /alvax/commands:
     get:
@@ -1435,19 +1438,6 @@ paths:
       summary: Upload projects dump -- restore projects
       tags:
       - projects
-  /role/{name}:
-    get:
-      description: get role by :id param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/roles.Role'
-      summary: Get role by Name
-      tags:
-      - roles
   /roles:
     get:
       description: get roules complete list
@@ -1478,6 +1468,56 @@ paths:
           schema:
             $ref: '#/definitions/roles.Role'
       summary: Add new role to roles array
+      tags:
+      - roles
+  /roles/{name}:
+    delete:
+      description: delete role by its Name
+      parameters:
+      - description: role Name
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Delete role by its Name
+      tags:
+      - roles
+    get:
+      description: get role by :id param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Get role by Name
+      tags:
+      - roles
+    put:
+      description: update role by its Name
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/roles.Role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Update role by its Name
       tags:
       - roles
   /roles/restore:
