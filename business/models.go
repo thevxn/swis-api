@@ -1,8 +1,8 @@
 package business
 
-type BusinessArray struct {
+type Entities struct {
 	// Array of business records.
-	BusinessArray []Business `json:"business"`
+	Entities map[string]Business `json:"business"`
 }
 
 // Business structure
@@ -11,7 +11,7 @@ type Business struct {
 	ID string `json:"id" binding:"required"`
 
 	// Czech Company ICO/ID number.
-	ICO string `json:"ico"`
+	ICO int `json:"ico"`
 
 	// Czech company DICO/VAT ID number/string.
 	VAT string `json:"vat_id"`

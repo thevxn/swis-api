@@ -75,7 +75,7 @@ definitions:
         type: array
       ico:
         description: Czech Company ICO/ID number.
-        type: string
+        type: integer
       id:
         description: Busines unique identifier.
         type: string
@@ -94,14 +94,6 @@ definitions:
     required:
     - id
     type: object
-  business.BusinessArray:
-    properties:
-      business:
-        description: Array of business records.
-        items:
-          $ref: '#/definitions/business.Business'
-        type: array
-    type: object
   business.Contact:
     properties:
       content:
@@ -111,6 +103,14 @@ definitions:
         description: Type of contact field (e.g. e-mail address, street address, telephone
           number etc).
         type: string
+    type: object
+  business.Entities:
+    properties:
+      business:
+        additionalProperties:
+          $ref: '#/definitions/business.Business'
+        description: Array of business records.
+        type: object
     type: object
   depots.Depot:
     properties:
@@ -469,9 +469,7 @@ definitions:
       projects:
         additionalProperties:
           $ref: '#/definitions/projects.Project'
-        description: |-
-          Array ob Project objects.
-          Projects []Project `json:"projects"`
+        description: Array ob Project objects.
         type: object
     type: object
   roles.Role:
@@ -675,7 +673,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.18
+  version: 5.2.19
 paths:
   /alvax/commands:
     get:
@@ -797,19 +795,19 @@ paths:
       - backups
   /business:
     get:
-      description: get business complete list
+      description: get business entities list
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/business.BusinessArray'
-      summary: Get all businesses
+            $ref: '#/definitions/business.Entities'
+      summary: Get all business entities
       tags:
       - business
     post:
-      description: add new business
+      description: add new business entity
       parameters:
       - description: query params
         in: body
@@ -824,12 +822,18 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/business.Business'
-      summary: Add new business to the array
+      summary: Add new business entity
       tags:
       - business
-  /business/{ico}:
-    get:
-      description: get business by :ico param
+  /business/{id}:
+    delete:
+      description: delete business by its ID
+      parameters:
+      - description: business ID
+        in: path
+        name: id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -837,7 +841,38 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/business.Business'
-      summary: Get business by its ICO (ID)
+      summary: Delete business by its ID
+      tags:
+      - business
+    get:
+      description: get business by ID param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Get business entity by its ID
+      tags:
+      - business
+    put:
+      description: update business entity by its ID
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/business.Business'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Update business entity by its ID
       tags:
       - business
   /business/restore:
@@ -848,7 +883,7 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Upload business dump backup -- restores all businesses
+      summary: Upload business dump backup -- restores all business entities
       tags:
       - business
   /depots:

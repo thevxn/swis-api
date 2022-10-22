@@ -200,8 +200,7 @@ func UpdateLinkByHash(c *gin.Context) {
 	var updatedLink Link
 	var hash string = c.Param("hash")
 
-	_, ok := l.Load(hash)
-	if !ok {
+	if _, ok := l.Load(hash); !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "links not found",
 			"code":    http.StatusNotFound,

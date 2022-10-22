@@ -206,32 +206,32 @@ const docTemplate = `{
         },
         "/business": {
             "get": {
-                "description": "get business complete list",
+                "description": "get business entities list",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "business"
                 ],
-                "summary": "Get all businesses",
+                "summary": "Get all business entities",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/business.BusinessArray"
+                            "$ref": "#/definitions/business.Entities"
                         }
                     }
                 }
             },
             "post": {
-                "description": "add new business",
+                "description": "add new business entity",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "business"
                 ],
-                "summary": "Add new business to the array",
+                "summary": "Add new business entity",
                 "parameters": [
                     {
                         "description": "query params",
@@ -265,20 +265,76 @@ const docTemplate = `{
                 "tags": [
                     "business"
                 ],
-                "summary": "Upload business dump backup -- restores all businesses",
+                "summary": "Upload business dump backup -- restores all business entities",
                 "responses": {}
             }
         },
-        "/business/{ico}": {
+        "/business/{id}": {
             "get": {
-                "description": "get business by :ico param",
+                "description": "get business by ID param",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "business"
                 ],
-                "summary": "Get business by its ICO (ID)",
+                "summary": "Get business entity by its ID",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update business entity by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Update business entity by its ID",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete business by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Delete business by its ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "business ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1620,7 +1676,7 @@ const docTemplate = `{
                 },
                 "ico": {
                     "description": "Czech Company ICO/ID number.",
-                    "type": "string"
+                    "type": "integer"
                 },
                 "id": {
                     "description": "Busines unique identifier.",
@@ -1644,18 +1700,6 @@ const docTemplate = `{
                 }
             }
         },
-        "business.BusinessArray": {
-            "type": "object",
-            "properties": {
-                "business": {
-                    "description": "Array of business records.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/business.Business"
-                    }
-                }
-            }
-        },
         "business.Contact": {
             "type": "object",
             "properties": {
@@ -1666,6 +1710,18 @@ const docTemplate = `{
                 "type": {
                     "description": "Type of contact field (e.g. e-mail address, street address, telephone number etc).",
                     "type": "string"
+                }
+            }
+        },
+        "business.Entities": {
+            "type": "object",
+            "properties": {
+                "business": {
+                    "description": "Array of business records.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/business.Business"
+                    }
                 }
             }
         },
@@ -2146,7 +2202,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "projects": {
-                    "description": "Array ob Project objects.\nProjects []Project ` + "`" + `json:\"projects\"` + "`" + `",
+                    "description": "Array ob Project objects.",
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "#/definitions/projects.Project"
@@ -2421,7 +2477,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.18",
+	Version:          "5.2.19",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},

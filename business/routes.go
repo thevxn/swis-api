@@ -7,11 +7,15 @@ import (
 // business CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
-		GetBusinessArray)
-	g.GET("/:ico_id",
-		GetBusinessByICO)
+		GetBusinessEntities)
 	g.POST("/",
 		PostBusiness)
+	g.GET("/:id",
+		GetBusinessByID)
+	g.PUT("/:id",
+		UpdateBusinessByID)
+	g.DELETE("/:id",
+		DeleteBusinessByID)
 	g.POST("/restore",
 		PostDumpRestore)
 }
