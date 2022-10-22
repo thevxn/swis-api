@@ -1348,62 +1348,6 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/swife": {
-            "get": {
-                "description": "get frontends complete list",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "swife"
-                ],
-                "summary": "Get all fronteds",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/swife.Frontend"
-                        }
-                    }
-                }
-            }
-        },
-        "/swife/restore": {
-            "post": {
-                "description": "upload frontend JSON dump and restore the data model",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "swife"
-                ],
-                "summary": "Uploadswife dump backup -- restores all frontends",
-                "responses": {}
-            }
-        },
-        "/swife/{sitename}": {
-            "get": {
-                "description": "get frontend details by :sitename param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "swife"
-                ],
-                "summary": "Get frontend by Sitename",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/swife.Frontend"
-                        }
-                    }
-                }
-            }
-        },
         "/users": {
             "get": {
                 "description": "get users complete list",
@@ -2337,23 +2281,6 @@ const docTemplate = `{
                     }
                 },
                 "owner_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "swife.Frontend": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "description": "Site's description, possible on the frontpage.",
-                    "type": "string"
-                },
-                "site_name": {
-                    "description": "SiteName or hostname to get details for.",
-                    "type": "string"
-                },
-                "title": {
-                    "description": "Site's title.",
                     "type": "string"
                 }
             }

@@ -45,7 +45,6 @@ import (
 	"swis-api/projects"
 	"swis-api/roles"
 	"swis-api/six"
-	"swis-api/swife"
 	"swis-api/users"
 
 	// remote dependencies
@@ -153,10 +152,6 @@ func main() {
 	// six CRUD
 	sixRouter := router.Group("/six")
 	six.Routes(sixRouter)
-
-	// swife CRUD
-	swifeRouter := router.Group("/swife")
-	swife.Routes(swifeRouter)
 
 	// users CRUD
 	usersRouter := router.Group("/users")

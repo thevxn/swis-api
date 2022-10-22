@@ -565,18 +565,6 @@ definitions:
     required:
     - owner_name
     type: object
-  swife.Frontend:
-    properties:
-      description:
-        description: Site's description, possible on the frontpage.
-        type: string
-      site_name:
-        description: SiteName or hostname to get details for.
-        type: string
-      title:
-        description: Site's title.
-        type: string
-    type: object
   users.User:
     properties:
       active:
@@ -1559,43 +1547,6 @@ paths:
       summary: Upload six dump backup -- restores all loaded calendars and todo lists
       tags:
       - six
-  /swife:
-    get:
-      description: get frontends complete list
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/swife.Frontend'
-      summary: Get all fronteds
-      tags:
-      - swife
-  /swife/{sitename}:
-    get:
-      description: get frontend details by :sitename param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/swife.Frontend'
-      summary: Get frontend by Sitename
-      tags:
-      - swife
-  /swife/restore:
-    post:
-      consumes:
-      - application/json
-      description: upload frontend JSON dump and restore the data model
-      produces:
-      - application/json
-      responses: {}
-      summary: Uploadswife dump backup -- restores all frontends
-      tags:
-      - swife
   /users:
     get:
       description: get users complete list
