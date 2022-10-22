@@ -99,7 +99,6 @@ declare -a paths=(
 
 	"/roles/restore"
 	"/six/restore"
-	"/swife/restore"
 	"/users/restore"
 )
 declare -a files=(
@@ -117,7 +116,6 @@ declare -a files=(
 
 	"/roles.json"
 	"/six_struct.json"
-	"/swife_frontends.json"
 	"/users.json"
 )
 
