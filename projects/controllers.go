@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var projects = Projects{}
 var p sync.Map
 
 // @Summary Get all projects
@@ -37,6 +36,7 @@ func GetProjects(c *gin.Context) {
 		"message":  "dumping projects",
 		"projects": projects,
 	})
+	return
 }
 
 // @Summary Get project by ID
@@ -54,7 +54,7 @@ func GetProjectByID(c *gin.Context) {
 	project, ok = rawProject.(Project)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"message": "link not found",
+			"message": "project not found",
 			"code":    http.StatusNotFound,
 		})
 		return

@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.2.17
+// @version 5.2.18
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -53,7 +53,7 @@ import (
 
 func main() {
 	// blank gin without any middleware
-	gin.DisableConsoleColor()
+	//gin.DisableConsoleColor()
 	router := gin.New()
 
 	// Recovery middleware recovers from any panics and writes a 500 if there was one.

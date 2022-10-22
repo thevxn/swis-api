@@ -8,19 +8,19 @@ on:
 
 jobs:
 
-  fmt_unit:
+  unit:
     runs-on: [ self-hosted, internal, docker ]
     steps:
     - uses: actions/checkout@v2
-    - name: Run tests
-      run: make fmt test
+    - name: Run unit tests.
+      run: make unit
 
   build:
     runs-on: [ self-hosted, internal, docker ]
-    needs: [ fmt_unit ]
+    needs: [ unit ]
     steps:
     - uses: actions/checkout@v2
-    - name: Build new swapi image (with staging)
+    - name: Build new swapi image (with staging).
       run: make build
 
   dev_deploy:
@@ -28,26 +28,26 @@ jobs:
     needs: [ build ]
     steps:
     - uses: actions/checkout@v2
-    - name: make error
-      run: make 
+    - name: Run dev container and run end-to-end test on it.
+      run: make devploy e2e
 
   dump_data:
     runs-on: [ self-hosted, internal, docker ]
-    needs: [ build ]
+    needs: [ dev_deploy ]
     steps:
-    - name: Dump production data
+    - name: Dump production data.
       run: make dump
 
-  redeploy:
+  prod_deploy:
     runs-on: [ self-hosted, internal, docker ]
-    needs: [ build, dump_data, dev_deploy ]
+    needs: [ dump_data ]
     steps:
-    - name: Redeploy docker container, recreate container with fresh image
+    - name: Deploy prod docker container, recreate container with fresh image.
       run: APP_ENVIRONMENT=production make run
 
   import_data:
     runs-on: [ self-hosted, internal, docker ]
-    needs: [ redeploy ]
+    needs: [ prod_deploy ]
     steps:
-    - name: Import dumped data to production
+    - name: Import dumped data to production.
       run: make import_dump

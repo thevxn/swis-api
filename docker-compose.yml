@@ -9,7 +9,7 @@ volumes:
     name: swis-data
 
 services:
-  swis-api-run:
+  swis-api-prod:
     image: ${DOCKER_IMAGE_TAG}
     container_name: ${DOCKER_CONTAINER_NAME}
     build:

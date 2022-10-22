@@ -74,13 +74,32 @@ version:
 fmt:
 	@echo -e "\n${YELLOW} Code reformating (gofmt)... ${RESET}\n"
 	@gofmt -d -s .
-	@find . -name "*.go" -exec gofmt {} \;
+#@find . -name "*.go" -exec gofmt {} \;
+
+.PHONY: unit
+unit:	
+	@echo -e "\n${YELLOW} Running tests in all packages (go test)... ${RESET}\n"
+	@go test -v ./...
 
 .PHONY: build
 build:  version
 	@echo -e "\n${YELLOW} Building project (docker compose build)... ${RESET}\n"
 	@docker compose --file $(DOCKER_COMPOSE_FILE) build
 #@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
+
+.PHONY: devploy
+devploy:
+	@echo -e "\n${YELLOW} Starting temporary dev container... ${RESET}\n"
+	@docker run --rm --detach \
+		--name ${DOCKER_DEV_CONTAINER} \
+		-p ${DOCKER_DEV_PORT}:${DOCKER_DEV_PORT} \
+		-e ROOT_TOKEN=d3qySD87Ds48300pl \
+		-e DOCKER_INTERNAL_PORT=${DOCKER_DEV_PORT} \
+		${DOCKER_IMAGE_TAG}
+
+.PHONY: e2e
+e2e:	
+	@docker stop swis-api-dev
 
 .PHONY: run
 run:
