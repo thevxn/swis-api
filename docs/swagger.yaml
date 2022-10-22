@@ -467,10 +467,12 @@ definitions:
   projects.Projects:
     properties:
       projects:
-        description: Array ob Project objects.
-        items:
+        additionalProperties:
           $ref: '#/definitions/projects.Project'
-        type: array
+        description: |-
+          Array ob Project objects.
+          Projects []Project `json:"projects"`
+        type: object
     type: object
   roles.Role:
     properties:
@@ -685,7 +687,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.16
+  version: 5.2.17
 paths:
   /alvax/commands:
     get:
@@ -1318,6 +1320,18 @@ paths:
       tags:
       - news
   /projects:
+    get:
+      description: get project list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Projects'
+      summary: Get all projects
+      tags:
+      - projects
     post:
       description: add new project to projects list
       parameters:
@@ -1338,6 +1352,24 @@ paths:
       tags:
       - projects
   /projects/{id}:
+    delete:
+      description: delete project by its ID
+      parameters:
+      - description: project ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Project'
+      summary: Delete project by its ID
+      tags:
+      - projects
     get:
       description: get project details by :id param
       produces:
@@ -1350,17 +1382,23 @@ paths:
       summary: Get project by ID
       tags:
       - projects
-  /projects/{name}:
-    get:
-      description: get project list
+    put:
+      description: update project by its ID
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/projects.Project'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/projects.Projects'
-      summary: Get all projects
+            $ref: '#/definitions/projects.Project'
+      summary: Update project by its ID
       tags:
       - projects
   /projects/restore:

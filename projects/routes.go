@@ -11,7 +11,11 @@ func Routes(g *gin.RouterGroup) {
 	g.GET("/:id",
 		GetProjectByID)
 	g.POST("/",
-		PostProject)
+		PostNewProject)
+	g.PUT("/:id",
+		UpdateProjectByID)
+	g.DELETE("/:id",
+		DeleteProjectByID)
 	g.POST("/restore",
 		PostDumpRestore)
 }

@@ -227,7 +227,6 @@ func UpdateLinkByHash(c *gin.Context) {
 	return
 }
 
-// (DELETE /links/{})
 // @Summary Delete link by its Hash
 // @Description delete link by its Hash
 // @Tags links

@@ -2,7 +2,8 @@ package projects
 
 type Projects struct {
 	// Array ob Project objects.
-	Projects []Project `json:"projects"`
+	//Projects []Project `json:"projects"`
+	Projects map[string]Project `json:"projects"`
 }
 
 type Project struct {

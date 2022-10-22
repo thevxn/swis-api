@@ -984,6 +984,24 @@ const docTemplate = `{
             }
         },
         "/projects": {
+            "get": {
+                "description": "get project list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Get all projects",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/projects.Projects"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "add new project to projects list",
                 "produces": [
@@ -1048,23 +1066,59 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/projects/{name}": {
-            "get": {
-                "description": "get project list",
+            },
+            "put": {
+                "description": "update project by its ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "projects"
                 ],
-                "summary": "Get all projects",
+                "summary": "Update project by its ID",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/projects.Project"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/projects.Projects"
+                            "$ref": "#/definitions/projects.Project"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete project by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Delete project by its ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/projects.Project"
                         }
                     }
                 }
@@ -2148,9 +2202,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "projects": {
-                    "description": "Array ob Project objects.",
-                    "type": "array",
-                    "items": {
+                    "description": "Array ob Project objects.\nProjects []Project ` + "`" + `json:\"projects\"` + "`" + `",
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/projects.Project"
                     }
                 }
@@ -2440,7 +2494,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.16",
+	Version:          "5.2.17",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},
