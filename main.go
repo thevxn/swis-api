@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.2.21
+// @version 5.2.22
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -32,7 +32,6 @@ import (
 	"time"
 
 	// swapi modules -- very local dependencies
-	"swis-api/alvax"
 	"swis-api/auth"
 	"swis-api/backups"
 	"swis-api/business"
@@ -104,10 +103,6 @@ func main() {
 	//
 	// swis modules
 	//
-
-	// alvax CRUD
-	alvaxRouter := router.Group("/alvax")
-	alvax.Routes(alvaxRouter)
 
 	// backups CRUD
 	backupsRouter := router.Group("/backups")
