@@ -679,7 +679,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.20
+  version: 5.2.21
 paths:
   /alvax/commands:
     get:
@@ -707,7 +707,7 @@ paths:
       - alvax
   /backups:
     get:
-      description: get backups actual status
+      description: get backuped services
       produces:
       - application/json
       responses:
@@ -715,7 +715,26 @@ paths:
           description: ok
           schema:
             type: string
-      summary: Get all backups status
+      summary: Get all backuped services
+      tags:
+      - backups
+    post:
+      description: add new backuped service
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/backups.Backup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/backups.Backup'
+      summary: Adding new backuped serivce
       tags:
       - backups
   /backups/{service}:
@@ -729,6 +748,24 @@ paths:
           schema:
             type: string
       summary: Delete backup service by its Name
+      tags:
+      - backups
+    get:
+      description: get backup status by project/service
+      parameters:
+      - description: backup service name
+        in: path
+        name: host
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get backup status by project/service
       tags:
       - backups
     put:
@@ -778,25 +815,6 @@ paths:
       - application/json
       responses: {}
       summary: Upload backups dump backup -- restores all backup services
-      tags:
-      - backups
-  /backups/status/{service}:
-    get:
-      description: get backup status by project/service
-      parameters:
-      - description: dish instance name
-        in: path
-        name: host
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      summary: Get backup status by project/service
       tags:
       - backups
   /business:

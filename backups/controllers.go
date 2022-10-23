@@ -2,58 +2,69 @@ package backups
 
 import (
 	"net/http"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 )
 
-var backups Backups = Backups{}
+var b sync.Map
 
-func findBackupByServiceName(c *gin.Context) (index *int, backup *Backup) {
-	for i, b := range backups.Backups {
-		if b.ServiceName == c.Param("service") {
-			return &i, &b
-		}
-	}
-
-	c.IndentedJSON(http.StatusNotFound, gin.H{
-		"code":    http.StatusNotFound,
-		"message": "backuped service not found",
-	})
-	return nil, nil
-}
-
-// @Summary Get all backups status
-// @Description get backups actual status
+// @Summary Get all backuped services
+// @Description get backuped services
 // @Tags backups
 // @Produce json
 // @Success 200 {object} string "ok"
 // @Router /backups [get]
 func GetBackupsStatus(c *gin.Context) {
+	var services = make(map[string]Backup)
+
+	b.Range(func(rawKey, rawVal interface{}) bool {
+		k, ok := rawKey.(string)
+		v, ok := rawVal.(Backup)
+
+		if !ok {
+			return false
+		}
+
+		services[k] = v
+		return true
+	})
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "ok, dumping all backuped services",
-		"backups": backups.Backups,
+		"message": "ok, dumping all sockets",
+		"backups": services,
 	})
+	return
 }
 
 // @Summary Get backup status by project/service
 // @Description get backup status by project/service
 // @Tags backups
 // @Produce  json
-// @Param   host     path    string     true        "dish instance name"
+// @Param   host     path    string     true        "backup service name"
 // @Success 200 {string} string	"ok"
-// @Router /backups/status/{service} [get]
+// @Router /backups/{service} [get]
 func GetBackupStatusByServiceName(c *gin.Context) {
-	_, backup := findBackupByServiceName(c.Copy())
-	if backup == nil {
+	var name string = c.Param("service")
+	var service Backup
+
+	rawService, ok := b.Load(name)
+	service, ok = rawService.(Backup)
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "service not found",
+		})
 		return
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "ok, returning found backup status",
-		"backup":  *backup,
+		"message": "dumping requested backuped service's status",
+		"backup":  service,
 	})
+	return
 }
 
 // @Summary Adding new backuped serivce
@@ -62,11 +73,11 @@ func GetBackupStatusByServiceName(c *gin.Context) {
 // @Produce json
 // @Param request body backups.Backup true "query params"
 // @Success 200 {object} backups.Backup
+// @Router /backups [post]
 func PostBackupService(c *gin.Context) {
-	var newBackup Backup
+	var newService = &Backup{}
 
-	// bind JSON to newSocket
-	if err := c.BindJSON(&newBackup); err != nil {
+	if err := c.BindJSON(newService); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
@@ -74,15 +85,23 @@ func PostBackupService(c *gin.Context) {
 		return
 	}
 
-	// add new backup
-	backups.Backups = append(backups.Backups, newBackup)
+	if _, found := b.Load(newService.ServiceName); found {
+		c.IndentedJSON(http.StatusConflict, gin.H{
+			"code":    http.StatusConflict,
+			"message": "service already exists",
+			"name":    newService.ServiceName,
+		})
+		return
+	}
 
-	// HTTP 201 Created
+	b.Store(newService.ServiceName, newService)
+
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
-		"message": "backup added",
-		"backup":  newBackup,
+		"message": "new project added",
+		"service": newService,
 	})
+	return
 }
 
 // @Summary Update backup status by service
@@ -93,36 +112,27 @@ func PostBackupService(c *gin.Context) {
 // @Success 200 {object} backups.Backup
 // @Router /backups/{service} [put]
 func UpdateBackupStatusByServiceName(c *gin.Context) {
-	var updatedBackup Backup
+	var updatedService Backup
+	var name string = c.Param("service")
 
-	i, b := findBackupByServiceName(c.Copy())
+	rawService, ok := b.Load(name)
+	updatedService, ok = rawService.(Backup)
 
-	if err := c.BindJSON(&updatedBackup); err != nil {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{
-			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "service not found",
+			"name":    name,
 		})
 		return
 	}
 
-	if !b.Active {
-		c.IndentedJSON(http.StatusForbidden, gin.H{
-			"code":    http.StatusForbidden,
-			"message": "this service is set to inactive",
-		})
-		return
-	}
+	b.Store(name, updatedService)
 
-	// update only some fields, not everything!
-	backups.Backups[*i].LastStatus = updatedBackup.LastStatus
-	backups.Backups[*i].Timestamp = updatedBackup.Timestamp
-	backups.Backups[*i].Size = updatedBackup.Size
-	backups.Backups[*i].FileName = updatedBackup.FileName
-
-	c.IndentedJSON(http.StatusAccepted, gin.H{
-		"code":    http.StatusAccepted,
-		"message": "backup status updated",
-		"backup":  backups.Backups[*i],
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "service updated",
+		"backup":  updatedService,
 	})
 	return
 }
@@ -136,19 +146,37 @@ func UpdateBackupStatusByServiceName(c *gin.Context) {
 // @Success 200 {object} backups.Backup
 // @Router /backups/{service}/active [put]
 func ActiveToggleBackupByServiceName(c *gin.Context) {
-	var updatedBackup Backup
+	var service Backup
+	var name string = c.Param("service")
 
-	i, _ := findBackupByServiceName(c.Copy())
-	updatedBackup = backups.Backups[*i]
+	rawService, ok := b.Load(name)
+	if !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "service not found",
+			"code":    http.StatusNotFound,
+			"name":    name,
+		})
+		return
+	}
 
-	// inverse the Muted field value
-	updatedBackup.Active = !updatedBackup.Active
+	service, typeOk := rawService.(Backup)
+	if !typeOk {
+		c.IndentedJSON(http.StatusConflict, gin.H{
+			"message": "stored value is not type Backup",
+			"code":    http.StatusConflict,
+		})
+		return
+	}
 
-	backups.Backups[*i] = updatedBackup
+	// inverse the Active field value
+	service.Active = !service.Active
+
+	b.Store(name, service)
+
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "backup service activated toggle pressed!",
-		"backup":  updatedBackup,
+		"message": "backuped service active toggle pressed!",
+		"backup":  service,
 	})
 	return
 }
@@ -160,26 +188,25 @@ func ActiveToggleBackupByServiceName(c *gin.Context) {
 // @Success 200 {string} string "ok"
 // @Router /backups/{service} [delete]
 func DeleteBackupByServiceName(c *gin.Context) {
-	i, b := findBackupByServiceName(c.Copy())
+	var name string = c.Param("service")
 
-	// delete an element from the array
-	// https://www.educative.io/answers/how-to-delete-an-element-from-an-array-in-golang
-	newLength := 0
-	for index := range backups.Backups {
-		if *i != index {
-			backups.Backups[newLength] = backups.Backups[index]
-			newLength++
-		}
+	if _, ok := b.Load(name); !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "service not found",
+			"name":    name,
+		})
+		return
 	}
 
-	// reslice the array to remove extra index
-	backups.Backups = backups.Backups[:newLength]
+	b.Delete(name)
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "backup deleted by ServiceName",
-		"backup":  *b,
+		"message": "service deleted by Name",
+		"name":    name,
 	})
+	return
 }
 
 // @Summary Upload backups dump backup -- restores all backup services
@@ -189,22 +216,24 @@ func DeleteBackupByServiceName(c *gin.Context) {
 // @Produce json
 // @Router /backups/restore [post]
 func PostDumpRestore(c *gin.Context) {
-	var importBackups Backups
+	var importServices = &Backups{}
+	var service Backup
 
-	// bind received JSON to importBackups
-	if err := c.BindJSON(&importBackups); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+	if err := c.BindJSON(importServices); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
 	}
 
-	backups = importBackups
+	for _, service = range importServices.Backups {
+		b.Store(service.ServiceName, service)
+	}
 
-	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
-		"message": "backups imported successfully",
+		"message": "backuped services imported, omitting output",
 	})
+	return
 }

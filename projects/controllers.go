@@ -47,7 +47,7 @@ func GetProjects(c *gin.Context) {
 // @Router /projects/{id} [get]
 // GetProjectByID returns project's properties, given sent ID exists in database
 func GetProjectByID(c *gin.Context) {
-	var id string = c.Param("")
+	var id string = c.Param("id")
 	var project Project
 
 	rawProject, ok := p.Load(id)

@@ -63,19 +63,48 @@ const docTemplate = `{
         },
         "/backups": {
             "get": {
-                "description": "get backups actual status",
+                "description": "get backuped services",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Get all backups status",
+                "summary": "Get all backuped services",
                 "responses": {
                     "200": {
                         "description": "ok",
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new backuped service",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Adding new backuped serivce",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/backups.Backup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/backups.Backup"
                         }
                     }
                 }
@@ -97,7 +126,7 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/backups/status/{service}": {
+        "/backups/{service}": {
             "get": {
                 "description": "get backup status by project/service",
                 "produces": [
@@ -110,7 +139,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "dish instance name",
+                        "description": "backup service name",
                         "name": "host",
                         "in": "path",
                         "required": true
@@ -124,9 +153,7 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/backups/{service}": {
+            },
             "put": {
                 "description": "update backup status by service",
                 "produces": [
@@ -2541,7 +2568,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.20",
+	Version:          "5.2.21",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},
