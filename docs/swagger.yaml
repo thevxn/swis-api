@@ -679,7 +679,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.21
+  version: 5.2.22
 paths:
   /alvax/commands:
     get:
@@ -1676,6 +1676,24 @@ paths:
       tags:
       - users
   /users/{name}:
+    delete:
+      description: delete user by Name
+      parameters:
+      - description: user Name
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Delete user by Name
+      tags:
+      - users
     get:
       description: get user by their :name param
       produces:
@@ -1686,6 +1704,25 @@ paths:
           schema:
             $ref: '#/definitions/users.User'
       summary: Get user by Name
+      tags:
+      - users
+    put:
+      description: update user by Name
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/users.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Update user by Name
       tags:
       - users
   /users/{name}/active:

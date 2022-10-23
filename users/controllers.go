@@ -283,3 +283,60 @@ func GetUsersSSHKeysRaw(c *gin.Context) {
 
 	return
 }
+
+// @Summary Delete user by Name
+// @Description delete user by Name
+// @Tags users
+// @Produce json
+// @Param  id  path  string  true  "user Name"
+// @Success 200 {object} users.User.Name
+// @Router /users/{name} [delete]
+func DeleteUserByName(c *gin.Context) {
+	var name string = c.Param("name")
+
+	u.Delete(name)
+
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "user deleted by Name",
+		"name":    name,
+	})
+	return
+}
+
+// @Summary Update user by Name
+// @Description update user by Name
+// @Tags users
+// @Produce json
+// @Param request body users.User.Name true "query params"
+// @Success 200 {object} users.User
+// @Router /users/{name} [put]
+func UpdateUserByName(c *gin.Context) {
+	var user = &User{}
+	var name string = c.Param("name")
+
+	if _, ok := u.Load(name); !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "project not found",
+			"code":    http.StatusNotFound,
+		})
+		return
+	}
+
+	if err := c.BindJSON(user); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	u.Store(name, user)
+
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "user updated",
+		"user":    user,
+	})
+	return
+}
