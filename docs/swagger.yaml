@@ -1104,6 +1104,63 @@ paths:
       summary: Get all finance accounts
       tags:
       - finance
+    post:
+      description: add new finance account
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/finance.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Add new finance account
+      tags:
+      - finance
+  /finance/accounts/{id}:
+    delete:
+      description: delete finance account by ID
+      parameters:
+      - description: account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Delete finance account by ID
+      tags:
+      - finance
+    put:
+      description: update finance account by ID
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/finance.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Update finance account by ID
+      tags:
+      - finance
   /finance/accounts/{owner}:
     get:
       description: get finance account by :owner param

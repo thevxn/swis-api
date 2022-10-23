@@ -659,6 +659,93 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "add new finance account",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Add new finance account",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/finance.Account"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Account"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/accounts/{id}": {
+            "put": {
+                "description": "update finance account by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Update finance account by ID",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/finance.Account"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Account"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete finance account by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Delete finance account by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "account ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Account"
+                        }
+                    }
+                }
             }
         },
         "/finance/accounts/{owner}": {

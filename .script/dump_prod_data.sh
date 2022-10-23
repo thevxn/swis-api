@@ -51,7 +51,6 @@ function dump_generic {
 #
 
 declare -a paths=(
-	"/alvax/commands"
 	"/backups/"
 	"/business/"
 	"/depots/"
@@ -68,7 +67,6 @@ declare -a paths=(
 	"/users/"
 )
 declare -a files=(
-	"/alvax_command_list.json"
 	"/backups.json"
 	"/business_array.json"
 	"/depots.json"
