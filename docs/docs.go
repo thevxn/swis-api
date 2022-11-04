@@ -2464,7 +2464,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "roles": {
-                    "description": "Roles []Role ` + "`" + `json:\"roles\"` + "`" + `",
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "#/definitions/roles.Role"
@@ -2711,7 +2710,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.2.22",
+	Version:          "5.2.23",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},

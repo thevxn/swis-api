@@ -494,7 +494,6 @@ definitions:
       roles:
         additionalProperties:
           $ref: '#/definitions/roles.Role'
-        description: Roles []Role `json:"roles"`
         type: object
     type: object
   six.Calendar:
@@ -679,7 +678,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.22
+  version: 5.2.23
 paths:
   /alvax/commands:
     get:
