@@ -3,6 +3,7 @@ package dish
 import (
 	"net/http"
 	"sync"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	//"github.com/savla-dev/savla-dish/socket"
@@ -205,6 +206,9 @@ func MuteToggleSocketByID(c *gin.Context) {
 
 	// inverse the Muted field value
 	updatedSocket.Muted = !updatedSocket.Muted
+	if updatedSocket.Muted {
+		updatedSocket.MutedFrom = time.Now().Unix()
+	}
 
 	s.Store(updatedSocket.ID, updatedSocket)
 

@@ -35,6 +35,9 @@ type Socket struct {
 	// Muted bool indicates that the socket is not propagated to any dish
 	Muted bool `json:"muted" default:false`
 
+	// MutedFrom UNIX timestamp.
+	MutedFrom int64 `json:"muted_from"`
+
 	// Status object for dish results to be returned/updated (by dish itself)
 	// Note: discontinued as dish now reports to pushgateway of prometheus'
 	//Status []bool `json:"status"`
