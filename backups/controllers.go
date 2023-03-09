@@ -140,6 +140,7 @@ func UpdateBackupStatusByServiceName(c *gin.Context) {
 	updatedService.Timestamp = postedService.Timestamp
 	updatedService.LastStatus = postedService.LastStatus
 	updatedService.FileName = postedService.FileName
+	updatedService.Size = postedService.Size
 
 	b.Store(name, updatedService)
 

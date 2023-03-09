@@ -1,7 +1,6 @@
 package roles
 
 type Roles struct {
-	//Roles []Role `json:"roles"`
 	Roles map[string]Role `json:"roles"`
 }
 

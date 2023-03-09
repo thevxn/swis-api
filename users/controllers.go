@@ -122,6 +122,7 @@ func PostNewUser(c *gin.Context) {
 		return
 	}
 
+	// implement LoadOrStore() method
 	if _, found := u.Load(newUser.Name); found {
 		c.IndentedJSON(http.StatusConflict, gin.H{
 			"message": "user already exists",
