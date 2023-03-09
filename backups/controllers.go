@@ -113,6 +113,7 @@ func PostBackupService(c *gin.Context) {
 // @Router /backups/{service} [put]
 func UpdateBackupStatusByServiceName(c *gin.Context) {
 	var updatedService Backup
+	var postedService = &Backup{}
 	var name string = c.Param("service")
 
 	rawService, ok := b.Load(name)
@@ -126,6 +127,19 @@ func UpdateBackupStatusByServiceName(c *gin.Context) {
 		})
 		return
 	}
+
+	if err := c.BindJSON(postedService); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	// manually update important report fields
+	updatedService.Timestamp = postedService.Timestamp
+	updatedService.LastStatus = postedService.LastStatus
+	updatedService.FileName = postedService.FileName
 
 	b.Store(name, updatedService)
 

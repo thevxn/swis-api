@@ -167,6 +167,9 @@ definitions:
         description: Muted bool indicates that the socket is not propagated to any
           dish
         type: boolean
+      muted_from:
+        description: MutedFrom UNIX timestamp.
+        type: integer
       path_http:
         description: PathHTTP is any URL the site is about to be tested on, e.g. /dish/sockets
         type: string
@@ -678,7 +681,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.2.23
+  version: 5.2.25
 paths:
   /alvax/commands:
     get:
@@ -1651,11 +1654,11 @@ paths:
       summary: Add new item to user's calendar
       tags:
       - six
-  /six/calendar/{owner_name}/item/{item_name}:
+  /six/calendar/{owner_name}/item/{item_id}:
     delete:
       description: delete calendar item by its name
       parameters:
-      - description: item_name
+      - description: item_id
         in: path
         name: id
         required: true
@@ -1673,7 +1676,7 @@ paths:
     put:
       description: update calendar item by its name
       parameters:
-      - description: item_name
+      - description: item_ID
         in: path
         name: id
         required: true
