@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.2.26
+// @version 5.2.27
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -87,8 +87,12 @@ func main() {
 			"message":     "welcome to swis, " + auth.Params.User.Name + "!",
 			"code":        http.StatusOK,
 			"environment": os.Getenv("APP_ENVIRONMENT"),
-			"version":     os.Getenv("APP_VERSION"),
-			"timestamp":   time.Now().Unix(),
+			"version": gin.H{
+				"alpine": os.Getenv("ALPINE_VERSION"),
+				"app":    os.Getenv("APP_VERSION"),
+				"golang": os.Getenv("GOLANG_VERSION"),
+			},
+			"timestamp": time.Now().Unix(),
 		})
 	})
 
