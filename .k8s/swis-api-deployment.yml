@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  # basis for ReplicaSet
+  name: swis-api-deployment
+  labels:
+    app: swapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swapi
+  template:
+    metadata:
+      labels:
+        app: swapi
+    spec:
+      containers:
+      - name: swis-api
+        image: swis-api:5.2.27-go1.20.2
+        ports:
+        - containerPort: 8049
+
