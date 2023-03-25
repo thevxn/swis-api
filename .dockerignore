@@ -3,8 +3,6 @@
 */.github/
 */docker-compose.yml
 Dockerfile
-go.mod
-go.sum
 */Makefile
 */swis-api
 .env
