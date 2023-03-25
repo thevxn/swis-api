@@ -5,7 +5,7 @@ metadata:
   labels:
     app: swapi
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: swapi
@@ -35,7 +35,7 @@ metadata:
     app: swapi
   name: swapi-service
 spec:
-  type: NodePort
+  #type: NodePort
   ports:
   - port: 8049
     protocol: TCP
@@ -44,7 +44,8 @@ spec:
   selector:
     app: swapi
   #type: ClusterIP
-
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
 
 ---
 

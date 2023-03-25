@@ -87,6 +87,7 @@ func main() {
 			"message":     "welcome to swis, " + auth.Params.User.Name + "!",
 			"code":        http.StatusOK,
 			"environment": os.Getenv("APP_ENVIRONMENT"),
+			"instance":    os.Getenv("HOSTNAME"),
 			"version": gin.H{
 				"alpine": os.Getenv("ALPINE_VERSION"),
 				"app":    os.Getenv("APP_VERSION"),
