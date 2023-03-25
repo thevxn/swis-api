@@ -17,10 +17,9 @@ ENV APP_NAME ${APP_NAME}
 RUN apk --no-cache add git
 
 WORKDIR /go/src/${APP_NAME}
-COPY . .
-
-RUN go mod init ${APP_NAME}
+COPY go.mod .
 RUN go mod tidy
+COPY . .
 
 RUN go install ${APP_NAME}
 
