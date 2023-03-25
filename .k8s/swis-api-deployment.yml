@@ -31,17 +31,19 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    labels:
-        app: swapi
-    name: swapi-service
+  labels:
+    app: swapi
+  name: swapi-service
 spec:
-    ports:
-    - port: 8049
-      protocol: TCP
-      targetPort: 8049
-    selector:
-        app: swapi
-    type: ClusterIP
+  type: NodePort
+  ports:
+  - port: 8049
+    protocol: TCP
+    targetPort: 8049
+    nodePort: 31049
+  selector:
+    app: swapi
+  #type: ClusterIP
 
 
 ---
