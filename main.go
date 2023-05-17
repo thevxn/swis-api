@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.4.5
+// @version 5.4.6
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -32,19 +32,19 @@ import (
 	"time"
 
 	// swapi modules -- very local dependencies
-	"go.savla.dev/swis/auth"
-	"go.savla.dev/swis/backups"
-	"go.savla.dev/swis/business"
-	"go.savla.dev/swis/config"
-	"go.savla.dev/swis/depots"
-	"go.savla.dev/swis/dish"
-	"go.savla.dev/swis/finance"
-	"go.savla.dev/swis/infra"
-	"go.savla.dev/swis/links"
-	"go.savla.dev/swis/news"
-	"go.savla.dev/swis/projects"
-	"go.savla.dev/swis/roles"
-	"go.savla.dev/swis/users"
+	"go.savla.dev/swis/v5/auth"
+	"go.savla.dev/swis/v5/backups"
+	"go.savla.dev/swis/v5/business"
+	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/depots"
+	"go.savla.dev/swis/v5/dish"
+	"go.savla.dev/swis/v5/finance"
+	"go.savla.dev/swis/v5/infra"
+	"go.savla.dev/swis/v5/links"
+	"go.savla.dev/swis/v5/news"
+	"go.savla.dev/swis/v5/projects"
+	"go.savla.dev/swis/v5/roles"
+	"go.savla.dev/swis/v5/users"
 
 	// remote dependencies
 	gin "github.com/gin-gonic/gin"
