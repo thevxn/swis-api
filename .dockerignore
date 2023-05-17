@@ -1,0 +1,9 @@
+*/.data/
+*/.git/
+*/.github/
+*/docker-compose.yml
+Dockerfile
+*/Makefile
+*/swis-api
+.env
+.env.example

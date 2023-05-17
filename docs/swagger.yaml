@@ -1,0 +1,1862 @@
+basePath: /
+definitions:
+  alvax.AlvaxCommands:
+    properties:
+      command_list:
+        description: User's defined command list.
+        items:
+          $ref: '#/definitions/alvax.Command'
+        type: array
+      user:
+        description: Target user's name (e.g. alvax-bot-ravn).
+        type: string
+    type: object
+  alvax.Command:
+    properties:
+      alias_names:
+        description: Command aliases, e.g. 'fname', 'lname' etc.
+        items:
+          type: string
+        type: array
+      argument_list:
+        description: List of arguments for such command to be read.
+        items:
+          type: string
+        type: array
+      command_base64:
+        description: Command logic, structure as base64 encoded string.
+        type: string
+      name:
+        description: Command name as in '/name' in Telegram command syntax.
+        type: string
+      parent_class:
+        description: Parent class for TS implementation to be loaded.
+        type: string
+      required_argument:
+        description: Is argument(s) required boolean.
+        type: boolean
+    type: object
+  backups.Backup:
+    properties:
+      active:
+        description: Boolean indicating if the service is to be backuped.
+        type: boolean
+      backup_size:
+        description: Size of the gzip/tar archive.
+        type: string
+      description:
+        description: More verbose description of such service backup.
+        type: string
+      executor_url:
+        description: Dumping script, git URL.
+        type: string
+      file_destination:
+        description: Path to the file on destination machine.
+        type: string
+      file_name:
+        description: Name of the compressed backup file.
+        type: string
+      last_status:
+        default: unknown
+        description: Last status string of such backup (e.g. success, failure).
+        type: string
+      service_name:
+        description: Backuped service name -- unique identifier.
+        type: string
+      timestamp:
+        description: UNIX timestamp of the last provided backup.
+        type: integer
+    required:
+    - service_name
+    type: object
+  business.Business:
+    properties:
+      contact:
+        description: Array of contacts of different type.
+        items:
+          $ref: '#/definitions/business.Contact'
+        type: array
+      ico:
+        description: Czech Company ICO/ID number.
+        type: integer
+      id:
+        description: Busines unique identifier.
+        type: string
+      name_label:
+        description: Company's business name.
+        type: string
+      role:
+        description: Business role to such organization (e.g. partner, owner)
+        type: string
+      username:
+        description: User's name linked to such business.
+        type: string
+      vat_id:
+        description: Czech company DICO/VAT ID number/string.
+        type: string
+    required:
+    - id
+    type: object
+  business.Contact:
+    properties:
+      content:
+        description: Contact field contents.
+        type: string
+      type:
+        description: Type of contact field (e.g. e-mail address, street address, telephone
+          number etc).
+        type: string
+    type: object
+  business.Entities:
+    properties:
+      business:
+        additionalProperties:
+          $ref: '#/definitions/business.Business'
+        description: Array of business records.
+        type: object
+    type: object
+  depots.Depot:
+    properties:
+      depot_items:
+        description: Generic array of depot Items.
+        items:
+          $ref: '#/definitions/depots.Item'
+        type: array
+      owner_name:
+        description: Depot owner's name, unique ID.
+        type: string
+    type: object
+  depots.Depots:
+    properties:
+      depots:
+        additionalProperties:
+          $ref: '#/definitions/depots.Depot'
+        type: object
+    type: object
+  depots.Item:
+    properties:
+      depot:
+        description: Location name of such Item.
+        type: string
+      desc:
+        description: Item descripton, name, ammount, type etc.
+        type: string
+      id:
+        description: Numeric unique ID of such Item.
+        type: integer
+      misc:
+        description: More information, e.g. the more precise location specification.
+        type: string
+    type: object
+  dish.Socket:
+    properties:
+      dish_target:
+        description: |-
+          DishTarget is a string array, usually containing dish's host short name (e.g. frank)
+          to be refered e.g. /dish/sockets/frank
+        items:
+          type: string
+        type: array
+      expected_http_code_array:
+        description: If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response
+          codes are okay and not to alert upon
+        items:
+          type: integer
+        type: array
+      host_name:
+        description: Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)
+        type: string
+      muted:
+        description: Muted bool indicates that the socket is not propagated to any
+          dish
+        type: boolean
+      muted_from:
+        description: MutedFrom UNIX timestamp.
+        type: integer
+      path_http:
+        description: PathHTTP is any URL the site is about to be tested on, e.g. /dish/sockets
+        type: string
+      port_tcp:
+        description: |-
+          Socket TCP port part
+          Even default port 80 should be added here
+        type: integer
+      socket_description:
+        description: More verbose name/description of the socket
+        type: string
+      socket_id:
+        description: Socket ID, snake_cased for socket editing and deleting
+        type: string
+      socket_name:
+        description: GEneric name of the socket, to be used in dish results as failed
+          one endpoint for example
+        type: string
+    required:
+    - host_name
+    - port_tcp
+    - socket_id
+    type: object
+  finance.Account:
+    properties:
+      account_currency:
+        description: Account currency name (e.g. CZK, GBP, EUR, USD)
+        type: string
+      account_description:
+        description: Account more verbose name.
+        type: string
+      account_iban:
+        description: Account IBAN code for international payments.
+        type: string
+      account_id:
+        description: Account unique ID, snake_cased identifier.
+        type: string
+      account_items:
+        description: Account items like (incoming/outcoming) payments.
+        items:
+          $ref: '#/definitions/finance.Item'
+        type: array
+      account_number:
+        description: Account number.
+        type: string
+      account_owner:
+        description: Owner's name/username to link account to.
+        type: string
+      account_swift_bic:
+        description: Account SWIFT/BIC code for international payments.
+        type: string
+      bank_code:
+        description: |-
+          Universal in-state bank code (CZ mainly).
+          Bank codes such as "0100" would be invalid as type int!
+        type: string
+    type: object
+  finance.Item:
+    properties:
+      amount:
+        description: Payment amount in defined currency (often the account's currency).
+        type: number
+      billing_date:
+        description: Billing date of the payment.
+        type: string
+      currency:
+        description: Payment currency name (e.g. CZK, GBP, EUR, USD)
+        type: string
+      description:
+        description: Payment/item description.
+        type: string
+      id:
+        description: Item unique ID (e.g. datetime timestamp plus currency etc).
+        type: integer
+      misc:
+        description: Mescellaneous information about the payment (e.g. foreign currency
+          and amount).
+        type: string
+    type: object
+  infra.Domain:
+    properties:
+      cf_zone_id:
+        description: Cloudflare Zone ID
+        type: string
+      domain_fqdn:
+        description: Fully qualified domain name.
+        type: string
+      domain_id:
+        description: Unique domain identifier.
+        type: string
+      domain_owner:
+        description: Domain's owner (user)name.
+        type: string
+      expiration_date:
+        description: Domain's expiration date
+        type: string
+      private_details:
+        description: Private details (e.g. addresses, phone number etc in WHOIS)
+        type: boolean
+      registrar_name:
+        description: Name of the current registrar
+        type: string
+    type: object
+  infra.Host:
+    properties:
+      children:
+        description: Children of such machine -- should use machines' hashes for proper
+          linking.
+        items:
+          type: string
+        type: array
+      description:
+        description: Brief node's description -- shown in node's MOTD on remote login.
+        type: string
+      domain:
+        description: Host's default domain name (e.g. savla.su as internal domain
+          name).
+        type: string
+      hostname_fqdn:
+        description: Node hostname as FQDN-formatted.
+        type: string
+      hostname_short:
+        description: Node hostname without its domain.
+        type: string
+      id:
+        description: Unique hash/ID to link to such host record.
+        type: string
+      ip_address:
+        description: Important network-related IP addresses to be assigned to such
+          host (e.g. public interface address, wireguard interface address etc).
+        items:
+          type: string
+        type: array
+      roles:
+        description: Ansible roles to be applied to such host.
+        items:
+          type: string
+        type: array
+    required:
+    - hostname_fqdn
+    - hostname_short
+    - id
+    type: object
+  infra.Hosts:
+    properties:
+      hosts:
+        items:
+          $ref: '#/definitions/infra.Host'
+        type: array
+    type: object
+  infra.Infrastructure:
+    properties:
+      domains:
+        description: Domains linked to such infrastructure.
+        items:
+          $ref: '#/definitions/infra.Domain'
+        type: array
+      hosts:
+        description: Hosts/nodes linked to such infrastructure.
+        items:
+          $ref: '#/definitions/infra.Host'
+        type: array
+      networks:
+        description: Networks linked to such infrastructure.
+        items:
+          $ref: '#/definitions/infra.Network'
+        type: array
+    type: object
+  infra.Network:
+    properties:
+      hash:
+        description: Unique network's identifier
+        type: string
+      interface:
+        description: Interface(s) of such network.
+        type: string
+      network_address:
+        description: Netowrk IP address.
+        type: string
+      network_cidr_block:
+        description: CIDR block of netmask.
+        type: string
+      network_name:
+        description: Network name, verbose ID.
+        type: string
+    type: object
+  links.Link:
+    properties:
+      active:
+        description: Link's activated status.
+        type: boolean
+      description:
+        description: Link's more verbose name/description.
+        type: string
+      name:
+        description: Link's name/placeholder, used as an unique key.
+        type: string
+      url:
+        description: Link's URL to link to.
+        type: string
+    required:
+    - name
+    - url
+    type: object
+  news.Item:
+    properties:
+      link:
+        description: Link to such item -- to the actual article usually.
+        type: string
+      parse_date_rfc1123z:
+        description: Special date of issue format to reparse/order all news items
+          altogether.
+        type: string
+      perex:
+        description: Item's short description (perex).
+        type: string
+      pub_date:
+        description: Date of issue, formatted by issuer.
+        type: string
+      server:
+        description: Issuer server name (hostname with subdomain).
+        type: string
+      title:
+        description: Item's title (headline).
+        type: string
+    type: object
+  news.NewsSources:
+    properties:
+      user_sources:
+        items:
+          $ref: '#/definitions/news.UserSource'
+        type: array
+    type: object
+  news.Source:
+    properties:
+      source_id:
+        description: Source unique identificator.
+        type: string
+      source_name:
+        description: Source's more natural name.
+        type: string
+      source_url:
+        description: RSS URL to the source.
+        type: string
+    type: object
+  news.UserSource:
+    properties:
+      news_sources:
+        description: Actual user's news sources.
+        items:
+          $ref: '#/definitions/news.Source'
+        type: array
+      user_name:
+        description: News sources linked username.
+        type: string
+    type: object
+  projects.Project:
+    properties:
+      backuped:
+        description: Projects backuped boolean.
+        type: boolean
+      kanban_link:
+        description: URL to kanboard/kanban project's page.
+        type: string
+      project_deploy_target:
+        description: Target internal node of deployment.
+        type: string
+      project_desc:
+        description: Brief project description.
+        type: string
+      project_docs_link:
+        description: URL to documentation page(s).
+        type: string
+      project_id:
+        description: Project's unique identificator.
+        type: string
+      project_manager:
+        description: Project manager's name/username.
+        type: string
+      project_name:
+        description: Project name.
+        type: string
+      project_published:
+        description: Published boolean.
+        type: boolean
+      project_repo:
+        description: Git repository link (not URL, without HTTP scheme).
+        type: string
+      project_url:
+        description: URL to base page of the project (project's URL).
+        type: string
+      redmine_link:
+        description: URL to redmine project overview.
+        type: string
+    required:
+    - project_id
+    type: object
+  projects.Projects:
+    properties:
+      projects:
+        additionalProperties:
+          $ref: '#/definitions/projects.Project'
+        description: Array ob Project objects.
+        type: object
+    type: object
+  roles.Role:
+    properties:
+      active:
+        description: Role status, by default it is inactive.
+        type: boolean
+      administrator:
+        description: Basic Access-Control List field.
+        type: boolean
+      description:
+        description: Role description to make more sense when listing those.
+        type: string
+      name:
+        description: Role name is its unique description, acts like an ID too.
+        type: string
+    required:
+    - name
+    type: object
+  roles.Roles:
+    properties:
+      roles:
+        additionalProperties:
+          $ref: '#/definitions/roles.Role'
+        type: object
+    type: object
+  six.Calendar:
+    properties:
+      items:
+        description: Calendar items.
+        items:
+          $ref: '#/definitions/six.Item'
+        type: array
+      owner_name:
+        description: Uniqueu owner name, User.Name.
+        type: string
+    required:
+    - owner_name
+    type: object
+  six.Item:
+    properties:
+      all_day:
+        description: Boolean to set and
+        type: boolean
+      color:
+        description: Item colour, RGB hex hash.
+        type: string
+      constraint:
+        default: businessHours
+        description: Item constrains, e.g. business hours.
+        type: string
+      description:
+        description: Item more verbouse description (pop-up windows text).
+        type: string
+      end:
+        description: End datetime string with timezone.
+        type: string
+      id:
+        description: Unique item ID.
+        type: string
+      name:
+        description: To-be-deleted soon -- title vs. ID.
+        type: string
+      start:
+        description: Start datetime string with timezone.
+        type: string
+      title:
+        description: Item title to be shown.
+        type: string
+      url:
+        description: Item URL link.
+        type: string
+    required:
+    - name
+    type: object
+  six.SixStruct:
+    properties:
+      calendars:
+        items:
+          $ref: '#/definitions/six.Calendar'
+        type: array
+      todo_lists:
+        description: Calendars map[string][]Item
+        items:
+          $ref: '#/definitions/six.TodoList'
+        type: array
+    type: object
+  six.TodoList:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/six.Item'
+        type: array
+      owner_name:
+        type: string
+    required:
+    - owner_name
+    type: object
+  users.User:
+    properties:
+      ACL:
+        description: Access Control List. List of swapi modules to be accessed.
+        items:
+          type: string
+        type: array
+      active:
+        description: |-
+          Presence/Absence boolean. If false, one is not allowed to log-in (token is rejected),
+          to interract with savla-dev infra in general (by default).
+        type: boolean
+      country:
+        description: Country of origin -- to help maintain global contacts.
+        type: string
+      discord_username:
+        description: Discord account/profile name.
+        type: string
+      email_alias:
+        description: Email alias in cloudflare email routing
+        type: string
+      email_main:
+        description: Email address main, personal
+        type: string
+      full_name:
+        description: Full Name of such user.
+        type: string
+      gdpr_consent:
+        description: |-
+          Important GDPR consent boolean -- if false, user's details should be omitted!
+          SEE more -- https://gdpr.eu/checklist/
+        type: boolean
+      github_username:
+        description: GitHub account/profile name (used for SSH public keys importing).
+        type: string
+      gpg_keys:
+        description: User's GPG public keys array.
+        items:
+          type: string
+        type: array
+      name:
+        description: ID not used anymore as indexing is used differently now (searching
+          by Name, index respects array implicit property).
+        type: string
+      roles:
+        description: |-
+          User's given roles -- a role labels array.
+          Roles []roles.Role `json:"roles"`
+        items:
+          type: string
+        type: array
+      spotify_link:
+        description: Spotify link to one's profile.
+        type: string
+      ssh_keys:
+        description: User's SSH public keys array.
+        items:
+          type: string
+        type: array
+      token_hmac:
+        description: Unique token used for auth purposes, SHA?-HMAC.
+        type: string
+      wireguard_vpn:
+        description: All Wireguard config objects -- an array.
+        items:
+          $ref: '#/definitions/users.Wireguard'
+        type: array
+    required:
+    - name
+    type: object
+  users.Users:
+    properties:
+      users:
+        additionalProperties:
+          $ref: '#/definitions/users.User'
+        description: A map of User objects
+        type: object
+    type: object
+  users.Wireguard:
+    properties:
+      allowed_ips:
+        description: Allowed IP address(es) list on the side of server (vpn_gateway_server).
+        items:
+          type: string
+        type: array
+      device_name:
+        description: Unique device name (for such user).
+        type: string
+      ip_address:
+        description: User's private IP address.
+        type: string
+      permission:
+        description: Is the user given permission to dial a connection?
+        type: boolean
+      private_key:
+        description: |-
+          Wireguard private key.
+          TODO: should be encrypted?
+        type: string
+      public_key:
+        description: Wireguard public key.
+        type: string
+    type: object
+host: swapi.savla.su:8049
+info:
+  contact:
+    email: krusty@savla.dev
+    name: API Support
+    url: http://savla.dev/swapi
+  description: sakalWeb Information System v5 RESTful API documentation
+  license:
+    name: MIT
+    url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
+  termsOfService: http://swagger.io/terms/
+  title: swis-api v5
+  version: 5.3.8
+paths:
+  /alvax/commands:
+    get:
+      description: get command array for alvax
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/alvax.AlvaxCommands'
+      summary: Get all alvax's commands
+      tags:
+      - alvax
+  /alvax/commands/restore:
+    post:
+      consumes:
+      - application/json
+      description: update alvax JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload alvax dump backup -- restores all loaded commands
+      tags:
+      - alvax
+  /backups:
+    get:
+      description: get backuped services
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get all backuped services
+      tags:
+      - backups
+    post:
+      description: add new backuped service
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/backups.Backup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/backups.Backup'
+      summary: Adding new backuped serivce
+      tags:
+      - backups
+  /backups/{service}:
+    delete:
+      description: delete backup service by its Name
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Delete backup service by its Name
+      tags:
+      - backups
+    get:
+      description: get backup status by project/service
+      parameters:
+      - description: backup service name
+        in: path
+        name: host
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get backup status by project/service
+      tags:
+      - backups
+    put:
+      description: update backup status by service
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/backups.Backup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/backups.Backup'
+      summary: Update backup status by service
+      tags:
+      - backups
+  /backups/{service}/active:
+    put:
+      description: active/inactive backup toggle by its ServiceName
+      parameters:
+      - description: service name
+        in: path
+        name: service_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/backups.Backup'
+      summary: Acitive/inactive backup toggle by its ServiceName
+      tags:
+      - backups
+  /backups/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload backups JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload backups dump backup -- restores all backup services
+      tags:
+      - backups
+  /business:
+    get:
+      description: get business entities list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Entities'
+      summary: Get all business entities
+      tags:
+      - business
+    post:
+      description: add new business entity
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/business.Business'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Add new business entity
+      tags:
+      - business
+  /business/{id}:
+    delete:
+      description: delete business by its ID
+      parameters:
+      - description: business ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Delete business by its ID
+      tags:
+      - business
+    get:
+      description: get business by ID param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Get business entity by its ID
+      tags:
+      - business
+    put:
+      description: update business entity by its ID
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/business.Business'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Update business entity by its ID
+      tags:
+      - business
+  /business/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload business JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload business dump backup -- restores all business entities
+      tags:
+      - business
+  /depots:
+    get:
+      description: get depot complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depots.Depots'
+      summary: Get all depots and their users/owners
+      tags:
+      - depots
+    post:
+      description: add new depot
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/depots.Depot'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depots.Depot'
+      summary: Add new depot
+      tags:
+      - depots
+  /depots/{owner}:
+    delete:
+      description: delete depot by its Owner
+      parameters:
+      - description: depot Owner
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depots.Depot'
+      summary: Delete depot by its owner
+      tags:
+      - depots
+    get:
+      description: get depot list by :owner param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depots.Depot'
+      summary: Get depot list by Owner
+      tags:
+      - depots
+  /depots/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload depot JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload depot dump backup -- restores all depots
+      tags:
+      - depots
+  /dish/restore:
+    post:
+      consumes:
+      - application/json
+      description: update dish JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload dish dump backup -- restores all loaded sockets
+      tags:
+      - dish
+  /dish/sockets:
+    get:
+      description: get socket list, socket array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get all sockets list
+      tags:
+      - dish
+  /dish/sockets/{host}:
+    get:
+      description: get socket list by Host
+      parameters:
+      - description: dish instance name
+        in: path
+        name: host
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get socket list by host
+      tags:
+      - dish
+  /dish/sockets/{id}:
+    delete:
+      description: delete socket by its ID
+      parameters:
+      - description: dish ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Delete socket by its ID
+      tags:
+      - dish
+    put:
+      description: update socket by its ID
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dish.Socket'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Update socket by its ID
+      tags:
+      - dish
+  /dish/sockets/{id}/mute:
+    put:
+      description: mute/unmute socket by its ID
+      parameters:
+      - description: dish ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Mute/unmute socket by its ID
+      tags:
+      - dish
+  /dish/test:
+    head:
+      responses:
+        "200":
+          description: OK
+      tags:
+      - dish
+  /finance:
+    get:
+      description: get finance complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Get all finance accounts
+      tags:
+      - finance
+    post:
+      description: add new finance account
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/finance.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Add new finance account
+      tags:
+      - finance
+  /finance/accounts/{id}:
+    delete:
+      description: delete finance account by ID
+      parameters:
+      - description: account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Delete finance account by ID
+      tags:
+      - finance
+    put:
+      description: update finance account by ID
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/finance.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Update finance account by ID
+      tags:
+      - finance
+  /finance/accounts/{owner}:
+    get:
+      description: get finance account by :owner param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Get finance account by its Owner
+      tags:
+      - finance
+  /finance/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload accounts JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload finance accounts dump backup -- restores all finance accounts
+      tags:
+      - finance
+  /infra:
+    get:
+      description: get all infrastructure details
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Infrastructure'
+      summary: Get whole infrastructure
+      tags:
+      - infra
+  /infra/domains:
+    get:
+      description: get domain list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Domain'
+      summary: Get all domains
+      tags:
+      - infra
+  /infra/hosts:
+    get:
+      description: get hosts list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Hosts'
+      summary: Get all hosts
+      tags:
+      - infra
+  /infra/hosts/{hostname}:
+    get:
+      description: get host by :hostname param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Host'
+      summary: Get host by Hostname
+      tags:
+      - infra
+  /infra/networks:
+    get:
+      description: get networks list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Infrastructure'
+      summary: Get all networks
+      tags:
+      - infra
+  /infra/restore:
+    post:
+      consumes:
+      - application/json
+      description: restore infrastructure data model
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload infrastructure JSON dump
+      tags:
+      - infra
+  /links:
+    get:
+      description: get links complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Get all links
+      tags:
+      - links
+    post:
+      description: add new link to links array
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/links.Link'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Add new link to links
+      tags:
+      - links
+  /links/{hash}:
+    delete:
+      description: delete link by its Hash
+      parameters:
+      - description: link Hash
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Delete link by its Hash
+      tags:
+      - links
+    get:
+      description: get link by its :hash param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Get link by :hash
+      tags:
+      - links
+    put:
+      description: update link by its Hash
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/links.Link'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Update link by its Hash
+      tags:
+      - links
+  /links/{hash}/active:
+    put:
+      description: toggle active boolean for {hash}
+      parameters:
+      - description: hash
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Toggle active boolean for {hash}
+      tags:
+      - links
+  /links/restore:
+    post:
+      consumes:
+      - application/json
+      description: update links JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload links dump backup -- restores all links
+      tags:
+      - links
+  /news/{name}:
+    get:
+      description: fetch and parse news for :user param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/news.Item'
+      summary: Get news by User
+      tags:
+      - news
+  /news/sources/:
+    get:
+      description: get all news sources
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/news.NewsSources'
+      summary: Get news source list
+      tags:
+      - news
+  /news/sources/{name}:
+    get:
+      description: get news sources by their :name param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/news.NewsSources'
+      summary: Get news source list by Username
+      tags:
+      - news
+  /news/sources/restore:
+    post:
+      consumes:
+      - application/json
+      description: update news sources JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload news sources dump backup -- restores all sources
+      tags:
+      - news
+  /projects:
+    get:
+      description: get project list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Projects'
+      summary: Get all projects
+      tags:
+      - projects
+    post:
+      description: add new project to projects list
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/projects.Project'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Project'
+      summary: Add new project
+      tags:
+      - projects
+  /projects/{id}:
+    delete:
+      description: delete project by its ID
+      parameters:
+      - description: project ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Project'
+      summary: Delete project by its ID
+      tags:
+      - projects
+    get:
+      description: get project details by :id param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Project'
+      summary: Get project by ID
+      tags:
+      - projects
+    put:
+      description: update project by its ID
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/projects.Project'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Project'
+      summary: Update project by its ID
+      tags:
+      - projects
+  /projects/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload project JSON dump and restore the data model
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload projects dump -- restore projects
+      tags:
+      - projects
+  /roles:
+    get:
+      description: get roules complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Roles'
+      summary: Get all roles
+      tags:
+      - roles
+    post:
+      description: add new role to roles array
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/roles.Role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Add new role to roles array
+      tags:
+      - roles
+  /roles/{name}:
+    delete:
+      description: delete role by its Name
+      parameters:
+      - description: role Name
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Delete role by its Name
+      tags:
+      - roles
+    get:
+      description: get role by :id param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Get role by Name
+      tags:
+      - roles
+    put:
+      description: update role by its Name
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/roles.Role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Update role by its Name
+      tags:
+      - roles
+  /roles/restore:
+    post:
+      consumes:
+      - application/json
+      description: update roles JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload roles dump backup -- restores all roles
+      tags:
+      - roles
+  /six:
+    get:
+      description: get the six struct
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/six.SixStruct'
+      summary: Get the six struct
+      tags:
+      - six
+  /six/calendar/{owner_name}:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/six.Calendar'
+      tags:
+      - six
+    post:
+      description: add new item to user's calendar
+      parameters:
+      - description: six.Item
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/six.Item'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/six.Item'
+      summary: Add new item to user's calendar
+      tags:
+      - six
+  /six/calendar/{owner_name}/item/{item_id}:
+    delete:
+      description: delete calendar item by its name
+      parameters:
+      - description: item_id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/six.Item'
+      summary: Delete calendar item by its name
+      tags:
+      - six
+    put:
+      description: update calendar item by its name
+      parameters:
+      - description: item_ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/six.Item'
+      summary: Update calendar item by its name
+      tags:
+      - six
+  /six/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload six JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload six dump backup -- restores all loaded calendars and todo lists
+      tags:
+      - six
+  /users:
+    get:
+      description: get users complete list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.Users'
+      summary: Get all users
+      tags:
+      - users
+    post:
+      description: add new user to users array
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/users.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Add new user to users array
+      tags:
+      - users
+  /users/{name}:
+    delete:
+      description: delete user by Name
+      parameters:
+      - description: user Name
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Delete user by Name
+      tags:
+      - users
+    get:
+      description: get user by their :name param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Get user by Name
+      tags:
+      - users
+    put:
+      description: update user by Name
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/users.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Update user by Name
+      tags:
+      - users
+  /users/{name}/active:
+    put:
+      description: toggle active boolean for {user}
+      parameters:
+      - description: username
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Toggle active boolean for {user}
+      tags:
+      - users
+  /users/{name}/keys/ssh:
+    get:
+      description: fetch :user ssh key array output in plain text
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Get User's SSH keys in plain text
+      tags:
+      - users
+    post:
+      description: add new SSH keys to :user param
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Add SSH public keys to User
+      tags:
+      - users
+  /users/restore:
+    post:
+      consumes:
+      - application/json
+      description: update users JSON dump
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload users dump backup -- restores all users
+      tags:
+      - users
+securityDefinitions:
+  apiKey:
+    in: header
+    name: X-Auth-Token
+    type: apiKey
+swagger: "2.0"
