@@ -1,4 +1,4 @@
-module go.savla.dev/swis
+module go.savla.dev/swis/v5
 
 go 1.20
 
