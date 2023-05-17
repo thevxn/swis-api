@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.3.8
+// @version 5.4.1
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -44,7 +44,6 @@ import (
 	"swis-api/news"
 	"swis-api/projects"
 	"swis-api/roles"
-	"swis-api/six"
 	"swis-api/users"
 
 	// remote dependencies
@@ -156,10 +155,6 @@ func main() {
 	// roles CRUD
 	rolesRouter := router.Group("/roles")
 	roles.Routes(rolesRouter)
-
-	// six CRUD
-	sixRouter := router.Group("/six")
-	six.Routes(sixRouter)
 
 	// users CRUD
 	usersRouter := router.Group("/users")

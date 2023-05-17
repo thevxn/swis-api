@@ -1,7 +1,7 @@
 version: '3.9'
 
 networks:
-  traefik_savla:
+  generic_savla_net:
     name: ${DOCKER_NETWORK_NAME}
 
 volumes:
