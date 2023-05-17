@@ -16,7 +16,7 @@ type Item struct {
 	// Numeric unique ID of such Item.
 	ID int `json:"id"`
 
-	// Item descripton, name, ammount, type etc.
+	// Item description, name, amount, type etc.
 	Description string `json:"desc"`
 
 	// More information, e.g. the more precise location specification.

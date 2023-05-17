@@ -7,7 +7,7 @@ type Entities struct {
 
 // Business structure
 type Business struct {
-	// Busines unique identifier.
+	// Business' unique identifier.
 	ID string `json:"id" binding:"required"`
 
 	// Czech Company ICO/ID number.

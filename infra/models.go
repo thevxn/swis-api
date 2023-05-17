@@ -88,7 +88,7 @@ type Network struct {
 	// Network name, verbose ID.
 	Name string `json:"network_name"`
 
-	// Netowrk IP address.
+	// Network IP address.
 	Address string `json:"network_address"`
 
 	// Interface(s) of such network.

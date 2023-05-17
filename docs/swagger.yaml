@@ -1,41 +1,5 @@
 basePath: /
 definitions:
-  alvax.AlvaxCommands:
-    properties:
-      command_list:
-        description: User's defined command list.
-        items:
-          $ref: '#/definitions/alvax.Command'
-        type: array
-      user:
-        description: Target user's name (e.g. alvax-bot-ravn).
-        type: string
-    type: object
-  alvax.Command:
-    properties:
-      alias_names:
-        description: Command aliases, e.g. 'fname', 'lname' etc.
-        items:
-          type: string
-        type: array
-      argument_list:
-        description: List of arguments for such command to be read.
-        items:
-          type: string
-        type: array
-      command_base64:
-        description: Command logic, structure as base64 encoded string.
-        type: string
-      name:
-        description: Command name as in '/name' in Telegram command syntax.
-        type: string
-      parent_class:
-        description: Parent class for TS implementation to be loaded.
-        type: string
-      required_argument:
-        description: Is argument(s) required boolean.
-        type: boolean
-    type: object
   backups.Backup:
     properties:
       active:
@@ -80,7 +44,7 @@ definitions:
         description: Czech Company ICO/ID number.
         type: integer
       id:
-        description: Busines unique identifier.
+        description: Business' unique identifier.
         type: string
       name_label:
         description: Company's business name.
@@ -139,7 +103,7 @@ definitions:
         description: Location name of such Item.
         type: string
       desc:
-        description: Item descripton, name, ammount, type etc.
+        description: Item description, name, amount, type etc.
         type: string
       id:
         description: Numeric unique ID of such Item.
@@ -153,7 +117,7 @@ definitions:
       dish_target:
         description: |-
           DishTarget is a string array, usually containing dish's host short name (e.g. frank)
-          to be refered e.g. /dish/sockets/frank
+          to be referred e.g. /dish/sockets/frank
         items:
           type: string
         type: array
@@ -350,7 +314,7 @@ definitions:
         description: Interface(s) of such network.
         type: string
       network_address:
-        description: Netowrk IP address.
+        description: Network IP address.
         type: string
       network_cidr_block:
         description: CIDR block of netmask.
@@ -502,78 +466,6 @@ definitions:
           $ref: '#/definitions/roles.Role'
         type: object
     type: object
-  six.Calendar:
-    properties:
-      items:
-        description: Calendar items.
-        items:
-          $ref: '#/definitions/six.Item'
-        type: array
-      owner_name:
-        description: Uniqueu owner name, User.Name.
-        type: string
-    required:
-    - owner_name
-    type: object
-  six.Item:
-    properties:
-      all_day:
-        description: Boolean to set and
-        type: boolean
-      color:
-        description: Item colour, RGB hex hash.
-        type: string
-      constraint:
-        default: businessHours
-        description: Item constrains, e.g. business hours.
-        type: string
-      description:
-        description: Item more verbouse description (pop-up windows text).
-        type: string
-      end:
-        description: End datetime string with timezone.
-        type: string
-      id:
-        description: Unique item ID.
-        type: string
-      name:
-        description: To-be-deleted soon -- title vs. ID.
-        type: string
-      start:
-        description: Start datetime string with timezone.
-        type: string
-      title:
-        description: Item title to be shown.
-        type: string
-      url:
-        description: Item URL link.
-        type: string
-    required:
-    - name
-    type: object
-  six.SixStruct:
-    properties:
-      calendars:
-        items:
-          $ref: '#/definitions/six.Calendar'
-        type: array
-      todo_lists:
-        description: Calendars map[string][]Item
-        items:
-          $ref: '#/definitions/six.TodoList'
-        type: array
-    type: object
-  six.TodoList:
-    properties:
-      items:
-        items:
-          $ref: '#/definitions/six.Item'
-        type: array
-      owner_name:
-        type: string
-    required:
-    - owner_name
-    type: object
   users.User:
     properties:
       ACL:
@@ -689,32 +581,8 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api v5
-  version: 5.3.8
+  version: 5.4.3
 paths:
-  /alvax/commands:
-    get:
-      description: get command array for alvax
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/alvax.AlvaxCommands'
-      summary: Get all alvax's commands
-      tags:
-      - alvax
-  /alvax/commands/restore:
-    post:
-      consumes:
-      - application/json
-      description: update alvax JSON dump
-      produces:
-      - application/json
-      responses: {}
-      summary: Upload alvax dump backup -- restores all loaded commands
-      tags:
-      - alvax
   /backups:
     get:
       description: get backuped services
@@ -1619,97 +1487,6 @@ paths:
       summary: Upload roles dump backup -- restores all roles
       tags:
       - roles
-  /six:
-    get:
-      description: get the six struct
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/six.SixStruct'
-      summary: Get the six struct
-      tags:
-      - six
-  /six/calendar/{owner_name}:
-    get:
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/six.Calendar'
-      tags:
-      - six
-    post:
-      description: add new item to user's calendar
-      parameters:
-      - description: six.Item
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/six.Item'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/six.Item'
-      summary: Add new item to user's calendar
-      tags:
-      - six
-  /six/calendar/{owner_name}/item/{item_id}:
-    delete:
-      description: delete calendar item by its name
-      parameters:
-      - description: item_id
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/six.Item'
-      summary: Delete calendar item by its name
-      tags:
-      - six
-    put:
-      description: update calendar item by its name
-      parameters:
-      - description: item_ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/six.Item'
-      summary: Update calendar item by its name
-      tags:
-      - six
-  /six/restore:
-    post:
-      consumes:
-      - application/json
-      description: upload six JSON dump
-      produces:
-      - application/json
-      responses: {}
-      summary: Upload six dump backup -- restores all loaded calendars and todo lists
-      tags:
-      - six
   /users:
     get:
       description: get users complete list

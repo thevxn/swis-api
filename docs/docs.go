@@ -25,42 +25,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/alvax/commands": {
-            "get": {
-                "description": "get command array for alvax",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "alvax"
-                ],
-                "summary": "Get all alvax's commands",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/alvax.AlvaxCommands"
-                        }
-                    }
-                }
-            }
-        },
-        "/alvax/commands/restore": {
-            "post": {
-                "description": "update alvax JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "alvax"
-                ],
-                "summary": "Upload alvax dump backup -- restores all loaded commands",
-                "responses": {}
-            }
-        },
         "/backups": {
             "get": {
                 "description": "get backuped services",
@@ -1435,145 +1399,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/six": {
-            "get": {
-                "description": "get the six struct",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "six"
-                ],
-                "summary": "Get the six struct",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/six.SixStruct"
-                        }
-                    }
-                }
-            }
-        },
-        "/six/calendar/{owner_name}": {
-            "get": {
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "six"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/six.Calendar"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new item to user's calendar",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "six"
-                ],
-                "summary": "Add new item to user's calendar",
-                "parameters": [
-                    {
-                        "description": "six.Item",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/six.Item"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/six.Item"
-                        }
-                    }
-                }
-            }
-        },
-        "/six/calendar/{owner_name}/item/{item_id}": {
-            "put": {
-                "description": "update calendar item by its name",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "six"
-                ],
-                "summary": "Update calendar item by its name",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "item_ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/six.Item"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "delete calendar item by its name",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "six"
-                ],
-                "summary": "Delete calendar item by its name",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "item_id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/six.Item"
-                        }
-                    }
-                }
-            }
-        },
-        "/six/restore": {
-            "post": {
-                "description": "upload six JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "six"
-                ],
-                "summary": "Upload six dump backup -- restores all loaded calendars and todo lists",
-                "responses": {}
-            }
-        },
         "/users": {
             "get": {
                 "description": "get users complete list",
@@ -1795,57 +1620,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "alvax.AlvaxCommands": {
-            "type": "object",
-            "properties": {
-                "command_list": {
-                    "description": "User's defined command list.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/alvax.Command"
-                    }
-                },
-                "user": {
-                    "description": "Target user's name (e.g. alvax-bot-ravn).",
-                    "type": "string"
-                }
-            }
-        },
-        "alvax.Command": {
-            "type": "object",
-            "properties": {
-                "alias_names": {
-                    "description": "Command aliases, e.g. 'fname', 'lname' etc.",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "argument_list": {
-                    "description": "List of arguments for such command to be read.",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "command_base64": {
-                    "description": "Command logic, structure as base64 encoded string.",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "Command name as in '/name' in Telegram command syntax.",
-                    "type": "string"
-                },
-                "parent_class": {
-                    "description": "Parent class for TS implementation to be loaded.",
-                    "type": "string"
-                },
-                "required_argument": {
-                    "description": "Is argument(s) required boolean.",
-                    "type": "boolean"
-                }
-            }
-        },
         "backups.Backup": {
             "type": "object",
             "required": [
@@ -1909,7 +1683,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "id": {
-                    "description": "Busines unique identifier.",
+                    "description": "Business' unique identifier.",
                     "type": "string"
                 },
                 "name_label": {
@@ -1990,7 +1764,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "desc": {
-                    "description": "Item descripton, name, ammount, type etc.",
+                    "description": "Item description, name, amount, type etc.",
                     "type": "string"
                 },
                 "id": {
@@ -2012,7 +1786,7 @@ const docTemplate = `{
             ],
             "properties": {
                 "dish_target": {
-                    "description": "DishTarget is a string array, usually containing dish's host short name (e.g. frank)\nto be refered e.g. /dish/sockets/frank",
+                    "description": "DishTarget is a string array, usually containing dish's host short name (e.g. frank)\nto be referred e.g. /dish/sockets/frank",
                     "type": "array",
                     "items": {
                         "type": "string"
@@ -2265,7 +2039,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "network_address": {
-                    "description": "Netowrk IP address.",
+                    "description": "Network IP address.",
                     "type": "string"
                 },
                 "network_cidr_block": {
@@ -2479,109 +2253,6 @@ const docTemplate = `{
                 }
             }
         },
-        "six.Calendar": {
-            "type": "object",
-            "required": [
-                "owner_name"
-            ],
-            "properties": {
-                "items": {
-                    "description": "Calendar items.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/six.Item"
-                    }
-                },
-                "owner_name": {
-                    "description": "Uniqueu owner name, User.Name.",
-                    "type": "string"
-                }
-            }
-        },
-        "six.Item": {
-            "type": "object",
-            "required": [
-                "name"
-            ],
-            "properties": {
-                "all_day": {
-                    "description": "Boolean to set and",
-                    "type": "boolean"
-                },
-                "color": {
-                    "description": "Item colour, RGB hex hash.",
-                    "type": "string"
-                },
-                "constraint": {
-                    "description": "Item constrains, e.g. business hours.",
-                    "type": "string",
-                    "default": "businessHours"
-                },
-                "description": {
-                    "description": "Item more verbouse description (pop-up windows text).",
-                    "type": "string"
-                },
-                "end": {
-                    "description": "End datetime string with timezone.",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "Unique item ID.",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "To-be-deleted soon -- title vs. ID.",
-                    "type": "string"
-                },
-                "start": {
-                    "description": "Start datetime string with timezone.",
-                    "type": "string"
-                },
-                "title": {
-                    "description": "Item title to be shown.",
-                    "type": "string"
-                },
-                "url": {
-                    "description": "Item URL link.",
-                    "type": "string"
-                }
-            }
-        },
-        "six.SixStruct": {
-            "type": "object",
-            "properties": {
-                "calendars": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/six.Calendar"
-                    }
-                },
-                "todo_lists": {
-                    "description": "Calendars map[string][]Item",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/six.TodoList"
-                    }
-                }
-            }
-        },
-        "six.TodoList": {
-            "type": "object",
-            "required": [
-                "owner_name"
-            ],
-            "properties": {
-                "items": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/six.Item"
-                    }
-                },
-                "owner_name": {
-                    "type": "string"
-                }
-            }
-        },
         "users.User": {
             "type": "object",
             "required": [
@@ -2725,7 +2396,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.3.8",
+	Version:          "5.4.3",
 	Host:             "swapi.savla.su:8049",
 	BasePath:         "/",
 	Schemes:          []string{},

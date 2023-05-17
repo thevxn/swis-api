@@ -29,7 +29,7 @@ type Socket struct {
 	PathHTTP string `json:"path_http"`
 
 	// DishTarget is a string array, usually containing dish's host short name (e.g. frank)
-	// to be refered e.g. /dish/sockets/frank
+	// to be referred e.g. /dish/sockets/frank
 	DishTarget []string `json:"dish_target"`
 
 	// Muted bool indicates that the socket is not propagated to any dish

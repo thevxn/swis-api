@@ -67,7 +67,7 @@ func TestGetProjects(t *testing.T) {
 	// (krusty Oct 22, 2022) this is not right: cannot get any POST'd project, even when there is time.Sleep()
 	// function used, even if the order is POST then GET, both functions even points to the same memory address,
 	// garbage collector (GC) does nothing between the two requests, so maybe it is the testing package
-	// who cleans the memory after each request (does not even work when the two Test fucntions are merged)...
+	// who cleans the memory after each request (does not even work when the two Test functions are merged)...
 	assert.Equal(t, http.StatusOK, w.Code)
 	//assert.NotEmpty(t, projects)
 }
