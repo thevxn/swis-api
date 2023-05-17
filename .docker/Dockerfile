@@ -19,7 +19,7 @@ RUN apk --no-cache add git
 WORKDIR /go/src/${APP_NAME}
 COPY . .
 
-RUN go install ${APP_NAME}
+RUN go install go.savla.dev/swis
 
 
 #
@@ -39,7 +39,7 @@ RUN apk --no-cache add tzdata
 RUN adduser -D -h ${APP_ROOT} -s /bin/sh ${DOCKER_USER}
 
 # compose release image
-COPY --from=swapi-build /go/bin/${APP_NAME} /bin/${APP_NAME}
+COPY --from=swapi-build /go/bin/swis /bin/${APP_NAME}
 COPY ./.github/assets/favicon.ico ${APP_ROOT}/
 
 WORKDIR ${APP_ROOT}

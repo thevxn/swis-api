@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"swis-api/users"
+	"go.savla.dev/swis/users"
 
 	"github.com/gin-gonic/gin"
 )

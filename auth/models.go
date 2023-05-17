@@ -1,8 +1,7 @@
 package auth
 
 import (
-	//"swis-api/roles"
-	"swis-api/users"
+	"go.savla.dev/swis/users"
 )
 
 type AuthParams struct {
