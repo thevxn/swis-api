@@ -1,7 +1,7 @@
 version: '3.9'
 
 networks:
-  generic_savla_net:
+  traefik_savla:
     name: ${DOCKER_NETWORK_NAME}
 
 volumes:
@@ -53,8 +53,8 @@ services:
     networks:
       - ${DOCKER_NETWORK_NAME}
     labels:
-      - "traefik.http.routers.${APP_NAME}.rule=Host(${APP_URLS_TRAEFIK})"
-      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${DOCKER_INTERNAL_PORT}"
+      - "traefik.http.routers.${APP_NAME}-prod.rule=Host(${APP_URLS_TRAEFIK})"
+      - "traefik.http.services.${APP_NAME}-prod.loadbalancer.server.port=${DOCKER_INTERNAL_PORT}"
       - "traefik.docker.network=${DOCKER_NETWORK_NAME}"
 
   swagger_ui:
