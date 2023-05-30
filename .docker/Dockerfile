@@ -19,7 +19,7 @@ RUN apk --no-cache add git
 WORKDIR /go/src/${APP_NAME}
 COPY . .
 
-RUN go install go.savla.dev/swis
+RUN go install go.savla.dev/swis/v5@latest
 
 
 #
