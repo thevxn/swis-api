@@ -3,11 +3,8 @@ name: swis-api CI/CD pipeline
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
-
   build:
     runs-on: [ self-hosted, internal, docker ]
     steps:
