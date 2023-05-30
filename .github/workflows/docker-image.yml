@@ -6,14 +6,14 @@ on:
 
 jobs:
   build:
-    runs-on: [ self-hosted, internal, docker ]
+    runs-on: [ self-hosted, public, docker ]
     steps:
     - uses: actions/checkout@v2
     - name: Build new swapi image (with staging).
       run: make build
 
   dev_deploy:
-    runs-on: [ self-hosted, internal, docker ]
+    runs-on: [ self-hosted, public, docker ]
     needs: [ build ]
     steps:
     - uses: actions/checkout@v2
@@ -21,22 +21,23 @@ jobs:
       run: make devploy e2e
 
   dump_data:
-    runs-on: [ self-hosted, internal, docker ]
+    runs-on: [ self-hosted, public, docker ]
     needs: [ dev_deploy ]
     steps:
     - name: Dump production data.
       run: make dump
 
   prod_deploy:
-    runs-on: [ self-hosted, internal, docker ]
+    runs-on: [ self-hosted, public, docker ]
     needs: [ dump_data ]
     steps:
     - name: Deploy prod docker container, recreate container with fresh image.
       run: APP_ENVIRONMENT=production make run
 
   import_data:
-    runs-on: [ self-hosted, internal, docker ]
+    runs-on: [ self-hosted, public, docker ]
     needs: [ prod_deploy ]
     steps:
     - name: Import dumped data to production.
       run: make import_dump
+
