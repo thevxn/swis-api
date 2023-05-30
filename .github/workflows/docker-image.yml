@@ -26,6 +26,8 @@ jobs:
     steps:
     - name: Dump production data.
       run: make dump
+      env:
+        APP_NAME: ${{ secrets.APP_URL }}
 
   prod_deploy:
     runs-on: [ self-hosted, public, docker ]
@@ -40,4 +42,6 @@ jobs:
     steps:
     - name: Import dumped data to production.
       run: make import_dump
+      env:
+        APP_NAME: ${{ secrets.APP_URL }}
 
