@@ -17,7 +17,7 @@ function die {
 # directory settings
 #
 
-DEST_URL="${APP_URL:-http://localhost:${DOCKER_EXTERNAL_PORT}}"
+DEST_URL="${APP_URL:-http://localhost4:${DOCKER_EXTERNAL_PORT}}"
 
 [ -z ${DUMP_DIR} ] && die "DUMP_DIR constant unset!"
 DATA_DIR=${DUMP_DIR}

@@ -15,7 +15,11 @@ BACKUP_TARGET_DIR=${DUMP_DIR}/archives
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 STATUS=failure
 SIZE=""
+URL=${APP_URL:-http://localhost:${DOCKER_EXTERNAL_PORT}}
+TOKEN=${ROOT_TOKEN}
+SERVICE_NAME=swis-api
 
+# ensure existing runtime dump target
 mkdir -p ${BACKUP_TARGET_DIR}
 
 tar --exclude='*.tar.gz' -czvf ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz ${BACKUP_TARGET_DIR}/.. 
@@ -23,11 +27,6 @@ tar --exclude='*.tar.gz' -czvf ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz ${BACKUP
 	SIZE=$(du -shx ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz | awk '{ print $1 }')
 	STATUS=success
 }
-
-# report back to swapi/backups
-URL=http://localhost:${DOCKER_EXTERNAL_PORT}
-SERVICE_NAME=swis-api
-TOKEN=xxxDS3RKKSddK43KDLSA34AAa4AAAA
 
 # generate backup report
 TMP_FILE_NAME=/tmp/swis-backup-report.json
