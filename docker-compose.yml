@@ -16,19 +16,19 @@ services:
       context: .
       dockerfile: .docker/Dockerfile
       args: 
-        GOLANG_VERSION: ${GOLANG_VERSION} 
         ALPINE_VERSION: ${ALPINE_VERSION}
-        APP_VERSION: ${APP_VERSION}
         APP_NAME: ${APP_NAME}
         APP_ROOT: ${APP_ROOT}
+        APP_VERSION: ${APP_VERSION}
         DOCKER_INTERNAL_PORT: ${DOCKER_INTERNAL_PORT} 
         DOCKER_USER: ${DOCKER_USER}
+        GOLANG_VERSION: ${GOLANG_VERSION} 
     restart: unless-stopped
     command: ${APP_FLAGS}
     logging:
       driver: loki
       options:
-        loki-url: "http://loki.savla.su:3100/loki/api/v1/push"
+        loki-url: ${LOKI_URL}
         labels: "swis,swis-api"
     environment:
       - ALPINE_VERSION=${ALPINE_VERSION}

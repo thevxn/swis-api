@@ -20,7 +20,10 @@ func JSONLogMiddleware() gin.HandlerFunc {
 			log["remote_addr"] = params.ClientIP
 			log["response_time"] = params.Latency
 
-			s, _ := json.Marshal(log)
+			s, err := json.Marshal(log)
+			if err != nil {
+				panic(err)
+			}
 			return string(s) + "\n"
 		},
 	)
