@@ -47,3 +47,12 @@ jobs:
       env:
         APP_URL: ${{ secrets.APP_URL }}
 
+  generate_docs:
+    runs-on: [ self-hosted, public, docker ]
+    needs: [ prod_deploy ]
+    steps:
+    - name: (re)Generate interface API swagger docs.
+      run: make docs
+      env:
+        APP_URL: ${{ secrets.APP_URL }}
+   
