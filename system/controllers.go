@@ -1,6 +1,13 @@
 package system
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
+	"sync"
+
+	"github.com/gin-gonic/gin"
+)
+
+var s sync.Map
 
 /*
  *  prototypes
@@ -20,8 +27,38 @@ import "github.com/gin-gonic/gin"
 :6,16s/\(.*\)/func \1(c *gin.Context) {}/
 */
 
-func GetBriefSystemStatus(c *gin.Context)        {}
-func GetRunningConfiguration(c *gin.Context)     {}
+func GetBriefSystemStatus(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "ok, papi",
+		"status":  0,
+	})
+	return
+}
+
+func GetRunningConfiguration(c *gin.Context) {
+	var systems = make(map[string]System)
+
+	s.Range(func(rawKey, rawVal interface{}) bool {
+		k, ok := rawKey.(string)
+		v, ok := rawVal.(System)
+
+		if !ok {
+			return false
+		}
+
+		systems[k] = v
+		return true
+	})
+
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "dumping systems",
+		"systems": systems,
+	})
+	return
+}
+
 func GetSyncTactPackMetadata(c *gin.Context)     {}
 func CatchSyncTactPack(c *gin.Context)           {}
 func CatchSyncTactPackByModule(c *gin.Context)   {}

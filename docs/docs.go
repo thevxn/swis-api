@@ -2396,8 +2396,8 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.4.14",
-	Host:             "swapi.savla.su:8049",
+	Version:          "5.4.15",
+	Host:             "swis-api-run:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "swis-api v5",

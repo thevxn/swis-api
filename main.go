@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.4.14
+// @version 5.4.15
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -10,7 +10,7 @@
 // @license.name MIT
 // @license.url https://github.com/savla-dev/swis-api/blob/master/LICENSE
 
-// @host swapi.savla.su:8049
+// @host swis-api-run:8050
 // @BasePath /
 
 // @securityDefinitions.apikey apiKey
@@ -21,7 +21,7 @@
 
 // Package swis-api is RESTful API core backend aka 'sakalWeb Information System v5'.
 // Basically it is a system of high modularity, where each module (package in golang terminology)
-// has its routes, models, and controllers (handler functions) defined in its own folder.
+// has its routes, models, and controllers (handler functions) defined in its own directory.
 package main
 
 import (
@@ -44,7 +44,6 @@ import (
 	"go.savla.dev/swis/v5/news"
 	"go.savla.dev/swis/v5/projects"
 	"go.savla.dev/swis/v5/roles"
-	"go.savla.dev/swis/v5/system"
 	"go.savla.dev/swis/v5/users"
 
 	// remote dependencies
@@ -158,8 +157,8 @@ func main() {
 	roles.Routes(rolesRouter)
 
 	// system CRUD
-	systemRouter := router.Group("/system")
-	system.Routes(systemRouter)
+	//systemRouter := router.Group("/system")
+	//system.Routes(systemRouter)
 
 	// users CRUD
 	usersRouter := router.Group("/users")
