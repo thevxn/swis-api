@@ -17,8 +17,8 @@ func Routes(g *gin.RouterGroup) {
 		CatchSyncTactPackByModule)
 	g.POST("/sync/:module",
 		PostNewSyncTactPackByModule)
-	g.PUT("/sync/:module",
-		UpdateSyncTactPackByModule)
+	//g.PUT("/sync/:module",
+	//	UpdateSyncTactPackByModule)
 	g.PATCH("/sync/:module",
 		UpdateSyncTactPackByModule)
 	g.PUT("/sync/:module/active",

@@ -21,7 +21,8 @@ COPY . .
 
 # force use locked version
 ARG APP_VERSION
-RUN go install go.savla.dev/swis/v5@v${APP_VERSION}
+#RUN go install go.savla.dev/swis/v5@v${APP_VERSION}
+RUN go build -o /go/bin/swis
 
 
 #
