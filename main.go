@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.4.21
+// @version 5.4.22
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -60,7 +60,8 @@ func main() {
 	router.Use(gin.Recovery())
 
 	// Logger middleware will write the logs to gin.DefaultWriter even if you set with GIN_MODE=release.
-	router.Use(gin.Logger())
+	//router.Use(gin.Logger())
+	router.Use(config.JSONLogMiddleware())
 
 	// CORS Middleware
 	router.Use(config.CORSMiddleware())
