@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.4.15
+// @version 5.4.16
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -44,6 +44,7 @@ import (
 	"go.savla.dev/swis/v5/news"
 	"go.savla.dev/swis/v5/projects"
 	"go.savla.dev/swis/v5/roles"
+	"go.savla.dev/swis/v5/system"
 	"go.savla.dev/swis/v5/users"
 
 	// remote dependencies
@@ -157,8 +158,8 @@ func main() {
 	roles.Routes(rolesRouter)
 
 	// system CRUD
-	//systemRouter := router.Group("/system")
-	//system.Routes(systemRouter)
+	systemRouter := router.Group("/system")
+	system.Routes(systemRouter)
 
 	// users CRUD
 	usersRouter := router.Group("/users")

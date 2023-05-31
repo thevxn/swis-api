@@ -18,6 +18,7 @@ services:
       args: 
         GOLANG_VERSION: ${GOLANG_VERSION} 
         ALPINE_VERSION: ${ALPINE_VERSION}
+        APP_VERSION: ${APP_VERSION}
         APP_NAME: ${APP_NAME}
         APP_ROOT: ${APP_ROOT}
         DOCKER_INTERNAL_PORT: ${DOCKER_INTERNAL_PORT} 

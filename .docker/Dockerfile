@@ -19,7 +19,9 @@ RUN apk --no-cache add git
 WORKDIR /go/src/${APP_NAME}
 COPY . .
 
-RUN go install go.savla.dev/swis/v5@latest
+# force use locked version
+ARG APP_VERSION
+RUN go install go.savla.dev/swis/v5@v${APP_VERSION}
 
 
 #
