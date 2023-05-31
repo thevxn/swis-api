@@ -15,7 +15,7 @@ var r sync.Map
 // @Produce  json
 // @Success 200 {object} roles.Roles
 // @Router /roles [get]
-// GetGroups returns JSON serialized list of roles and their properties.
+// GetRoles returns JSON serialized list of roles and their properties.
 func GetRoles(c *gin.Context) {
 	var roles = make(map[string]Role)
 

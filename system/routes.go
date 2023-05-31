@@ -5,10 +5,12 @@ import (
 )
 
 func Routes(g *gin.RouterGroup) {
+	g.GET("/",
+		GetSystems)
 	g.GET("/status",
 		GetBriefSystemStatus)
 	g.GET("/sync",
-		GetRunningConfiguration)
+		GetSyncRunningConfiguration)
 	g.GET("/sync/:module",
 		GetSyncTactPackMetadata)
 	g.PUT("/sync",
@@ -26,5 +28,7 @@ func Routes(g *gin.RouterGroup) {
 	g.DELETE("/sync/:module",
 		DeleteSyncTactPackByModule)
 	g.POST("/restore",
-		PostDumpRestore)
+		PostDumpRestoreSystems)
+	g.POST("/sync/restore",
+		PostDumpRestoreSyncPacks)
 }

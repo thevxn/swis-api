@@ -95,6 +95,7 @@ declare -a paths=(
 	"/projects/restore"
 
 	"/roles/restore"
+	"/system/restore"
 	"/system/sync/restore"
 	"/users/restore"
 )
@@ -111,6 +112,7 @@ declare -a files=(
 	"/projects.json"
 
 	"/roles.json"
+	"/systems.json"
 	"/system_sync.json"
 	"/users.json"
 )

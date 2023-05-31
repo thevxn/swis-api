@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.4.15"
+        "version": "5.4.20"
     },
     "host": "swis-api-run:8050",
     "basePath": "/",
@@ -1390,6 +1390,22 @@
                         }
                     }
                 }
+            }
+        },
+        "/system/restore": {
+            "post": {
+                "description": "update systems' JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "Upload systems dump backup -- restores all systems",
+                "responses": {}
             }
         },
         "/users": {

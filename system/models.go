@@ -40,7 +40,7 @@ type Part struct {
 // v5/system/sync
 //
 
-type SyncTact struct {
+type SyncPacks struct {
 	Packs map[string]SyncPack `json:"sync_packs"`
 }
 
