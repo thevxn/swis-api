@@ -1,7 +1,5 @@
 package system
 
-import "time"
-
 type System struct {
 	// Name is a system name.
 	Name string `json:"name"`
@@ -55,7 +53,7 @@ type SyncPack struct {
 	//
 	// Actually, it would be better to sum sync derivates' values rather then select
 	// the newest one as the new base for further timestamps' metadata.
-	Timestamp time.Time `json:"timestamp"`
+	Timestamp int `json:"timestamp"`
 
 	// Checksums is an array of checksums of defined packages (swapi plugin-modules).
 	// See more in the source file /config/sync.go.

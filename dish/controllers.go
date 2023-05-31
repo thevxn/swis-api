@@ -1,6 +1,9 @@
 package dish
 
 import (
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"sync"
 	"time"
@@ -47,10 +50,27 @@ func GetSocketList(c *gin.Context) {
 		return true
 	})
 
+	rawJSON, err := json.Marshal(sockets)
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot marshal sockets into JSON byte stream",
+		})
+	}
+
+	rawChecksum := sha256.Sum256([]byte(rawJSON))
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot calculate the checksum",
+		})
+	}
+
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"message": "ok, dumping all sockets",
-		"sockets": sockets,
+		"code":     http.StatusOK,
+		"message":  "ok, dumping all sockets",
+		"checksum": fmt.Sprintf("%x", rawChecksum),
+		"sockets":  sockets,
 	})
 	return
 }

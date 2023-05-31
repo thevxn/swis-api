@@ -124,9 +124,7 @@ func PostDumpRestoreSystems(c *gin.Context) {
 }
 
 func PostDumpRestoreSyncPacks(c *gin.Context) {
-	var importSyncPacks = &SyncPacks{
-		make(map[string]SyncPack),
-	}
+	var importSyncPacks = &SyncPacks{}
 	var sync SyncPack
 
 	if err := c.BindJSON(importSyncPacks); err != nil {
