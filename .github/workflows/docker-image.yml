@@ -27,7 +27,7 @@ jobs:
     - name: Dump production data.
       run: make dump
       env:
-        APP_NAME: ${{ secrets.APP_URL }}
+        APP_URL: ${{ secrets.APP_URL }}
 
   prod_deploy:
     runs-on: [ self-hosted, public, docker ]
@@ -35,6 +35,8 @@ jobs:
     steps:
     - name: Deploy prod docker container, recreate container with fresh image.
       run: APP_ENVIRONMENT=production make run
+      env:
+        ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
 
   import_data:
     runs-on: [ self-hosted, public, docker ]
@@ -43,5 +45,14 @@ jobs:
     - name: Import dumped data to production.
       run: make import_dump
       env:
-        APP_NAME: ${{ secrets.APP_URL }}
+        APP_URL: ${{ secrets.APP_URL }}
 
+  generate_docs:
+    runs-on: [ self-hosted, public, docker ]
+    needs: [ prod_deploy ]
+    steps:
+    - name: (re)Generate interface API swagger docs.
+      run: make docs
+      env:
+        APP_URL: ${{ secrets.APP_URL }}
+   

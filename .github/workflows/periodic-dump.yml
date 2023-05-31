@@ -1,0 +1,18 @@
+name: swis-api dump pipeline
+
+on:
+  schedule:
+    - cron: '59 */2 * * *'
+
+
+jobs:
+  run_dump:
+    runs-on: [ self-hosted, public, docker ]
+    steps:
+    - uses: actions/checkout@v3
+      if: github.event.schedule == '59 */2 * * *'
+    - name: Make a periodic swis-api dump (backup)
+      env:
+        APP_URL: ${{ secrets.APP_URL }}
+        ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
+      run: make backup
