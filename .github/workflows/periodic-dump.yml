@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       if: github.event.schedule == '59 */2 * * *'
-    - name: Make a periodic swis-api dump (backup)
+    - name: Make a periodic swis-api dump (data backup)
       env:
         APP_URL: ${{ secrets.APP_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
