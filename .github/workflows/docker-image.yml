@@ -18,9 +18,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Run dev container and run end-to-end test on it.
-      run: make devploy e2e
       env:
         LOKI_URL: ${{ secrets.LOKI_URL }}
+      run: make devploy e2e
 
   dump_data:
     runs-on: [ self-hosted, public, docker ]
@@ -28,10 +28,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Dump production data.
-      run: make dump
       env:
         APP_URL: ${{ secrets.APP_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
+      run: make dump
 
   prod_deploy:
     runs-on: [ self-hosted, public, docker ]
@@ -39,11 +39,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Deploy prod docker container, recreate container with fresh image.
-      run: make run
       env:
         APP_ENVIRONMENT: production
         LOKI_URL: ${{ secrets.LOKI_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
+      run: make run
 
   import_data:
     runs-on: [ self-hosted, public, docker ]
@@ -51,10 +51,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Import dumped data to production.
-      run: make import_dump
       env:
         APP_URL: ${{ secrets.APP_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
+      run: make import_dump
 
   generate_docs:
     runs-on: [ self-hosted, public, docker ]
@@ -62,7 +62,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: (re)Generate interface API swagger docs.
-      run: make docs
       env:
         APP_URL: ${{ secrets.APP_URL }}
+      run: make docs
    
