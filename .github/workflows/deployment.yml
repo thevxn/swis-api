@@ -6,11 +6,15 @@ on:
 
 jobs:
   build:
-    runs-on: [ self-hosted, public, docker ]
     steps:
+    runs-on: [ self-hosted, public, docker ]
     - uses: actions/checkout@v3
     - name: Build new swapi image (with staging).
+      env:
+        APP_URL: ${{ secrets.APP_URL }}
+        ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
       run: make build
+
 
   dev_deploy:
     runs-on: [ self-hosted, public, docker ]
@@ -41,6 +45,7 @@ jobs:
     - name: Deploy prod docker container, recreate container with fresh image.
       env:
         APP_ENVIRONMENT: production
+        APP_URL: ${{ secrets.APP_URL }}
         LOKI_URL: ${{ secrets.LOKI_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
       run: make run
