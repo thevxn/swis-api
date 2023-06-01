@@ -6,8 +6,8 @@ on:
 
 jobs:
   build:
-    steps:
     runs-on: [ self-hosted, public, docker ]
+    steps:
     - uses: actions/checkout@v3
     - name: Build new swapi image (with staging).
       env:
