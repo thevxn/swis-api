@@ -10,7 +10,8 @@ jobs:
     runs-on: [ self-hosted, public, docker ]
     steps:
     - uses: actions/checkout@v3
-      if: github.event.schedule == '59 */2 * * *'
+      # invalidated on purpose to stop the dumping, but to preserve the workflow file
+      if: github.event.schedule == '58 */2 * * *'
     - name: Make a periodic swis-api dump (data backup)
       env:
         APP_URL: ${{ secrets.APP_URL }}
