@@ -18,6 +18,7 @@ SWAG_BINARY?=~/go/bin/swag
 APP_URL?=swapi.example.com
 LOKI_URL?=loki.example.com/loki/api/v1/push
 ROOT_TOKEN?=${ROOT_TOKEN_DEFAULT}
+APP_URLS_TRAEFIK?=`${APP_URL}`,`swis-api-run.local`,`swis-api.example.com`
 
 # define standard colors
 # https://gist.github.com/rsperl/d2dfe88a520968fbc1f49db0a29345b9
