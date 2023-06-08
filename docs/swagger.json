@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.4.24"
+        "version": "5.4.25"
     },
     "host": "swis-api-run:8050",
     "basePath": "/",
@@ -1807,6 +1807,10 @@
                     "items": {
                         "type": "integer"
                     }
+                },
+                "fail_count": {
+                    "description": "FailCount indicates how many times socket has to be in failed state before alerting.",
+                    "type": "integer"
                 },
                 "host_name": {
                     "description": "Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)",

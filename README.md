@@ -30,6 +30,8 @@ APP_URL
 ROOT_TOKEN
 # if you want to log to Loki, define an URL (full) to the loki instance
 LOKI_URL
+# defaults to 'debug', specify 'release' in .env or in GHA secret for production
+GIN_MODE
 ```
 
 ### install latest binary (go runtime installed required)

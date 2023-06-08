@@ -104,10 +104,27 @@ func GetSocketListByHost(c *gin.Context) {
 	})
 
 	if len(sockets) > 0 {
+		rawJSON, err := json.Marshal(sockets)
+		if err != nil {
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{
+				"code":    http.StatusInternalServerError,
+				"message": "cannot marshal sockets into JSON byte stream",
+			})
+		}
+
+		rawChecksum := sha256.Sum256([]byte(rawJSON))
+		if err != nil {
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{
+				"code":    http.StatusInternalServerError,
+				"message": "cannot calculate the checksum",
+			})
+		}
+
 		c.IndentedJSON(http.StatusOK, gin.H{
-			"message": "ok, dumping socket by host",
-			"code":    http.StatusOK,
-			"sockets": sockets,
+			"message":  "ok, dumping socket by host",
+			"code":     http.StatusOK,
+			"checksum": fmt.Sprintf("%x", rawChecksum),
+			"sockets":  sockets,
 		})
 		return
 	}

@@ -1815,6 +1815,10 @@ const docTemplate = `{
                         "type": "integer"
                     }
                 },
+                "fail_count": {
+                    "description": "FailCount indicates how many times socket has to be in failed state before alerting.",
+                    "type": "integer"
+                },
                 "host_name": {
                     "description": "Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)",
                     "type": "string"
@@ -2412,7 +2416,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.4.24",
+	Version:          "5.4.25",
 	Host:             "swis-api-run:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

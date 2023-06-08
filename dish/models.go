@@ -38,6 +38,9 @@ type Socket struct {
 	// MutedFrom UNIX timestamp.
 	MutedFrom int64 `json:"muted_from"`
 
+	// FailCount indicates how many times socket has to be in failed state before alerting.
+	FailCount int `json:"fail_count" default:0`
+
 	// Status object for dish results to be returned/updated (by dish itself)
 	// Note: discontinued as dish now reports to pushgateway of prometheus'
 	//Status []bool `json:"status"`
