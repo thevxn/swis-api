@@ -2,12 +2,11 @@
 
 [![Go Reference](https://pkg.go.dev/badge/go.savla.dev/swis/v5.svg)](https://pkg.go.dev/go.savla.dev/swis/v5)
 [![Go Report Card](https://goreportcard.com/badge/go.savla.dev/swis/v5)](https://goreportcard.com/report/go.savla.dev/swis/v5)
-[![swis-api CI/CD pipeline](https://github.com/savla-dev/swis-api/actions/workflows/docker-image.yml/badge.svg?branch=master)](https://github.com/savla-dev/swis-api/actions/workflows/docker-image.yml)
-[![swis-api dump pipeline](https://github.com/savla-dev/swis-api/actions/workflows/periodic-dump.yml/badge.svg)](https://github.com/savla-dev/swis-api/actions/workflows/periodic-dump.yml)
+[![swis-api CI/CD pipeline](https://github.com/savla-dev/swis-api/actions/workflows/deployment.yml/badge.svg?branch=master)](https://github.com/savla-dev/swis-api/actions/workflows/deployment.yml)
 
 sakalWebIS v5 RESTful JSON API in Go for Docker
 
-`swapi` is a condensated data structure tree made into an Information System (IS) environment. It works as an independent in-memory database/cache for generic system components like `users`, `roles`, `projects`, `business_entities` and many more. Primarily, it is meant to be used in Docker as all components are written to work out of the box when there.
+`swapi` is a condensated data structure tree made into an Information System (IS) environment. It works as an independent in-memory database/cache for generic system components like `users`, `roles`, `projects`, `business_entities` and many more. Primarily, it is meant to be used in Docker as all components are written to work out of the box when there (no go runtime installment needed when run in Docker).
 
 Reaad more in a short article on `swapi`:
 
@@ -23,7 +22,17 @@ vi .env
 make build run
 ```
 
-### install latest binary
+or use Github Action Runner (self-hosted) to (re)delpoy `swapi` using Actions Secrets (Settings -> Secrets and variables -> Actions -> New repository secret), use these keys at least:
+```
+# without http/https prefix amd HTTP path
+APP_URL 
+# token used for redeployment dump and data reimport (`dump_data` and `import_data` workflow jobs)
+ROOT_TOKEN
+# if you want to log to Loki, define an URL (full) to the loki instance
+LOKI_URL
+```
+
+### install latest binary (go runtime installed required)
 
 ```
 go install go.savla.dev/swis/v5@latest
