@@ -1,5 +1,5 @@
 // @title swis-api v5
-// @version 5.4.25
+// @version 5.4.26
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -76,6 +76,10 @@ func main() {
 	// @Router /ping [get]
 	// very simple LE support --- https://github.com/gin-gonic/gin#support-lets-encrypt
 	router.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
+	})
+
+	router.HEAD("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
 
