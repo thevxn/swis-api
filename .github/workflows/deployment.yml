@@ -16,20 +16,20 @@ jobs:
       run: make build
 
 
-  dev_deploy:
+  test_deploy:
     runs-on: [ self-hosted, public, docker ]
     needs: [ build ]
     steps:
     - uses: actions/checkout@v3
-    - name: Run dev container and run end-to-end test on it.
+    - name: Run test container and run end-to-end test on it.
       env:
         LOKI_URL: ${{ secrets.LOKI_URL }}
         GIN_MODE: debug
-      run: make devploy e2e
+      run: make test_deploy e2e
 
   dump_data:
     runs-on: [ self-hosted, public, docker ]
-    needs: [ dev_deploy ]
+    needs: [ test_deploy ]
     steps:
     - uses: actions/checkout@v3
     - name: Dump production data.

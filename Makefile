@@ -94,19 +94,19 @@ build:  version
 	@docker compose --file $(DOCKER_COMPOSE_FILE) build
 #@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
 
-.PHONY: devploy
-devploy:
-	@echo -e "\n${YELLOW} Starting temporary dev container... ${RESET}\n"
+.PHONY: test_deploy
+test_deploy:
+	@echo -e "\n${YELLOW} Starting temporary test container... ${RESET}\n"
 	@docker run --rm --detach \
-		--name ${DOCKER_DEV_CONTAINER} \
-		-p ${DOCKER_DEV_PORT}:${DOCKER_DEV_PORT} \
+		--name ${DOCKER_TEST_CONTAINER_NAME} \
+		-p ${DOCKER_TEST_PORT}:${DOCKER_TEST_PORT} \
 		-e ROOT_TOKEN=d3qySD87Ds48300pl \
-		-e DOCKER_INTERNAL_PORT=${DOCKER_DEV_PORT} \
+		-e DOCKER_INTERNAL_PORT=${DOCKER_TEST_PORT} \
 		${DOCKER_IMAGE_TAG}
 
 .PHONY: e2e
 e2e:	
-	@docker stop swis-api-dev
+	@docker stop ${DOCKER_TEST_CONTAINER_NAME}
 
 .PHONY: run
 run:
