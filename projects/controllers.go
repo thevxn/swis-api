@@ -47,7 +47,14 @@ func GetProjectByID(c *gin.Context) {
 		return
 	}
 
-	project := rawProject.(*Project)
+	project, ok := rawProject.(Project)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"message": "cannot assert data type, database internal error",
+			"code":    http.StatusInternalServerError,
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -66,7 +73,7 @@ func GetProjectByID(c *gin.Context) {
 // @Router /projects [post]
 // PostProject
 func PostNewProject(c *gin.Context) {
-	var newProject = &Project{}
+	var newProject Project
 
 	if err := c.BindJSON(newProject); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

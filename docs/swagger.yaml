@@ -443,7 +443,7 @@ definitions:
       projects:
         additionalProperties:
           $ref: '#/definitions/projects.Project'
-        description: Array ob Project objects.
+        description: Array of Project objects for a batch import.
         type: object
     type: object
   roles.Role:
@@ -584,8 +584,8 @@ info:
     name: MIT
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
-  title: swis-api v5
-  version: 5.4.26
+  title: swis-api (swapi) v5
+  version: 5.4.32
 paths:
   /backups:
     get:

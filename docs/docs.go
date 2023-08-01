@@ -2230,7 +2230,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "projects": {
-                    "description": "Array ob Project objects.",
+                    "description": "Array of Project objects for a batch import.",
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "#/definitions/projects.Project"
@@ -2416,11 +2416,11 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.4.26",
+	Version:          "5.4.32",
 	Host:             "swis-api-run:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "swis-api v5",
+	Title:            "swis-api (swapi) v5",
 	Description:      "sakalWeb Information System v5 RESTful API documentation",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

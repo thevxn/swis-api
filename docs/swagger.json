@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "sakalWeb Information System v5 RESTful API documentation",
-        "title": "swis-api v5",
+        "title": "swis-api (swapi) v5",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.4.26"
+        "version": "5.4.32"
     },
     "host": "swis-api-run:8050",
     "basePath": "/",
@@ -2223,7 +2223,7 @@
             "type": "object",
             "properties": {
                 "projects": {
-                    "description": "Array ob Project objects.",
+                    "description": "Array of Project objects for a batch import.",
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "#/definitions/projects.Project"
