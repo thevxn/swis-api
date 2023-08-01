@@ -1,7 +1,7 @@
 version: '3.9'
 
 networks:
-  traefik_savla:
+  traefik_hermes:
     name: ${DOCKER_NETWORK_NAME}
 
 volumes:
