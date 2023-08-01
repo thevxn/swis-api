@@ -932,7 +932,7 @@ const docTemplate = `{
                 "tags": [
                     "links"
                 ],
-                "summary": "Upload links dump backup -- restores all links",
+                "summary": "Upload links dump backup -- restore all links",
                 "responses": {}
             }
         },
@@ -1184,7 +1184,7 @@ const docTemplate = `{
         },
         "/projects/{id}": {
             "get": {
-                "description": "get project details by :id param",
+                "description": "get project details by :id route param",
                 "produces": [
                     "application/json"
                 ],
@@ -2348,7 +2348,7 @@ const docTemplate = `{
                     }
                 },
                 "token_hmac": {
-                    "description": "Unique token used for auth purposes, SHA?-HMAC.",
+                    "description": "Unique token used for auth purposes, SHA512 preferred.",
                     "type": "string"
                 },
                 "wireguard_vpn": {
@@ -2416,7 +2416,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.4.32",
+	Version:          "5.4.36",
 	Host:             "swis-api-run:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

@@ -530,7 +530,7 @@ definitions:
           type: string
         type: array
       token_hmac:
-        description: Unique token used for auth purposes, SHA?-HMAC.
+        description: Unique token used for auth purposes, SHA512 preferred.
         type: string
       wireguard_vpn:
         description: All Wireguard config objects -- an array.
@@ -585,7 +585,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.4.32
+  version: 5.4.36
 paths:
   /backups:
     get:
@@ -1252,7 +1252,7 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Upload links dump backup -- restores all links
+      summary: Upload links dump backup -- restore all links
       tags:
       - links
   /news/{name}:
@@ -1357,7 +1357,7 @@ paths:
       tags:
       - projects
     get:
-      description: get project details by :id param
+      description: get project details by :id route param
       produces:
       - application/json
       responses:

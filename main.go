@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.4.35
+// @version 5.4.36
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -146,6 +146,7 @@ func main() {
 
 	// links CRUD
 	linksRouter := router.Group("/links")
+	links.Cache = &config.Cache{}
 	links.Routes(linksRouter)
 
 	// news CRUD

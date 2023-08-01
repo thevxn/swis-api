@@ -1,7 +1,6 @@
 package news
 
 import (
-	//b64 "encoding/base64"
 	"encoding/xml"
 	"log"
 	"net/http"
@@ -9,12 +8,14 @@ import (
 	"sort"
 	"time"
 
+	"go.savla.dev/swis/v5/config"
+
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	//sources = []Source{}
-	news = NewsSources{}
+	news  = NewsSources{}
+	Cache *config.Cache
 )
 
 func findSourcesByUser(c *gin.Context) (s *[]Source) {

@@ -2,36 +2,24 @@ package links
 
 import (
 	"net/http"
-	"sync"
+
+	"go.savla.dev/swis/v5/config"
 
 	"github.com/gin-gonic/gin"
 )
 
-var l sync.Map
+var Cache *config.Cache
 
 // @Summary Get all links
 // @Description get links complete list
 // @Tags links
-// @Produce  json
+// @Produce json
 // @Success 200 {object} links.Link
 // @Router /links [get]
 // GetLinks GET method
 // GetLinks returns JSON serialized list of links and their properties.
 func GetLinks(c *gin.Context) {
-	var links = make(map[string]Link)
-
-	l.Range(func(rawKey, rawVal interface{}) bool {
-		// very insecure assert
-		k, ok := rawKey.(string)
-		v, ok := rawVal.(Link)
-
-		if !ok {
-			return false
-		}
-
-		links[k] = v
-		return true
-	})
+	var links = Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -44,7 +32,7 @@ func GetLinks(c *gin.Context) {
 // @Summary Get link by :hash
 // @Description get link by its :hash param
 // @Tags links
-// @Produce  json
+// @Produce json
 // @Success 200 {object} links.Link
 // @Router /links/{hash} [get]
 // GetLinkByHash returns link's properties, given sent hash exists in database.
@@ -52,19 +40,27 @@ func GetLinkByHash(c *gin.Context) {
 	var hash string = c.Param("hash")
 	var link Link
 
-	rawLink, ok := l.Load(hash)
-	link, ok = rawLink.(Link)
+	rawLink, ok := Cache.Get(hash)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"message": "link not found",
 			"code":    http.StatusNotFound,
+			"message": "link not found",
+		})
+		return
+	}
+
+	link, ok = rawLink.(Link)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot assert data type, database internal error",
 		})
 		return
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"message": "ok, dumping given link's details",
 		"code":    http.StatusOK,
+		"message": "ok, dumping requested link's details",
 		"link":    link,
 	})
 	return
@@ -79,21 +75,19 @@ func GetLinkByHash(c *gin.Context) {
 // @Router /links [post]
 // PostNewLink enables one to add new link to links model.
 func PostNewLink(c *gin.Context) {
-	var newLink = &Link{}
+	var newLink Link
 
-	// bind received JSON to newLink
-	if err := c.BindJSON(newLink); err != nil {
+	if err := c.BindJSON(&newLink); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
 	var hash string = newLink.Name
 
-	if _, found := l.Load(hash); found {
-		// Link already exists, such hash/name is already used...
+	if _, found := Cache.Get(hash); found {
 		c.IndentedJSON(http.StatusConflict, gin.H{
 			"code":    http.StatusConflict,
 			"message": "link hash name already used!",
@@ -102,9 +96,14 @@ func PostNewLink(c *gin.Context) {
 		return
 	}
 
-	l.Store(newLink.Name, newLink)
+	if saved := Cache.Set(newLink.Name, newLink); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "user couldn't be saved to database",
+		})
+		return
+	}
 
-	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "link added",
@@ -114,15 +113,15 @@ func PostNewLink(c *gin.Context) {
 	return
 }
 
-// @Summary Upload links dump backup -- restores all links
+// @Summary Upload links dump backup -- restore all links
 // @Description update links JSON dump
 // @Tags links
 // @Accept json
 // @Produce json
 // @Router /links/restore [post]
-// PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
 	var importLinks = &Links{}
+	var counter int = 0
 
 	if err := c.BindJSON(importLinks); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -133,14 +132,15 @@ func PostDumpRestore(c *gin.Context) {
 	}
 
 	for _, link := range importLinks.Links {
-		l.Store(link.Name, link)
+		Cache.Set(link.Name, link)
+		counter++
 	}
 
 	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
-		"message": "links imported successfully",
-		"links":   l,
+		"count":   counter,
+		"message": "links imported successfully, ommiting output",
 	})
 	return
 }
@@ -154,23 +154,23 @@ func PostDumpRestore(c *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{hash}/active [put]
 func ActiveToggleByHash(c *gin.Context) {
-	var link Link
 	var hash string = c.Param("hash")
+	var link Link
 
-	rawLink, ok := l.Load(hash)
+	rawLink, ok := Cache.Get(hash)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"message": "links not found",
 			"code":    http.StatusNotFound,
+			"message": "link not found",
 		})
 		return
 	}
 
-	link, typeOk := rawLink.(Link)
-	if !typeOk {
-		c.IndentedJSON(http.StatusConflict, gin.H{
-			"message": "stored value is not type Link",
-			"code":    http.StatusConflict,
+	link, ok = rawLink.(Link)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot assert data type, database internal error",
 		})
 		return
 	}
@@ -178,7 +178,13 @@ func ActiveToggleByHash(c *gin.Context) {
 	// inverse the Active field value
 	link.Active = !link.Active
 
-	l.Store(hash, link)
+	if saved := Cache.Set(hash, link); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "link couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -197,12 +203,12 @@ func ActiveToggleByHash(c *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{hash} [put]
 func UpdateLinkByHash(c *gin.Context) {
-	var updatedLink Link
 	var hash string = c.Param("hash")
+	var updatedLink Link
 
-	if _, ok := l.Load(hash); !ok {
+	if _, ok := Cache.Get(hash); !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"message": "links not found",
+			"message": "link not found",
 			"code":    http.StatusNotFound,
 		})
 		return
@@ -211,12 +217,18 @@ func UpdateLinkByHash(c *gin.Context) {
 	if err := c.BindJSON(&updatedLink); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
-	l.Store(hash, updatedLink)
+	if saved := Cache.Set(hash, updatedLink); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "link couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -236,7 +248,21 @@ func UpdateLinkByHash(c *gin.Context) {
 func DeleteLinkByHash(c *gin.Context) {
 	var hash string = c.Param("hash")
 
-	l.Delete(hash)
+	if _, ok := Cache.Get(hash); !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "link not found",
+		})
+		return
+	}
+
+	if deleted := Cache.Delete(hash); !deleted {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "link couldn't be deleted from database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,

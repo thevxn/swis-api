@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.4.32"
+        "version": "5.4.36"
     },
     "host": "swis-api-run:8050",
     "basePath": "/",
@@ -925,7 +925,7 @@
                 "tags": [
                     "links"
                 ],
-                "summary": "Upload links dump backup -- restores all links",
+                "summary": "Upload links dump backup -- restore all links",
                 "responses": {}
             }
         },
@@ -1177,7 +1177,7 @@
         },
         "/projects/{id}": {
             "get": {
-                "description": "get project details by :id param",
+                "description": "get project details by :id route param",
                 "produces": [
                     "application/json"
                 ],
@@ -2341,7 +2341,7 @@
                     }
                 },
                 "token_hmac": {
-                    "description": "Unique token used for auth purposes, SHA?-HMAC.",
+                    "description": "Unique token used for auth purposes, SHA512 preferred.",
                     "type": "string"
                 },
                 "wireguard_vpn": {
