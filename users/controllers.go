@@ -13,8 +13,14 @@ var Cache *config.Cache
 
 func FindUserByToken(token string) *User {
 	var user User
-	var users = Cache.GetAll().(Users)
 	var counter int = 0
+
+	rawUsers := Cache.GetAll()
+
+	users, ok := rawUsers.(Users)
+	if !ok {
+		return nil
+	}
 
 	for _, user = range users.Users {
 		// each token should be unique, to be generated from User.Name and other attributes + pepper
