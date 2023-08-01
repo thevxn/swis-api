@@ -16,13 +16,6 @@ var Params = AuthParams{
 	BearerToken: "",
 }
 
-func respondWithError(c *gin.Context, code int, message interface{}) {
-	c.AbortWithStatusJSON(code, gin.H{
-		"message": message,
-		"code":    code,
-	})
-}
-
 // https://sosedoff.com/2014/12/21/gin-middleware.html
 func AuthenticationMiddleware() gin.HandlerFunc {
 	rootToken := os.Getenv("ROOT_TOKEN")
@@ -67,9 +60,7 @@ func AuthenticationMiddleware() gin.HandlerFunc {
 }
 
 func AuthorizationMiddleware() gin.HandlerFunc {
-
 	return func(c *gin.Context) {
-
 		// grant all to root
 		if Params.User.Name == "root" {
 			c.Next()

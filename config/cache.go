@@ -22,7 +22,6 @@ func (c *Cache) GetAll() (interface{}) {
 
 	c.syncMap.Range(func(rawKey, rawVal interface{}) bool {
 		k, ok := rawKey.(string)
-		//v, ok := rawVal.(Project)
 
 		if !ok {
 			return false
