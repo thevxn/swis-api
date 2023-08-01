@@ -25,7 +25,7 @@ func (c *Cache) Get(key string) (interface{}, bool) {
 	return rawVal, true
 }
 
-func (c *Cache) GetAll() (interface{}) {
+func (c *Cache) GetAll() interface{} {
 	var values = make(map[string]interface{})
 
 	c.syncMap.Range(func(rawKey, rawVal interface{}) bool {
@@ -42,14 +42,13 @@ func (c *Cache) GetAll() (interface{}) {
 	return values
 }
 
-
-func (c *Cache) Set(key string, value interface{}) (bool) {
+func (c *Cache) Set(key string, value interface{}) bool {
 	c.syncMap.Store(key, value)
 
 	return true
 }
 
-func (c *Cache) Delete(key string) (bool) {
+func (c *Cache) Delete(key string) bool {
 	c.syncMap.Delete(key)
 
 	return true

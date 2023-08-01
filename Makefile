@@ -80,7 +80,7 @@ version:
 .PHONY: fmt
 fmt:
 	@echo -e "\n${YELLOW} Code reformating (gofmt)... ${RESET}\n"
-	@gofmt -d -s .
+	@gofmt -s -w .
 #@find . -name "*.go" -exec gofmt {} \;
 
 .PHONY: unit

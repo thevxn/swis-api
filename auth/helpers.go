@@ -35,4 +35,3 @@ func respondWithError(c *gin.Context, code int, message interface{}) {
 		"code":    code,
 	})
 }
-

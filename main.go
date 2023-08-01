@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.4.33
+// @version 5.4.34
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -116,7 +116,6 @@ func main() {
 		})
 	})
 
-
 	//
 	// swis packages
 	//
@@ -151,6 +150,7 @@ func main() {
 
 	// news CRUD
 	newsRouter := router.Group("/news")
+	news.Cache = &config.Cache{}
 	news.Routes(newsRouter)
 
 	// projects CRUD
@@ -179,8 +179,8 @@ func main() {
 		Handler:      router,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
-		// = 1 * 2^22 = 1,048,576 * 4
-		MaxHeaderBytes: 1 << 22,
+		// = 1 * 2^23 = 1,048,576 * 8
+		MaxHeaderBytes: 1 << 23,
 		// use config.CORSMiddleware()
 		DisableGeneralOptionsHandler: true,
 	}

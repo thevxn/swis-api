@@ -38,7 +38,7 @@ func GetProjects(c *gin.Context) {
 func GetProjectByID(c *gin.Context) {
 	var id string = c.Param("id")
 
-	rawProject, ok := Cache.Get(id) 
+	rawProject, ok := Cache.Get(id)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "project not found",
@@ -194,7 +194,7 @@ func PostDumpRestore(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "projects imported/restored, omitting output",
-		"count": counter,
+		"count":   counter,
 	})
 	return
 }

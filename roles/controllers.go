@@ -213,7 +213,7 @@ func PostDumpRestore(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "roles imported/restored, omitting output",
-		"count": counter,
+		"count":   counter,
 	})
 	return
 }
