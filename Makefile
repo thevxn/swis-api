@@ -13,6 +13,7 @@ include .env.example
 APP_ENVIRONMENT?=development
 PROJECT_NAME?=${APP_NAME}
 DOCKER_COMPOSE_FILE?=./docker-compose.yml
+DOCKER_COMPOSE_DEV_FILE?=./docker-compose.dev.yml
 SWAG_BINARY?=~/go/bin/swag
 
 APP_URL?=swapi.example.com
@@ -121,6 +122,11 @@ logs:
 stop:  
 	@echo -e "\n${YELLOW} Stopping and purging project (docker compose down)... ${RESET}\n"
 	@docker compose --file $(DOCKER_COMPOSE_FILE) down
+
+.PHONY: dev
+dev:
+	@echo -e "\n${YELLOW} Starting local swapi instance... ${RESET}\n"
+	@docker compose --file $(DOCKER_COMPOSE_DEV_FILE) up --force-recreate --remove-orphans --build
 
 .PHONY: dump
 dump: 

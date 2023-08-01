@@ -24,3 +24,5 @@ go.work
 .dumps/*
 
 swis
+swis-api
+swapi
