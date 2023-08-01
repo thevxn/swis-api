@@ -1,7 +1,7 @@
 package projects
 
 type Projects struct {
-	// Array ob Project objects.
+	// Array of Project objects for a batch import.
 	Projects map[string]Project `json:"projects"`
 }
 

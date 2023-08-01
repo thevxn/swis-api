@@ -2,12 +2,13 @@ package projects
 
 import (
 	"net/http"
-	"sync"
+
+	"go.savla.dev/swis/v5/config"
 
 	"github.com/gin-gonic/gin"
 )
 
-var p sync.Map
+var Cache *config.Cache
 
 // @Summary Get all projects
 // @Description get project list
@@ -17,19 +18,7 @@ var p sync.Map
 // @Router /projects [get]
 // GetProjects function dumps the projects variable contents
 func GetProjects(c *gin.Context) {
-	var projects = make(map[string]Project)
-
-	p.Range(func(rawKey, rawVal interface{}) bool {
-		k, ok := rawKey.(string)
-		v, ok := rawVal.(Project)
-
-		if !ok {
-			return false
-		}
-
-		projects[k] = v
-		return true
-	})
+	projects := Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,
@@ -48,10 +37,8 @@ func GetProjects(c *gin.Context) {
 // GetProjectByID returns project's properties, given sent ID exists in database
 func GetProjectByID(c *gin.Context) {
 	var id string = c.Param("id")
-	var project Project
 
-	rawProject, ok := p.Load(id)
-	project, ok = rawProject.(Project)
+	rawProject, ok := Cache.Get(id) 
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "project not found",
@@ -59,6 +46,8 @@ func GetProjectByID(c *gin.Context) {
 		})
 		return
 	}
+
+	project := rawProject.(*Project)
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -87,7 +76,7 @@ func PostNewProject(c *gin.Context) {
 		return
 	}
 
-	if _, found := p.Load(newProject.Name); found {
+	if _, found := Cache.Get(newProject.ID); found {
 		c.IndentedJSON(http.StatusConflict, gin.H{
 			"code":    http.StatusConflict,
 			"message": "project already exists",
@@ -96,7 +85,7 @@ func PostNewProject(c *gin.Context) {
 		return
 	}
 
-	p.Store(newProject.ID, newProject)
+	Cache.Set(newProject.ID, newProject)
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
@@ -117,7 +106,7 @@ func UpdateProjectByID(c *gin.Context) {
 	var updatedProject = &Project{}
 	var id string = c.Param("id")
 
-	if _, ok := p.Load(id); !ok {
+	if _, ok := Cache.Get(id); !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "project not found",
 			"code":    http.StatusNotFound,
@@ -133,7 +122,7 @@ func UpdateProjectByID(c *gin.Context) {
 		return
 	}
 
-	p.Store(id, updatedProject)
+	Cache.Set(id, updatedProject)
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -153,7 +142,15 @@ func UpdateProjectByID(c *gin.Context) {
 func DeleteProjectByID(c *gin.Context) {
 	var id string = c.Param("id")
 
-	p.Delete(id)
+	if _, ok := Cache.Get(id); !ok {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "project not found",
+			"code":    http.StatusNotFound,
+		})
+		return
+	}
+
+	Cache.Delete(id)
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -172,11 +169,6 @@ func DeleteProjectByID(c *gin.Context) {
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
 	var importProjects = &Projects{}
-	/* legacy import
-	var importProjects = &struct {
-		Projects []Project `json:"projects"`
-	}{}
-	*/
 	var project Project
 
 	if err := c.BindJSON(importProjects); err != nil {
@@ -188,7 +180,7 @@ func PostDumpRestore(c *gin.Context) {
 	}
 
 	for _, project = range importProjects.Projects {
-		p.Store(project.ID, project)
+		Cache.Set(project.ID, project)
 	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{

@@ -69,7 +69,7 @@ func TestGetProjects(t *testing.T) {
 	// garbage collector (GC) does nothing between the two requests, so maybe it is the testing package
 	// who cleans the memory after each request (does not even work when the two Test functions are merged)...
 	assert.Equal(t, http.StatusOK, w.Code)
-	//assert.NotEmpty(t, projects)
+	assert.NotEmpty(t, projects)
 }
 
 func TestGetProjectByID(t *testing.T) {
@@ -85,5 +85,5 @@ func TestGetProjectByID(t *testing.T) {
 	// this should return StatusOK and requested project by ID
 	//assert.Equal(t, http.StatusOK, w.Code)
 	assert.Equal(t, http.StatusNotFound, w.Code)
-	//assert.NotEmpty(t, project)
+	assert.NotEmpty(t, project)
 }
