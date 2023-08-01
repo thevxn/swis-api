@@ -4,8 +4,16 @@ import (
 	"sync"
 )
 
+type CacheInterface interface {
+	Get(string)
+	GetAll()
+	Set(string, interface{})
+	Delete(string)
+}
+
 type Cache struct {
 	syncMap sync.Map
+	CacheInterface
 }
 
 func (c *Cache) Get(key string) (interface{}, bool) {

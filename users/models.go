@@ -25,8 +25,8 @@ type User struct {
 	// to interract with savla-dev infra in general (by default).
 	Active bool `json:"active" default:false`
 
-	// Unique token used for auth purposes, SHA?-HMAC.
-	TokenHMAC string `json:"token_hmac"`
+	// Unique token used for auth purposes, SHA512 preferred.
+	TokenHash string `json:"token_hmac"`
 
 	// GitHub account/profile name (used for SSH public keys importing).
 	GitHubUser string `json:"github_username"`

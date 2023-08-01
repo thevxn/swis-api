@@ -13,28 +13,28 @@ var Cache *config.Cache
 // @Summary Get all projects
 // @Description get project list
 // @Tags projects
-// @Produce  json
+// @Produce json
 // @Success 200 {object} projects.Projects
 // @Router /projects [get]
-// GetProjects function dumps the projects variable contents
+// GetProjects function dumps the projects cache contents.
 func GetProjects(c *gin.Context) {
-	projects := Cache.GetAll()
+	var projects = Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,
-		"message":  "dumping projects",
+		"message":  "ok, dumping all projects",
 		"projects": projects,
 	})
 	return
 }
 
 // @Summary Get project by ID
-// @Description get project details by :id param
+// @Description get project details by :id route param
 // @Tags projects
-// @Produce  json
+// @Produce json
 // @Success 200 {object} projects.Project
 // @Router /projects/{id} [get]
-// GetProjectByID returns project's properties, given sent ID exists in database
+// GetProjectByID returns project's properties, given sent ID exists in database.
 func GetProjectByID(c *gin.Context) {
 	var id string = c.Param("id")
 
@@ -71,14 +71,13 @@ func GetProjectByID(c *gin.Context) {
 // @Param request body projects.Project true "query params"
 // @Success 200 {object} projects.Project
 // @Router /projects [post]
-// PostProject
 func PostNewProject(c *gin.Context) {
 	var newProject Project
 
 	if err := c.BindJSON(newProject); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
@@ -143,7 +142,7 @@ func UpdateProjectByID(c *gin.Context) {
 // @Description delete project by its ID
 // @Tags projects
 // @Produce json
-// @Param  id  path  string  true  "project ID"
+// @Param id path string true "project ID"
 // @Success 200 {object} projects.Project.ID
 // @Router /projects/{id} [delete]
 func DeleteProjectByID(c *gin.Context) {
@@ -177,6 +176,7 @@ func DeleteProjectByID(c *gin.Context) {
 func PostDumpRestore(c *gin.Context) {
 	var importProjects = &Projects{}
 	var project Project
+	var counter int = 0
 
 	if err := c.BindJSON(importProjects); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -188,11 +188,13 @@ func PostDumpRestore(c *gin.Context) {
 
 	for _, project = range importProjects.Projects {
 		Cache.Set(project.ID, project)
+		counter++
 	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "projects imported/restored, omitting output",
+		"count": counter,
 	})
 	return
 }

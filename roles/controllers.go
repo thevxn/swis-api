@@ -2,12 +2,13 @@ package roles
 
 import (
 	"net/http"
-	"sync"
+
+	"go.savla.dev/swis/v5/config"
 
 	"github.com/gin-gonic/gin"
 )
 
-var r sync.Map
+var Cache *config.Cache
 
 // @Summary Get all roles
 // @Description get roules complete list
@@ -17,23 +18,11 @@ var r sync.Map
 // @Router /roles [get]
 // GetRoles returns JSON serialized list of roles and their properties.
 func GetRoles(c *gin.Context) {
-	var roles = make(map[string]Role)
-
-	r.Range(func(rawKey, rawVal interface{}) bool {
-		k, ok := rawKey.(string)
-		v, ok := rawVal.(Role)
-
-		if !ok {
-			return false
-		}
-
-		roles[k] = v
-		return true
-	})
+	var roles = Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "dumping roles",
+		"message": "ok, dumping all roles",
 		"roles":   roles,
 	})
 	return
@@ -49,12 +38,20 @@ func GetRoleByName(c *gin.Context) {
 	var name string = c.Param("name")
 	var role Role
 
-	rawRole, ok := r.Load(name)
-	role, ok = rawRole.(Role)
+	rawRole, ok := Cache.Get(name)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "role not found",
 			"code":    http.StatusNotFound,
+		})
+		return
+	}
+
+	role, ok = rawRole.(Role)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"message": "cannot assert data type, database internal error",
+			"code":    http.StatusInternalServerError,
 		})
 		return
 	}
@@ -74,19 +71,19 @@ func GetRoleByName(c *gin.Context) {
 // @Param request body roles.Role true "query params"
 // @Success 200 {object} roles.Role
 // @Router /roles [post]
-// PostGroup enables one to add new role to roles.
-func PostRole(c *gin.Context) {
-	var newRole *Role = &Role{}
+// PostNewRole enables one to add new role to roles.
+func PostNewRole(c *gin.Context) {
+	var newRole Role
 
 	if err := c.BindJSON(newRole); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
-	if _, found := r.Load(newRole.Name); found {
+	if _, found := Cache.Get(newRole.Name); found {
 		c.IndentedJSON(http.StatusConflict, gin.H{
 			"code":    http.StatusConflict,
 			"message": "role already exists",
@@ -95,7 +92,13 @@ func PostRole(c *gin.Context) {
 		return
 	}
 
-	r.Store(newRole.Name, newRole)
+	if saved := Cache.Set(newRole.Name, newRole); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "role couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
@@ -113,10 +116,10 @@ func PostRole(c *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{name} [put]
 func UpdateRoleByName(c *gin.Context) {
-	var updatedRole *Role = &Role{}
 	var name string = c.Param("name")
+	var updatedRole Role
 
-	if _, ok := r.Load(name); !ok {
+	if _, found := Cache.Get(name); !found {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "role not found",
 			"code":    http.StatusNotFound,
@@ -127,12 +130,18 @@ func UpdateRoleByName(c *gin.Context) {
 	if err := c.BindJSON(updatedRole); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
-	r.Store(name, updatedRole)
+	if saved := Cache.Set(name, updatedRole); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "role couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -146,17 +155,31 @@ func UpdateRoleByName(c *gin.Context) {
 // @Description delete role by its Name
 // @Tags roles
 // @Produce json
-// @Param  id  path  string  true  "role Name"
+// @Param id path string true "role Name"
 // @Success 200 {object} roles.Role.Name
 // @Router /roles/{name} [delete]
 func DeleteRoleByName(c *gin.Context) {
 	var name string = c.Param("name")
 
-	r.Delete(name)
+	if _, found := Cache.Get(name); !found {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "role not found",
+			"code":    http.StatusNotFound,
+		})
+		return
+	}
+
+	if deleted := Cache.Delete(name); !deleted {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "role couldn't be deleted from database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "role deleted by ID",
+		"message": "role deleted by Name",
 		"name":    name,
 	})
 	return
@@ -172,22 +195,25 @@ func DeleteRoleByName(c *gin.Context) {
 func PostDumpRestore(c *gin.Context) {
 	var importRoles = &Roles{}
 	var role Role
+	var counter int = 0
 
 	if err := c.BindJSON(importRoles); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
 	for _, role = range importRoles.Roles {
-		r.Store(role.Name, role)
+		Cache.Set(role.Name, role)
+		counter++
 	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "roles imported/restored, omitting output",
+		"count": counter,
 	})
 	return
 }

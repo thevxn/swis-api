@@ -30,11 +30,11 @@ services:
       - APP_ENVIRONMENT=${APP_ENVIRONMENT}
       - APP_NAME=${APP_NAME}
       - APP_VERSION=${APP_VERSION}
-      - DOCKER_INTERNAL_PORT=${DOCKER_DEV_PORT}
       - GIN_MODE=${GIN_MODE}
       - GOLANG_VERSION=${GOLANG_VERSION}
       - GOMAXPROCS=${GOMAXPROCS}
       - ROOT_TOKEN=${ROOT_TOKEN}
+      - SERVER_PORT=${DOCKER_DEV_PORT}
       - TZ=${TZ}
     volumes: 
       - "swis-data-dev:${APP_ROOT}"
@@ -48,10 +48,10 @@ services:
       - "${DOCKER_DEV_PORT}:${DOCKER_DEV_PORT}/tcp"
     networks:
       - ${DOCKER_NETWORK_NAME}
-    labels:
-      - "traefik.http.routers.${APP_NAME}-dev.rule=Host(${APP_URLS_TRAEFIK})"
-      - "traefik.http.services.${APP_NAME}-dev.loadbalancer.server.port=${DOCKER_DEV_PORT}"
-      - "traefik.docker.network=${DOCKER_NETWORK_NAME}"
+    #labels:
+    #  - "traefik.http.routers.${APP_NAME}-dev.rule=Host(${APP_URLS_TRAEFIK})"
+    #  - "traefik.http.services.${APP_NAME}-dev.loadbalancer.server.port=${DOCKER_DEV_PORT}"
+    #  - "traefik.docker.network=${DOCKER_NETWORK_NAME}"
 
   swagger_ui:
     image: swaggerapi/swagger-ui

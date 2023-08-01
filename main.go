@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.4.32
+// @version 5.4.33
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -44,7 +44,6 @@ import (
 	"go.savla.dev/swis/v5/news"
 	"go.savla.dev/swis/v5/projects"
 	"go.savla.dev/swis/v5/roles"
-	"go.savla.dev/swis/v5/system"
 	"go.savla.dev/swis/v5/users"
 
 	// remote dependencies
@@ -69,12 +68,11 @@ func main() {
 	// serve savla-dev internal favicon
 	router.StaticFile("/favicon.ico", "./favicon.ico")
 
-	// (GET /ping)
 	// @Summary Simple ping-pong route
 	// @Description Simple ping-pong route
 	// @Success 200
 	// @Router /ping [get]
-	// very simple LE support --- https://github.com/gin-gonic/gin#support-lets-encrypt
+	// Very simple LE support --- https://github.com/gin-gonic/gin#support-lets-encrypt.
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
@@ -118,6 +116,7 @@ func main() {
 		})
 	})
 
+
 	//
 	// swis packages
 	//
@@ -155,36 +154,33 @@ func main() {
 	news.Routes(newsRouter)
 
 	// projects CRUD
-	projects.Cache = &config.Cache{}
 	projectsRouter := router.Group("/projects")
+	projects.Cache = &config.Cache{}
 	projects.Routes(projectsRouter)
 
 	// roles CRUD
 	rolesRouter := router.Group("/roles")
+	roles.Cache = &config.Cache{}
 	roles.Routes(rolesRouter)
-
-	// system CRUD
-	systemRouter := router.Group("/system")
-	system.Routes(systemRouter)
 
 	// users CRUD
 	usersRouter := router.Group("/users")
-	//usersRouter.Use(authMiddleware.MiddlewareFunc())
+	users.Cache = &config.Cache{}
 	users.Routes(usersRouter)
 
-	// attach router to http.Server and start it, check for DOCKER_INTERNAL_PORT constant
-	if os.Getenv("DOCKER_INTERNAL_PORT") == "" {
-		log.Fatal("DOCKER_INTERNAL_PORT environment variable not provided! stopping the server now...")
+	// attach router to http.Server and start it, check for SERVER_PORT env variable
+	if os.Getenv("SERVER_PORT") == "" {
+		log.Fatal("SERVER_PORT environment variable not provided! refusing to start the server...")
 	}
 
 	// https://pkg.go.dev/net/http#Server
 	server := &http.Server{
-		Addr:         "0.0.0.0:" + os.Getenv("DOCKER_INTERNAL_PORT"),
+		Addr:         "0.0.0.0:" + os.Getenv("SERVER_PORT"),
 		Handler:      router,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
-		// = 1 * 2^20 = 1,048,576
-		MaxHeaderBytes: 1 << 20,
+		// = 1 * 2^22 = 1,048,576 * 4
+		MaxHeaderBytes: 1 << 22,
 		// use config.CORSMiddleware()
 		DisableGeneralOptionsHandler: true,
 	}

@@ -9,7 +9,7 @@ func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetRoles)
 	g.POST("/",
-		PostRole)
+		PostNewRole)
 	g.GET("/:name",
 		GetRoleByName)
 	g.PUT("/:name",

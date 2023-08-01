@@ -3,42 +3,34 @@ package users
 import (
 	"net/http"
 	"strings"
-	"sync"
+
+	"go.savla.dev/swis/v5/config"
 
 	"github.com/gin-gonic/gin"
 )
 
-var u sync.Map
+var Cache *config.Cache
 
 func FindUserByToken(token string) *User {
-	var users = make(map[string]User)
-	var user *User = nil
+	var user User
+	var users = Cache.GetAll().(Users)
+	var counter int = 0
 
-	u.Range(func(rawKey, rawVal interface{}) bool {
-		// very insecure assert
-		k, ok := rawKey.(string)
-		v, ok := rawVal.(User)
-
-		if !ok {
-			return false
-		}
-
+	for _, user = range users.Users {
 		// each token should be unique, to be generated from User.Name and other attributes + pepper
-		if v.TokenHMAC == token && v.Active {
-			users[k] = v
+		if user.TokenHash == token && user.Active {
+			counter++
 
 			// if one token is shared between users, disallow both (this to be more discussed, please)
-			if len(users) > 1 {
-				return false
+			if counter > 1 {
+				return nil
 			}
 
-			user = &v
+			return &user
 		}
+	}
 
-		return true
-	})
-
-	return user
+	return nil
 }
 
 // @Summary Get all users
@@ -50,20 +42,7 @@ func FindUserByToken(token string) *User {
 // GetSocketList GET method
 // GetUsers returns JSON serialized list of users and their properties.
 func GetUsers(c *gin.Context) {
-	var users = make(map[string]User)
-
-	u.Range(func(rawKey, rawVal interface{}) bool {
-		// very insecure assert
-		k, ok := rawKey.(string)
-		v, ok := rawVal.(User)
-
-		if !ok {
-			return false
-		}
-
-		users[k] = v
-		return true
-	})
+	var users = Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -80,24 +59,31 @@ func GetUsers(c *gin.Context) {
 // @Router /users/{name} [get]
 // GetUserByName returns user's properties, given sent name exists in database.
 func GetUserByName(c *gin.Context) {
-	var name string = c.Param("name")
+	var userName string = c.Param("name")
 	var user User
 
-	userRaw, ok := u.Load(name)
-	user, ok = userRaw.(User)
-
+	rawUser, ok := Cache.Get(userName)
 	if !ok {
-		c.IndentedJSON(http.StatusConflict, gin.H{
-			"message": "user not found or the user object cannot be loaded",
-			"code":    http.StatusConflict,
-			"name":    name,
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "user not found",
+			"name":    userName,
+		})
+		return
+	}
+
+	user, ok = rawUser.(User)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot assert data type, database internal error",
 		})
 		return
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"message": "ok, dumping user info",
 		"code":    http.StatusOK,
+		"message": "ok, dumping user's info",
 		"user":    user,
 	})
 }
@@ -111,30 +97,34 @@ func GetUserByName(c *gin.Context) {
 // @Router /users [post]
 // PostNewUser enables one to add new user to users model.
 func PostNewUser(c *gin.Context) {
-	var newUser = &User{}
+	var newUser User
 
-	// bind received JSON to newUser
-	if err := c.BindJSON(newUser); err != nil {
+	if err := c.BindJSON(&newUser); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
-	// implement LoadOrStore() method
-	if _, found := u.Load(newUser.Name); found {
+	// TODO: implement LoadOrStore() method
+	if _, found := Cache.Get(newUser.Name); found {
 		c.IndentedJSON(http.StatusConflict, gin.H{
-			"message": "user already exists",
 			"code":    http.StatusConflict,
+			"message": "user already exists",
 			"name":    newUser.Name,
 		})
 		return
 	}
 
-	u.Store(newUser.Name, newUser)
+	if saved := Cache.Set(newUser.Name, newUser); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "user couldn't be saved to database",
+		})
+		return
+	}
 
-	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "user added",
@@ -151,23 +141,27 @@ func PostNewUser(c *gin.Context) {
 // PostDumpRestore
 func PostDumpRestore(c *gin.Context) {
 	var importUsers = &Users{}
+	var user User
+	var counter int = 0
 
 	// bind received JSON to newUser
 	if err := c.BindJSON(importUsers); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
-	for _, user := range importUsers.Users {
-		u.Store(user.Name, user)
+
+	for _, user = range importUsers.Users {
+		Cache.Set(user.Name, user)
+		counter++
 	}
 
-	// HTTP 201 Created
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "users imported successfully",
+		"count": counter,
 	})
 }
 
@@ -183,9 +177,7 @@ func ActiveToggleUserByName(c *gin.Context) {
 	var user User
 	var userName string = c.Param("name")
 
-	rawUser, ok := u.Load(userName)
-	user, ok = rawUser.(User)
-
+	rawUser, ok := Cache.Get(userName)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "user not found",
@@ -195,10 +187,25 @@ func ActiveToggleUserByName(c *gin.Context) {
 		return
 	}
 
+	user, ok = rawUser.(User)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"message": "cannot assert data type, database internal error",
+			"code":    http.StatusInternalServerError,
+		})
+		return
+	}
+
 	// inverse the Active field value
 	user.Active = !user.Active
 
-	u.Store(userName, user)
+	if saved := Cache.Set(userName, user); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "user couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -220,14 +227,21 @@ func PostUsersSSHKeys(c *gin.Context) {
 	var user User
 	var userName string = c.Param("name")
 
-	rawUser, ok := u.Load(userName)
-	user, ok = rawUser.(User)
-
+	rawUser, ok := Cache.Get(userName)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "user not found",
 			"code":    http.StatusNotFound,
 			"name":    userName,
+		})
+		return
+	}
+
+	user, ok = rawUser.(User)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"message": "cannot assert data type, database internal error",
+			"code":    http.StatusInternalServerError,
 		})
 		return
 	}
@@ -239,17 +253,24 @@ func PostUsersSSHKeys(c *gin.Context) {
 	if err := c.BindJSON(&sshKeys); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
 	user.SSHKeys = sshKeys
-	u.Store(userName, user)
+
+	if saved := Cache.Set(userName, user); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "user couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusAccepted, gin.H{
 		"code":    http.StatusAccepted,
-		"message": "ssh keys for user imported",
+		"message": "ssh keys for user (re)imported",
 		"name":    userName,
 	})
 	return
@@ -266,14 +287,21 @@ func GetUsersSSHKeysRaw(c *gin.Context) {
 	var user User
 	var userName string = c.Param("name")
 
-	rawUser, ok := u.Load(userName)
-	user, ok = rawUser.(User)
-
+	rawUser, ok := Cache.Get(userName)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "user not found",
 			"code":    http.StatusNotFound,
 			"name":    userName,
+		})
+		return
+	}
+
+	user, ok = rawUser.(User)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"message": "cannot assert data type, database internal error",
+			"code":    http.StatusInternalServerError,
 		})
 		return
 	}
@@ -295,7 +323,21 @@ func GetUsersSSHKeysRaw(c *gin.Context) {
 func DeleteUserByName(c *gin.Context) {
 	var name string = c.Param("name")
 
-	u.Delete(name)
+	if _, found := Cache.Get(name); !found {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"message": "user not found",
+			"code":    http.StatusNotFound,
+		})
+		return
+	}
+
+	if deleted := Cache.Delete(name); !deleted {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "user couldn't be deleted from database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -313,31 +355,37 @@ func DeleteUserByName(c *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{name} [put]
 func UpdateUserByName(c *gin.Context) {
-	var user = &User{}
 	var name string = c.Param("name")
+	var updatedUser User
 
-	if _, ok := u.Load(name); !ok {
+	if _, found := Cache.Get(name); !found {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"message": "project not found",
 			"code":    http.StatusNotFound,
+			"message": "user not found",
 		})
 		return
 	}
 
-	if err := c.BindJSON(user); err != nil {
+	if err := c.BindJSON(updatedUser); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
-	u.Store(name, user)
+	if saved := Cache.Set(name, updatedUser); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "user couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "user updated",
-		"user":    user,
+		"user":    updatedUser,
 	})
 	return
 }
