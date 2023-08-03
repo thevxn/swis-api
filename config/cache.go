@@ -25,21 +25,24 @@ func (c *Cache) Get(key string) (interface{}, bool) {
 	return rawVal, true
 }
 
-func (c *Cache) GetAll() interface{} {
+func (c *Cache) GetAll() (map[string]interface{}, int) {
 	var values = make(map[string]interface{})
+	var counter int = 0
 
 	c.syncMap.Range(func(rawKey, rawVal interface{}) bool {
 		k, ok := rawKey.(string)
+		//v, ok := rawVal.(T)
 
 		if !ok {
 			return false
 		}
 
 		values[k] = rawVal
+		counter++
 		return true
 	})
 
-	return values
+	return values, counter
 }
 
 func (c *Cache) Set(key string, value interface{}) bool {

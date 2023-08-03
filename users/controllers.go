@@ -12,26 +12,15 @@ import (
 var Cache *config.Cache
 
 func FindUserByToken(token string) *User {
-	var user User
-	var counter int = 0
+	rawUsers, _ := Cache.GetAll()
 
-	rawUsers := Cache.GetAll()
+	for _, rawUser := range rawUsers {
+		user, ok := rawUser.(User)
+		if !ok {
+			return nil
+		}
 
-	users, ok := rawUsers.(Users)
-	if !ok {
-		return nil
-	}
-
-	for _, user = range users.Users {
-		// each token should be unique, to be generated from User.Name and other attributes + pepper
 		if user.TokenHash == token && user.Active {
-			counter++
-
-			// if one token is shared between users, disallow both (this to be more discussed, please)
-			if counter > 1 {
-				return nil
-			}
-
 			return &user
 		}
 	}
@@ -48,10 +37,11 @@ func FindUserByToken(token string) *User {
 // GetSocketList GET method
 // GetUsers returns JSON serialized list of users and their properties.
 func GetUsers(c *gin.Context) {
-	var users = Cache.GetAll()
+	users, count := Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
+		"count":   count,
 		"message": "ok, listing users",
 		"users":   users,
 	})

@@ -13,9 +13,9 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.4.36"
+        "version": "5.4.37"
     },
-    "host": "swis-api-run:8050",
+    "host": "swis-api-run-prod:8050",
     "basePath": "/",
     "paths": {
         "/backups": {
@@ -475,6 +475,35 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "add new socket to socket array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Adding new socket to socket array",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
             }
         },
         "/dish/sockets/{host}": {
@@ -589,18 +618,6 @@
                         "schema": {
                             "$ref": "#/definitions/dish.Socket"
                         }
-                    }
-                }
-            }
-        },
-        "/dish/test": {
-            "head": {
-                "tags": [
-                    "dish"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
                     }
                 }
             }

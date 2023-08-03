@@ -18,10 +18,11 @@ var Cache *config.Cache
 // @Router /roles [get]
 // GetRoles returns JSON serialized list of roles and their properties.
 func GetRoles(c *gin.Context) {
-	var roles = Cache.GetAll()
+	roles, count := Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
+		"count":   count,
 		"message": "ok, dumping all roles",
 		"roles":   roles,
 	})

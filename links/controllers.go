@@ -19,10 +19,11 @@ var Cache *config.Cache
 // GetLinks GET method
 // GetLinks returns JSON serialized list of links and their properties.
 func GetLinks(c *gin.Context) {
-	var links = Cache.GetAll()
+	links, count := Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
+		"count":   count,
 		"message": "ok, listing links",
 		"links":   links,
 	})

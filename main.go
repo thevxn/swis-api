@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.4.36
+// @version 5.4.37
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -10,7 +10,7 @@
 // @license.name MIT
 // @license.url https://github.com/savla-dev/swis-api/blob/master/LICENSE
 
-// @host swis-api-run:8050
+// @host swis-api-run-prod:8050
 // @BasePath /
 
 // @securityDefinitions.apikey apiKey
@@ -134,6 +134,7 @@ func main() {
 
 	// dish CRUD
 	dishRouter := router.Group("/dish")
+	dish.Cache = &config.Cache{}
 	dish.Routes(dishRouter)
 
 	// finance accounts CRUD

@@ -1,30 +1,19 @@
 package dish
 
 import (
-	"crypto/sha256"
-	"encoding/json"
-	"fmt"
+	//"crypto/sha256"
+	//"encoding/json"
+	//"fmt"
 	"net/http"
-	"sync"
 	"time"
 
+	//"go.savla.dev/dish/pkg/socket"
+	"go.savla.dev/swis/v5/config"
+
 	"github.com/gin-gonic/gin"
-	//"github.com/savla-dev/savla-dish/socket"
 )
 
-var s sync.Map
-
-// (HEAD /dish/test)
-// @Summary
-// @Description
-// @Tags dish
-// @Success 200
-// @Router /dish/test [head]
-// HeadTest is the HEAD HTTP method for savla-dish service, that acts like a testing endpoint.
-func HeadTest(c *gin.Context) {
-	c.String(http.StatusOK, "ok")
-	return
-}
+var Cache *config.Cache
 
 // (GET /dish/sockets)
 // @Summary Get all sockets list
@@ -35,22 +24,9 @@ func HeadTest(c *gin.Context) {
 // @Router /dish/sockets [get]
 // Get all sockets loaded.
 func GetSocketList(c *gin.Context) {
-	var sockets = make(map[string]Socket)
+	sockets, count := Cache.GetAll()
 
-	s.Range(func(rawKey, rawVal interface{}) bool {
-		// very insecure assert?
-		k, ok := rawKey.(string)
-		v, ok := rawVal.(Socket)
-
-		if !ok {
-			return false
-		}
-
-		sockets[k] = v
-		return true
-	})
-
-	rawJSON, err := json.Marshal(sockets)
+	/*rawJSON, err := json.Marshal(sockets)
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
@@ -64,110 +40,97 @@ func GetSocketList(c *gin.Context) {
 			"code":    http.StatusInternalServerError,
 			"message": "cannot calculate the checksum",
 		})
-	}
+	}*/
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,
+		"count":    count,
 		"message":  "ok, dumping all sockets",
-		"checksum": fmt.Sprintf("%x", rawChecksum),
+		//"checksum": fmt.Sprintf("%x", rawChecksum),
 		"sockets":  sockets,
 	})
 	return
 }
 
-// (GET /dish/sockets/{host})
 // @Summary Get socket list by host
 // @Description get socket list by Host
 // @Tags dish
-// @Produce  json
-// @Param   host     path    string     true        "dish instance name"
+// @Produce json
+// @Param host path string true "dish instance name"
 // @Success 200 {string} string	"ok"
 // @Router /dish/sockets/{host} [get]
 // Get sockets by hostname/dish-name.
 func GetSocketListByHost(c *gin.Context) {
 	var host string = c.Param("host")
-	var sockets = make(map[string]Socket)
+	var exportedSockets = make(map[string]Socket)
 
-	s.Range(func(rawKey, rawVal interface{}) bool {
-		// very insecure assert?
-		k, ok := rawKey.(string)
-		v, ok := rawVal.(Socket)
+	rawSocketsMap, _ := Cache.GetAll()
 
+	for _, rawSocket := range rawSocketsMap {
+		socket, ok := rawSocket.(Socket)
 		if !ok {
-			return false
+			continue
 		}
 
-		if contains(v.DishTarget, host) && !v.Muted {
-			sockets[k] = v
+		if contains(socket.DishTarget, host) && !socket.Muted {
+			exportedSockets[socket.ID] = socket
 		}
-		return true
-	})
+	}
 
-	if len(sockets) > 0 {
-		rawJSON, err := json.Marshal(sockets)
-		if err != nil {
-			c.IndentedJSON(http.StatusInternalServerError, gin.H{
-				"code":    http.StatusInternalServerError,
-				"message": "cannot marshal sockets into JSON byte stream",
-			})
-		}
-
-		rawChecksum := sha256.Sum256([]byte(rawJSON))
-		if err != nil {
-			c.IndentedJSON(http.StatusInternalServerError, gin.H{
-				"code":    http.StatusInternalServerError,
-				"message": "cannot calculate the checksum",
-			})
-		}
-
+	if len(exportedSockets) > 0 {
 		c.IndentedJSON(http.StatusOK, gin.H{
-			"message":  "ok, dumping socket by host",
 			"code":     http.StatusOK,
-			"checksum": fmt.Sprintf("%x", rawChecksum),
-			"sockets":  sockets,
+			"message":  "ok, dumping socket by host",
+			"host":     host,
+			"sockets":  exportedSockets,
 		})
 		return
 	}
 
 	c.IndentedJSON(http.StatusNotFound, gin.H{
-		"message": "no sockets for given 'hostname'",
 		"code":    http.StatusNotFound,
+		"message": "no sockets for given 'host'",
 		"host":    host,
 	})
 	return
 
 }
 
-// (POST /sockets)
 // @Summary Adding new socket to socket array
 // @Description add new socket to socket array
 // @Tags dish
 // @Produce json
 // @Param request body dish.Socket true "query params"
 // @Success 200 {object} dish.Socket
+// @Router /dish/sockets [post]
 // Add new socket to the list.
 func PostNewSocket(c *gin.Context) {
-	var newSocket = &Socket{}
+	var newSocket Socket
 
-	// bind JSON to newSocket
-	if err := c.BindJSON(newSocket); err != nil {
+	if err := c.BindJSON(&newSocket); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
-	if _, found := s.Load(newSocket.ID); found {
+	if _, found := Cache.Get(newSocket.ID); found {
 		c.IndentedJSON(http.StatusConflict, gin.H{
-			"message": "dish socket already exists",
 			"code":    http.StatusConflict,
+			"message": "dish socket already exists",
 			"id":      newSocket.ID,
 		})
 		return
 	}
 
-	s.Store(newSocket.ID, newSocket)
+	if saved := Cache.Set(newSocket.ID, newSocket); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "socket couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
@@ -188,9 +151,9 @@ func PostNewSocket(c *gin.Context) {
 // edit existing socket by ID
 func UpdateSocketByID(c *gin.Context) {
 	var id string = c.Param("id")
-	var updatedSocket = &Socket{}
+	var updatedSocket Socket
 
-	if _, ok := s.Load(id); !ok {
+	if _, found := Cache.Get(id); !found {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
 			"message": "socket not found",
@@ -198,19 +161,25 @@ func UpdateSocketByID(c *gin.Context) {
 		return
 	}
 
-	if err := c.BindJSON(updatedSocket); err != nil {
+	if err := c.BindJSON(&updatedSocket); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
-	s.Store(updatedSocket.ID, updatedSocket)
+	if saved := Cache.Set(updatedSocket.ID, updatedSocket); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "socket couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "socket updated",
+		"message": "socket updated by its ID",
 		"socket":  updatedSocket,
 	})
 	return
@@ -226,12 +195,10 @@ func UpdateSocketByID(c *gin.Context) {
 // @Router /dish/sockets/{id}/mute [put]
 // edit existing socket by ID
 func MuteToggleSocketByID(c *gin.Context) {
-	var updatedSocket Socket
 	var id string = c.Param("id")
+	var updatedSocket Socket
 
-	rawSocket, ok := s.Load(id)
-	updatedSocket, ok = rawSocket.(Socket)
-
+	rawSocket, ok := Cache.Get(id)
 	if !ok {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
@@ -241,13 +208,29 @@ func MuteToggleSocketByID(c *gin.Context) {
 		return
 	}
 
+	updatedSocket, ok = rawSocket.(Socket)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot assert data type, database internal error",
+		})
+		return
+	}
+
 	// inverse the Muted field value
 	updatedSocket.Muted = !updatedSocket.Muted
+
 	if updatedSocket.Muted {
 		updatedSocket.MutedFrom = time.Now().Unix()
 	}
 
-	s.Store(updatedSocket.ID, updatedSocket)
+	if saved := Cache.Set(updatedSocket.ID, updatedSocket); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "socket couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -269,7 +252,7 @@ func MuteToggleSocketByID(c *gin.Context) {
 func DeleteSocketByID(c *gin.Context) {
 	var id string = c.Param("id")
 
-	if _, ok := s.Load(id); !ok {
+	if _, found := Cache.Get(id); !found {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
 			"message": "socket not found",
@@ -278,7 +261,13 @@ func DeleteSocketByID(c *gin.Context) {
 		return
 	}
 
-	s.Delete(id)
+	if deleted := Cache.Delete(id); !deleted {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "socket couldn't be deleted from database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -298,21 +287,24 @@ func DeleteSocketByID(c *gin.Context) {
 func PostDumpRestore(c *gin.Context) {
 	var importSockets = &Sockets{}
 	var socket Socket
+	var counter int = 0
 
 	if err := c.BindJSON(importSockets); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
+			"message": "cannot bind input JSON stream",
 		})
 		return
 	}
 
 	for _, socket = range importSockets.Sockets {
-		s.Store(socket.ID, socket)
+		Cache.Set(socket.ID, socket)
+		counter++
 	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
+		"count":   counter,
 		"message": "sockets imported, omitting output",
 	})
 	return

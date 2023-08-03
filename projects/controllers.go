@@ -18,10 +18,11 @@ var Cache *config.Cache
 // @Router /projects [get]
 // GetProjects function dumps the projects cache contents.
 func GetProjects(c *gin.Context) {
-	var projects = Cache.GetAll()
+	projects, count := Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,
+		"count":    count,
 		"message":  "ok, dumping all projects",
 		"projects": projects,
 	})

@@ -5,8 +5,6 @@ import (
 )
 
 func Routes(g *gin.RouterGroup) {
-	g.HEAD("/test",
-		HeadTest)
 	g.GET("/sockets",
 		GetSocketList)
 	g.GET("/sockets/:host",

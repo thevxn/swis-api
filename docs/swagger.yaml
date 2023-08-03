@@ -573,7 +573,7 @@ definitions:
         description: Wireguard public key.
         type: string
     type: object
-host: swis-api-run:8050
+host: swis-api-run-prod:8050
 info:
   contact:
     email: krusty@savla.dev
@@ -585,7 +585,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.4.36
+  version: 5.4.37
 paths:
   /backups:
     get:
@@ -890,6 +890,25 @@ paths:
       summary: Get all sockets list
       tags:
       - dish
+    post:
+      description: add new socket to socket array
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dish.Socket'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Adding new socket to socket array
+      tags:
+      - dish
   /dish/sockets/{host}:
     get:
       description: get socket list by Host
@@ -964,13 +983,6 @@ paths:
           schema:
             $ref: '#/definitions/dish.Socket'
       summary: Mute/unmute socket by its ID
-      tags:
-      - dish
-  /dish/test:
-    head:
-      responses:
-        "200":
-          description: OK
       tags:
       - dish
   /finance:

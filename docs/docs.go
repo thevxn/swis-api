@@ -482,6 +482,35 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "add new socket to socket array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Adding new socket to socket array",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
             }
         },
         "/dish/sockets/{host}": {
@@ -596,18 +625,6 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/dish.Socket"
                         }
-                    }
-                }
-            }
-        },
-        "/dish/test": {
-            "head": {
-                "tags": [
-                    "dish"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
                     }
                 }
             }
@@ -2416,8 +2433,8 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.4.36",
-	Host:             "swis-api-run:8050",
+	Version:          "5.4.37",
+	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "swis-api (swapi) v5",
