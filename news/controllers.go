@@ -2,7 +2,7 @@ package news
 
 import (
 	"encoding/xml"
-	"log"
+	//"log"
 	"net/http"
 	"net/url"
 	"sort"
@@ -36,7 +36,6 @@ func findSourcesByUser(c *gin.Context) (s *[]Source) {
 func fetchRSSContents(s *Source) (i *[]Item) {
 	resp, err := http.Get(s.URL)
 	if err != nil {
-		log.Println(err)
 		return nil
 	}
 	defer resp.Body.Close()
@@ -45,7 +44,7 @@ func fetchRSSContents(s *Source) (i *[]Item) {
 
 	decoder := xml.NewDecoder(resp.Body)
 	if err = decoder.Decode(&rss); err != nil {
-		log.Println(err)
+		//log.Println(err)
 		return nil
 	}
 
