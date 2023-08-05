@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.4.38
+// @version 5.4.40
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -122,6 +122,7 @@ func main() {
 
 	// backups CRUD
 	backupsRouter := router.Group("/backups")
+	backups.Cache = &config.Cache{}
 	backups.Routes(backupsRouter)
 
 	// business CRUD

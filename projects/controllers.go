@@ -92,7 +92,13 @@ func PostNewProject(c *gin.Context) {
 		return
 	}
 
-	Cache.Set(newProject.ID, newProject)
+	if saved := Cache.Set(newProject.ID, newProject); !saved {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "project couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
@@ -110,10 +116,10 @@ func PostNewProject(c *gin.Context) {
 // @Success 200 {object} projects.Project
 // @Router /projects/{id} [put]
 func UpdateProjectByID(c *gin.Context) {
-	var updatedProject = &Project{}
+	var updatedProject Project
 	var id string = c.Param("id")
 
-	if _, ok := Cache.Get(id); !ok {
+	if _, found := Cache.Get(id); !found {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"message": "project not found",
 			"code":    http.StatusNotFound,
@@ -121,7 +127,7 @@ func UpdateProjectByID(c *gin.Context) {
 		return
 	}
 
-	if err := c.BindJSON(updatedProject); err != nil {
+	if err := c.BindJSON(&updatedProject); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
@@ -129,7 +135,13 @@ func UpdateProjectByID(c *gin.Context) {
 		return
 	}
 
-	Cache.Set(id, updatedProject)
+	if saved := Cache.Set(id, updatedProject); !saved {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "project couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -157,7 +169,13 @@ func DeleteProjectByID(c *gin.Context) {
 		return
 	}
 
-	Cache.Delete(id)
+	if deleted := Cache.Delete(id); !deleted {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "project couldn't be deleted from database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -180,7 +198,7 @@ func PostDumpRestore(c *gin.Context) {
 	var counter int = 0
 
 	if err := c.BindJSON(importProjects); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})

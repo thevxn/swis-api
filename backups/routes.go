@@ -6,11 +6,11 @@ import (
 
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
-		GetBackupsStatus)
+		GetBackupStatusAll)
 	g.POST("/",
-		PostBackupService)
+		PostBackedupService)
 	g.GET("/:service",
-		GetBackupStatusByServiceName)
+		GetBackedupStatusByServiceName)
 	g.PUT("/:service",
 		UpdateBackupStatusByServiceName)
 	g.DELETE("/:service",

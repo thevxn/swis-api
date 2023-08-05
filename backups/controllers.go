@@ -2,38 +2,28 @@ package backups
 
 import (
 	"net/http"
-	"sync"
+
+	"go.savla.dev/swis/v5/config"
 
 	"github.com/gin-gonic/gin"
 )
 
-var b sync.Map
+var Cache *config.Cache
 
-// @Summary Get all backuped services
-// @Description get backuped services
+// @Summary Get all backed up services
+// @Description get backed up services
 // @Tags backups
 // @Produce json
 // @Success 200 {object} string "ok"
 // @Router /backups [get]
-func GetBackupsStatus(c *gin.Context) {
-	var services = make(map[string]Backup)
-
-	b.Range(func(rawKey, rawVal interface{}) bool {
-		k, ok := rawKey.(string)
-		v, ok := rawVal.(Backup)
-
-		if !ok {
-			return false
-		}
-
-		services[k] = v
-		return true
-	})
+func GetBackupStatusAll(c *gin.Context) {
+	backedupServices, count := Cache.GetAll()
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "ok, dumping all sockets",
-		"backups": services,
+		"count":   count,
+		"message": "ok, dumping all backed up services",
+		"backups": backedupServices,
 	})
 	return
 }
@@ -45,61 +35,75 @@ func GetBackupsStatus(c *gin.Context) {
 // @Param   host     path    string     true        "backup service name"
 // @Success 200 {string} string	"ok"
 // @Router /backups/{service} [get]
-func GetBackupStatusByServiceName(c *gin.Context) {
+func GetBackedupStatusByServiceName(c *gin.Context) {
 	var name string = c.Param("service")
-	var service Backup
+	var backedupService Backup
 
-	rawService, ok := b.Load(name)
-	service, ok = rawService.(Backup)
-	if !ok {
+	rawService, found := Cache.Get(name)
+	if !found {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
-			"message": "service not found",
+			"message": "backup status by service not found",
+		})
+		return
+	}
+
+	backedupService, ok := rawService.(Backup)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"message": "cannot assert data type, database internal error",
+			"code":    http.StatusInternalServerError,
 		})
 		return
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "dumping requested backuped service's status",
-		"backup":  service,
+		"message": "dumping requested backed up service's status",
+		"backup":  backedupService,
 	})
 	return
 }
 
-// @Summary Adding new backuped serivce
-// @Description add new backuped service
+// @Summary Add new backed up serivce
+// @Description add new backed up service
 // @Tags backups
 // @Produce json
 // @Param request body backups.Backup true "query params"
 // @Success 200 {object} backups.Backup
 // @Router /backups [post]
-func PostBackupService(c *gin.Context) {
-	var newService = &Backup{}
+func PostBackedupService(c *gin.Context) {
+	var newBackedupService Backup
 
-	if err := c.BindJSON(newService); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+	if err := c.BindJSON(&newBackedupService); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
 	}
 
-	if _, found := b.Load(newService.ServiceName); found {
+	if _, found := Cache.Get(newBackedupService.ServiceName); found {
 		c.IndentedJSON(http.StatusConflict, gin.H{
 			"code":    http.StatusConflict,
-			"message": "service already exists",
-			"name":    newService.ServiceName,
+			"message": "backed up service already exists",
+			"name":    newBackedupService.ServiceName,
 		})
 		return
 	}
 
-	b.Store(newService.ServiceName, newService)
+	if saved := Cache.Set(newBackedupService.ServiceName, newBackedupService); !saved {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "backed up service couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
-		"message": "new project added",
-		"service": newService,
+		"message": "new backed up service added",
+		"service": newBackedupService,
 	})
 	return
 }
@@ -113,23 +117,31 @@ func PostBackupService(c *gin.Context) {
 // @Router /backups/{service} [put]
 func UpdateBackupStatusByServiceName(c *gin.Context) {
 	var updatedService Backup
-	var postedService = &Backup{}
+	var postedService Backup
+
 	var name string = c.Param("service")
 
-	rawService, ok := b.Load(name)
-	updatedService, ok = rawService.(Backup)
-
-	if !ok {
+	rawService, found := Cache.Get(name)
+	if !found {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
-			"message": "service not found",
+			"message": "backed up service not found by its name",
 			"name":    name,
 		})
 		return
 	}
 
-	if err := c.BindJSON(postedService); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+	updatedService, ok := rawService.(Backup)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"message": "cannot assert data type, database internal error",
+			"code":    http.StatusInternalServerError,
+		})
+		return
+	}
+
+	if err := c.BindJSON(&postedService); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
@@ -137,16 +149,23 @@ func UpdateBackupStatusByServiceName(c *gin.Context) {
 	}
 
 	// manually update important report fields
+	// TODO: review this!
 	updatedService.Timestamp = postedService.Timestamp
 	updatedService.LastStatus = postedService.LastStatus
 	updatedService.FileName = postedService.FileName
 	updatedService.Size = postedService.Size
 
-	b.Store(name, updatedService)
+	if saved := Cache.Set(name, updatedService); !saved {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "backed up service couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "service updated",
+		"message": "backed up service updated",
 		"backup":  updatedService,
 	})
 	return
@@ -164,21 +183,21 @@ func ActiveToggleBackupByServiceName(c *gin.Context) {
 	var service Backup
 	var name string = c.Param("service")
 
-	rawService, ok := b.Load(name)
-	if !ok {
+	rawService, found := Cache.Get(name)
+	if !found {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"message": "service not found",
+			"message": "backed up service not found",
 			"code":    http.StatusNotFound,
 			"name":    name,
 		})
 		return
 	}
 
-	service, typeOk := rawService.(Backup)
-	if !typeOk {
-		c.IndentedJSON(http.StatusConflict, gin.H{
-			"message": "stored value is not type Backup",
-			"code":    http.StatusConflict,
+	service, ok := rawService.(Backup)
+	if !ok {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"message": "cannot assert data type, database internal error",
+			"code":    http.StatusInternalServerError,
 		})
 		return
 	}
@@ -186,11 +205,17 @@ func ActiveToggleBackupByServiceName(c *gin.Context) {
 	// inverse the Active field value
 	service.Active = !service.Active
 
-	b.Store(name, service)
+	if saved := Cache.Set(name, service); !saved {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "backed up service couldn't be saved to database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "backuped service active toggle pressed!",
+		"message": "backed up service active toggle pressed!",
 		"backup":  service,
 	})
 	return
@@ -205,20 +230,26 @@ func ActiveToggleBackupByServiceName(c *gin.Context) {
 func DeleteBackupByServiceName(c *gin.Context) {
 	var name string = c.Param("service")
 
-	if _, ok := b.Load(name); !ok {
+	if _, found := Cache.Get(name); !found {
 		c.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
-			"message": "service not found",
+			"message": "backed up service not found",
 			"name":    name,
 		})
 		return
 	}
 
-	b.Delete(name)
+	if deleted := Cache.Delete(name); !deleted {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "backed up service couldn't be deleted from database",
+		})
+		return
+	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"message": "service deleted by Name",
+		"message": "backed up service deleted by Name",
 		"name":    name,
 	})
 	return
@@ -243,7 +274,7 @@ func PostDumpRestore(c *gin.Context) {
 	}
 
 	for _, service = range importServices.Backups {
-		b.Store(service.ServiceName, service)
+		Cache.Set(service.ServiceName, service)
 	}
 
 	c.IndentedJSON(http.StatusCreated, gin.H{
