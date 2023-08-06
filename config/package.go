@@ -8,27 +8,29 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func PrintAllRootItems(ctx *gin.Context, cache *Cache, dataName string) {
+func PrintAllRootItems(ctx *gin.Context, cache *Cache, pkgName string) {
 	items, count := cache.GetAll()
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"count":   count,
-		"message": fmt.Sprintf("ok, listing all items of '%s' package", dataName),
-		dataName:  items,
+		"items":   items,
+		"message": fmt.Sprintf("ok, listing all items of '%s' package", pkgName),
+		"package": pkgName,
 	})
 	return
 }
 
-func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, model T) {
-	var itemName string = ctx.Param("name")
+func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
+	key := ctx.Param("name")
 
-	rawItem, ok := cache.Get(itemName)
+	rawItem, ok := cache.Get(key)
 	if !ok {
 		ctx.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
+			"key":     key,
 			"message": "item not found",
-			"name":    itemName,
+			"package": pkgName,
 		})
 		return
 	}
@@ -37,24 +39,29 @@ func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, mo
 	if !ok {
 		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
+			"key":     key,
 			"message": "cannot assert data type, database internal error",
+			"package": pkgName,
 		})
 		return
 	}
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
+		"item":    item,
+		"key":     key,
 		"message": "ok, dumping item's contents",
-		dataName:  item,
+		"package": pkgName,
 	})
 	return
 }
 
-func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, model T) {
+func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
 	if err := ctx.BindJSON(&model); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot bind input JSON stream",
+			"package": pkgName,
 		})
 		return
 	}
@@ -68,6 +75,7 @@ func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, m
 			"code":    http.StatusConflict,
 			"key":     key,
 			"message": "item already exists",
+			"package": pkgName,
 		})
 		return
 	}
@@ -75,7 +83,9 @@ func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, m
 	if saved := cache.Set(key, model); !saved {
 		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
+			"key":     key,
 			"message": "item couldn't be saved to database",
+			"package": pkgName,
 		})
 		return
 	}
@@ -85,18 +95,20 @@ func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, m
 		"item":    model,
 		"key":     key,
 		"message": "new item added",
+		"package": pkgName,
 	})
-
 	return
 }
 
-func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, model T) {
+func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
 	key := ctx.Param("name")
 
 	if _, found := cache.Get(key); !found {
 		ctx.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
+			"key":     key,
 			"message": "item not found",
+			"package": pkgName,
 		})
 		return
 	}
@@ -104,7 +116,9 @@ func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, m
 	if err := ctx.BindJSON(&model); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
+			"key":     key,
 			"message": "cannot bind input JSON stream",
+			"package": pkgName,
 		})
 		return
 	}
@@ -112,7 +126,9 @@ func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, m
 	if saved := cache.Set(key, model); !saved {
 		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
+			"key":     key,
 			"message": "item couldn't be saved to database",
+			"package": pkgName,
 		})
 		return
 	}
@@ -122,17 +138,20 @@ func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, m
 		"item":    model,
 		"key":     key,
 		"message": "item updated",
+		"packege": pkgName,
 	})
 	return
 }
 
-func DeleteItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, model T) {
+func DeleteItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
 	key := ctx.Param("name")
 
 	if _, found := cache.Get(key); !found {
 		ctx.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
+			"key":     key,
 			"message": "item not found",
+			"package": pkgName,
 		})
 		return
 	}
@@ -140,7 +159,9 @@ func DeleteItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, m
 	if deleted := cache.Delete(key); !deleted {
 		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
+			"key":     key,
 			"message": "item couldn't be deleted from database",
+			"package": pkgName,
 		})
 		return
 	}
@@ -149,24 +170,28 @@ func DeleteItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, m
 		"code":    http.StatusOK,
 		"key":     key,
 		"message": "item deleted by key",
+		"package": pkgName,
 	})
 	return
 }
 
-func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, dataName string, model T) {
+func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
 	var counter int = 0
 
-	items := make(map[string]T)
+	items := struct {
+		Items map[string]T `json:"items"`
+	}{}
 
 	if err := ctx.BindJSON(&items); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot bind input JSON stream",
+			"package": pkgName,
 		})
 		return
 	}
 
-	for key, item := range items {
+	for key, item := range items.Items {
 		cache.Set(key, item)
 		counter++
 	}
@@ -175,6 +200,7 @@ func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, dataName string, m
 		"code":    http.StatusCreated,
 		"count":   counter,
 		"message": "items restored successfully",
+		"package": pkgName,
 	})
 	return
 }

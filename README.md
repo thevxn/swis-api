@@ -1,4 +1,4 @@
-# swis-api (swapi) v5.4
+# swis-api (swapi) v5.5
 
 [![Go Reference](https://pkg.go.dev/badge/go.savla.dev/swis/v5.svg)](https://pkg.go.dev/go.savla.dev/swis/v5)
 [![Go Report Card](https://goreportcard.com/badge/go.savla.dev/swis/v5)](https://goreportcard.com/report/go.savla.dev/swis/v5)
@@ -12,7 +12,7 @@ Reaad more in a short article on `swapi`:
 
 + https://krusty.space/projects/swis-api
 
-### simple way to run (docker stack without reverse-proxy)
+### simple way to run (docker stack without a reverse-proxy)
 
 ```
 git clone https://github.com/savla-dev/swis-api
