@@ -141,7 +141,7 @@ func PostDumpRestore(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"count":   counter,
-		"message": "links imported successfully, ommiting output",
+		"message": "links imported successfully, omitting output",
 	})
 	return
 }
