@@ -43,11 +43,11 @@ func GetSocketList(c *gin.Context) {
 	}*/
 
 	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":     http.StatusOK,
-		"count":    count,
-		"message":  "ok, dumping all sockets",
+		"code":    http.StatusOK,
+		"count":   count,
+		"message": "ok, dumping all sockets",
 		//"checksum": fmt.Sprintf("%x", rawChecksum),
-		"sockets":  sockets,
+		"sockets": sockets,
 	})
 	return
 }
@@ -79,10 +79,10 @@ func GetSocketListByHost(c *gin.Context) {
 
 	if len(exportedSockets) > 0 {
 		c.IndentedJSON(http.StatusOK, gin.H{
-			"code":     http.StatusOK,
-			"message":  "ok, dumping socket by host",
-			"host":     host,
-			"sockets":  exportedSockets,
+			"code":    http.StatusOK,
+			"message": "ok, dumping socket by host",
+			"host":    host,
+			"sockets": exportedSockets,
 		})
 		return
 	}

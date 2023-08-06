@@ -124,7 +124,7 @@ stop:
 	@docker compose --file $(DOCKER_COMPOSE_FILE) down
 
 .PHONY: dev
-dev:
+dev: fmt
 	@echo -e "\n${YELLOW} Starting local swapi instance... ${RESET}\n"
 	@docker compose --file $(DOCKER_COMPOSE_DEV_FILE) up --force-recreate --remove-orphans --build
 

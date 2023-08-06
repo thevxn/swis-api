@@ -152,3 +152,29 @@ func DeleteItemByParam[T any](ctx *gin.Context, cache *Cache, dataName string, m
 	})
 	return
 }
+
+func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, dataName string, model T) {
+	var counter int = 0
+
+	items := make(map[string]T)
+
+	if err := ctx.BindJSON(&items); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot bind input JSON stream",
+		})
+		return
+	}
+
+	for key, item := range items {
+		cache.Set(key, item)
+		counter++
+	}
+
+	ctx.IndentedJSON(http.StatusCreated, gin.H{
+		"code":    http.StatusCreated,
+		"count":   counter,
+		"message": "items restored successfully",
+	})
+	return
+}
