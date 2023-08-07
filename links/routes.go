@@ -8,16 +8,16 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetLinks)
-	g.POST("/",
-		PostNewLink)
-	g.GET("/:hash",
-		GetLinkByHash)
-	g.PUT("/:hash",
-		UpdateLinkByHash)
-	g.DELETE("/:hash",
-		DeleteLinkByHash)
-	g.PUT("/:hash/active",
-		ActiveToggleByHash)
+	g.POST("/:key",
+		PostNewLinkByKey)
+	g.GET("/:key",
+		GetLinkByKey)
+	g.PUT("/:key",
+		UpdateLinkByKey)
+	g.DELETE("/:key",
+		DeleteLinkByKey)
+	g.PUT("/:key/active",
+		ActiveToggleByKey)
 	g.POST("/restore",
 		PostDumpRestore)
 }

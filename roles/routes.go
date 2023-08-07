@@ -8,14 +8,14 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetRoles)
-	g.POST("/",
-		PostNewRole)
-	g.GET("/:name",
-		GetRoleByName)
-	g.PUT("/:name",
-		UpdateRoleByName)
-	g.DELETE("/:name",
-		DeleteRoleByName)
+	g.POST("/:key",
+		PostNewRoleByKey)
+	g.GET("/:key",
+		GetRoleByKey)
+	g.PUT("/:key",
+		UpdateRoleByKey)
+	g.DELETE("/:key",
+		DeleteRoleByKey)
 	g.POST("/restore",
 		PostDumpRestore)
 }
