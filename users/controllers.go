@@ -31,6 +31,7 @@ func FindUserByToken(token string) *User {
 	return nil
 }
 
+// GetUsers returns JSON serialized list of users and their properties.
 // @Summary Get all users
 // @Description get users complete list
 // @Tags users
@@ -38,58 +39,57 @@ func FindUserByToken(token string) *User {
 // @Success 200 {object} users.Users
 // @Router /users [get]
 // GetSocketList GET method
-// GetUsers returns JSON serialized list of users and their properties.
 func GetUsers(ctx *gin.Context) {
 	config.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
-// @Summary Get user by Name
-// @Description get user by their :name param
+// GetUserByName returns user's properties, given sent name exists in database.
+// @Summary Get user by Key
+// @Description get user by their :key param
 // @Tags users
 // @Produce  json
 // @Success 200 {object} users.User
-// @Router /users/{name} [get]
-// GetUserByName returns user's properties, given sent name exists in database.
-func GetUserByName(ctx *gin.Context) {
+// @Router /users/{key} [get]
+func GetUserByKey(ctx *gin.Context) {
 	config.PrintItemByParam(ctx, Cache, pkgName, User{})
 	return
 }
 
+// PostNewUserByKey enables one to add new user to users model.
 // @Summary Add new user to users array
 // @Description add new user to users array
 // @Tags users
 // @Produce json
 // @Param request body users.User true "query params"
 // @Success 200 {object} users.User
-// @Router /users/{name} [post]
-// PostNewUser enables one to add new user to users model.
-func PostNewUser(ctx *gin.Context) {
+// @Router /users/{key} [post]
+func PostNewUserByKey(ctx *gin.Context) {
 	config.AddNewItemByParam(ctx, Cache, pkgName, User{})
 	return
 }
 
-// @Summary Update user by Name
-// @Description update user by Name
+// @Summary Update user by Key
+// @Description update user by Key
 // @Tags users
 // @Produce json
 // @Param request body users.User.Name true "query params"
 // @Success 200 {object} users.User
-// @Router /users/{name} [put]
-func UpdateUserByName(ctx *gin.Context) {
+// @Router /users/{key} [put]
+func UpdateUserByKey(ctx *gin.Context) {
 	config.UpdateItemByParam(ctx, Cache, pkgName, User{})
 	return
 }
 
-// @Summary Delete user by Name
-// @Description delete user by Name
+// @Summary Delete user by Key
+// @Description delete user by Key
 // @Tags users
 // @Produce json
 // @Param  id  path  string  true  "user Name"
 // @Success 200 {object} users.User.Name
-// @Router /users/{name} [delete]
-func DeleteUserByName(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName, User{})
+// @Router /users/{key} [delete]
+func DeleteUserByKey(ctx *gin.Context) {
+	config.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -110,12 +110,12 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Description toggle active boolean for {user}
 // @Tags users
 // @Produce json
-// @Param  id  path  string  true  "username"
+// @Param  id  path  string  true  "user name"
 // @Success 200 {object} users.User
-// @Router /users/{name}/active [put]
-func ActiveToggleUserByName(c *gin.Context) {
+// @Router /users/{key}/active [put]
+func ActiveToggleUserByKey(c *gin.Context) {
 	var user User
-	var userName string = c.Param("name")
+	var userName string = c.Param("key")
 
 	rawUser, ok := Cache.Get(userName)
 	if !ok {
@@ -155,17 +155,17 @@ func ActiveToggleUserByName(c *gin.Context) {
 	return
 }
 
+// PostUsersSSHKeys method adds (rewrites) SSH key array by user.Name.
 // @Summary Add SSH public keys to User
 // @Description add new SSH keys to :user param
 // @Tags users
 // @Produce json
 // @Param request body string true "query params"
 // @Success 200 {object} users.User
-// @Router /users/{name}/keys/ssh [post]
-// PostUsersSSHKeys method adds (rewrites) SSH key array by user.Name
+// @Router /users/{key}/keys/ssh [post]
 func PostUsersSSHKeys(c *gin.Context) {
 	var user User
-	var userName string = c.Param("name")
+	var userName string = c.Param("key")
 
 	rawUser, ok := Cache.Get(userName)
 	if !ok {
@@ -216,16 +216,16 @@ func PostUsersSSHKeys(c *gin.Context) {
 	return
 }
 
+// GetUsersSSHKeysRaw
 // @Summary Get User's SSH keys in plain text
 // @Description fetch :user ssh key array output in plain text
 // @Tags users
 // @Produce json
 // @Success 200 {object} users.User
-// @Router /users/{name}/keys/ssh [get]
-// GetUsersSSHKeysRaw
+// @Router /users/{key}/keys/ssh [get]
 func GetUsersSSHKeysRaw(c *gin.Context) {
 	var user User
-	var userName string = c.Param("name")
+	var userName string = c.Param("key")
 
 	rawUser, ok := Cache.Get(userName)
 	if !ok {

@@ -8,20 +8,21 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetUsers)
-	g.GET("/:name",
-		GetUserByName)
-	g.POST("/:name",
-		PostNewUser)
-	g.PUT("/:name",
-		UpdateUserByName)
-	g.DELETE("/:name",
-		DeleteUserByName)
-	g.PUT("/:name/active",
-		ActiveToggleUserByName)
-	g.POST("/:name/keys/ssh",
-		PostUsersSSHKeys)
-	g.GET("/:name/keys/ssh",
-		GetUsersSSHKeysRaw)
+	g.GET("/:key",
+		GetUserByKey)
+	g.POST("/:key",
+		PostNewUserByKey)
+	g.PUT("/:key",
+		UpdateUserByKey)
+	g.DELETE("/:key",
+		DeleteUserByKey)
 	g.POST("/restore",
 		PostDumpRestore)
+
+	g.PUT("/:key/active",
+		ActiveToggleUserByKey)
+	g.POST("/:key/keys/ssh",
+		PostUsersSSHKeys)
+	g.GET("/:key/keys/ssh",
+		GetUsersSSHKeysRaw)
 }
