@@ -8,10 +8,10 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetUsers)
-	g.POST("/",
-		PostNewUser)
 	g.GET("/:name",
 		GetUserByName)
+	g.POST("/:name",
+		PostNewUser)
 	g.PUT("/:name",
 		UpdateUserByName)
 	g.DELETE("/:name",
