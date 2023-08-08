@@ -3,10 +3,16 @@ package infra
 import (
 	"net/http"
 
+	"go.savla.dev/swis/v5/config"
+
 	"github.com/gin-gonic/gin"
 )
 
-var infrastructure = Infrastructure{}
+var (
+	infrastructure = Infrastructure{}
+	Cache          *config.Cache
+	pkgName        string = "infra"
+)
 
 func findHostByHostname(c *gin.Context) (index *int, h *Host) {
 	// loop over hosts

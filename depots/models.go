@@ -6,13 +6,13 @@ type Depots struct {
 
 type Depot struct {
 	// Depot owner's name, unique ID.
-	Owner string `json:"owner_name"`
+	//Owner string `json:"owner_name"`
 
 	// Generic array of depot Items.
-	DepotItems []Item `json:"depot_items"`
+	DepotItems []DepotItem `json:"depot_items"`
 }
 
-type Item struct {
+type DepotItem struct {
 	// Numeric unique ID of such Item.
 	ID int `json:"id"`
 
@@ -24,6 +24,9 @@ type Item struct {
 
 	// Location name of such Item.
 	Location string `json:"depot"`
+
+	// Owner name according to users package.
+	Owner string `json:"owner_name"`
 }
 
 type Location struct {

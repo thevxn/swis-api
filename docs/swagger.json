@@ -13,55 +13,26 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.4.38"
+        "version": "5.5.7"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
     "paths": {
         "/backups": {
             "get": {
-                "description": "get backuped services",
+                "description": "get backed up services",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Get all backuped services",
+                "summary": "Get all backed up services",
                 "responses": {
                     "200": {
                         "description": "ok",
                         "schema": {
                             "type": "string"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new backuped service",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "backups"
-                ],
-                "summary": "Adding new backuped serivce",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/backups.Backup"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/backups.Backup"
                         }
                     }
                 }
@@ -83,20 +54,20 @@
                 "responses": {}
             }
         },
-        "/backups/{service}": {
+        "/backups/{key}": {
             "get": {
-                "description": "get backup status by project/service",
+                "description": "get backup status by project'S/service's key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Get backup status by project/service",
+                "summary": "Get backup status by project's/service's key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "backup service name",
+                        "description": "backup service key",
                         "name": "host",
                         "in": "path",
                         "required": true
@@ -112,14 +83,43 @@
                 }
             },
             "put": {
-                "description": "update backup status by service",
+                "description": "update backup status by service's key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Update backup status by service",
+                "summary": "Update backup status by service's key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/backups.Backup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/backups.Backup"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new backed up service",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Add new backed up serivce",
                 "parameters": [
                     {
                         "description": "query params",
@@ -141,14 +141,14 @@
                 }
             },
             "delete": {
-                "description": "delete backup service by its Name",
+                "description": "delete backup service by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Delete backup service by its Name",
+                "summary": "Delete backup service by its key",
                 "responses": {
                     "200": {
                         "description": "ok",
@@ -206,6 +206,71 @@
                         }
                     }
                 }
+            }
+        },
+        "/business/restore": {
+            "post": {
+                "description": "upload business JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Upload business dump backup -- restores all business entities",
+                "responses": {}
+            }
+        },
+        "/business/{key}": {
+            "get": {
+                "description": "get business by key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Get business entity by its key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update business entity by its key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Update business entity by its key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                }
             },
             "post": {
                 "description": "add new business entity",
@@ -235,81 +300,16 @@
                         }
                     }
                 }
-            }
-        },
-        "/business/restore": {
-            "post": {
-                "description": "upload business JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "business"
-                ],
-                "summary": "Upload business dump backup -- restores all business entities",
-                "responses": {}
-            }
-        },
-        "/business/{id}": {
-            "get": {
-                "description": "get business by ID param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "business"
-                ],
-                "summary": "Get business entity by its ID",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/business.Business"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update business entity by its ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "business"
-                ],
-                "summary": "Update business entity by its ID",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/business.Business"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/business.Business"
-                        }
-                    }
-                }
             },
             "delete": {
-                "description": "delete business by its ID",
+                "description": "delete business by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "business"
                 ],
-                "summary": "Delete business by its ID",
+                "summary": "Delete business by its key",
                 "parameters": [
                     {
                         "type": "string",
@@ -343,20 +343,65 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.Depots"
+                            "$ref": "#/definitions/depots.Depot"
                         }
                     }
                 }
-            },
+            }
+        },
+        "/depots/restore": {
             "post": {
-                "description": "add new depot",
+                "description": "upload depots JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "depots"
                 ],
-                "summary": "Add new depot",
+                "summary": "Upload depot dump backup -- restores all depot items",
+                "responses": {}
+            }
+        },
+        "/depots/{key}": {
+            "put": {
+                "description": "update depot by its key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Update depot item by its key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "depot key",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depots.DepotItem"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new depot item",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Add new depot item",
                 "parameters": [
                     {
                         "description": "query params",
@@ -372,65 +417,49 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.Depot"
-                        }
-                    }
-                }
-            }
-        },
-        "/depots/restore": {
-            "post": {
-                "description": "upload depot JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "depots"
-                ],
-                "summary": "Upload depot dump backup -- restores all depots",
-                "responses": {}
-            }
-        },
-        "/depots/{owner}": {
-            "get": {
-                "description": "get depot list by :owner param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "depots"
-                ],
-                "summary": "Get depot list by Owner",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/depots.Depot"
+                            "$ref": "#/definitions/depots.DepotItem"
                         }
                     }
                 }
             },
             "delete": {
-                "description": "delete depot by its Owner",
+                "description": "delete depot item by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "depots"
                 ],
-                "summary": "Delete depot by its owner",
+                "summary": "Delete depot item by its key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "depot Owner",
+                        "description": "depot key",
                         "name": "id",
                         "in": "path",
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depots.DepotItem"
+                        }
+                    }
+                }
+            }
+        },
+        "/depots/{owner}": {
+            "get": {
+                "description": "get depot item list by :owner param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Get depot item list by Owner",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -454,7 +483,11 @@
                     "dish"
                 ],
                 "summary": "Upload dish dump backup -- restores all loaded sockets",
-                "responses": {}
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
             }
         },
         "/dish/sockets": {
@@ -472,35 +505,6 @@
                         "description": "ok",
                         "schema": {
                             "type": "string"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new socket to socket array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Adding new socket to socket array",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
                         }
                     }
                 }
@@ -535,7 +539,7 @@
                 }
             }
         },
-        "/dish/sockets/{id}": {
+        "/dish/sockets/{key}": {
             "put": {
                 "description": "update socket by its ID",
                 "produces": [
@@ -545,6 +549,35 @@
                     "dish"
                 ],
                 "summary": "Update socket by its ID",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new socket to socket array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Adding new socket to socket array",
                 "parameters": [
                     {
                         "description": "query params",
@@ -593,7 +626,7 @@
                 }
             }
         },
-        "/dish/sockets/{id}/mute": {
+        "/dish/sockets/{key}/mute": {
             "put": {
                 "description": "mute/unmute socket by its ID",
                 "produces": [
@@ -622,7 +655,7 @@
                 }
             }
         },
-        "/finance": {
+        "/finance/account": {
             "get": {
                 "description": "get finance complete list",
                 "produces": [
@@ -640,7 +673,29 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/finance/account/owner/{key}": {
+            "get": {
+                "description": "get finance account by :owner param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Get finance account by its Owner",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Account"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/account/{key}": {
             "post": {
                 "description": "add new finance account",
                 "produces": [
@@ -671,7 +726,7 @@
                 }
             }
         },
-        "/finance/accounts/{id}": {
+        "/finance/accounts/{key}": {
             "put": {
                 "description": "update finance account by ID",
                 "produces": [
@@ -719,26 +774,6 @@
                         "required": true
                     }
                 ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/finance.Account"
-                        }
-                    }
-                }
-            }
-        },
-        "/finance/accounts/{owner}": {
-            "get": {
-                "description": "get finance account by :owner param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "finance"
-                ],
-                "summary": "Get finance account by its Owner",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -899,6 +934,71 @@
                         }
                     }
                 }
+            }
+        },
+        "/links/restore": {
+            "post": {
+                "description": "update links JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Upload links dump backup -- restore all links",
+                "responses": {}
+            }
+        },
+        "/links/{key}": {
+            "get": {
+                "description": "get link by its :hash param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Get link by :hash",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update link by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Update link by its Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
             },
             "post": {
                 "description": "add new link to links array",
@@ -928,85 +1028,20 @@
                         }
                     }
                 }
-            }
-        },
-        "/links/restore": {
-            "post": {
-                "description": "update links JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "links"
-                ],
-                "summary": "Upload links dump backup -- restore all links",
-                "responses": {}
-            }
-        },
-        "/links/{hash}": {
-            "get": {
-                "description": "get link by its :hash param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "links"
-                ],
-                "summary": "Get link by :hash",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/links.Link"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update link by its Hash",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "links"
-                ],
-                "summary": "Update link by its Hash",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/links.Link"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/links.Link"
-                        }
-                    }
-                }
             },
             "delete": {
-                "description": "delete link by its Hash",
+                "description": "delete link by its Key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "links"
                 ],
-                "summary": "Delete link by its Hash",
+                "summary": "Delete link by its Key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "link Hash",
+                        "description": "link Key",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1022,7 +1057,7 @@
                 }
             }
         },
-        "/links/{hash}/active": {
+        "/links/{key}/active": {
             "put": {
                 "description": "toggle active boolean for {hash}",
                 "produces": [
@@ -1145,35 +1180,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "add new project to projects list",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "projects"
-                ],
-                "summary": "Add new project",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/projects.Project"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/projects.Project"
-                        }
-                    }
-                }
             }
         },
         "/projects/restore": {
@@ -1192,7 +1198,7 @@
                 "responses": {}
             }
         },
-        "/projects/{id}": {
+        "/projects/{key}": {
             "get": {
                 "description": "get project details by :id route param",
                 "produces": [
@@ -1220,6 +1226,35 @@
                     "projects"
                 ],
                 "summary": "Update project by its ID",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/projects.Project"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/projects.Project"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new project to projects list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Add new project",
                 "parameters": [
                     {
                         "description": "query params",
@@ -1286,6 +1321,71 @@
                         }
                     }
                 }
+            }
+        },
+        "/roles/restore": {
+            "post": {
+                "description": "update roles JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Upload roles dump backup -- restores all roles",
+                "responses": {}
+            }
+        },
+        "/roles/{key}": {
+            "get": {
+                "description": "get role by :key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Get role by Key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update role by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Update role by its Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
             },
             "post": {
                 "description": "add new role to roles array",
@@ -1315,85 +1415,20 @@
                         }
                     }
                 }
-            }
-        },
-        "/roles/restore": {
-            "post": {
-                "description": "update roles JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roles"
-                ],
-                "summary": "Upload roles dump backup -- restores all roles",
-                "responses": {}
-            }
-        },
-        "/roles/{name}": {
-            "get": {
-                "description": "get role by :id param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roles"
-                ],
-                "summary": "Get role by Name",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/roles.Role"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update role by its Name",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roles"
-                ],
-                "summary": "Update role by its Name",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/roles.Role"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/roles.Role"
-                        }
-                    }
-                }
             },
             "delete": {
-                "description": "delete role by its Name",
+                "description": "delete role by its Key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "roles"
                 ],
-                "summary": "Delete role by its Name",
+                "summary": "Delete role by its Key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "role Name",
+                        "description": "role Key",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1443,6 +1478,71 @@
                         }
                     }
                 }
+            }
+        },
+        "/users/restore": {
+            "post": {
+                "description": "update users JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Upload users dump backup -- restores all users",
+                "responses": {}
+            }
+        },
+        "/users/{key}": {
+            "get": {
+                "description": "get user by their :key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get user by Key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update user by Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update user by Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
             },
             "post": {
                 "description": "add new user to users array",
@@ -1472,81 +1572,16 @@
                         }
                     }
                 }
-            }
-        },
-        "/users/restore": {
-            "post": {
-                "description": "update users JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "users"
-                ],
-                "summary": "Upload users dump backup -- restores all users",
-                "responses": {}
-            }
-        },
-        "/users/{name}": {
-            "get": {
-                "description": "get user by their :name param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "users"
-                ],
-                "summary": "Get user by Name",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/users.User"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update user by Name",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "users"
-                ],
-                "summary": "Update user by Name",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/users.User"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/users.User"
-                        }
-                    }
-                }
             },
             "delete": {
-                "description": "delete user by Name",
+                "description": "delete user by Key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "users"
                 ],
-                "summary": "Delete user by Name",
+                "summary": "Delete user by Key",
                 "parameters": [
                     {
                         "type": "string",
@@ -1566,7 +1601,7 @@
                 }
             }
         },
-        "/users/{name}/active": {
+        "/users/{key}/active": {
             "put": {
                 "description": "toggle active boolean for {user}",
                 "produces": [
@@ -1579,7 +1614,7 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "username",
+                        "description": "user name",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1595,7 +1630,7 @@
                 }
             }
         },
-        "/users/{name}/keys/ssh": {
+        "/users/{key}/keys/ssh": {
             "get": {
                 "description": "fetch :user ssh key array output in plain text",
                 "produces": [
@@ -1762,27 +1797,12 @@
                     "description": "Generic array of depot Items.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/depots.Item"
-                    }
-                },
-                "owner_name": {
-                    "description": "Depot owner's name, unique ID.",
-                    "type": "string"
-                }
-            }
-        },
-        "depots.Depots": {
-            "type": "object",
-            "properties": {
-                "depots": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/depots.Depot"
+                        "$ref": "#/definitions/depots.DepotItem"
                     }
                 }
             }
         },
-        "depots.Item": {
+        "depots.DepotItem": {
             "type": "object",
             "properties": {
                 "depot": {
@@ -1800,6 +1820,10 @@
                 "misc": {
                     "description": "More information, e.g. the more precise location specification.",
                     "type": "string"
+                },
+                "owner_name": {
+                    "description": "Owner name according to users package.",
+                    "type": "string"
                 }
             }
         },
@@ -1812,14 +1836,14 @@
             ],
             "properties": {
                 "dish_target": {
-                    "description": "DishTarget is a string array, usually containing dish's host short name (e.g. frank)\nto be referred e.g. /dish/sockets/frank",
+                    "description": "DishTarget is a string array, usually containing dish's host short name (e.g. frank).\nTo be referred as /dish/sockets/frank for example.",
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
                 },
                 "expected_http_code_array": {
-                    "description": "If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response codes are okay and not to alert upon",
+                    "description": "If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response codes are okay and not to alert upon.",
                     "type": "array",
                     "items": {
                         "type": "integer"
@@ -1830,11 +1854,11 @@
                     "type": "integer"
                 },
                 "host_name": {
-                    "description": "Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)",
+                    "description": "Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).",
                     "type": "string"
                 },
                 "muted": {
-                    "description": "Muted bool indicates that the socket is not propagated to any dish",
+                    "description": "Muted bool indicates that the socket is not propagated to any dish if true.",
                     "type": "boolean"
                 },
                 "muted_from": {
@@ -1846,19 +1870,19 @@
                     "type": "string"
                 },
                 "port_tcp": {
-                    "description": "Socket TCP port part\nEven default port 80 should be added here",
+                    "description": "Socket TCP port part\nEven default port 80 should be added here.",
                     "type": "integer"
                 },
                 "socket_description": {
-                    "description": "More verbose name/description of the socket",
+                    "description": "More verbose name/description of the socket.",
                     "type": "string"
                 },
                 "socket_id": {
-                    "description": "Socket ID, snake_cased for socket editing and deleting",
+                    "description": "Socket ID, snake_cased for socket editing and deleting.",
                     "type": "string"
                 },
                 "socket_name": {
-                    "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example",
+                    "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example.",
                     "type": "string"
                 }
             }

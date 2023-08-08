@@ -10,15 +10,15 @@ func Routes(g *gin.RouterGroup) {
 	g.GET("/sockets/:host",
 		GetSocketListByHost)
 	g.POST("/sockets",
-		PostNewSocket)
-	g.PUT("/sockets/:id",
-		UpdateSocketByID)
-	g.PATCH("/sockets/:id",
-		UpdateSocketByID)
-	g.PUT("/sockets/:id/mute",
-		MuteToggleSocketByID)
-	g.DELETE("/sockets/:id",
-		DeleteSocketByID)
+		PostNewSocketByKey)
+	g.PUT("/sockets/:key",
+		UpdateSocketByKey)
+	g.PATCH("/sockets/:key",
+		UpdateSocketByKey)
+	g.PUT("/sockets/:key/mute",
+		MuteToggleSocketByKey)
+	g.DELETE("/sockets/:key",
+		DeleteSocketByKey)
 	g.POST("/sockets/restore",
 		PostDumpRestore)
 }

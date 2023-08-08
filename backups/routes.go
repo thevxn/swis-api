@@ -7,16 +7,16 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetBackupStatusAll)
-	g.POST("/",
-		PostBackedupService)
-	g.GET("/:service",
-		GetBackedupStatusByServiceName)
-	g.PUT("/:service",
-		UpdateBackupStatusByServiceName)
-	g.DELETE("/:service",
-		DeleteBackupByServiceName)
-	g.PUT("/:service/active",
-		ActiveToggleBackupByServiceName)
+	g.POST("/:key",
+		PostBackedupServiceByServiceKey)
+	g.GET("/:key",
+		GetBackedupStatusByServiceKey)
+	g.PUT("/:key",
+		UpdateBackupStatusByServiceKey)
+	g.DELETE("/:key",
+		DeleteBackupByServiceKey)
+	g.PUT("/:key/active",
+		ActiveToggleBackupByServiceKey)
 	g.POST("/restore",
 		PostDumpRestore)
 }

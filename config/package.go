@@ -22,7 +22,7 @@ func PrintAllRootItems(ctx *gin.Context, cache *Cache, pkgName string) {
 }
 
 func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
-	key := ctx.Param("name")
+	key := ctx.Param("key")
 
 	rawItem, ok := cache.Get(key)
 	if !ok {
@@ -67,7 +67,7 @@ func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mo
 	}
 
 	//key := model.Name | model.ID
-	key := ctx.Param("name")
+	key := ctx.Param("key")
 
 	// TODO: implement LoadOrStore() method
 	if _, found := cache.Get(key); found {
@@ -101,7 +101,7 @@ func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mo
 }
 
 func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
-	key := ctx.Param("name")
+	key := ctx.Param("key")
 
 	if _, found := cache.Get(key); !found {
 		ctx.IndentedJSON(http.StatusNotFound, gin.H{
@@ -143,8 +143,8 @@ func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mo
 	return
 }
 
-func DeleteItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
-	key := ctx.Param("name")
+func DeleteItemByParam(ctx *gin.Context, cache *Cache, pkgName string) {
+	key := ctx.Param("key")
 
 	if _, found := cache.Get(key); !found {
 		ctx.IndentedJSON(http.StatusNotFound, gin.H{

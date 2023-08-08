@@ -84,20 +84,10 @@ definitions:
       depot_items:
         description: Generic array of depot Items.
         items:
-          $ref: '#/definitions/depots.Item'
+          $ref: '#/definitions/depots.DepotItem'
         type: array
-      owner_name:
-        description: Depot owner's name, unique ID.
-        type: string
     type: object
-  depots.Depots:
-    properties:
-      depots:
-        additionalProperties:
-          $ref: '#/definitions/depots.Depot'
-        type: object
-    type: object
-  depots.Item:
+  depots.DepotItem:
     properties:
       depot:
         description: Location name of such Item.
@@ -111,19 +101,22 @@ definitions:
       misc:
         description: More information, e.g. the more precise location specification.
         type: string
+      owner_name:
+        description: Owner name according to users package.
+        type: string
     type: object
   dish.Socket:
     properties:
       dish_target:
         description: |-
-          DishTarget is a string array, usually containing dish's host short name (e.g. frank)
-          to be referred e.g. /dish/sockets/frank
+          DishTarget is a string array, usually containing dish's host short name (e.g. frank).
+          To be referred as /dish/sockets/frank for example.
         items:
           type: string
         type: array
       expected_http_code_array:
         description: If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response
-          codes are okay and not to alert upon
+          codes are okay and not to alert upon.
         items:
           type: integer
         type: array
@@ -132,11 +125,11 @@ definitions:
           state before alerting.
         type: integer
       host_name:
-        description: Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)
+        description: Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).
         type: string
       muted:
         description: Muted bool indicates that the socket is not propagated to any
-          dish
+          dish if true.
         type: boolean
       muted_from:
         description: MutedFrom UNIX timestamp.
@@ -147,17 +140,17 @@ definitions:
       port_tcp:
         description: |-
           Socket TCP port part
-          Even default port 80 should be added here
+          Even default port 80 should be added here.
         type: integer
       socket_description:
-        description: More verbose name/description of the socket
+        description: More verbose name/description of the socket.
         type: string
       socket_id:
-        description: Socket ID, snake_cased for socket editing and deleting
+        description: Socket ID, snake_cased for socket editing and deleting.
         type: string
       socket_name:
         description: GEneric name of the socket, to be used in dish results as failed
-          one endpoint for example
+          one endpoint for example.
         type: string
     required:
     - host_name
@@ -585,11 +578,11 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.4.38
+  version: 5.5.7
 paths:
   /backups:
     get:
-      description: get backuped services
+      description: get backed up services
       produces:
       - application/json
       responses:
@@ -597,31 +590,12 @@ paths:
           description: ok
           schema:
             type: string
-      summary: Get all backuped services
+      summary: Get all backed up services
       tags:
       - backups
-    post:
-      description: add new backuped service
-      parameters:
-      - description: query params
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/backups.Backup'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/backups.Backup'
-      summary: Adding new backuped serivce
-      tags:
-      - backups
-  /backups/{service}:
+  /backups/{key}:
     delete:
-      description: delete backup service by its Name
+      description: delete backup service by its key
       produces:
       - application/json
       responses:
@@ -629,13 +603,13 @@ paths:
           description: ok
           schema:
             type: string
-      summary: Delete backup service by its Name
+      summary: Delete backup service by its key
       tags:
       - backups
     get:
-      description: get backup status by project/service
+      description: get backup status by project'S/service's key
       parameters:
-      - description: backup service name
+      - description: backup service key
         in: path
         name: host
         required: true
@@ -647,11 +621,11 @@ paths:
           description: ok
           schema:
             type: string
-      summary: Get backup status by project/service
+      summary: Get backup status by project's/service's key
       tags:
       - backups
-    put:
-      description: update backup status by service
+    post:
+      description: add new backed up service
       parameters:
       - description: query params
         in: body
@@ -666,7 +640,26 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/backups.Backup'
-      summary: Update backup status by service
+      summary: Add new backed up serivce
+      tags:
+      - backups
+    put:
+      description: update backup status by service's key
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/backups.Backup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/backups.Backup'
+      summary: Update backup status by service's key
       tags:
       - backups
   /backups/{service}/active:
@@ -712,6 +705,37 @@ paths:
       summary: Get all business entities
       tags:
       - business
+  /business/{key}:
+    delete:
+      description: delete business by its key
+      parameters:
+      - description: business ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Delete business by its key
+      tags:
+      - business
+    get:
+      description: get business by key param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Get business entity by its key
+      tags:
+      - business
     post:
       description: add new business entity
       parameters:
@@ -731,39 +755,8 @@ paths:
       summary: Add new business entity
       tags:
       - business
-  /business/{id}:
-    delete:
-      description: delete business by its ID
-      parameters:
-      - description: business ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/business.Business'
-      summary: Delete business by its ID
-      tags:
-      - business
-    get:
-      description: get business by ID param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/business.Business'
-      summary: Get business entity by its ID
-      tags:
-      - business
     put:
-      description: update business entity by its ID
+      description: update business entity by its key
       parameters:
       - description: query params
         in: body
@@ -778,7 +771,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/business.Business'
-      summary: Update business entity by its ID
+      summary: Update business entity by its key
       tags:
       - business
   /business/restore:
@@ -801,12 +794,31 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depots.Depots'
+            $ref: '#/definitions/depots.Depot'
       summary: Get all depots and their users/owners
       tags:
       - depots
+  /depots/{key}:
+    delete:
+      description: delete depot item by its key
+      parameters:
+      - description: depot key
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depots.DepotItem'
+      summary: Delete depot item by its key
+      tags:
+      - depots
     post:
-      description: add new depot
+      description: add new depot item
       parameters:
       - description: query params
         in: body
@@ -820,15 +832,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depots.Depot'
-      summary: Add new depot
+            $ref: '#/definitions/depots.DepotItem'
+      summary: Add new depot item
       tags:
       - depots
-  /depots/{owner}:
-    delete:
-      description: delete depot by its Owner
+    put:
+      description: update depot by its key
       parameters:
-      - description: depot Owner
+      - description: depot key
         in: path
         name: id
         required: true
@@ -839,12 +850,13 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depots.Depot'
-      summary: Delete depot by its owner
+            $ref: '#/definitions/depots.DepotItem'
+      summary: Update depot item by its key
       tags:
       - depots
+  /depots/{owner}:
     get:
-      description: get depot list by :owner param
+      description: get depot item list by :owner param
       produces:
       - application/json
       responses:
@@ -852,18 +864,18 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/depots.Depot'
-      summary: Get depot list by Owner
+      summary: Get depot item list by Owner
       tags:
       - depots
   /depots/restore:
     post:
       consumes:
       - application/json
-      description: upload depot JSON dump
+      description: upload depots JSON dump
       produces:
       - application/json
       responses: {}
-      summary: Upload depot dump backup -- restores all depots
+      summary: Upload depot dump backup -- restores all depot items
       tags:
       - depots
   /dish/restore:
@@ -873,7 +885,9 @@ paths:
       description: update dish JSON dump
       produces:
       - application/json
-      responses: {}
+      responses:
+        "201":
+          description: Created
       summary: Upload dish dump backup -- restores all loaded sockets
       tags:
       - dish
@@ -888,25 +902,6 @@ paths:
           schema:
             type: string
       summary: Get all sockets list
-      tags:
-      - dish
-    post:
-      description: add new socket to socket array
-      parameters:
-      - description: query params
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/dish.Socket'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dish.Socket'
-      summary: Adding new socket to socket array
       tags:
       - dish
   /dish/sockets/{host}:
@@ -928,7 +923,7 @@ paths:
       summary: Get socket list by host
       tags:
       - dish
-  /dish/sockets/{id}:
+  /dish/sockets/{key}:
     delete:
       description: delete socket by its ID
       parameters:
@@ -945,6 +940,25 @@ paths:
           schema:
             $ref: '#/definitions/dish.Socket'
       summary: Delete socket by its ID
+      tags:
+      - dish
+    post:
+      description: add new socket to socket array
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dish.Socket'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Adding new socket to socket array
       tags:
       - dish
     put:
@@ -966,7 +980,7 @@ paths:
       summary: Update socket by its ID
       tags:
       - dish
-  /dish/sockets/{id}/mute:
+  /dish/sockets/{key}/mute:
     put:
       description: mute/unmute socket by its ID
       parameters:
@@ -985,7 +999,7 @@ paths:
       summary: Mute/unmute socket by its ID
       tags:
       - dish
-  /finance:
+  /finance/account:
     get:
       description: get finance complete list
       produces:
@@ -998,6 +1012,7 @@ paths:
       summary: Get all finance accounts
       tags:
       - finance
+  /finance/account/{key}:
     post:
       description: add new finance account
       parameters:
@@ -1017,7 +1032,20 @@ paths:
       summary: Add new finance account
       tags:
       - finance
-  /finance/accounts/{id}:
+  /finance/account/owner/{key}:
+    get:
+      description: get finance account by :owner param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Get finance account by its Owner
+      tags:
+      - finance
+  /finance/accounts/{key}:
     delete:
       description: delete finance account by ID
       parameters:
@@ -1053,19 +1081,6 @@ paths:
           schema:
             $ref: '#/definitions/finance.Account'
       summary: Update finance account by ID
-      tags:
-      - finance
-  /finance/accounts/{owner}:
-    get:
-      description: get finance account by :owner param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/finance.Account'
-      summary: Get finance account by its Owner
       tags:
       - finance
   /finance/restore:
@@ -1168,6 +1183,37 @@ paths:
       summary: Get all links
       tags:
       - links
+  /links/{key}:
+    delete:
+      description: delete link by its Key
+      parameters:
+      - description: link Key
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Delete link by its Key
+      tags:
+      - links
+    get:
+      description: get link by its :hash param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/links.Link'
+      summary: Get link by :hash
+      tags:
+      - links
     post:
       description: add new link to links array
       parameters:
@@ -1187,39 +1233,8 @@ paths:
       summary: Add new link to links
       tags:
       - links
-  /links/{hash}:
-    delete:
-      description: delete link by its Hash
-      parameters:
-      - description: link Hash
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/links.Link'
-      summary: Delete link by its Hash
-      tags:
-      - links
-    get:
-      description: get link by its :hash param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/links.Link'
-      summary: Get link by :hash
-      tags:
-      - links
     put:
-      description: update link by its Hash
+      description: update link by its Key
       parameters:
       - description: query params
         in: body
@@ -1234,10 +1249,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/links.Link'
-      summary: Update link by its Hash
+      summary: Update link by its Key
       tags:
       - links
-  /links/{hash}/active:
+  /links/{key}/active:
     put:
       description: toggle active boolean for {hash}
       parameters:
@@ -1330,26 +1345,7 @@ paths:
       summary: Get all projects
       tags:
       - projects
-    post:
-      description: add new project to projects list
-      parameters:
-      - description: query params
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/projects.Project'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/projects.Project'
-      summary: Add new project
-      tags:
-      - projects
-  /projects/{id}:
+  /projects/{key}:
     delete:
       description: delete project by its ID
       parameters:
@@ -1378,6 +1374,25 @@ paths:
           schema:
             $ref: '#/definitions/projects.Project'
       summary: Get project by ID
+      tags:
+      - projects
+    post:
+      description: add new project to projects list
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/projects.Project'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/projects.Project'
+      summary: Add new project
       tags:
       - projects
     put:
@@ -1423,6 +1438,37 @@ paths:
       summary: Get all roles
       tags:
       - roles
+  /roles/{key}:
+    delete:
+      description: delete role by its Key
+      parameters:
+      - description: role Key
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Delete role by its Key
+      tags:
+      - roles
+    get:
+      description: get role by :key param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/roles.Role'
+      summary: Get role by Key
+      tags:
+      - roles
     post:
       description: add new role to roles array
       parameters:
@@ -1442,39 +1488,8 @@ paths:
       summary: Add new role to roles array
       tags:
       - roles
-  /roles/{name}:
-    delete:
-      description: delete role by its Name
-      parameters:
-      - description: role Name
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/roles.Role'
-      summary: Delete role by its Name
-      tags:
-      - roles
-    get:
-      description: get role by :id param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/roles.Role'
-      summary: Get role by Name
-      tags:
-      - roles
     put:
-      description: update role by its Name
+      description: update role by its Key
       parameters:
       - description: query params
         in: body
@@ -1489,7 +1504,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/roles.Role'
-      summary: Update role by its Name
+      summary: Update role by its Key
       tags:
       - roles
   /roles/restore:
@@ -1527,6 +1542,37 @@ paths:
       summary: Get all users
       tags:
       - users
+  /users/{key}:
+    delete:
+      description: delete user by Key
+      parameters:
+      - description: user Name
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Delete user by Key
+      tags:
+      - users
+    get:
+      description: get user by their :key param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Get user by Key
+      tags:
+      - users
     post:
       description: add new user to users array
       parameters:
@@ -1546,39 +1592,8 @@ paths:
       summary: Add new user to users array
       tags:
       - users
-  /users/{name}:
-    delete:
-      description: delete user by Name
-      parameters:
-      - description: user Name
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/users.User'
-      summary: Delete user by Name
-      tags:
-      - users
-    get:
-      description: get user by their :name param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/users.User'
-      summary: Get user by Name
-      tags:
-      - users
     put:
-      description: update user by Name
+      description: update user by Key
       parameters:
       - description: query params
         in: body
@@ -1593,14 +1608,14 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/users.User'
-      summary: Update user by Name
+      summary: Update user by Key
       tags:
       - users
-  /users/{name}/active:
+  /users/{key}/active:
     put:
       description: toggle active boolean for {user}
       parameters:
-      - description: username
+      - description: user name
         in: path
         name: id
         required: true
@@ -1615,7 +1630,7 @@ paths:
       summary: Toggle active boolean for {user}
       tags:
       - users
-  /users/{name}/keys/ssh:
+  /users/{key}/keys/ssh:
     get:
       description: fetch :user ssh key array output in plain text
       produces:

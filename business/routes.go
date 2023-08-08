@@ -8,14 +8,14 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetBusinessEntities)
-	g.POST("/",
-		PostBusiness)
-	g.GET("/:id",
-		GetBusinessByID)
-	g.PUT("/:id",
-		UpdateBusinessByID)
-	g.DELETE("/:id",
-		DeleteBusinessByID)
+	g.POST("/:key",
+		PostBusinessByKey)
+	g.GET("/:key",
+		GetBusinessByKey)
+	g.PUT("/:key",
+		UpdateBusinessByKey)
+	g.DELETE("/:key",
+		DeleteBusinessByKey)
 	g.POST("/restore",
 		PostDumpRestore)
 }
