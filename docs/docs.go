@@ -350,20 +350,65 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.Depots"
+                            "$ref": "#/definitions/depots.Depot"
                         }
                     }
                 }
-            },
+            }
+        },
+        "/depots/restore": {
             "post": {
-                "description": "add new depot",
+                "description": "upload depots JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "depots"
                 ],
-                "summary": "Add new depot",
+                "summary": "Upload depot dump backup -- restores all depot items",
+                "responses": {}
+            }
+        },
+        "/depots/{key}": {
+            "put": {
+                "description": "update depot by its key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Update depot item by its key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "depot key",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depots.DepotItem"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new depot item",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Add new depot item",
                 "parameters": [
                     {
                         "description": "query params",
@@ -379,65 +424,49 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.Depot"
-                        }
-                    }
-                }
-            }
-        },
-        "/depots/restore": {
-            "post": {
-                "description": "upload depot JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "depots"
-                ],
-                "summary": "Upload depot dump backup -- restores all depots",
-                "responses": {}
-            }
-        },
-        "/depots/{owner}": {
-            "get": {
-                "description": "get depot list by :owner param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "depots"
-                ],
-                "summary": "Get depot list by Owner",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/depots.Depot"
+                            "$ref": "#/definitions/depots.DepotItem"
                         }
                     }
                 }
             },
             "delete": {
-                "description": "delete depot by its Owner",
+                "description": "delete depot item by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "depots"
                 ],
-                "summary": "Delete depot by its owner",
+                "summary": "Delete depot item by its key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "depot Owner",
+                        "description": "depot key",
                         "name": "id",
                         "in": "path",
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depots.DepotItem"
+                        }
+                    }
+                }
+            }
+        },
+        "/depots/{owner}": {
+            "get": {
+                "description": "get depot item list by :owner param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Get depot item list by Owner",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1775,27 +1804,12 @@ const docTemplate = `{
                     "description": "Generic array of depot Items.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/depots.Item"
-                    }
-                },
-                "owner_name": {
-                    "description": "Depot owner's name, unique ID.",
-                    "type": "string"
-                }
-            }
-        },
-        "depots.Depots": {
-            "type": "object",
-            "properties": {
-                "depots": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/depots.Depot"
+                        "$ref": "#/definitions/depots.DepotItem"
                     }
                 }
             }
         },
-        "depots.Item": {
+        "depots.DepotItem": {
             "type": "object",
             "properties": {
                 "depot": {
@@ -1812,6 +1826,10 @@ const docTemplate = `{
                 },
                 "misc": {
                     "description": "More information, e.g. the more precise location specification.",
+                    "type": "string"
+                },
+                "owner_name": {
+                    "description": "Owner name according to users package.",
                     "type": "string"
                 }
             }
@@ -2439,7 +2457,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.5.4",
+	Version:          "5.5.5",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

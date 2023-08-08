@@ -84,20 +84,10 @@ definitions:
       depot_items:
         description: Generic array of depot Items.
         items:
-          $ref: '#/definitions/depots.Item'
+          $ref: '#/definitions/depots.DepotItem'
         type: array
-      owner_name:
-        description: Depot owner's name, unique ID.
-        type: string
     type: object
-  depots.Depots:
-    properties:
-      depots:
-        additionalProperties:
-          $ref: '#/definitions/depots.Depot'
-        type: object
-    type: object
-  depots.Item:
+  depots.DepotItem:
     properties:
       depot:
         description: Location name of such Item.
@@ -110,6 +100,9 @@ definitions:
         type: integer
       misc:
         description: More information, e.g. the more precise location specification.
+        type: string
+      owner_name:
+        description: Owner name according to users package.
         type: string
     type: object
   dish.Socket:
@@ -585,7 +578,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.5.4
+  version: 5.5.5
 paths:
   /backups:
     get:
@@ -801,12 +794,31 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depots.Depots'
+            $ref: '#/definitions/depots.Depot'
       summary: Get all depots and their users/owners
       tags:
       - depots
+  /depots/{key}:
+    delete:
+      description: delete depot item by its key
+      parameters:
+      - description: depot key
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depots.DepotItem'
+      summary: Delete depot item by its key
+      tags:
+      - depots
     post:
-      description: add new depot
+      description: add new depot item
       parameters:
       - description: query params
         in: body
@@ -820,15 +832,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depots.Depot'
-      summary: Add new depot
+            $ref: '#/definitions/depots.DepotItem'
+      summary: Add new depot item
       tags:
       - depots
-  /depots/{owner}:
-    delete:
-      description: delete depot by its Owner
+    put:
+      description: update depot by its key
       parameters:
-      - description: depot Owner
+      - description: depot key
         in: path
         name: id
         required: true
@@ -839,12 +850,13 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depots.Depot'
-      summary: Delete depot by its owner
+            $ref: '#/definitions/depots.DepotItem'
+      summary: Update depot item by its key
       tags:
       - depots
+  /depots/{owner}:
     get:
-      description: get depot list by :owner param
+      description: get depot item list by :owner param
       produces:
       - application/json
       responses:
@@ -852,18 +864,18 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/depots.Depot'
-      summary: Get depot list by Owner
+      summary: Get depot item list by Owner
       tags:
       - depots
   /depots/restore:
     post:
       consumes:
       - application/json
-      description: upload depot JSON dump
+      description: upload depots JSON dump
       produces:
       - application/json
       responses: {}
-      summary: Upload depot dump backup -- restores all depots
+      summary: Upload depot dump backup -- restores all depot items
       tags:
       - depots
   /dish/restore:
