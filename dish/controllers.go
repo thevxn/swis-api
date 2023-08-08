@@ -92,6 +92,7 @@ func PostDumpRestore(ctx *gin.Context) {
 func GetSocketListByHost(ctx *gin.Context) {
 	var host string = ctx.Param("host")
 	var exportedSockets = make(map[string]Socket)
+	var counter int = 0
 
 	rawSocketsMap, _ := Cache.GetAll()
 
@@ -103,13 +104,15 @@ func GetSocketListByHost(ctx *gin.Context) {
 
 		if contains(socket.DishTarget, host) && !socket.Muted {
 			exportedSockets[socket.ID] = socket
+			counter++
 		}
 	}
 
 	if len(exportedSockets) > 0 {
 		ctx.IndentedJSON(http.StatusOK, gin.H{
 			"code":    http.StatusOK,
-			"tems":    exportedSockets,
+			"count":   counter,
+			"items":   exportedSockets,
 			"message": "ok, dumping socket by host",
 			"host":    host,
 		})
