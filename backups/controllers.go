@@ -77,15 +77,15 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Param request body backups.Backup.ServiceName true "query params"
 // @Success 200 {object} backups.Backup
 // @Router /backups/{key} [put]
-func UpdateBackupStatusByServiceKey(c *gin.Context) {
+func UpdateBackupStatusByServiceKey(ctx *gin.Context) {
 	var updatedService Backup
 	var postedService Backup
 
-	var name string = c.Param("service")
+	var name string = ctx.Param("key")
 
 	rawService, found := Cache.Get(name)
 	if !found {
-		c.IndentedJSON(http.StatusNotFound, gin.H{
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
 			"message": "backed up service not found by its name",
 			"name":    name,
@@ -95,15 +95,15 @@ func UpdateBackupStatusByServiceKey(c *gin.Context) {
 
 	updatedService, ok := rawService.(Backup)
 	if !ok {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"message": "cannot assert data type, database internal error",
 			"code":    http.StatusInternalServerError,
 		})
 		return
 	}
 
-	if err := c.BindJSON(&postedService); err != nil {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{
+	if err := ctx.BindJSON(&postedService); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
@@ -118,14 +118,14 @@ func UpdateBackupStatusByServiceKey(c *gin.Context) {
 	updatedService.Size = postedService.Size
 
 	if saved := Cache.Set(name, updatedService); !saved {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
 			"message": "backed up service couldn't be saved to database",
 		})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{
+	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "backed up service updated",
 		"backup":  updatedService,
