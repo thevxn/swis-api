@@ -213,6 +213,71 @@ const docTemplate = `{
                         }
                     }
                 }
+            }
+        },
+        "/business/restore": {
+            "post": {
+                "description": "upload business JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Upload business dump backup -- restores all business entities",
+                "responses": {}
+            }
+        },
+        "/business/{key}": {
+            "get": {
+                "description": "get business by key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Get business entity by its key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update business entity by its key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Update business entity by its key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/business.Business"
+                        }
+                    }
+                }
             },
             "post": {
                 "description": "add new business entity",
@@ -242,81 +307,16 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/business/restore": {
-            "post": {
-                "description": "upload business JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "business"
-                ],
-                "summary": "Upload business dump backup -- restores all business entities",
-                "responses": {}
-            }
-        },
-        "/business/{id}": {
-            "get": {
-                "description": "get business by ID param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "business"
-                ],
-                "summary": "Get business entity by its ID",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/business.Business"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update business entity by its ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "business"
-                ],
-                "summary": "Update business entity by its ID",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/business.Business"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/business.Business"
-                        }
-                    }
-                }
             },
             "delete": {
-                "description": "delete business by its ID",
+                "description": "delete business by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "business"
                 ],
-                "summary": "Delete business by its ID",
+                "summary": "Delete business by its key",
                 "parameters": [
                     {
                         "type": "string",
@@ -2457,7 +2457,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.5.5",
+	Version:          "5.5.7",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

@@ -578,7 +578,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.5.5
+  version: 5.5.7
 paths:
   /backups:
     get:
@@ -705,6 +705,37 @@ paths:
       summary: Get all business entities
       tags:
       - business
+  /business/{key}:
+    delete:
+      description: delete business by its key
+      parameters:
+      - description: business ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Delete business by its key
+      tags:
+      - business
+    get:
+      description: get business by key param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/business.Business'
+      summary: Get business entity by its key
+      tags:
+      - business
     post:
       description: add new business entity
       parameters:
@@ -724,39 +755,8 @@ paths:
       summary: Add new business entity
       tags:
       - business
-  /business/{id}:
-    delete:
-      description: delete business by its ID
-      parameters:
-      - description: business ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/business.Business'
-      summary: Delete business by its ID
-      tags:
-      - business
-    get:
-      description: get business by ID param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/business.Business'
-      summary: Get business entity by its ID
-      tags:
-      - business
     put:
-      description: update business entity by its ID
+      description: update business entity by its key
       parameters:
       - description: query params
         in: body
@@ -771,7 +771,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/business.Business'
-      summary: Update business entity by its ID
+      summary: Update business entity by its key
       tags:
       - business
   /business/restore:

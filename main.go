@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.5.6
+// @version 5.5.7
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -127,10 +127,12 @@ func main() {
 
 	// business CRUD
 	businessRouter := router.Group("/business")
+	business.Cache = &config.Cache{}
 	business.Routes(businessRouter)
 
 	// depots CRUD
 	depotsRouter := router.Group("/depots")
+	depots.Cache = &config.Cache{}
 	depots.Routes(depotsRouter)
 
 	// dish CRUD
@@ -140,10 +142,12 @@ func main() {
 
 	// finance accounts CRUD
 	financeRouter := router.Group("/finance")
+	finance.Cache = &config.Cache{}
 	finance.Routes(financeRouter)
 
 	// infra CRUD
 	infraRouter := router.Group("/infra")
+	infra.Cache = &config.Cache{}
 	infra.Routes(infraRouter)
 
 	// links CRUD
