@@ -13,42 +13,71 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var Cache *config.Cache
+var (
+	Cache   *config.Cache
+	pkgName string = "dish"
+)
 
-// (GET /dish/sockets)
+// Get all sockets loaded.
 // @Summary Get all sockets list
 // @Description get socket list, socket array
 // @Tags dish
 // @Produce  json
 // @Success 200 {object} string "ok"
 // @Router /dish/sockets [get]
-// Get all sockets loaded.
-func GetSocketList(c *gin.Context) {
-	sockets, count := Cache.GetAll()
+func GetSocketList(ctx *gin.Context) {
+	config.PrintAllRootItems(ctx, Cache, pkgName)
+	return
+}
 
-	/*rawJSON, err := json.Marshal(sockets)
-	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{
-			"code":    http.StatusInternalServerError,
-			"message": "cannot marshal sockets into JSON byte stream",
-		})
-	}
+// Add new socket to the list.
+// @Summary Adding new socket to socket array
+// @Description add new socket to socket array
+// @Tags dish
+// @Produce json
+// @Param request body dish.Socket true "query params"
+// @Success 200 {object} dish.Socket
+// @Router /dish/sockets/{key} [post]
+func PostNewSocketByKey(ctx *gin.Context) {
+	config.AddNewItemByParam(ctx, Cache, pkgName, Socket{})
+	return
+}
 
-	rawChecksum := sha256.Sum256([]byte(rawJSON))
-	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{
-			"code":    http.StatusInternalServerError,
-			"message": "cannot calculate the checksum",
-		})
-	}*/
+// edit existing socket by ID
+// @Summary Update socket by its ID
+// @Description update socket by its ID
+// @Tags dish
+// @Produce json
+// @Param request body dish.Socket.ID true "query params"
+// @Success 200 {object} dish.Socket
+// @Router /dish/sockets/{key} [put]
+func UpdateSocketByKey(ctx *gin.Context) {
+	config.UpdateItemByParam(ctx, Cache, pkgName, Socket{})
+	return
+}
 
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"count":   count,
-		"message": "ok, dumping all sockets",
-		//"checksum": fmt.Sprintf("%x", rawChecksum),
-		"sockets": sockets,
-	})
+// remove existing socket by ID
+// @Summary Delete socket by its ID
+// @Description delete socket by its ID
+// @Tags dish
+// @Produce json
+// @Param  id  path  string  true  "dish ID"
+// @Success 200 {object} dish.Socket
+// @Router /dish/sockets/{key} [delete]
+func DeleteSocketByKey(ctx *gin.Context) {
+	config.DeleteItemByParam(ctx, Cache, pkgName)
+	return
+}
+
+// @Summary Upload dish dump backup -- restores all loaded sockets
+// @Description update dish JSON dump
+// @Tags dish
+// @Accept json
+// @Produce json
+// @Success 201
+// @Router /dish/restore [post]
+func PostDumpRestore(ctx *gin.Context) {
+	config.BatchRestoreItems(ctx, Cache, pkgName, Socket{})
 	return
 }
 
@@ -60,8 +89,8 @@ func GetSocketList(c *gin.Context) {
 // @Success 200 {string} string	"ok"
 // @Router /dish/sockets/{host} [get]
 // Get sockets by hostname/dish-name.
-func GetSocketListByHost(c *gin.Context) {
-	var host string = c.Param("host")
+func GetSocketListByHost(ctx *gin.Context) {
+	var host string = ctx.Param("host")
 	var exportedSockets = make(map[string]Socket)
 
 	rawSocketsMap, _ := Cache.GetAll()
@@ -78,111 +107,22 @@ func GetSocketListByHost(c *gin.Context) {
 	}
 
 	if len(exportedSockets) > 0 {
-		c.IndentedJSON(http.StatusOK, gin.H{
+		ctx.IndentedJSON(http.StatusOK, gin.H{
 			"code":    http.StatusOK,
+			"tems":    exportedSockets,
 			"message": "ok, dumping socket by host",
 			"host":    host,
-			"sockets": exportedSockets,
 		})
 		return
 	}
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{
+	ctx.IndentedJSON(http.StatusNotFound, gin.H{
 		"code":    http.StatusNotFound,
 		"message": "no sockets for given 'host'",
 		"host":    host,
 	})
 	return
 
-}
-
-// @Summary Adding new socket to socket array
-// @Description add new socket to socket array
-// @Tags dish
-// @Produce json
-// @Param request body dish.Socket true "query params"
-// @Success 200 {object} dish.Socket
-// @Router /dish/sockets [post]
-// Add new socket to the list.
-func PostNewSocket(c *gin.Context) {
-	var newSocket Socket
-
-	if err := c.BindJSON(&newSocket); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code":    http.StatusBadRequest,
-			"message": "cannot bind input JSON stream",
-		})
-		return
-	}
-
-	if _, found := Cache.Get(newSocket.ID); found {
-		c.IndentedJSON(http.StatusConflict, gin.H{
-			"code":    http.StatusConflict,
-			"message": "dish socket already exists",
-			"id":      newSocket.ID,
-		})
-		return
-	}
-
-	if saved := Cache.Set(newSocket.ID, newSocket); !saved {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":    http.StatusInternalServerError,
-			"message": "socket couldn't be saved to database",
-		})
-		return
-	}
-
-	c.IndentedJSON(http.StatusCreated, gin.H{
-		"code":    http.StatusCreated,
-		"message": "socket added",
-		"socket":  newSocket,
-	})
-	return
-}
-
-// (PUT /dish/sockets/{id})
-// @Summary Update socket by its ID
-// @Description update socket by its ID
-// @Tags dish
-// @Produce json
-// @Param request body dish.Socket.ID true "query params"
-// @Success 200 {object} dish.Socket
-// @Router /dish/sockets/{id} [put]
-// edit existing socket by ID
-func UpdateSocketByID(c *gin.Context) {
-	var id string = c.Param("id")
-	var updatedSocket Socket
-
-	if _, found := Cache.Get(id); !found {
-		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"code":    http.StatusNotFound,
-			"message": "socket not found",
-		})
-		return
-	}
-
-	if err := c.BindJSON(&updatedSocket); err != nil {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{
-			"code":    http.StatusBadRequest,
-			"message": "cannot bind input JSON stream",
-		})
-		return
-	}
-
-	if saved := Cache.Set(updatedSocket.ID, updatedSocket); !saved {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":    http.StatusInternalServerError,
-			"message": "socket couldn't be saved to database",
-		})
-		return
-	}
-
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"message": "socket updated by its ID",
-		"socket":  updatedSocket,
-	})
-	return
 }
 
 // (PUT /dish/sockets/{id}/mute)
@@ -192,15 +132,15 @@ func UpdateSocketByID(c *gin.Context) {
 // @Produce json
 // @Param  id  path  string  true  "dish ID"
 // @Success 200 {object} dish.Socket
-// @Router /dish/sockets/{id}/mute [put]
+// @Router /dish/sockets/{key}/mute [put]
 // edit existing socket by ID
-func MuteToggleSocketByID(c *gin.Context) {
-	var id string = c.Param("id")
+func MuteToggleSocketByKey(ctx *gin.Context) {
+	var id string = ctx.Param("key")
 	var updatedSocket Socket
 
 	rawSocket, ok := Cache.Get(id)
 	if !ok {
-		c.IndentedJSON(http.StatusNotFound, gin.H{
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
 			"message": "socket not found",
 			"id":      id,
@@ -210,7 +150,7 @@ func MuteToggleSocketByID(c *gin.Context) {
 
 	updatedSocket, ok = rawSocket.(Socket)
 	if !ok {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
 			"message": "cannot assert data type, database internal error",
 		})
@@ -225,87 +165,17 @@ func MuteToggleSocketByID(c *gin.Context) {
 	}
 
 	if saved := Cache.Set(updatedSocket.ID, updatedSocket); !saved {
-		c.JSON(http.StatusInternalServerError, gin.H{
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
 			"message": "socket couldn't be saved to database",
 		})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{
+	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "socket mute toggle pressed!",
 		"socket":  updatedSocket,
-	})
-	return
-}
-
-// (DELETE /dish/sockets/{id})
-// remove existing socket by ID
-// @Summary Delete socket by its ID
-// @Description delete socket by its ID
-// @Tags dish
-// @Produce json
-// @Param  id  path  string  true  "dish ID"
-// @Success 200 {object} dish.Socket
-// @Router /dish/sockets/{id} [delete]
-func DeleteSocketByID(c *gin.Context) {
-	var id string = c.Param("id")
-
-	if _, found := Cache.Get(id); !found {
-		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"code":    http.StatusNotFound,
-			"message": "socket not found",
-			"id":      id,
-		})
-		return
-	}
-
-	if deleted := Cache.Delete(id); !deleted {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":    http.StatusInternalServerError,
-			"message": "socket couldn't be deleted from database",
-		})
-		return
-	}
-
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"message": "socket deleted by ID",
-		"id":      id,
-	})
-	return
-}
-
-// (POST /dish/sockets/restore)
-// @Summary Upload dish dump backup -- restores all loaded sockets
-// @Description update dish JSON dump
-// @Tags dish
-// @Accept json
-// @Produce json
-// @Router /dish/restore [post]
-func PostDumpRestore(c *gin.Context) {
-	var importSockets = &Sockets{}
-	var socket Socket
-	var counter int = 0
-
-	if err := c.BindJSON(importSockets); err != nil {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{
-			"code":    http.StatusBadRequest,
-			"message": "cannot bind input JSON stream",
-		})
-		return
-	}
-
-	for _, socket = range importSockets.Sockets {
-		Cache.Set(socket.ID, socket)
-		counter++
-	}
-
-	c.IndentedJSON(http.StatusCreated, gin.H{
-		"code":    http.StatusCreated,
-		"count":   counter,
-		"message": "sockets imported, omitting output",
 	})
 	return
 }

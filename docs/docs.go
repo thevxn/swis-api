@@ -27,48 +27,19 @@ const docTemplate = `{
     "paths": {
         "/backups": {
             "get": {
-                "description": "get backuped services",
+                "description": "get backed up services",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Get all backuped services",
+                "summary": "Get all backed up services",
                 "responses": {
                     "200": {
                         "description": "ok",
                         "schema": {
                             "type": "string"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new backuped service",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "backups"
-                ],
-                "summary": "Adding new backuped serivce",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/backups.Backup"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/backups.Backup"
                         }
                     }
                 }
@@ -90,20 +61,20 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/backups/{service}": {
+        "/backups/{key}": {
             "get": {
-                "description": "get backup status by project/service",
+                "description": "get backup status by project'S/service's key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Get backup status by project/service",
+                "summary": "Get backup status by project's/service's key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "backup service name",
+                        "description": "backup service key",
                         "name": "host",
                         "in": "path",
                         "required": true
@@ -119,14 +90,43 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "update backup status by service",
+                "description": "update backup status by service's key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Update backup status by service",
+                "summary": "Update backup status by service's key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/backups.Backup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/backups.Backup"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new backed up service",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Add new backed up serivce",
                 "parameters": [
                     {
                         "description": "query params",
@@ -148,14 +148,14 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "delete backup service by its Name",
+                "description": "delete backup service by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Delete backup service by its Name",
+                "summary": "Delete backup service by its key",
                 "responses": {
                     "200": {
                         "description": "ok",
@@ -461,7 +461,11 @@ const docTemplate = `{
                     "dish"
                 ],
                 "summary": "Upload dish dump backup -- restores all loaded sockets",
-                "responses": {}
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
             }
         },
         "/dish/sockets": {
@@ -479,35 +483,6 @@ const docTemplate = `{
                         "description": "ok",
                         "schema": {
                             "type": "string"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new socket to socket array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Adding new socket to socket array",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
                         }
                     }
                 }
@@ -542,7 +517,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/dish/sockets/{id}": {
+        "/dish/sockets/{key}": {
             "put": {
                 "description": "update socket by its ID",
                 "produces": [
@@ -552,6 +527,35 @@ const docTemplate = `{
                     "dish"
                 ],
                 "summary": "Update socket by its ID",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new socket to socket array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Adding new socket to socket array",
                 "parameters": [
                     {
                         "description": "query params",
@@ -600,7 +604,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/dish/sockets/{id}/mute": {
+        "/dish/sockets/{key}/mute": {
             "put": {
                 "description": "mute/unmute socket by its ID",
                 "produces": [
@@ -629,7 +633,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/finance": {
+        "/finance/account": {
             "get": {
                 "description": "get finance complete list",
                 "produces": [
@@ -647,7 +651,29 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
+            }
+        },
+        "/finance/account/owner/{key}": {
+            "get": {
+                "description": "get finance account by :owner param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Get finance account by its Owner",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Account"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/account/{key}": {
             "post": {
                 "description": "add new finance account",
                 "produces": [
@@ -678,7 +704,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/finance/accounts/{id}": {
+        "/finance/accounts/{key}": {
             "put": {
                 "description": "update finance account by ID",
                 "produces": [
@@ -726,26 +752,6 @@ const docTemplate = `{
                         "required": true
                     }
                 ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/finance.Account"
-                        }
-                    }
-                }
-            }
-        },
-        "/finance/accounts/{owner}": {
-            "get": {
-                "description": "get finance account by :owner param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "finance"
-                ],
-                "summary": "Get finance account by its Owner",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -906,6 +912,71 @@ const docTemplate = `{
                         }
                     }
                 }
+            }
+        },
+        "/links/restore": {
+            "post": {
+                "description": "update links JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Upload links dump backup -- restore all links",
+                "responses": {}
+            }
+        },
+        "/links/{key}": {
+            "get": {
+                "description": "get link by its :hash param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Get link by :hash",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update link by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Update link by its Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/links.Link"
+                        }
+                    }
+                }
             },
             "post": {
                 "description": "add new link to links array",
@@ -935,85 +1006,20 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/links/restore": {
-            "post": {
-                "description": "update links JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "links"
-                ],
-                "summary": "Upload links dump backup -- restore all links",
-                "responses": {}
-            }
-        },
-        "/links/{hash}": {
-            "get": {
-                "description": "get link by its :hash param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "links"
-                ],
-                "summary": "Get link by :hash",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/links.Link"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update link by its Hash",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "links"
-                ],
-                "summary": "Update link by its Hash",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/links.Link"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/links.Link"
-                        }
-                    }
-                }
             },
             "delete": {
-                "description": "delete link by its Hash",
+                "description": "delete link by its Key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "links"
                 ],
-                "summary": "Delete link by its Hash",
+                "summary": "Delete link by its Key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "link Hash",
+                        "description": "link Key",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1029,7 +1035,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/links/{hash}/active": {
+        "/links/{key}/active": {
             "put": {
                 "description": "toggle active boolean for {hash}",
                 "produces": [
@@ -1152,35 +1158,6 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "add new project to projects list",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "projects"
-                ],
-                "summary": "Add new project",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/projects.Project"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/projects.Project"
-                        }
-                    }
-                }
             }
         },
         "/projects/restore": {
@@ -1199,7 +1176,7 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/projects/{id}": {
+        "/projects/{key}": {
             "get": {
                 "description": "get project details by :id route param",
                 "produces": [
@@ -1227,6 +1204,35 @@ const docTemplate = `{
                     "projects"
                 ],
                 "summary": "Update project by its ID",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/projects.Project"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/projects.Project"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new project to projects list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Add new project",
                 "parameters": [
                     {
                         "description": "query params",
@@ -1293,6 +1299,71 @@ const docTemplate = `{
                         }
                     }
                 }
+            }
+        },
+        "/roles/restore": {
+            "post": {
+                "description": "update roles JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Upload roles dump backup -- restores all roles",
+                "responses": {}
+            }
+        },
+        "/roles/{key}": {
+            "get": {
+                "description": "get role by :key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Get role by Key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update role by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Update role by its Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/roles.Role"
+                        }
+                    }
+                }
             },
             "post": {
                 "description": "add new role to roles array",
@@ -1322,85 +1393,20 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/roles/restore": {
-            "post": {
-                "description": "update roles JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roles"
-                ],
-                "summary": "Upload roles dump backup -- restores all roles",
-                "responses": {}
-            }
-        },
-        "/roles/{name}": {
-            "get": {
-                "description": "get role by :id param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roles"
-                ],
-                "summary": "Get role by Name",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/roles.Role"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update role by its Name",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roles"
-                ],
-                "summary": "Update role by its Name",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/roles.Role"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/roles.Role"
-                        }
-                    }
-                }
             },
             "delete": {
-                "description": "delete role by its Name",
+                "description": "delete role by its Key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "roles"
                 ],
-                "summary": "Delete role by its Name",
+                "summary": "Delete role by its Key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "role Name",
+                        "description": "role Key",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1450,6 +1456,71 @@ const docTemplate = `{
                         }
                     }
                 }
+            }
+        },
+        "/users/restore": {
+            "post": {
+                "description": "update users JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Upload users dump backup -- restores all users",
+                "responses": {}
+            }
+        },
+        "/users/{key}": {
+            "get": {
+                "description": "get user by their :key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get user by Key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update user by Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update user by Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
             },
             "post": {
                 "description": "add new user to users array",
@@ -1479,81 +1550,16 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/users/restore": {
-            "post": {
-                "description": "update users JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "users"
-                ],
-                "summary": "Upload users dump backup -- restores all users",
-                "responses": {}
-            }
-        },
-        "/users/{name}": {
-            "get": {
-                "description": "get user by their :name param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "users"
-                ],
-                "summary": "Get user by Name",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/users.User"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update user by Name",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "users"
-                ],
-                "summary": "Update user by Name",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/users.User"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/users.User"
-                        }
-                    }
-                }
             },
             "delete": {
-                "description": "delete user by Name",
+                "description": "delete user by Key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "users"
                 ],
-                "summary": "Delete user by Name",
+                "summary": "Delete user by Key",
                 "parameters": [
                     {
                         "type": "string",
@@ -1573,7 +1579,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/{name}/active": {
+        "/users/{key}/active": {
             "put": {
                 "description": "toggle active boolean for {user}",
                 "produces": [
@@ -1586,7 +1592,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "username",
+                        "description": "user name",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1602,7 +1608,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/{name}/keys/ssh": {
+        "/users/{key}/keys/ssh": {
             "get": {
                 "description": "fetch :user ssh key array output in plain text",
                 "produces": [
@@ -1819,14 +1825,14 @@ const docTemplate = `{
             ],
             "properties": {
                 "dish_target": {
-                    "description": "DishTarget is a string array, usually containing dish's host short name (e.g. frank)\nto be referred e.g. /dish/sockets/frank",
+                    "description": "DishTarget is a string array, usually containing dish's host short name (e.g. frank).\nTo be referred as /dish/sockets/frank for example.",
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
                 },
                 "expected_http_code_array": {
-                    "description": "If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response codes are okay and not to alert upon",
+                    "description": "If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response codes are okay and not to alert upon.",
                     "type": "array",
                     "items": {
                         "type": "integer"
@@ -1837,11 +1843,11 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "host_name": {
-                    "description": "Hostname (server.random.com) or HTTP/S URI (http://endpoint.space)",
+                    "description": "Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).",
                     "type": "string"
                 },
                 "muted": {
-                    "description": "Muted bool indicates that the socket is not propagated to any dish",
+                    "description": "Muted bool indicates that the socket is not propagated to any dish if true.",
                     "type": "boolean"
                 },
                 "muted_from": {
@@ -1853,19 +1859,19 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "port_tcp": {
-                    "description": "Socket TCP port part\nEven default port 80 should be added here",
+                    "description": "Socket TCP port part\nEven default port 80 should be added here.",
                     "type": "integer"
                 },
                 "socket_description": {
-                    "description": "More verbose name/description of the socket",
+                    "description": "More verbose name/description of the socket.",
                     "type": "string"
                 },
                 "socket_id": {
-                    "description": "Socket ID, snake_cased for socket editing and deleting",
+                    "description": "Socket ID, snake_cased for socket editing and deleting.",
                     "type": "string"
                 },
                 "socket_name": {
-                    "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example",
+                    "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example.",
                     "type": "string"
                 }
             }
@@ -2433,7 +2439,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.4.38",
+	Version:          "5.5.4",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
