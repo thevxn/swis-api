@@ -14,19 +14,20 @@ import (
 )
 
 var (
-	news  = NewsSources{}
-	Cache *config.Cache
+	news    = NewsSources{}
+	Cache   *config.Cache
+	pkgName string = "news"
 )
 
-func findSourcesByUser(c *gin.Context) (s *[]Source) {
+func findSourcesByUser(ctx *gin.Context) (s *[]Source) {
 	for _, n := range news.UserSources {
-		if n.User == c.Param("user") {
+		if n.User == ctx.Param("user") {
 			//c.IndentedJSON(http.StatusOK, a)
 			return &n.Sources
 		}
 	}
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{
+	ctx.IndentedJSON(http.StatusNotFound, gin.H{
 		"code":    http.StatusNotFound,
 		"message": "user's sources not found",
 	})
@@ -51,22 +52,91 @@ func fetchRSSContents(s *Source) (i *[]Item) {
 	//log.Printf("Channel title: %v\n", rss.Channel.Title)
 	//log.Printf("Channel link: %v\n", rss.Channel.Link)
 
-	/*
-		for i, item := range rss.Channel.Items {
-			log.Printf("%v. item title: %v\n", i, item.Title)
-		}*/
+	/*for i, item := range rss.Channel.Items {
+		log.Printf("%v. item title: %v\n", i, item.Title)
+	}*/
 	return &rss.Channel.Items
 }
 
+// GetSources
+// @Summary Get news source list
+// @Description get all news sources
+// @Tags news
+// @Produce  json
+// @Success 200 {object} news.NewsSources.Sources
+// @Router /news/sources/ [get]
+func GetSources(ctx *gin.Context) {
+	config.PrintAllRootItems(ctx, Cache, pkgName)
+	return
+}
+
+// GetSourcesByUserKey
+// @Summary Get news source list by User key
+// @Description get news sources by their user :key param
+// @Tags news
+// @Produce  json
+// @Success 200 {object} news.Source
+// @Router /news/sources/{key} [get]
+func GetSourcesByUserKey(ctx *gin.Context) {
+	config.PrintItemByParam(ctx, Cache, pkgName, Source{})
+	return
+}
+
+// @Summary Add new user sources by user key
+// @Description add new news sources by user :key param
+// @Tags news
+// @Produce  json
+// @Success 200 {object} news.Source
+// @Router /news/sources/{key} [post]
+func PostNewSourcesByUserKey(ctx *gin.Context) {
+	config.AddNewItemByParam(ctx, Cache, pkgName, Source{})
+	return
+}
+
+// @Summary Update news sources by user key
+// @Description update news sources by user key
+// @Tags backups
+// @Produce json
+// @Param request body news.Source true "query params"
+// @Success 200 {object} news.Source
+// @Router /news/sources/{key} [put]
+func UpdateSourcesByUserKey(ctx *gin.Context) {
+	config.UpdateItemByParam(ctx, Cache, pkgName, Source{})
+	return
+}
+
+// @Summary Delete user sources by user key
+// @Description delete user sources by user key
+// @Tags backups
+// @Produce json
+// @Success 200 {string} string "ok"
+// @Router /news/sources/{key} [delete]
+func DeleteSourcesByUserKey(ctx *gin.Context) {
+	config.DeleteItemByParam(ctx, Cache, pkgName)
+	return
+}
+
+// PostDumpRestore
+// @Summary Upload news sources dump backup -- restores all sources
+// @Description update news sources JSON dump
+// @Tags news
+// @Accept json
+// @Produce json
+// @Router /news/sources/restore [post]
+func PostDumpRestore(ctx *gin.Context) {
+	config.BatchRestoreItems(ctx, Cache, pkgName, Source{})
+	return
+}
+
+// GetNewsByUser returns all possible news from all sources loaded in memory
 // @Summary Get news by User
 // @Description fetch and parse news for :user param
 // @Tags news
 // @Produce  json
 // @Success 200 {object} news.Item
-// @Router /news/{name} [get]
-// GetNewsByUser returns all possible news from all sources loaded in memory
-func GetNewsByUser(c *gin.Context) {
-	userSources := findSourcesByUser(c)
+// @Router /news/{key} [get]
+func GetNewsByUserKey(ctx *gin.Context) {
+	userSources := findSourcesByUser(ctx)
 	if userSources == nil {
 		return
 	}
@@ -98,71 +168,8 @@ func GetNewsByUser(c *gin.Context) {
 		return items[i].ParseDate.After(items[j].ParseDate)
 	})
 
-	c.IndentedJSON(http.StatusOK, gin.H{
+	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"news": items,
 	})
-}
-
-// @Summary Get news source list
-// @Description get all news sources
-// @Tags news
-// @Produce  json
-// @Success 200 {object} news.NewsSources.Sources
-// @Router /news/sources/ [get]
-// GetSources
-func GetSources(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"message":      "ok, dumping news sources",
-		"code":         http.StatusOK,
-		"user_sources": news.UserSources,
-	})
-}
-
-// @Summary Get news source list by Username
-// @Description get news sources by their :name param
-// @Tags news
-// @Produce  json
-// @Success 200 {object} news.NewsSources.Sources
-// @Router /news/sources/{name} [get]
-// GetSources
-func GetSourcesByUser(c *gin.Context) {
-	userSources := findSourcesByUser(c)
-	if userSources == nil {
-		return
-	}
-
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"message": "ok, dumping news sources",
-		"code":    http.StatusOK,
-		"sources": *userSources,
-	})
-}
-
-// @Summary Upload news sources dump backup -- restores all sources
-// @Description update news sources JSON dump
-// @Tags news
-// @Accept json
-// @Produce json
-// @Router /news/sources/restore [post]
-// PostDumpRestore
-func PostDumpRestore(c *gin.Context) {
-	var importSources NewsSources //News.Sources
-
-	// bind received JSON to newUser
-	if err := c.BindJSON(&importSources); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code":    http.StatusBadRequest,
-			"message": "cannot parse input JSON stream",
-		})
-		return
-	}
-
-	// restore sources
-	news = importSources
-
-	// HTTP 201 Created
-	c.IndentedJSON(http.StatusCreated, gin.H{
-		"code":    http.StatusCreated,
-		"message": "sources imported successfully",
-	})
+	return
 }

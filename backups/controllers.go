@@ -134,22 +134,22 @@ func UpdateBackupStatusByServiceKey(ctx *gin.Context) {
 }
 
 // (PUT /backups/{service}/active)
-// @Summary Acitive/inactive backup toggle by its ServiceName
-// @Description active/inactive backup toggle by its ServiceName
+// @Summary Acitive/inactive backup toggle by its key
+// @Description active/inactive backup toggle by its key
 // @Tags backups
 // @Produce json
-// @Param  service_name  path  string  true  "service name"
+// @Param  service_name  path  string  true  "service key"
 // @Success 200 {object} backups.Backup
-// @Router /backups/{service}/active [put]
-func ActiveToggleBackupByServiceKey(c *gin.Context) {
+// @Router /backups/{key}/active [put]
+func ActiveToggleBackupByServiceKey(ctx *gin.Context) {
 	var service Backup
-	var name string = c.Param("service")
+	var name string = ctx.Param("key")
 
 	rawService, found := Cache.Get(name)
 	if !found {
-		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"message": "backed up service not found",
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
+			"message": "backed up service not found",
 			"name":    name,
 		})
 		return
@@ -157,9 +157,9 @@ func ActiveToggleBackupByServiceKey(c *gin.Context) {
 
 	service, ok := rawService.(Backup)
 	if !ok {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{
-			"message": "cannot assert data type, database internal error",
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
+			"message": "cannot assert data type, database internal error",
 		})
 		return
 	}
@@ -168,14 +168,14 @@ func ActiveToggleBackupByServiceKey(c *gin.Context) {
 	service.Active = !service.Active
 
 	if saved := Cache.Set(name, service); !saved {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
 			"message": "backed up service couldn't be saved to database",
 		})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, gin.H{
+	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "backed up service active toggle pressed!",
 		"backup":  service,
