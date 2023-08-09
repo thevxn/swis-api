@@ -14,27 +14,11 @@ import (
 )
 
 var (
-	news    = NewsSources{}
 	Cache   *config.Cache
 	pkgName string = "news"
 )
 
-func findSourcesByUser(ctx *gin.Context) (s *[]Source) {
-	for _, n := range news.UserSources {
-		if n.User == ctx.Param("user") {
-			//c.IndentedJSON(http.StatusOK, a)
-			return &n.Sources
-		}
-	}
-
-	ctx.IndentedJSON(http.StatusNotFound, gin.H{
-		"code":    http.StatusNotFound,
-		"message": "user's sources not found",
-	})
-	return nil
-}
-
-func fetchRSSContents(s *Source) (i *[]Item) {
+func fetchRSSContents(s Source) (i *[]Item) {
 	resp, err := http.Get(s.URL)
 	if err != nil {
 		return nil
@@ -95,7 +79,7 @@ func PostNewSourcesByUserKey(ctx *gin.Context) {
 
 // @Summary Update news sources by user key
 // @Description update news sources by user key
-// @Tags backups
+// @Tags news
 // @Produce json
 // @Param request body news.Source true "query params"
 // @Success 200 {object} news.Source
@@ -107,7 +91,7 @@ func UpdateSourcesByUserKey(ctx *gin.Context) {
 
 // @Summary Delete user sources by user key
 // @Description delete user sources by user key
-// @Tags backups
+// @Tags news
 // @Produce json
 // @Success 200 {string} string "ok"
 // @Router /news/sources/{key} [delete]
@@ -129,28 +113,47 @@ func PostDumpRestore(ctx *gin.Context) {
 }
 
 // GetNewsByUser returns all possible news from all sources loaded in memory
-// @Summary Get news by User
-// @Description fetch and parse news for :user param
+// @Summary Get news by user key
+// @Description fetch and parse news for :key param
 // @Tags news
 // @Produce  json
 // @Success 200 {object} news.Item
 // @Router /news/{key} [get]
 func GetNewsByUserKey(ctx *gin.Context) {
-	userSources := findSourcesByUser(ctx)
-	if userSources == nil {
+	user := ctx.Param("key")
+
+	rawUserSources, ok := Cache.Get(user)
+	if !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"key":     user,
+			"message": "no news sources found for such user key",
+			"package": pkgName,
+		})
+		return
+	}
+
+	userSources, ok := rawUserSources.([]Source)
+	if !ok {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"key":     user,
+			"message": "cannot assert data type, internal database error",
+			"package": pkgName,
+		})
 		return
 	}
 
 	//var R = []Rss{}
 	var items = []Item{}
 
-	for _, s := range *userSources {
-		cont := fetchRSSContents(&s)
-		if cont == nil {
+	for _, source := range userSources {
+		contents := fetchRSSContents(source)
+		if contents == nil {
 			continue
 		}
 
-		for _, item := range *cont {
+		for _, item := range *contents {
 			// time layouts (date template constants) --> https://go.dev/src/time/format.go
 			item.ParseDate, _ = time.Parse(time.RFC1123Z, item.PubDate)
 
@@ -169,7 +172,10 @@ func GetNewsByUserKey(ctx *gin.Context) {
 	})
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
-		"news": items,
+		"code":    http.StatusOK,
+		"items":   items,
+		"message": "ok, listing news (newest to oldest)",
+		"package": pkgName,
 	})
 	return
 }

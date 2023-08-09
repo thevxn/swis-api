@@ -125,7 +125,6 @@ func GetSocketListByHost(ctx *gin.Context) {
 		"host":    host,
 	})
 	return
-
 }
 
 // (PUT /dish/sockets/{id}/mute)
