@@ -1,9 +1,5 @@
 package links
 
-type Links struct {
-	Links map[string]Link `json:"links"`
-}
-
 type Link struct {
 	// Link's name/placeholder, used as an unique key.
 	Name string `json:"name" binding:"required"`

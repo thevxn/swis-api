@@ -1,10 +1,5 @@
 package projects
 
-type Projects struct {
-	// Array of Project objects for a batch import.
-	Projects map[string]Project `json:"projects"`
-}
-
 type Project struct {
 	// Project's unique identificator.
 	ID string `json:"project_id" binding:"required"`

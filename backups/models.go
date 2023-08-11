@@ -1,11 +1,5 @@
 package backups
 
-type Backups struct {
-	// Array of to be backuped services.
-	//Backups []Backup `json:"backups"`
-	Backups map[string]Backup `json:"backups"`
-}
-
 type Backup struct {
 	// Backuped service name -- unique identifier.
 	ServiceName string `json:"service_name" binding:"required" validation:"required"`

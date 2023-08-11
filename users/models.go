@@ -1,11 +1,5 @@
 package users
 
-// High-level Users struct mainly for users restore batch importing.
-type Users struct {
-	// A map of User objects
-	Users map[string]User `json:"users"`
-}
-
 // Low-level User struct with all user's details.
 type User struct {
 	// ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property).

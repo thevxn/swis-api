@@ -16,7 +16,7 @@ var (
 // @Description get roules complete list
 // @Tags roles
 // @Produce  json
-// @Success 200 {object} roles.Roles
+// @Success 200 {object} []roles.Role
 // @Router /roles [get]
 func GetRoles(ctx *gin.Context) {
 	config.PrintAllRootItems(ctx, Cache, pkgName)

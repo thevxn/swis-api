@@ -29,9 +29,10 @@ func checkMethodUsagePermission(pp AuthParams, ctx *gin.Context) bool {
 	return true
 }
 
-func respondWithError(c *gin.Context, code int, message interface{}) {
-	c.AbortWithStatusJSON(code, gin.H{
-		"message": message,
+func respondWithError(ctx *gin.Context, code int, message interface{}) {
+	ctx.AbortWithStatusJSON(code, gin.H{
 		"code":    code,
+		"message": message,
 	})
+	return
 }

@@ -1,17 +1,5 @@
 package depots
 
-type Depots struct {
-	Depots map[string]Depot `json:"depots"`
-}
-
-type Depot struct {
-	// Depot owner's name, unique ID.
-	//Owner string `json:"owner_name"`
-
-	// Generic array of depot Items.
-	DepotItems []DepotItem `json:"depot_items"`
-}
-
 type DepotItem struct {
 	// Numeric unique ID of such Item.
 	ID int `json:"id"`

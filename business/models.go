@@ -1,10 +1,5 @@
 package business
 
-type Entities struct {
-	// Array of business records.
-	Entities map[string]Business `json:"business"`
-}
-
 // Business structure
 type Business struct {
 	// Business' unique identifier.

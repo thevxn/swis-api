@@ -166,20 +166,20 @@ const docTemplate = `{
                 }
             }
         },
-        "/backups/{service}/active": {
+        "/backups/{key}/active": {
             "put": {
-                "description": "active/inactive backup toggle by its ServiceName",
+                "description": "active/inactive backup toggle by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Acitive/inactive backup toggle by its ServiceName",
+                "summary": "Acitive/inactive backup toggle by its key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "service name",
+                        "description": "service key",
                         "name": "service_name",
                         "in": "path",
                         "required": true
@@ -209,7 +209,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/business.Entities"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/business.Business"
+                            }
                         }
                     }
                 }
@@ -350,7 +353,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.Depot"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/depots.DepotItem"
+                            }
                         }
                     }
                 }
@@ -416,7 +422,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/depots.Depot"
+                            "$ref": "#/definitions/depots.DepotItem"
                         }
                     }
                 ],
@@ -471,7 +477,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.Depot"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/depots.DepotItem"
+                            }
                         }
                     }
                 }
@@ -1129,36 +1138,101 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/news/sources/{name}": {
+        "/news/sources/{key}": {
             "get": {
-                "description": "get news sources by their :name param",
+                "description": "get news sources by their user :key param",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "news"
                 ],
-                "summary": "Get news source list by Username",
+                "summary": "Get news source list by User key",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.NewsSources"
+                            "$ref": "#/definitions/news.Source"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update news sources by user key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Update news sources by user key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/news.Source"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/news.Source"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new news sources by user :key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Add new user sources by user key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/news.Source"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete user sources by user key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Delete user sources by user key",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
             }
         },
-        "/news/{name}": {
+        "/news/{key}": {
             "get": {
-                "description": "fetch and parse news for :user param",
+                "description": "fetch and parse news for :key param",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "news"
                 ],
-                "summary": "Get news by User",
+                "summary": "Get news by user key",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1183,7 +1257,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/projects.Projects"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/projects.Project"
+                            }
                         }
                     }
                 }
@@ -1324,7 +1401,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/roles.Roles"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/roles.Role"
+                            }
                         }
                     }
                 }
@@ -1481,7 +1561,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/users.Users"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/users.User"
+                            }
                         }
                     }
                 }
@@ -1782,30 +1865,6 @@ const docTemplate = `{
                 "type": {
                     "description": "Type of contact field (e.g. e-mail address, street address, telephone number etc).",
                     "type": "string"
-                }
-            }
-        },
-        "business.Entities": {
-            "type": "object",
-            "properties": {
-                "business": {
-                    "description": "Array of business records.",
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/business.Business"
-                    }
-                }
-            }
-        },
-        "depots.Depot": {
-            "type": "object",
-            "properties": {
-                "depot_items": {
-                    "description": "Generic array of depot Items.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/depots.DepotItem"
-                    }
                 }
             }
         },
@@ -2267,18 +2326,6 @@ const docTemplate = `{
                 }
             }
         },
-        "projects.Projects": {
-            "type": "object",
-            "properties": {
-                "projects": {
-                    "description": "Array of Project objects for a batch import.",
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/projects.Project"
-                    }
-                }
-            }
-        },
         "roles.Role": {
             "type": "object",
             "required": [
@@ -2300,17 +2347,6 @@ const docTemplate = `{
                 "name": {
                     "description": "Role name is its unique description, acts like an ID too.",
                     "type": "string"
-                }
-            }
-        },
-        "roles.Roles": {
-            "type": "object",
-            "properties": {
-                "roles": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/roles.Role"
-                    }
                 }
             }
         },
@@ -2401,18 +2437,6 @@ const docTemplate = `{
                 }
             }
         },
-        "users.Users": {
-            "type": "object",
-            "properties": {
-                "users": {
-                    "description": "A map of User objects",
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/users.User"
-                    }
-                }
-            }
-        },
         "users.Wireguard": {
             "type": "object",
             "properties": {
@@ -2457,7 +2481,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.5.7",
+	Version:          "5.5.13",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

@@ -1,9 +1,5 @@
 package roles
 
-type Roles struct {
-	Roles map[string]Role `json:"roles"`
-}
-
 type Role struct {
 	// Role name is its unique description, acts like an ID too.
 	Name string `json:"name" binding:"required"`

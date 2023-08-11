@@ -15,7 +15,7 @@ var (
 // @Description get business entities list
 // @Tags business
 // @Produce  json
-// @Success 200 {object} business.Entities
+// @Success 200 {object} []business.Business
 // @Router /business [get]
 func GetBusinessEntities(ctx *gin.Context) {
 	config.PrintAllRootItems(ctx, Cache, pkgName)

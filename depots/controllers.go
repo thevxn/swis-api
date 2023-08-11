@@ -20,7 +20,7 @@ var (
 // @Description get depot complete list
 // @Tags depots
 // @Produce json
-// @Success 200 {object} depots.Depot
+// @Success 200 {object} []depots.DepotItem
 // @Router /depots [get]
 func GetDepotItems(ctx *gin.Context) {
 	config.PrintAllRootItems(ctx, Cache, pkgName)
@@ -31,7 +31,7 @@ func GetDepotItems(ctx *gin.Context) {
 // @Description add new depot item
 // @Tags depots
 // @Produce json
-// @Param request body depots.Depot true "query params"
+// @Param request body depots.DepotItem true "query params"
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/{key} [post]
 func PostNewDepotItemByKey(ctx *gin.Context) {
@@ -78,7 +78,7 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Description get depot item list by :owner param
 // @Tags depots
 // @Produce json
-// @Success 200 {object} depots.Depot
+// @Success 200 {object} []depots.DepotItem
 // @Router /depots/{owner} [get]
 func GetDepotItemsByOwner(ctx *gin.Context) {
 	var owner string = ctx.Param("owner")

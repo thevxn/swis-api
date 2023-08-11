@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.5.7"
+        "version": "5.5.13"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -159,20 +159,20 @@
                 }
             }
         },
-        "/backups/{service}/active": {
+        "/backups/{key}/active": {
             "put": {
-                "description": "active/inactive backup toggle by its ServiceName",
+                "description": "active/inactive backup toggle by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "backups"
                 ],
-                "summary": "Acitive/inactive backup toggle by its ServiceName",
+                "summary": "Acitive/inactive backup toggle by its key",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "service name",
+                        "description": "service key",
                         "name": "service_name",
                         "in": "path",
                         "required": true
@@ -202,7 +202,10 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/business.Entities"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/business.Business"
+                            }
                         }
                     }
                 }
@@ -343,7 +346,10 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.Depot"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/depots.DepotItem"
+                            }
                         }
                     }
                 }
@@ -409,7 +415,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/depots.Depot"
+                            "$ref": "#/definitions/depots.DepotItem"
                         }
                     }
                 ],
@@ -464,7 +470,10 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.Depot"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/depots.DepotItem"
+                            }
                         }
                     }
                 }
@@ -1122,36 +1131,101 @@
                 "responses": {}
             }
         },
-        "/news/sources/{name}": {
+        "/news/sources/{key}": {
             "get": {
-                "description": "get news sources by their :name param",
+                "description": "get news sources by their user :key param",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "news"
                 ],
-                "summary": "Get news source list by Username",
+                "summary": "Get news source list by User key",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.NewsSources"
+                            "$ref": "#/definitions/news.Source"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update news sources by user key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Update news sources by user key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/news.Source"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/news.Source"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new news sources by user :key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Add new user sources by user key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/news.Source"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete user sources by user key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Delete user sources by user key",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
             }
         },
-        "/news/{name}": {
+        "/news/{key}": {
             "get": {
-                "description": "fetch and parse news for :user param",
+                "description": "fetch and parse news for :key param",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "news"
                 ],
-                "summary": "Get news by User",
+                "summary": "Get news by user key",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1176,7 +1250,10 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/projects.Projects"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/projects.Project"
+                            }
                         }
                     }
                 }
@@ -1317,7 +1394,10 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/roles.Roles"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/roles.Role"
+                            }
                         }
                     }
                 }
@@ -1474,7 +1554,10 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/users.Users"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/users.User"
+                            }
                         }
                     }
                 }
@@ -1775,30 +1858,6 @@
                 "type": {
                     "description": "Type of contact field (e.g. e-mail address, street address, telephone number etc).",
                     "type": "string"
-                }
-            }
-        },
-        "business.Entities": {
-            "type": "object",
-            "properties": {
-                "business": {
-                    "description": "Array of business records.",
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/business.Business"
-                    }
-                }
-            }
-        },
-        "depots.Depot": {
-            "type": "object",
-            "properties": {
-                "depot_items": {
-                    "description": "Generic array of depot Items.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/depots.DepotItem"
-                    }
                 }
             }
         },
@@ -2260,18 +2319,6 @@
                 }
             }
         },
-        "projects.Projects": {
-            "type": "object",
-            "properties": {
-                "projects": {
-                    "description": "Array of Project objects for a batch import.",
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/projects.Project"
-                    }
-                }
-            }
-        },
         "roles.Role": {
             "type": "object",
             "required": [
@@ -2293,17 +2340,6 @@
                 "name": {
                     "description": "Role name is its unique description, acts like an ID too.",
                     "type": "string"
-                }
-            }
-        },
-        "roles.Roles": {
-            "type": "object",
-            "properties": {
-                "roles": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/roles.Role"
-                    }
                 }
             }
         },
@@ -2390,18 +2426,6 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/users.Wireguard"
-                    }
-                }
-            }
-        },
-        "users.Users": {
-            "type": "object",
-            "properties": {
-                "users": {
-                    "description": "A map of User objects",
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/users.User"
                     }
                 }
             }

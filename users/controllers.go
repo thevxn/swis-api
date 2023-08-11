@@ -36,7 +36,7 @@ func FindUserByToken(token string) *User {
 // @Description get users complete list
 // @Tags users
 // @Produce  json
-// @Success 200 {object} users.Users
+// @Success 200 {object} []users.User
 // @Router /users [get]
 // GetSocketList GET method
 func GetUsers(ctx *gin.Context) {

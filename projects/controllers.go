@@ -16,7 +16,7 @@ var (
 // @Description get project list
 // @Tags projects
 // @Produce json
-// @Success 200 {object} projects.Projects
+// @Success 200 {object} []projects.Project
 // @Router /projects [get]
 func GetProjects(ctx *gin.Context) {
 	config.PrintAllRootItems(ctx, Cache, pkgName)

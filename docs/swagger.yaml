@@ -71,22 +71,6 @@ definitions:
           number etc).
         type: string
     type: object
-  business.Entities:
-    properties:
-      business:
-        additionalProperties:
-          $ref: '#/definitions/business.Business'
-        description: Array of business records.
-        type: object
-    type: object
-  depots.Depot:
-    properties:
-      depot_items:
-        description: Generic array of depot Items.
-        items:
-          $ref: '#/definitions/depots.DepotItem'
-        type: array
-    type: object
   depots.DepotItem:
     properties:
       depot:
@@ -431,14 +415,6 @@ definitions:
     required:
     - project_id
     type: object
-  projects.Projects:
-    properties:
-      projects:
-        additionalProperties:
-          $ref: '#/definitions/projects.Project'
-        description: Array of Project objects for a batch import.
-        type: object
-    type: object
   roles.Role:
     properties:
       active:
@@ -455,13 +431,6 @@ definitions:
         type: string
     required:
     - name
-    type: object
-  roles.Roles:
-    properties:
-      roles:
-        additionalProperties:
-          $ref: '#/definitions/roles.Role'
-        type: object
     type: object
   users.User:
     properties:
@@ -533,14 +502,6 @@ definitions:
     required:
     - name
     type: object
-  users.Users:
-    properties:
-      users:
-        additionalProperties:
-          $ref: '#/definitions/users.User'
-        description: A map of User objects
-        type: object
-    type: object
   users.Wireguard:
     properties:
       allowed_ips:
@@ -578,7 +539,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.5.7
+  version: 5.5.13
 paths:
   /backups:
     get:
@@ -662,11 +623,11 @@ paths:
       summary: Update backup status by service's key
       tags:
       - backups
-  /backups/{service}/active:
+  /backups/{key}/active:
     put:
-      description: active/inactive backup toggle by its ServiceName
+      description: active/inactive backup toggle by its key
       parameters:
-      - description: service name
+      - description: service key
         in: path
         name: service_name
         required: true
@@ -678,7 +639,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/backups.Backup'
-      summary: Acitive/inactive backup toggle by its ServiceName
+      summary: Acitive/inactive backup toggle by its key
       tags:
       - backups
   /backups/restore:
@@ -701,7 +662,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/business.Entities'
+            items:
+              $ref: '#/definitions/business.Business'
+            type: array
       summary: Get all business entities
       tags:
       - business
@@ -794,7 +757,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depots.Depot'
+            items:
+              $ref: '#/definitions/depots.DepotItem'
+            type: array
       summary: Get all depots and their users/owners
       tags:
       - depots
@@ -825,7 +790,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/depots.Depot'
+          $ref: '#/definitions/depots.DepotItem'
       produces:
       - application/json
       responses:
@@ -863,7 +828,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/depots.Depot'
+            items:
+              $ref: '#/definitions/depots.DepotItem'
+            type: array
       summary: Get depot item list by Owner
       tags:
       - depots
@@ -1282,9 +1249,9 @@ paths:
       summary: Upload links dump backup -- restore all links
       tags:
       - links
-  /news/{name}:
+  /news/{key}:
     get:
-      description: fetch and parse news for :user param
+      description: fetch and parse news for :key param
       produces:
       - application/json
       responses:
@@ -1292,7 +1259,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/news.Item'
-      summary: Get news by User
+      summary: Get news by user key
       tags:
       - news
   /news/sources/:
@@ -1308,17 +1275,60 @@ paths:
       summary: Get news source list
       tags:
       - news
-  /news/sources/{name}:
+  /news/sources/{key}:
+    delete:
+      description: delete user sources by user key
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Delete user sources by user key
+      tags:
+      - news
     get:
-      description: get news sources by their :name param
+      description: get news sources by their user :key param
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/news.NewsSources'
-      summary: Get news source list by Username
+            $ref: '#/definitions/news.Source'
+      summary: Get news source list by User key
+      tags:
+      - news
+    post:
+      description: add new news sources by user :key param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/news.Source'
+      summary: Add new user sources by user key
+      tags:
+      - news
+    put:
+      description: update news sources by user key
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/news.Source'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/news.Source'
+      summary: Update news sources by user key
       tags:
       - news
   /news/sources/restore:
@@ -1341,7 +1351,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/projects.Projects'
+            items:
+              $ref: '#/definitions/projects.Project'
+            type: array
       summary: Get all projects
       tags:
       - projects
@@ -1434,7 +1446,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/roles.Roles'
+            items:
+              $ref: '#/definitions/roles.Role'
+            type: array
       summary: Get all roles
       tags:
       - roles
@@ -1538,7 +1552,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/users.Users'
+            items:
+              $ref: '#/definitions/users.User'
+            type: array
       summary: Get all users
       tags:
       - users
