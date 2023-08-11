@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.5.13
+// @version 5.5.14
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -66,7 +66,7 @@ func main() {
 	router.Use(config.CORSMiddleware())
 
 	// Mirroring Middleware
-	router.Use(config.MirrorMiddleware())
+	//router.Use(config.MirrorMiddleware())
 
 	// serve savla-dev internal favicon
 	router.StaticFile("/favicon.ico", "./favicon.ico")
