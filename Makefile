@@ -102,13 +102,13 @@ test_deploy:
 		--name ${DOCKER_TEST_CONTAINER_NAME} \
 		-p ${DOCKER_TEST_PORT}:${DOCKER_TEST_PORT} \
 		-e ROOT_TOKEN=${ROOT_TOKEN_TEST} \
-		-e DOCKER_INTERNAL_PORT=${DOCKER_TEST_PORT} \
+		-e SERVER_PORT=${DOCKER_TEST_PORT} \
 		${DOCKER_IMAGE_TAG}
 
 POSTMAN_COLLECTION_FILE=.postman/swapi_E2E_dish.postman_collection.json
 .PHONY: e2e
 e2e:	
-	@postman collection run ${POSTMAN_COLLECTION_FILE} --env-var "token=${ROOT_TOKEN_TEST}" --env-var "baseURL=localhost:${DOCKER_TEST_PORT}"; \
+	@postman collection run ${POSTMAN_COLLECTION_FILE} --env-var "token=${ROOT_TOKEN_TEST}" --env-var "baseUrl=${HOSTNAME}:${DOCKER_TEST_PORT}"; \
 		docker stop ${DOCKER_TEST_CONTAINER_NAME}
 
 .PHONY: run
