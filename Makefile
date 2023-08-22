@@ -94,19 +94,22 @@ build:  version
 	@docker compose --file $(DOCKER_COMPOSE_FILE) build
 #@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
 
+ROOT_TOKEN_TEST=fsdFD33FdsfK3dcc00Wef223kffDSrrrr
 .PHONY: test_deploy
 test_deploy:
 	@echo -e "\n${YELLOW} Starting temporary test container... ${RESET}\n"
 	@docker run --rm --detach \
 		--name ${DOCKER_TEST_CONTAINER_NAME} \
 		-p ${DOCKER_TEST_PORT}:${DOCKER_TEST_PORT} \
-		-e ROOT_TOKEN=d3qySD87Ds48300pl \
+		-e ROOT_TOKEN=${ROOT_TOKEN_TEST} \
 		-e DOCKER_INTERNAL_PORT=${DOCKER_TEST_PORT} \
 		${DOCKER_IMAGE_TAG}
 
+POSTMAN_COLLECTION_FILE=.postman/swapi_E2E_dish.postman_collection.json
 .PHONY: e2e
 e2e:	
-	@docker stop ${DOCKER_TEST_CONTAINER_NAME}
+	@postman collection run ${POSTMAN_COLLECTION_FILE} --env-var "token=${ROOT_TOKEN_TEST}" --env-var "baseURL=localhost:${DOCKER_TEST_PORT}"; \
+		docker stop ${DOCKER_TEST_CONTAINER_NAME}
 
 .PHONY: run
 run:

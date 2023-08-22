@@ -1,0 +1,368 @@
+{
+	"info": {
+		"_postman_id": "284cce11-b9b7-495a-a570-c8ceece5b38d",
+		"name": "swapi E2E testing",
+		"description": "# ⛓️ Get started here\n\nPostman allows you to test your APIs using simple [Javascript code](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/). You can evaluate your response body, headers, cookies, and more using the [ChaiJS BDD](https://www.chaijs.com/api/bdd/) syntax.\n\nThis template guides you through the process of setting up an integration test to ensure that all individual components of an API function together seamlessly.\n\nThe API under test in this collection includes three endpoints for registering and receiving a token, accessing your unique generated name, and unregistering a token:\n\n- POST `/register`\n- POST `/unregister`\n- GET `/my-name`\n    \n\nBy setting up requests in the order of the operation, we can test the flow of data to and from the endpoints and ensure they work together as expected. We also verify that the data persists between requests on the back end.\n\n## 🔖 **How to use this template**\n\n**Step 1:** Check out the requests' documentation to learn more about -\n\n- what each request is meant to do.\n- the tests we've added against each one.\n    \n\n**Step 2:** Run this collection by clicking on \"Run\" or the by using the [Collection Runner](https://learning.postman.com/docs/collections/running-collections/intro-to-collection-runs/).\n\n<img src=\"https://content.pstmn.io/84019b0f-69c8-4c5f-98b9-2c90a6f9a0b1/Y29sbGVjdGlvbi1ydW5uZXItYnV0dG9uLmpwZWc=\" width=\"266\" height=\"103\">\n\n**Step 3:** To customize this template, replace the request URLs with your API endpoints and add or edit the tests if needed.\n\n## 💡Related templates\n\n[Regression testing](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=7ab0f80e-a964-46ee-b948-4a4e3a85809c&sourceTemplateId=fe506090-ca91-4340-bea9-82d2c3d2bb9a)  \n[Performance testing](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=3302192d-87dd-4612-b381-61894de21203&sourceTemplateId=fe506090-ca91-4340-bea9-82d2c3d2bb9a)  \n[Contract testing](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=42247877-8529-429d-acba-4de20c3b5b3b&sourceTemplateId=fe506090-ca91-4340-bea9-82d2c3d2bb9a)  \n[Conditional workflow](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=78475d97-9a36-4731-ab24-9adf6a94d0fb&sourceTemplateId=fe506090-ca91-4340-bea9-82d2c3d2bb9a)  \n[Mock data generation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=da8ceebc-d4da-478c-ab8a-37634faefc74&sourceTemplateId=fe506090-ca91-4340-bea9-82d2c3d2bb9a)  \n[Common API vulnerabilities check](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e1edbae8-6429-453d-890e-00385eea1811&sourceTemplateId=fe506090-ca91-4340-bea9-82d2c3d2bb9a)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29279964"
+	},
+	"item": [
+		{
+			"name": "Ping",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns pong\", () => {",
+							"    pm.expect(pm.response.text()).to.have.a.string(\"pong\")",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/ping",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get root",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"An access token is returned\", () => {",
+							"    pm.expect(pm.response.json()).to.have.property('app_env')",
+							"    //pm.expect(pm.response.json().code).to.be.a('string')",
+							"    // Set the collection-scope \"token\" variable to the token received from the API",
+							"    // This lets us use it in other requests",
+							"    //pm.collectionVariables.set('code', pm.response.json().code)",
+							"})",
+							"",
+							"pm.test(\"Returns 200 OK status\", () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+			},
+			"response": []
+		},
+		{
+			"name": "Get sockets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 200 OK status\", () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dish/sockets",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dish",
+						"sockets"
+					]
+				},
+				"description": "This request uses the saved `token` collection variable to access a secret 'name' stored against that token.\n\nIn this request, we used the `token` collection variable as a query param to fetch the name generated for that token. We have added a test to check that a name is correctly returned."
+			},
+			"response": []
+		},
+		{
+			"name": "Update a testing socket (404 test)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 404 NOT FOUND status --- item does not exist\", () => {",
+							"    pm.response.to.have.status(404)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"socket_id\": \"ssh_test_socket\",\n    \"socket_name\": \"ssh test socket updated\",\n    \"socket_description\": \"\",\n    \"host_name\": \"10.4.5.131\",\n    \"port_tcp\": 22,\n    \"expected_http_code_array\": [],\n    \"path_http\": \"\",\n    \"dish_target\": [\n        \"talion\"\n    ],\n    \"muted\": true,\n    \"muted_from\": 0,\n    \"fail_count\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dish/sockets/ssh_test_socket",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dish",
+						"sockets",
+						"ssh_test_socket"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a testing socket",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 201 CREATED status\", () => {",
+							"    pm.response.to.have.status(201)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"socket_id\": \"ssh_test_socket\",\n    \"socket_name\": \"ssh test socket\",\n    \"socket_description\": \"\",\n    \"host_name\": \"10.4.5.131\",\n    \"port_tcp\": 22,\n    \"expected_http_code_array\": [],\n    \"path_http\": \"\",\n    \"dish_target\": [\n        \"talion\",\n        \"opsidian\"\n    ],\n    \"muted\": false,\n    \"muted_from\": 0,\n    \"fail_count\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dish/sockets/ssh_test_socket",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dish",
+						"sockets",
+						"ssh_test_socket"
+					]
+				},
+				"description": "This request un-registers a token by using the token collection variable in the POST body.\n\nWe also added a test to ensure the response has a 200 OK status code."
+			},
+			"response": []
+		},
+		{
+			"name": "Create a testing socket (already exists test)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 409 status -- item already exists\", () => {",
+							"    pm.response.to.have.status(409)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"socket_id\": \"ssh_test_socket\",\n    \"socket_name\": \"ssh test socket\",\n    \"socket_description\": \"\",\n    \"host_name\": \"10.4.5.131\",\n    \"port_tcp\": 22,\n    \"expected_http_code_array\": [],\n    \"path_http\": \"\",\n    \"dish_target\": [\n        \"talion\",\n        \"opsidian\"\n    ],\n    \"muted\": false,\n    \"muted_from\": 0,\n    \"fail_count\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dish/sockets/ssh_test_socket",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dish",
+						"sockets",
+						"ssh_test_socket"
+					]
+				},
+				"description": "This request un-registers a token by using the token collection variable in the POST body.\n\nWe also added a test to ensure the response has a 200 OK status code."
+			},
+			"response": []
+		},
+		{
+			"name": "Update a testing socket",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 200 OK status --- item updated\", () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"socket_id\": \"ssh_test_socket\",\n    \"socket_name\": \"ssh test socket updated\",\n    \"socket_description\": \"\",\n    \"host_name\": \"10.4.5.131\",\n    \"port_tcp\": 22,\n    \"expected_http_code_array\": [],\n    \"path_http\": \"\",\n    \"dish_target\": [\n        \"talion\"\n    ],\n    \"muted\": true,\n    \"muted_from\": 0,\n    \"fail_count\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/dish/sockets/ssh_test_socket",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dish",
+						"sockets",
+						"ssh_test_socket"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a testing socket",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns 200 OK status --- item deleted\", () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/dish/sockets/ssh_test_socket",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"dish",
+						"sockets",
+						"ssh_test_socket"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "X-Auth-Token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:8051"
+		},
+		{
+			"key": "token",
+			"value": "xxx",
+			"type": "string"
+		}
+	]
+}
