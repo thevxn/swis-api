@@ -109,7 +109,7 @@ POSTMAN_COLLECTION_FILE=.postman/swapi_E2E_dish.postman_collection.json
 HOSTNAME=hermes.savla.net
 .PHONY: e2e
 e2e:	
-	@postman collection run ${POSTMAN_COLLECTION_FILE} --env-var "token=${ROOT_TOKEN_TEST}" --env-var "baseUrl=${HOSTNAME}:${DOCKER_TEST_PORT} --timeout-request 5000"; \
+	@postman collection run ${POSTMAN_COLLECTION_FILE} --timeout-request 5000 --env-var "token=${ROOT_TOKEN_TEST}" --env-var "baseUrl=${HOSTNAME}:${DOCKER_TEST_PORT}"; \
 		docker stop ${DOCKER_TEST_CONTAINER_NAME}
 
 .PHONY: run
