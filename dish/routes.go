@@ -9,7 +9,7 @@ func Routes(g *gin.RouterGroup) {
 		GetSocketList)
 	g.GET("/sockets/:host",
 		GetSocketListByHost)
-	g.POST("/sockets",
+	g.POST("/sockets/:key",
 		PostNewSocketByKey)
 	g.PUT("/sockets/:key",
 		UpdateSocketByKey)
