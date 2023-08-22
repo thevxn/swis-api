@@ -48,5 +48,5 @@ COPY ./.github/assets/favicon.ico ${APP_ROOT}/
 WORKDIR ${APP_ROOT}
 EXPOSE ${DOCKER_INTERNAL_PORT}
 USER ${DOCKER_USER}
-ENTRYPOINT ${APP_NAME}
+ENTRYPOINT ["/bin/swis-api"]
 
