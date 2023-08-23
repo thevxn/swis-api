@@ -25,6 +25,150 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/alvax": {
+            "get": {
+                "description": "get alvax config list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "Get all alvax configs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/alvax.ConfigRoot"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/alvax/restore": {
+            "post": {
+                "description": "upload alvax config JSON dump and restore the data model",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "Upload alvax configs dump -- restore configs",
+                "responses": {}
+            }
+        },
+        "/alvax/{key}": {
+            "get": {
+                "description": "get alvax config by key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "Get alvax config by key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/alvax.ConfigRoot"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update alvax config by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "Update alvax config by its ID",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/alvax.ConfigRoot"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/alvax.ConfigRoot"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new alvax config",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "Add new alvax config",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/alvax.ConfigRoot"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/alvax.ConfigRoot"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete alvax config by its key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "Delete alvax config by its key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "alvax config key",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/alvax.ConfigRoot"
+                        }
+                    }
+                }
+            }
+        },
         "/backups": {
             "get": {
                 "description": "get backed up services",
@@ -1771,6 +1915,123 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "alvax.Channel": {
+            "type": "object",
+            "properties": {
+                "baseUrl": {
+                    "type": "string"
+                },
+                "botToken": {
+                    "type": "string"
+                },
+                "commands": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/alvax.Command"
+                    }
+                },
+                "defaultGroupId": {
+                    "type": "integer"
+                },
+                "githubGroupId": {
+                    "type": "integer"
+                },
+                "integrate": {
+                    "type": "boolean"
+                },
+                "memeMode": {
+                    "type": "boolean"
+                },
+                "methods": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "prodWebhook": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "wehbookEndpoint": {
+                    "type": "string"
+                }
+            }
+        },
+        "alvax.Command": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "fullName": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parameters": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "alvax.ConfigRoot": {
+            "type": "object",
+            "properties": {
+                "channels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/alvax.Channel"
+                    }
+                },
+                "docker": {
+                    "$ref": "#/definitions/alvax.Docker"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "ngrok": {
+                    "$ref": "#/definitions/alvax.Ngrok"
+                },
+                "server": {
+                    "$ref": "#/definitions/alvax.Server"
+                }
+            }
+        },
+        "alvax.Docker": {
+            "type": "object",
+            "properties": {
+                "host": {
+                    "type": "string"
+                }
+            }
+        },
+        "alvax.Ngrok": {
+            "type": "object",
+            "properties": {
+                "tunnelsUrl": {
+                    "type": "string"
+                }
+            }
+        },
+        "alvax.Server": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "integer"
+                }
+            }
+        },
         "backups.Backup": {
             "type": "object",
             "required": [
@@ -2481,7 +2742,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.5.18",
+	Version:          "5.5.22",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

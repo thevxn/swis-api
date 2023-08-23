@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.5.21
+// @version 5.5.22
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -32,6 +32,7 @@ import (
 	"time"
 
 	// swapi modules -- very local dependencies
+	"go.savla.dev/swis/v5/alvax"
 	"go.savla.dev/swis/v5/auth"
 	"go.savla.dev/swis/v5/backups"
 	"go.savla.dev/swis/v5/business"
@@ -122,6 +123,11 @@ func main() {
 	//
 	// swis packages
 	//
+
+	// alvax CRUD
+	alvaxRouter := router.Group("/alvax")
+	alvax.Cache = &config.Cache{}
+	alvax.Routes(alvaxRouter)
 
 	// backups CRUD
 	backupsRouter := router.Group("/backups")

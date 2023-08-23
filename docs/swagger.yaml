@@ -1,5 +1,81 @@
 basePath: /
 definitions:
+  alvax.Channel:
+    properties:
+      baseUrl:
+        type: string
+      botToken:
+        type: string
+      commands:
+        items:
+          $ref: '#/definitions/alvax.Command'
+        type: array
+      defaultGroupId:
+        type: integer
+      githubGroupId:
+        type: integer
+      integrate:
+        type: boolean
+      memeMode:
+        type: boolean
+      methods:
+        additionalProperties:
+          type: string
+        type: object
+      name:
+        type: string
+      prodWebhook:
+        type: string
+      token:
+        type: string
+      username:
+        type: string
+      wehbookEndpoint:
+        type: string
+    type: object
+  alvax.Command:
+    properties:
+      description:
+        type: string
+      fullName:
+        type: string
+      name:
+        type: string
+      parameters:
+        items:
+          type: string
+        type: array
+    type: object
+  alvax.ConfigRoot:
+    properties:
+      channels:
+        additionalProperties:
+          $ref: '#/definitions/alvax.Channel'
+        type: object
+      docker:
+        $ref: '#/definitions/alvax.Docker'
+      key:
+        type: string
+      ngrok:
+        $ref: '#/definitions/alvax.Ngrok'
+      server:
+        $ref: '#/definitions/alvax.Server'
+    type: object
+  alvax.Docker:
+    properties:
+      host:
+        type: string
+    type: object
+  alvax.Ngrok:
+    properties:
+      tunnelsUrl:
+        type: string
+    type: object
+  alvax.Server:
+    properties:
+      port:
+        type: integer
+    type: object
   backups.Backup:
     properties:
       active:
@@ -539,8 +615,103 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.5.18
+  version: 5.5.22
 paths:
+  /alvax:
+    get:
+      description: get alvax config list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/alvax.ConfigRoot'
+            type: array
+      summary: Get all alvax configs
+      tags:
+      - alvax
+  /alvax/{key}:
+    delete:
+      description: delete alvax config by its key
+      parameters:
+      - description: alvax config key
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/alvax.ConfigRoot'
+      summary: Delete alvax config by its key
+      tags:
+      - alvax
+    get:
+      description: get alvax config by key
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/alvax.ConfigRoot'
+      summary: Get alvax config by key
+      tags:
+      - alvax
+    post:
+      description: add new alvax config
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/alvax.ConfigRoot'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/alvax.ConfigRoot'
+      summary: Add new alvax config
+      tags:
+      - alvax
+    put:
+      description: update alvax config by its ID
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/alvax.ConfigRoot'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/alvax.ConfigRoot'
+      summary: Update alvax config by its ID
+      tags:
+      - alvax
+  /alvax/restore:
+    post:
+      consumes:
+      - application/json
+      description: upload alvax config JSON dump and restore the data model
+      produces:
+      - application/json
+      responses: {}
+      summary: Upload alvax configs dump -- restore configs
+      tags:
+      - alvax
   /backups:
     get:
       description: get backed up services

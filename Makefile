@@ -62,19 +62,19 @@ export
 info: 
 	@echo -e "\n${GREEN} ${PROJECT_NAME} / Makefile ${RESET}\n"
 
-	@echo -e "${YELLOW} make --- show this helper ${RESET}\n"
+	@echo -e "${YELLOW} make${RESET} --- ${BLUE}show this helper ${RESET}\n"
 
-	@echo -e "${YELLOW} make fmt  --- reformat the go source (gofmt) ${RESET}"
-	@echo -e "${YELLOW} make docs --- render documentation from code (swagger OA docs) ${RESET}\n"
+	@echo -e "${YELLOW} make fmt${RESET}  --- ${BLUE}reformat the go source (gofmt) ${RESET}"
+	@echo -e "${YELLOW} make docs${RESET} --- ${BLUE}render documentation from code (swagger OA docs) ${RESET}\n"
 
-	@echo -e "${YELLOW} make build --- build project (docker image) ${RESET}"
-	@echo -e "${YELLOW} make run   --- run project ${RESET}"
-	@echo -e "${YELLOW} make logs  --- fetch container's logs ${RESET}"
-	@echo -e "${YELLOW} make stop  --- stop and purge project (only docker containers!) ${RESET}\n"
+	@echo -e "${YELLOW} make build${RESET} --- ${BLUE}build project (docker image) ${RESET}"
+	@echo -e "${YELLOW} make run${RESET}   --- ${BLUE}run project ${RESET}"
+	@echo -e "${YELLOW} make logs${RESET}  --- ${BLUE}fetch container's logs ${RESET}"
+	@echo -e "${YELLOW} make stop${RESET}  --- ${BLUE}stop and purge project (only docker containers!) ${RESET}\n"
 
-	@echo -e "${YELLOW} make import_dump --- import dumped data (locally) into runtime ${RESET}"
-	@echo -e "${YELLOW} make dump        --- dump runtime data to DUMP_DIR ${RESET}"
-	@echo -e "${YELLOW} make backup      --- execute data dump and tar/gzip data backup ${RESET}"
+	@echo -e "${YELLOW} make import_dump${RESET} --- ${BLUE}import dumped data (locally) into runtime ${RESET}"
+	@echo -e "${YELLOW} make dump${RESET}        --- ${BLUE}dump runtime data to DUMP_DIR ${RESET}"
+	@echo -e "${YELLOW} make backup${RESET}      --- ${BLUE}execute data dump and tar/gzip data backup ${RESET}"
 	@echo -e ""
 
 .PHONY: version
