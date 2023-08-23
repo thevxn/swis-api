@@ -22,6 +22,11 @@ ROOT_TOKEN?=${ROOT_TOKEN_DEFAULT}
 APP_URLS_TRAEFIK?=`${APP_URL}`,`swis-api-run.local`,`swis-api.example.com`
 GIN_MODE?=debug
 
+# test env
+POSTMAN_COLLECTION_FILE=.postman/swapi_E2E_dish.postman_collection.json
+HOSTNAME?=localhost
+ROOT_TOKEN_TEST=fsdFD33FdsfK3dcc00Wef223kffDSrrrr
+
 # define standard colors
 # https://gist.github.com/rsperl/d2dfe88a520968fbc1f49db0a29345b9
 ifneq (,$(findstring xterm,${TERM}))
@@ -94,7 +99,6 @@ build:  version
 	@docker compose --file $(DOCKER_COMPOSE_FILE) build
 #@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
 
-ROOT_TOKEN_TEST=fsdFD33FdsfK3dcc00Wef223kffDSrrrr
 .PHONY: test_deploy
 test_deploy:
 	@echo -e "\n${YELLOW} Starting temporary test container... ${RESET}\n"
@@ -105,10 +109,9 @@ test_deploy:
 		-e SERVER_PORT=${DOCKER_TEST_PORT} \
 		${DOCKER_IMAGE_TAG}
 
-POSTMAN_COLLECTION_FILE=.postman/swapi_E2E_dish.postman_collection.json
-HOSTNAME=hermes.savla.net
 .PHONY: e2e
 e2e:	
+	@echo -e "\n${YELLOW} Running Postman collection... ${RESET}\n"
 	@postman collection run ${POSTMAN_COLLECTION_FILE} --timeout-request 5000 --env-var "token=${ROOT_TOKEN_TEST}" --env-var "baseUrl=${HOSTNAME}:${DOCKER_TEST_PORT}"; \
 		docker stop ${DOCKER_TEST_CONTAINER_NAME}
 

@@ -14,7 +14,6 @@ func Routes(g *gin.RouterGroup) {
 		GetHosts)
 	g.GET("/hosts/:hostname",
 		GetHostByHostname)
-	//g.GET("/map", GetInfraMap)
 	g.GET("/networks",
 		GetNetworks)
 	g.POST("/restore",
