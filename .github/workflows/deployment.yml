@@ -25,7 +25,7 @@ jobs:
       env:
         LOKI_URL: ${{ secrets.LOKI_URL }}
         GIN_MODE: debug
-        HOSTNAME: ${{ env.HOSTNAME }}
+        HOSTNAME: ${{ vars.HOSTNAME }}
       run: make test_deploy e2e
 
   dump_data:
