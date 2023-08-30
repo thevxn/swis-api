@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.5.22"
+        "version": "5.5.23"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -1954,6 +1954,9 @@
                     "type": "string"
                 },
                 "wehbookEndpoint": {
+                    "type": "string"
+                },
+                "wehbookUrl": {
                     "type": "string"
                 }
             }

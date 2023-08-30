@@ -1,8 +1,10 @@
-*/.data/
+*/.demo/
 */.git/
 */.github/
+docs/
 */docker-compose.yml
-Dockerfile
+*/docker-compose.dev.yml
+*/Dockerfile
 */Makefile
 */swis-api
 .env
