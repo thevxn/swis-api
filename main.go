@@ -67,7 +67,7 @@ func main() {
 	router.Use(config.CORSMiddleware())
 
 	// Mirroring Middleware
-	router.Use(config.MirrorMiddleware())
+	//router.Use(config.MirrorMiddleware())
 
 	// serve savla-dev internal favicon
 	router.StaticFile("/favicon.ico", "./favicon.ico")
