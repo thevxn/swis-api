@@ -8,7 +8,7 @@ sakalWebIS v5 RESTful JSON API in Go for Docker
 
 `swapi` is a condensated data structure tree made into an Information System (IS) environment. It works as an independent in-memory database/cache for generic system components like `users`, `roles`, `projects`, `business_entities` and many more. Primarily, it is meant to be used in Docker as all components are written to work out of the box when there (no go runtime installment needed when run in Docker).
 
-Reaad more in a short article on `swapi`:
+Read more in a short article on `swapi`:
 
 + https://krusty.space/projects/swis-api
 
@@ -28,6 +28,7 @@ or use Github Action Runner (self-hosted) to (re)delpoy `swapi` using Actions Se
 APP_URL 
 # token used for redeployment dump and data reimport (`dump_data` and `import_data` workflow jobs)
 ROOT_TOKEN
+
 # if you want to log to Loki, define an URL (full) to the loki instance
 LOKI_URL
 # defaults to 'debug', specify 'release' in .env or in GHA secret for production
@@ -40,4 +41,14 @@ GIN_MODE
 go install go.savla.dev/swis/v5@latest
 ```
 
-`swapi` could be run as a single binary too. However, some environment constants have to be set when running it solitarily --- mainly `DOCKER_INTERNAL_PORT` and `ROOT_TOKEN` constants are required for the app smooth start-up. 
+`swapi` could be run as a single binary too. However, some environment constants have to be set when running it solitarily --- mainly `SERVER_PORT` and `ROOT_TOKEN` environment variables are required for the app's smooth start-up. 
+
+### development
+
+`swapi` development environment is made in Docker too, it is simple to run a local instance using:
+
+```
+make fmt dev
+```
+
+Then, the local instance could be accessed via http://localhost:8051. To contribute, simply make a new branch and create a new pull request.
