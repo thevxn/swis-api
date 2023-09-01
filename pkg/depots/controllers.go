@@ -5,13 +5,13 @@ import (
 	//"sort"
 	"strconv"
 
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "depots"
 )
 
@@ -23,7 +23,7 @@ var (
 // @Success 200 {object} []depots.DepotItem
 // @Router /depots [get]
 func GetDepotItems(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -35,7 +35,7 @@ func GetDepotItems(ctx *gin.Context) {
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/{key} [post]
 func PostNewDepotItemByKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, DepotItem{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, DepotItem{})
 	return
 }
 
@@ -47,7 +47,7 @@ func PostNewDepotItemByKey(ctx *gin.Context) {
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/{key} [put]
 func UpdateDepotItemByKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, DepotItem{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, DepotItem{})
 	return
 }
 
@@ -59,7 +59,7 @@ func UpdateDepotItemByKey(ctx *gin.Context) {
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/{key} [delete]
 func DeleteDepotItemByKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -70,7 +70,7 @@ func DeleteDepotItemByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /depots/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, DepotItem{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, DepotItem{})
 	return
 }
 

@@ -3,11 +3,11 @@ package business
 import (
 	"github.com/gin-gonic/gin"
 
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "business"
 )
 
@@ -18,7 +18,7 @@ var (
 // @Success 200 {object} []business.Business
 // @Router /business [get]
 func GetBusinessEntities(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -29,7 +29,7 @@ func GetBusinessEntities(ctx *gin.Context) {
 // @Success 200 {object} business.Business
 // @Router /business/{key} [get]
 func GetBusinessByKey(ctx *gin.Context) {
-	config.PrintItemByParam(ctx, Cache, pkgName, Business{})
+	core.PrintItemByParam(ctx, Cache, pkgName, Business{})
 	return
 }
 
@@ -41,7 +41,7 @@ func GetBusinessByKey(ctx *gin.Context) {
 // @Success 200 {object} business.Business
 // @Router /business/{key} [post]
 func PostBusinessByKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, Business{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, Business{})
 	return
 }
 
@@ -53,7 +53,7 @@ func PostBusinessByKey(ctx *gin.Context) {
 // @Success 200 {object} business.Business
 // @Router /business/{key} [put]
 func UpdateBusinessByKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, Business{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, Business{})
 	return
 }
 
@@ -65,7 +65,7 @@ func UpdateBusinessByKey(ctx *gin.Context) {
 // @Success 200 {object} business.Business.ID
 // @Router /business/{key} [delete]
 func DeleteBusinessByKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -77,6 +77,6 @@ func DeleteBusinessByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /business/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, Business{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, Business{})
 	return
 }

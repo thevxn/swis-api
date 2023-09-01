@@ -4,13 +4,13 @@ import (
 	"net/http"
 	"strings"
 
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "users"
 )
 
@@ -40,7 +40,7 @@ func FindUserByToken(token string) *User {
 // @Router /users [get]
 // GetSocketList GET method
 func GetUsers(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -52,7 +52,7 @@ func GetUsers(ctx *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{key} [get]
 func GetUserByKey(ctx *gin.Context) {
-	config.PrintItemByParam(ctx, Cache, pkgName, User{})
+	core.PrintItemByParam(ctx, Cache, pkgName, User{})
 	return
 }
 
@@ -65,7 +65,7 @@ func GetUserByKey(ctx *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{key} [post]
 func PostNewUserByKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, User{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, User{})
 	return
 }
 
@@ -77,7 +77,7 @@ func PostNewUserByKey(ctx *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{key} [put]
 func UpdateUserByKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, User{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, User{})
 	return
 }
 
@@ -89,7 +89,7 @@ func UpdateUserByKey(ctx *gin.Context) {
 // @Success 200 {object} users.User.Name
 // @Router /users/{key} [delete]
 func DeleteUserByKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -101,7 +101,7 @@ func DeleteUserByKey(ctx *gin.Context) {
 // @Router /users/restore [post]
 // PostDumpRestore
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, User{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, User{})
 	return
 }
 

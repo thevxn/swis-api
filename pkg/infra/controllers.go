@@ -3,14 +3,16 @@ package infra
 import (
 	"net/http"
 
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
 	infrastructure = Infrastructure{}
-	Cache          *config.Cache
+	CacheHosts     *core.Cache
+	CacheNetworks  *core.Cache
+	CacheDomains   *core.Cache
 	pkgName        string = "infra"
 )
 

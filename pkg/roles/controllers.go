@@ -1,13 +1,13 @@
 package roles
 
 import (
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "roles"
 )
 
@@ -19,7 +19,7 @@ var (
 // @Success 200 {object} []roles.Role
 // @Router /roles [get]
 func GetRoles(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -30,7 +30,7 @@ func GetRoles(ctx *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{key} [get]
 func GetRoleByKey(ctx *gin.Context) {
-	config.PrintItemByParam(ctx, Cache, pkgName, Role{})
+	core.PrintItemByParam(ctx, Cache, pkgName, Role{})
 	return
 }
 
@@ -43,7 +43,7 @@ func GetRoleByKey(ctx *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{key} [post]
 func PostNewRoleByKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, Role{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, Role{})
 	return
 }
 
@@ -55,7 +55,7 @@ func PostNewRoleByKey(ctx *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{key} [put]
 func UpdateRoleByKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, Role{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, Role{})
 	return
 }
 
@@ -67,7 +67,7 @@ func UpdateRoleByKey(ctx *gin.Context) {
 // @Success 200 {object} roles.Role.Name
 // @Router /roles/{key} [delete]
 func DeleteRoleByKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -79,6 +79,6 @@ func DeleteRoleByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /roles/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, Role{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, Role{})
 	return
 }

@@ -1,13 +1,13 @@
 package projects
 
 import (
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "projects"
 )
 
@@ -19,7 +19,7 @@ var (
 // @Success 200 {object} []projects.Project
 // @Router /projects [get]
 func GetProjects(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -31,7 +31,7 @@ func GetProjects(ctx *gin.Context) {
 // @Success 200 {object} projects.Project
 // @Router /projects/{key} [get]
 func GetProjectByKey(ctx *gin.Context) {
-	config.PrintItemByParam(ctx, Cache, pkgName, Project{})
+	core.PrintItemByParam(ctx, Cache, pkgName, Project{})
 	return
 }
 
@@ -43,7 +43,7 @@ func GetProjectByKey(ctx *gin.Context) {
 // @Success 200 {object} projects.Project
 // @Router /projects/{key} [post]
 func PostNewProjectByKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, Project{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, Project{})
 	return
 }
 
@@ -55,7 +55,7 @@ func PostNewProjectByKey(ctx *gin.Context) {
 // @Success 200 {object} projects.Project
 // @Router /projects/{key} [put]
 func UpdateProjectByKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, Project{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, Project{})
 	return
 }
 
@@ -67,7 +67,7 @@ func UpdateProjectByKey(ctx *gin.Context) {
 // @Success 200 {object} projects.Project.ID
 // @Router /projects/{key} [delete]
 func DeleteProjectByKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -79,6 +79,6 @@ func DeleteProjectByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /projects/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, Project{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, Project{})
 	return
 }

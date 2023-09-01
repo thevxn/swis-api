@@ -6,13 +6,13 @@ import (
 	"sort"
 	"time"
 
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "news"
 )
 
@@ -24,7 +24,7 @@ var (
 // @Success 200 {object} news.NewsSources.Sources
 // @Router /news/sources/ [get]
 func GetSources(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -36,7 +36,7 @@ func GetSources(ctx *gin.Context) {
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [get]
 func GetSourcesByUserKey(ctx *gin.Context) {
-	config.PrintItemByParam(ctx, Cache, pkgName, []Source{})
+	core.PrintItemByParam(ctx, Cache, pkgName, []Source{})
 	return
 }
 
@@ -47,7 +47,7 @@ func GetSourcesByUserKey(ctx *gin.Context) {
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [post]
 func PostNewSourcesByUserKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, []Source{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, []Source{})
 	return
 }
 
@@ -59,7 +59,7 @@ func PostNewSourcesByUserKey(ctx *gin.Context) {
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [put]
 func UpdateSourcesByUserKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, []Source{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, []Source{})
 	return
 }
 
@@ -70,7 +70,7 @@ func UpdateSourcesByUserKey(ctx *gin.Context) {
 // @Success 200 {string} string "ok"
 // @Router /news/sources/{key} [delete]
 func DeleteSourcesByUserKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -82,7 +82,7 @@ func DeleteSourcesByUserKey(ctx *gin.Context) {
 // @Produce json
 // @Router /news/sources/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, []Source{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, []Source{})
 	return
 }
 

@@ -3,13 +3,13 @@ package backups
 import (
 	"net/http"
 
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "backups"
 )
 
@@ -20,7 +20,7 @@ var (
 // @Success 200 {object} string "ok"
 // @Router /backups [get]
 func GetBackupStatusAll(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -32,7 +32,7 @@ func GetBackupStatusAll(ctx *gin.Context) {
 // @Success 200 {string} string	"ok"
 // @Router /backups/{key} [get]
 func GetBackedupStatusByServiceKey(ctx *gin.Context) {
-	config.PrintItemByParam(ctx, Cache, pkgName, Backup{})
+	core.PrintItemByParam(ctx, Cache, pkgName, Backup{})
 	return
 }
 
@@ -44,7 +44,7 @@ func GetBackedupStatusByServiceKey(ctx *gin.Context) {
 // @Success 200 {object} backups.Backup
 // @Router /backups/{key} [post]
 func PostBackedupServiceByServiceKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, Backup{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, Backup{})
 	return
 }
 
@@ -55,7 +55,7 @@ func PostBackedupServiceByServiceKey(ctx *gin.Context) {
 // @Success 200 {string} string "ok"
 // @Router /backups/{key} [delete]
 func DeleteBackupByServiceKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -66,7 +66,7 @@ func DeleteBackupByServiceKey(ctx *gin.Context) {
 // @Produce json
 // @Router /backups/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, Backup{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, Backup{})
 	return
 }
 

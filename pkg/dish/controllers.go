@@ -8,13 +8,13 @@ import (
 	"time"
 
 	//"go.savla.dev/dish/pkg/socket"
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "dish"
 )
 
@@ -26,7 +26,7 @@ var (
 // @Success 200 {object} string "ok"
 // @Router /dish/sockets [get]
 func GetSocketList(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -39,7 +39,7 @@ func GetSocketList(ctx *gin.Context) {
 // @Success 200 {object} dish.Socket
 // @Router /dish/sockets/{key} [post]
 func PostNewSocketByKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, Socket{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, Socket{})
 	return
 }
 
@@ -52,7 +52,7 @@ func PostNewSocketByKey(ctx *gin.Context) {
 // @Success 200 {object} dish.Socket
 // @Router /dish/sockets/{key} [put]
 func UpdateSocketByKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, Socket{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, Socket{})
 	return
 }
 
@@ -65,7 +65,7 @@ func UpdateSocketByKey(ctx *gin.Context) {
 // @Success 200 {object} dish.Socket
 // @Router /dish/sockets/{key} [delete]
 func DeleteSocketByKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -77,7 +77,7 @@ func DeleteSocketByKey(ctx *gin.Context) {
 // @Success 201
 // @Router /dish/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, Socket{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, Socket{})
 	return
 }
 

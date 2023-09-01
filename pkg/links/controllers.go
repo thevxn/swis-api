@@ -3,13 +3,13 @@ package links
 import (
 	"net/http"
 
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "links"
 )
 
@@ -21,7 +21,7 @@ var (
 // @Success 200 {object} links.Link
 // @Router /links [get]
 func GetLinks(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -33,7 +33,7 @@ func GetLinks(ctx *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{key} [get]
 func GetLinkByKey(ctx *gin.Context) {
-	config.PrintItemByParam(ctx, Cache, pkgName, Link{})
+	core.PrintItemByParam(ctx, Cache, pkgName, Link{})
 	return
 }
 
@@ -46,7 +46,7 @@ func GetLinkByKey(ctx *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{key} [post]
 func PostNewLinkByKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, Link{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, Link{})
 	return
 }
 
@@ -57,7 +57,7 @@ func PostNewLinkByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /links/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, Link{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, Link{})
 	return
 }
 
@@ -69,7 +69,7 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{key} [put]
 func UpdateLinkByKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, Link{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, Link{})
 	return
 }
 
@@ -81,7 +81,7 @@ func UpdateLinkByKey(ctx *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{key} [delete]
 func DeleteLinkByKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 

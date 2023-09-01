@@ -1,13 +1,13 @@
 package alvax
 
 import (
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "alvax"
 )
 
@@ -19,7 +19,7 @@ var (
 // @Success 200 {object} []alvax.ConfigRoot
 // @Router /alvax [get]
 func GetConfigs(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -31,7 +31,7 @@ func GetConfigs(ctx *gin.Context) {
 // @Success 200 {object} alvax.ConfigRoot
 // @Router /alvax/{key} [get]
 func GetConfigByKey(ctx *gin.Context) {
-	config.PrintItemByParam(ctx, Cache, pkgName, ConfigRoot{})
+	core.PrintItemByParam(ctx, Cache, pkgName, ConfigRoot{})
 	return
 }
 
@@ -43,7 +43,7 @@ func GetConfigByKey(ctx *gin.Context) {
 // @Success 200 {object} alvax.ConfigRoot
 // @Router /alvax/{key} [post]
 func PostNewConfigByKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, ConfigRoot{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, ConfigRoot{})
 	return
 }
 
@@ -55,7 +55,7 @@ func PostNewConfigByKey(ctx *gin.Context) {
 // @Success 200 {object} alvax.ConfigRoot
 // @Router /alvax/{key} [put]
 func UpdateConfigByKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, ConfigRoot{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, ConfigRoot{})
 	return
 }
 
@@ -67,7 +67,7 @@ func UpdateConfigByKey(ctx *gin.Context) {
 // @Success 200 {object} alvax.ConfigRoot.Key
 // @Router /alvax/{key} [delete]
 func DeleteConfigByKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
 
@@ -79,6 +79,6 @@ func DeleteConfigByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /alvax/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, ConfigRoot{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, ConfigRoot{})
 	return
 }

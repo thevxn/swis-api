@@ -3,13 +3,13 @@ package finance
 import (
 	//"net/http"
 
-	"go.savla.dev/swis/v5/config"
+	"go.savla.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 var (
-	Cache   *config.Cache
+	Cache   *core.Cache
 	pkgName string = "finance"
 )
 
@@ -20,7 +20,7 @@ var (
 // @Success 200 {object} finance.Account
 // @Router /finance/account [get]
 func GetAccounts(ctx *gin.Context) {
-	config.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
 
@@ -32,7 +32,7 @@ func GetAccounts(ctx *gin.Context) {
 // @Success 200 {object} finance.Account
 // @Router /finance/account/{key} [post]
 func PostNewAccountByKey(ctx *gin.Context) {
-	config.AddNewItemByParam(ctx, Cache, pkgName, Account{})
+	core.AddNewItemByParam(ctx, Cache, pkgName, Account{})
 	return
 }
 
@@ -43,7 +43,7 @@ func PostNewAccountByKey(ctx *gin.Context) {
 // @Success 200 {object} finance.Account
 // @Router /finance/account/owner/{key} [get]
 func GetAccountByOwnerKey(ctx *gin.Context) {
-	//config.PrintItemByParam(ctx, Cache, pkgName, Account{})
+	//core.PrintItemByParam(ctx, Cache, pkgName, Account{})
 	return
 }
 
@@ -54,7 +54,7 @@ func GetAccountByOwnerKey(ctx *gin.Context) {
 // @Produce json
 // @Router /finance/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	config.BatchRestoreItems(ctx, Cache, pkgName, Account{})
+	core.BatchRestoreItems(ctx, Cache, pkgName, Account{})
 	return
 }
 
@@ -67,7 +67,7 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Success 200 {object} finance.Account
 // @Router /finance/accounts/{key} [put]
 func UpdateAccountByKey(ctx *gin.Context) {
-	config.UpdateItemByParam(ctx, Cache, pkgName, Account{})
+	core.UpdateItemByParam(ctx, Cache, pkgName, Account{})
 	return
 }
 
@@ -79,6 +79,6 @@ func UpdateAccountByKey(ctx *gin.Context) {
 // @Success 200 {object} finance.Account
 // @Router /finance/accounts/{key} [delete]
 func DeleteAccountByKey(ctx *gin.Context) {
-	config.DeleteItemByParam(ctx, Cache, pkgName)
+	core.DeleteItemByParam(ctx, Cache, pkgName)
 	return
 }
