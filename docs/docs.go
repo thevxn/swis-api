@@ -2202,6 +2202,14 @@ const docTemplate = `{
                     "description": "Socket TCP port part\nEven default port 80 should be added here.",
                     "type": "integer"
                 },
+                "public": {
+                    "description": "Public boolean tells the frontendee to show itself.",
+                    "type": "boolean"
+                },
+                "response_time": {
+                    "description": "ResponseTime is the time for the request to be processed.",
+                    "type": "number"
+                },
                 "socket_description": {
                     "description": "More verbose name/description of the socket.",
                     "type": "string"
@@ -2213,6 +2221,17 @@ const docTemplate = `{
                 "socket_name": {
                     "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example.",
                     "type": "string"
+                },
+                "status_map": {
+                    "description": "Status object for dish results to be returned/updated (by dish itself).\nNote: discontinued as dish now reports to pushgateway of prometheus'",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "boolean"
+                    }
+                },
+                "test_timestamp": {
+                    "description": "TestTimestamp tells the time of the last socket testing being executed upon.",
+                    "type": "integer"
                 }
             }
         },
@@ -2744,7 +2763,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.5.23",
+	Version:          "5.5.25",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

@@ -204,6 +204,12 @@ definitions:
           Socket TCP port part
           Even default port 80 should be added here.
         type: integer
+      public:
+        description: Public boolean tells the frontendee to show itself.
+        type: boolean
+      response_time:
+        description: ResponseTime is the time for the request to be processed.
+        type: number
       socket_description:
         description: More verbose name/description of the socket.
         type: string
@@ -214,6 +220,17 @@ definitions:
         description: GEneric name of the socket, to be used in dish results as failed
           one endpoint for example.
         type: string
+      status_map:
+        additionalProperties:
+          type: boolean
+        description: |-
+          Status object for dish results to be returned/updated (by dish itself).
+          Note: discontinued as dish now reports to pushgateway of prometheus'
+        type: object
+      test_timestamp:
+        description: TestTimestamp tells the time of the last socket testing being
+          executed upon.
+        type: integer
     required:
     - host_name
     - port_tcp
@@ -617,7 +634,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.5.23
+  version: 5.5.25
 paths:
   /alvax:
     get:

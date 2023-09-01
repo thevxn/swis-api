@@ -38,19 +38,22 @@ alias jq="$(which jq)"
 
 
 function dump_generic {
-  REQ_PATH="$1"
-  URL="${DEST_URL}${REQ_PATH}"
+  	REQ_PATH="$1"
+  	URL="${DEST_URL}${REQ_PATH}"
 
-  printf "dumping $2...\n\t"
-  curlp --url ${URL} | tee ${DATA_DIR}/$2 | jq -r '. | {code,message} | join(" ")'
-  echo
+	printf "dumping $2...\n\t"
+  	curlp --url ${URL} | tee ${DATA_DIR}/$2 | jq -r '. | {code,message} | join(" ")' || \
+		curlp --url ${URL} | tee ${DATA_DIR}/$2 
+  	echo
 }
+
 
 #
 # modules
 #
 
 declare -a paths=(
+	"/alvax"
 	"/backups/"
 	"/business/"
 	"/depots/"
@@ -68,6 +71,7 @@ declare -a paths=(
 	"/users/"
 )
 declare -a files=(
+	"/alvax_configs.json"
 	"/backups.json"
 	"/business_array.json"
 	"/depots.json"

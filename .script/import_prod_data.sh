@@ -43,38 +43,39 @@ alias jq="$(which jq)"
 #
 
 function import_generic {
-  POST_PATH="$1"
-  URL="${DEST_URL}${POST_PATH}"
+  	POST_PATH="$1"
+  	URL="${DEST_URL}${POST_PATH}"
 
-  DATA_FILE="${DATA_DIR}$2"
-  [ ! -f "${DATA_FILE}" ] && die "[import_generic] DATA_FILE (${DATA_FILE}) of a no existence"
+  	DATA_FILE="${DATA_DIR}$2"
+  	[ ! -f "${DATA_FILE}" ] && die "[import_generic] DATA_FILE (${DATA_FILE}) of a no existence"
 
-  printf "importing $2...\n\t"
-  curlp --data @${DATA_FILE} --url ${URL} | jq -r '. | {code,message} | join(" ")'
-  echo
+  	printf "importing $2...\n\t"
+  	curlp --data @${DATA_FILE} --url ${URL} | jq -r '. | {code,message} | join(" ")' || \
+		curlp --data @${DATA_FILE} --url ${URL}
+  	echo
 }
 
 # deprecated -- to be deleted
 function import_ssh_keys {
-  # template:
+  	# template:
 
-  # users to import given SSH keys arrays to (according to ./data/ssh_keys_username.json convention and swis-api/users.User.SSHKeys model)
-  SSH_KEYS_USERS=(
-    krusty
-    tack
-  )
+  	# users to import given SSH keys arrays to (according to ./data/ssh_keys_username.json convention and swis-api/users.User.SSHKeys model)
+  	SSH_KEYS_USERS=(
+    		krusty
+    		tack
+  	)
 
-  # loop over users and import ssh keys for them
-  for USER in ${SSH_KEYS_USERS[@]}; do
-    POST_PATH="/users/${USER}/keys/ssh"
-    URL="${DEST_URL}${POST_PATH}"
+  	# loop over users and import ssh keys for them
+  	for USER in ${SSH_KEYS_USERS[@]}; do
+    		POST_PATH="/users/${USER}/keys/ssh"
+    		URL="${DEST_URL}${POST_PATH}"
 
-    DATA_FILE=${DATA_DIR}/ssh_keys_${USER}.json
-    [ ! -f "${DATA_FILE}" ] && die "[import_ssh_keys] DATA_FILE (${DATA_FILE}) of a no existence"
+    		DATA_FILE=${DATA_DIR}/ssh_keys_${USER}.json
+    		[ ! -f "${DATA_FILE}" ] && die "[import_ssh_keys] DATA_FILE (${DATA_FILE}) of a no existence"
 
-    #echo "imporitng SSH keys to ${USER}..."
-    curlp --data @${DATA_FILE} --url ${URL} | jq '. | {code,message} | join(" ")'
-  done
+    		#echo "imporitng SSH keys to ${USER}..."
+    		curlp --data @${DATA_FILE} --url ${URL} | jq '. | {code,message} | join(" ")'
+  	done
 }
 
 
@@ -83,6 +84,7 @@ function import_ssh_keys {
 #
 
 declare -a paths=(
+	"/alvax/restore"
 	"/backups/restore"
 	"/business/restore"
 	"/depots/restore"
@@ -100,6 +102,7 @@ declare -a paths=(
 	"/users/restore"
 )
 declare -a files=(
+	"/alvax_config.json"
 	"/backups.json"
 	"/business_array.json"
 	"/depots.json"
