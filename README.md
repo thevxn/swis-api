@@ -39,6 +39,8 @@ GIN_MODE
 
 ```
 go install go.savla.dev/swis/v5@latest
+
+GIN_MODE=release ROOT_TOKEN=xxx SERVER_PORT=8050 ~/go/bin/swis
 ```
 
 `swapi` could be run as a single binary too. However, some environment constants have to be set when running it solitarily --- mainly `SERVER_PORT` and `ROOT_TOKEN` environment variables are required for the app's smooth start-up. 
