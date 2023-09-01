@@ -44,7 +44,7 @@ func MirrorMiddleware() gin.HandlerFunc {
 
 		// create a new url from the raw RequestURI sent by the client
 		proxyScheme := "http"
-		proxyHost := "localhost:8051"
+		proxyHost := "localhost:8052"
 		url := fmt.Sprintf("%s://%s%s", proxyScheme, proxyHost, ctx.Request.RequestURI)
 
 		newReq, err := http.NewRequest(ctx.Request.Method, url, bytes.NewReader(body))

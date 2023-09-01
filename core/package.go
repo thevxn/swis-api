@@ -1,5 +1,5 @@
 // generics and first class functions PoC
-package config
+package core
 
 import (
 	"fmt"
