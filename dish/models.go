@@ -41,7 +41,16 @@ type Socket struct {
 	// FailCount indicates how many times socket has to be in failed state before alerting.
 	FailCount int `json:"fail_count" default:0`
 
+	// ResponseTime is the time for the request to be processed.
+	ResponseTime float64 `json:"response_time"`
+
+	// TestTimestamp tells the time of the last socket testing being executed upon.
+	TestTimestamp int `json:"test_timestamp"`
+
 	// Status object for dish results to be returned/updated (by dish itself).
 	// Note: discontinued as dish now reports to pushgateway of prometheus'
-	//Status []bool `json:"status"`
+	Status map[int]bool `json:"status_map"`
+
+	// Public boolean tells the frontendee to show itself.
+	Public bool `json:"public" default:false`
 }
