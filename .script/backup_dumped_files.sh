@@ -24,7 +24,7 @@ mkdir -p ${BACKUP_TARGET_DIR}
 
 tar --exclude='*.tar.gz' -czvf ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz ${BACKUP_TARGET_DIR}/.. 
 [[ $? -ne 0 ]] && die "backup error" || {
-	SIZE=$(du -shx ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz | awk '{ print $1 }')
+	SIZE=$(du -b ${BACKUP_TARGET_DIR}/${TIMESTAMP}.tar.gz | awk '{ print $1 }')
 	STATUS=success
 }
 
