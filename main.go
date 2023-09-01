@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.5.26
+// @version 5.6.0
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -32,20 +32,21 @@ import (
 	"time"
 
 	// swapi modules -- very local dependencies
-	"go.savla.dev/swis/v5/alvax"
-	"go.savla.dev/swis/v5/auth"
-	"go.savla.dev/swis/v5/backups"
-	"go.savla.dev/swis/v5/business"
-	"go.savla.dev/swis/v5/config"
-	"go.savla.dev/swis/v5/depots"
-	"go.savla.dev/swis/v5/dish"
-	"go.savla.dev/swis/v5/finance"
-	"go.savla.dev/swis/v5/infra"
-	"go.savla.dev/swis/v5/links"
-	"go.savla.dev/swis/v5/news"
-	"go.savla.dev/swis/v5/projects"
-	"go.savla.dev/swis/v5/roles"
-	"go.savla.dev/swis/v5/users"
+	"go.savla.dev/swis/v5/pkg/alvax"
+	"go.savla.dev/swis/v5/pkg/auth"
+	"go.savla.dev/swis/v5/pkg/backups"
+	"go.savla.dev/swis/v5/pkg/business"
+	"go.savla.dev/swis/v5/pkg/config"
+	"go.savla.dev/swis/v5/pkg/core"
+	"go.savla.dev/swis/v5/pkg/depots"
+	"go.savla.dev/swis/v5/pkg/dish"
+	"go.savla.dev/swis/v5/pkg/finance"
+	"go.savla.dev/swis/v5/pkg/infra"
+	"go.savla.dev/swis/v5/pkg/links"
+	"go.savla.dev/swis/v5/pkg/news"
+	"go.savla.dev/swis/v5/pkg/projects"
+	"go.savla.dev/swis/v5/pkg/roles"
+	"go.savla.dev/swis/v5/pkg/users"
 
 	// remote dependencies
 	gin "github.com/gin-gonic/gin"
@@ -67,7 +68,7 @@ func main() {
 	router.Use(config.CORSMiddleware())
 
 	// Mirroring Middleware
-	//router.Use(config.MirrorMiddleware())
+	//router.Use(core.MirrorMiddleware())
 
 	// serve savla-dev internal favicon
 	router.StaticFile("/favicon.ico", "./favicon.ico")
@@ -126,62 +127,64 @@ func main() {
 
 	// alvax CRUD
 	alvaxRouter := router.Group("/alvax")
-	alvax.Cache = &config.Cache{}
+	alvax.Cache = &core.Cache{}
 	alvax.Routes(alvaxRouter)
 
 	// backups CRUD
 	backupsRouter := router.Group("/backups")
-	backups.Cache = &config.Cache{}
+	backups.Cache = &core.Cache{}
 	backups.Routes(backupsRouter)
 
 	// business CRUD
 	businessRouter := router.Group("/business")
-	business.Cache = &config.Cache{}
+	business.Cache = &core.Cache{}
 	business.Routes(businessRouter)
 
 	// depots CRUD
 	depotsRouter := router.Group("/depots")
-	depots.Cache = &config.Cache{}
+	depots.Cache = &core.Cache{}
 	depots.Routes(depotsRouter)
 
 	// dish CRUD
 	dishRouter := router.Group("/dish")
-	dish.Cache = &config.Cache{}
+	dish.Cache = &core.Cache{}
 	dish.Routes(dishRouter)
 
 	// finance accounts CRUD
 	financeRouter := router.Group("/finance")
-	finance.Cache = &config.Cache{}
+	finance.Cache = &core.Cache{}
 	finance.Routes(financeRouter)
 
 	// infra CRUD
 	infraRouter := router.Group("/infra")
-	infra.Cache = &config.Cache{}
+	infra.CacheHosts = &core.Cache{}
+	infra.CacheNetworks = &core.Cache{}
+	infra.CacheDomains = &core.Cache{}
 	infra.Routes(infraRouter)
 
 	// links CRUD
 	linksRouter := router.Group("/links")
-	links.Cache = &config.Cache{}
+	links.Cache = &core.Cache{}
 	links.Routes(linksRouter)
 
 	// news CRUD
 	newsRouter := router.Group("/news")
-	news.Cache = &config.Cache{}
+	news.Cache = &core.Cache{}
 	news.Routes(newsRouter)
 
 	// projects CRUD
 	projectsRouter := router.Group("/projects")
-	projects.Cache = &config.Cache{}
+	projects.Cache = &core.Cache{}
 	projects.Routes(projectsRouter)
 
 	// roles CRUD
 	rolesRouter := router.Group("/roles")
-	roles.Cache = &config.Cache{}
+	roles.Cache = &core.Cache{}
 	roles.Routes(rolesRouter)
 
 	// users CRUD
 	usersRouter := router.Group("/users")
-	users.Cache = &config.Cache{}
+	users.Cache = &core.Cache{}
 	users.Routes(usersRouter)
 
 	// attach router to http.Server and start it, check for SERVER_PORT env variable
