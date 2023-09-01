@@ -102,7 +102,7 @@ declare -a paths=(
 	"/users/restore"
 )
 declare -a files=(
-	"/alvax_config.json"
+	"/alvax_configs.json"
 	"/backups.json"
 	"/business_array.json"
 	"/depots.json"
