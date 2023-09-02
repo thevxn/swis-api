@@ -57,17 +57,19 @@ func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mod
 }
 
 func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
+	//key := model.Name | model.ID
+	key := ctx.Param("key")
+
 	if err := ctx.BindJSON(&model); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"key":     key,
 			"message": "cannot bind input JSON stream",
 			"package": pkgName,
 		})
 		return
 	}
-
-	//key := model.Name | model.ID
-	key := ctx.Param("key")
 
 	// TODO: implement LoadOrStore() method
 	if _, found := cache.Get(key); found {
@@ -116,6 +118,7 @@ func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mo
 	if err := ctx.BindJSON(&model); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 			"key":     key,
 			"message": "cannot bind input JSON stream",
 			"package": pkgName,
@@ -185,6 +188,7 @@ func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, pkgName string, mo
 	if err := ctx.BindJSON(&items); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 			"message": "cannot bind input JSON stream",
 			"package": pkgName,
 		})

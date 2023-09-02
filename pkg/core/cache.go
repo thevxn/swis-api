@@ -13,7 +13,7 @@ type CacheInterface interface {
 
 type Cache struct {
 	syncMap sync.Map
-	CacheInterface
+	//CacheInterface
 }
 
 func (c *Cache) Get(key string) (interface{}, bool) {
