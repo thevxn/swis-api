@@ -45,7 +45,7 @@ type Socket struct {
 	ResponseTime float64 `json:"response_time"`
 
 	// TestTimestamp tells the time of the last socket testing being executed upon.
-	TestTimestamp int `json:"test_timestamp"`
+	TestTimestamp int64 `json:"test_timestamp"`
 
 	// Healthy boolean indicates wheter is socket okay, or the way around.
 	Healthy bool `json:"healthy" default:false`
