@@ -186,6 +186,9 @@ definitions:
         description: FailCount indicates how many times socket has to be in failed
           state before alerting.
         type: integer
+      healthy:
+        description: Healthy boolean indicates wheter is socket okay, or the way around.
+        type: boolean
       host_name:
         description: Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).
         type: string
@@ -220,13 +223,6 @@ definitions:
         description: GEneric name of the socket, to be used in dish results as failed
           one endpoint for example.
         type: string
-      status_map:
-        additionalProperties:
-          type: boolean
-        description: |-
-          Status object for dish results to be returned/updated (by dish itself).
-          Note: discontinued as dish now reports to pushgateway of prometheus'
-        type: object
       test_timestamp:
         description: TestTimestamp tells the time of the last socket testing being
           executed upon.
@@ -634,7 +630,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.6.2
+  version: 5.6.4
 paths:
   /alvax:
     get:
@@ -1154,6 +1150,15 @@ paths:
           schema:
             $ref: '#/definitions/dish.Socket'
       summary: Mute/unmute socket by its ID
+      tags:
+      - dish
+  /dish/sockets/results:
+    post:
+      description: batch update socket's healthy state.
+      produces:
+      - application/json
+      responses: {}
+      summary: Batch update socket's healthy state.
       tags:
       - dish
   /finance/account:

@@ -21,4 +21,6 @@ func Routes(g *gin.RouterGroup) {
 		DeleteSocketByKey)
 	g.POST("/sockets/restore",
 		PostDumpRestore)
+	g.POST("/sockets/results",
+		BatchPostHealthyStatus)
 }

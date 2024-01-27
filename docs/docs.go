@@ -669,6 +669,19 @@ const docTemplate = `{
                 }
             }
         },
+        "/dish/sockets/results": {
+            "post": {
+                "description": "batch update socket's healthy state.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Batch update socket's healthy state.",
+                "responses": {}
+            }
+        },
         "/dish/sockets/{host}": {
             "get": {
                 "description": "get socket list by Host",
@@ -2182,6 +2195,10 @@ const docTemplate = `{
                     "description": "FailCount indicates how many times socket has to be in failed state before alerting.",
                     "type": "integer"
                 },
+                "healthy": {
+                    "description": "Healthy boolean indicates wheter is socket okay, or the way around.",
+                    "type": "boolean"
+                },
                 "host_name": {
                     "description": "Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).",
                     "type": "string"
@@ -2221,13 +2238,6 @@ const docTemplate = `{
                 "socket_name": {
                     "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example.",
                     "type": "string"
-                },
-                "status_map": {
-                    "description": "Status object for dish results to be returned/updated (by dish itself).\nNote: discontinued as dish now reports to pushgateway of prometheus'",
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "boolean"
-                    }
                 },
                 "test_timestamp": {
                     "description": "TestTimestamp tells the time of the last socket testing being executed upon.",
@@ -2763,7 +2773,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.6.2",
+	Version:          "5.6.4",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

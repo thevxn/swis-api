@@ -127,6 +127,68 @@ func GetSocketListByHost(ctx *gin.Context) {
 	return
 }
 
+// @Summary Batch update socket's healthy state.
+// @Description batch update socket's healthy state.
+// @Tags dish
+// @Produce json
+// @Router /dish/sockets/results [post]
+func BatchPostHealthyStatus(ctx *gin.Context) {
+	var results = struct {
+		Map map[string]bool `json:"dish_results"`
+	}{}
+
+	if err := ctx.BindJSON(&results); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"message": "cannot bind input JSON stream",
+			"package": pkgName,
+		})
+		return
+	}
+
+	var count int = 0
+
+	for key, result := range results.Map {
+		var socket Socket
+		var ok bool
+
+		if rawSocket, found := Cache.Get(key); !found {
+			continue
+		} else {
+			if socket, ok = rawSocket.(Socket); !ok {
+				ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+					"code":    http.StatusInternalServerError,
+					"key":     key,
+					"message": "cannot assert data type, database internal error",
+					"package": pkgName,
+				})
+				return
+			}
+		}
+
+		socket.Healthy = result
+		socket.TestTimestamp = time.Now().UnixNano()
+		count++
+
+		if saved := Cache.Set(key, socket); !saved {
+			ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+				"code":    http.StatusInternalServerError,
+				"key":     key,
+				"message": "cannot update socket's healthy state by key",
+			})
+			return
+		}
+	}
+
+	ctx.IndentedJSON(http.StatusNotFound, gin.H{
+		"code":    http.StatusOK,
+		"message": "ok, healthy booleans updated per socket",
+		"count":   count,
+	})
+	return
+}
+
 // (PUT /dish/sockets/{id}/mute)
 // @Summary Mute/unmute socket by its ID
 // @Description mute/unmute socket by its ID
