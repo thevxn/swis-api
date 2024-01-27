@@ -47,9 +47,8 @@ type Socket struct {
 	// TestTimestamp tells the time of the last socket testing being executed upon.
 	TestTimestamp int `json:"test_timestamp"`
 
-	// Status object for dish results to be returned/updated (by dish itself).
-	// Note: discontinued as dish now reports to pushgateway of prometheus'
-	Status map[int]bool `json:"status_map"`
+	// Healthy boolean indicates wheter is socket okay, or the way around.
+	Healthy bool `json:"healthy" default:false`
 
 	// Public boolean tells the frontendee to show itself.
 	Public bool `json:"public" default:false`
