@@ -187,14 +187,16 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 		}
 	}
 
-	// generate and send a SSE message
-	msg := Message{
-		Content:    "sockets updated",
-		SocketList: sockets,
-		Timestamp:  time.Now().UnixNano(),
-	}
+	if len(sockets) > 0 {
+		// generate and send a SSE message
+		msg := Message{
+			Content:    "sockets updated",
+			SocketList: sockets,
+			Timestamp:  time.Now().UnixNano(),
+		}
 
-	Dispatcher.NewEvent(msg)
+		Dispatcher.NewEvent(msg)
+	}
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
