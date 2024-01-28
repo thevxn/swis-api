@@ -15,7 +15,6 @@ jobs:
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
       run: make build
 
-
   test_deploy:
     runs-on: [ self-hosted, public, docker ]
     needs: [ build ]
