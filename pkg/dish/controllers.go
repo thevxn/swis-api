@@ -1,9 +1,9 @@
 package dish
 
 import (
-	//"crypto/sha256"
-	//"encoding/json"
-	//"fmt"
+	"encoding/json"
+	"io"
+	//"log"
 	"net/http"
 	"time"
 
@@ -147,6 +147,7 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 		return
 	}
 
+	var sockets []string
 	var count int = 0
 
 	for key, result := range results.Map {
@@ -169,6 +170,8 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 
 		socket.Healthy = result
 		socket.TestTimestamp = time.Now().UnixNano()
+
+		sockets = append(sockets, socket.ID)
 		count++
 
 		if saved := Cache.Set(key, socket); !saved {
@@ -180,6 +183,15 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 			return
 		}
 	}
+
+	// generate and send a SSE message
+	msg := Message{
+		Content:    "sockets updated",
+		SocketList: sockets,
+		Timestamp:  time.Now().UnixNano(),
+	}
+
+	Dispatcher.NewEvent(msg)
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
@@ -242,4 +254,40 @@ func MuteToggleSocketByKey(ctx *gin.Context) {
 		"socket":  updatedSocket,
 	})
 	return
+}
+
+// @Summary Subscribe to dish SSE service.
+// @Description subscribe to dish SSE service
+// @Tags dish
+// @Produce json
+// @Success 200 {object} dish.Message
+// @Router /dish/sockets/status [get]
+func SubscribeToSSEStream(ctx *gin.Context) {
+	// initialize client channel
+	clientChan := make(ClientChan)
+
+	// send new connection to event server
+	Dispatcher.NewClients <- clientChan
+
+	defer func() {
+		// send closed connection to event server
+		Dispatcher.ClosedClients <- clientChan
+	}()
+
+	// set the stream headers
+	ctx.Writer.Header().Set("Content-Type", "text/event-stream")
+	ctx.Writer.Header().Set("Cache-Control", "no-cache")
+	ctx.Writer.Header().Set("Connection", "keep-alive")
+	ctx.Writer.Header().Set("Transfer-Encoding", "chunked")
+
+	ctx.Stream(func(w io.Writer) bool {
+		// Stream message to client from message channel
+		if msg, ok := <-clientChan; ok {
+			m, _ := json.Marshal(msg)
+			ctx.SSEvent("message", string(m))
+			//log.Println("wrote:", m)
+			return true
+		}
+		return false
+	})
 }

@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.7.2
+// @version 5.8.0
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -146,6 +146,7 @@ func main() {
 	depots.Routes(depotsRouter)
 
 	// dish CRUD
+	dish.Dispatcher = dish.NewDispatcher()
 	dishRouter := router.Group("/dish")
 	dish.Cache = &core.Cache{}
 	dish.Routes(dishRouter)

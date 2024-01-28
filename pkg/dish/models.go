@@ -53,3 +53,22 @@ type Socket struct {
 	// Public boolean tells the frontendee to show itself.
 	Public bool `json:"public" default:false`
 }
+
+type ClientChan chan Message
+
+// Stream is a SSE data structure
+type Stream struct {
+	// Message is a string of volatile length that carries the very event saying and its metadata.
+	Message chan Message `json:"message"`
+
+	// Client connections monitoring
+	NewClients    chan chan Message
+	ClosedClients chan chan Message
+	TotalClients  map[chan Message]bool
+}
+
+type Message struct {
+	Content    string   `json:"content"`
+	SocketList []string `json:"socket_list"`
+	Timestamp  int64    `json:"timestamp"`
+}

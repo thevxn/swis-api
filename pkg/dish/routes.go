@@ -7,6 +7,8 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/sockets",
 		GetSocketList)
+	g.GET("/sockets/status",
+		SubscribeToSSEStream)
 	g.GET("/sockets/:host",
 		GetSocketListByHost)
 	g.POST("/sockets/:key",
