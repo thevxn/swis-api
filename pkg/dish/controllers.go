@@ -181,7 +181,7 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 		}
 	}
 
-	ctx.IndentedJSON(http.StatusNotFound, gin.H{
+	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "ok, healthy booleans updated per socket",
 		"count":   count,

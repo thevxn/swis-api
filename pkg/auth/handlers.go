@@ -81,7 +81,7 @@ func AuthorizationMiddleware() gin.HandlerFunc {
 			if len(path) > 1 && path[1] == item {
 				// check the persmission for the requested method usage
 				if ok := checkMethodUsagePermission(Params, c); !ok {
-					respondWithError(c, http.StatusMethodNotAllowed, "method not allowed")
+					respondWithError(c, http.StatusForbidden, "forbidden")
 					return
 				}
 
