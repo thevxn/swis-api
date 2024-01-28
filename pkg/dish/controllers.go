@@ -168,10 +168,13 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 			}
 		}
 
+		// add socket ID to the exported array (via event dispatcher) if changed its state only
+		if socket.Healthy != result {
+			sockets = append(sockets, socket.ID)
+		}
+
 		socket.Healthy = result
 		socket.TestTimestamp = time.Now().UnixNano()
-
-		sockets = append(sockets, socket.ID)
 		count++
 
 		if saved := Cache.Set(key, socket); !saved {

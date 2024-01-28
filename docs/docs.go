@@ -682,6 +682,26 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/dish/sockets/status": {
+            "get": {
+                "description": "subscribe to dish SSE service",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Subscribe to dish SSE service.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Message"
+                        }
+                    }
+                }
+            }
+        },
         "/dish/sockets/{host}": {
             "get": {
                 "description": "get socket list by Host",
@@ -2169,6 +2189,23 @@ const docTemplate = `{
                 }
             }
         },
+        "dish.Message": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "socket_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "timestamp": {
+                    "type": "integer"
+                }
+            }
+        },
         "dish.Socket": {
             "type": "object",
             "required": [
@@ -2773,7 +2810,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.6.4",
+	Version:          "5.8.1",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
