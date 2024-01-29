@@ -176,5 +176,5 @@ FLAGS?=-sL
 .PHONY: raw
 raw:
 	@echo -e "\n${YELLOW} Executing a raw cURL request based on .env variables... ${RESET}\n"
-	/usr/bin/curl ${FLAGS} -X ${METHOD} -H "X-Auth-Token: ${USER_TOKEN}" ${TARGET_INSTANCE_URL}${PATH}
+	@/usr/bin/curl ${FLAGS} -X ${METHOD} -H "X-Auth-Token: ${USER_TOKEN}" ${TARGET_INSTANCE_URL}${PATH}
 	
