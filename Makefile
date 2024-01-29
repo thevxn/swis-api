@@ -167,3 +167,14 @@ docs:
 sh: 
 	@echo -e "\n${YELLOW} Attaching container's (${DOCKER_CONTAINER_NAME}) shell... ${RESET}\n"
 	@docker exec -it ${DOCKER_CONTAINER_NAME} sh
+
+USER_TOKEN?=xxx
+TARGET_INSTANCE_URL?=http://localhost:${DOCKER_EXTERNAL_PORT}
+PATH?=/
+METHOD?=GET
+FLAGS?=-sL
+.PHONY: raw
+raw:
+	@echo -e "\n${YELLOW} Executing a raw cURL request based on .env variables... ${RESET}\n"
+	/usr/bin/curl ${FLAGS} -X ${METHOD} -H "X-Auth-Token: ${USER_TOKEN}" ${TARGET_INSTANCE_URL}${PATH}
+	
