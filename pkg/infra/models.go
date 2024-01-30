@@ -81,7 +81,7 @@ type Host struct {
 	Facts Facts `json:"facts"`
 
 	// Provider is the name of the hosting company of such machine.
-	Provider string `json"provider"`
+	Provider string `json:"provider"`
 
 	// EpiresAt is a time of the expiration of such hosting service.
 	ExpiresAt time.Time `json:"expires_at"`
