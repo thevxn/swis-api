@@ -9,7 +9,6 @@ import (
 )
 
 var (
-	//infrastructure = Infrastructure{}
 	CacheHosts    *core.Cache
 	CacheNetworks *core.Cache
 	CacheDomains  *core.Cache
@@ -33,7 +32,6 @@ func GetInfrastructure(ctx *gin.Context) {
 		"domains":  domains,
 		"hosts":    hosts,
 		"networks": networks,
-		//"infrastructure": infrastructure,
 	})
 }
 
@@ -254,21 +252,42 @@ func DeleteNetworkByKey(ctx *gin.Context) {
 // @Router /infra/restore [post]
 // PostDumpRestore
 func PostDumpRestore(ctx *gin.Context) {
-	var importInfrastructure Infrastructures
+	var counter []int = []int{0, 0, 0}
 
-	if err := ctx.BindJSON(&importInfrastructure); err != nil {
+	var importInfra = struct {
+		Domains  map[string]Domain  `json:"domains"`
+		Hosts    map[string]Host    `json:"hosts"`
+		Networks map[string]Network `json:"networks"`
+	}{}
+
+	if err := ctx.BindJSON(&importInfra); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 			"message": "cannot parse input JSON stream",
 		})
 		return
 	}
 
-	//infrastructure = importInfrastructure.Infrastructure
+	for key, item := range importInfra.Domains {
+		CacheDomains.Set(key, item)
+		counter[0]++
+	}
+
+	for key, item := range importInfra.Hosts {
+		CacheHosts.Set(key, item)
+		counter[1]++
+	}
+
+	for key, item := range importInfra.Networks {
+		CacheNetworks.Set(key, item)
+		counter[2]++
+	}
 
 	// HTTP 201 Created
 	ctx.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
+		"counter": counter,
 		"message": "infrastrcture imported successfully",
 	})
 }
