@@ -95,8 +95,8 @@ type Facts struct {
 	IsVirtual     bool   `json:"is_virtual"`
 	KernelVersion string `json:"kernel_version"`
 
-	MemoryTotalBytes int `json:"memory_total_bytes"`
-	MemoryUsedBytes  int `json:"memory_used_bytes"`
+	MemoryTotalBytes int64 `json:"memory_total_bytes"`
+	MemoryUsedBytes  int64 `json:"memory_used_bytes"`
 
 	NetDomain         string `json:"net_domain"`
 	NetHostname       string `json:"net_hostname"`
@@ -110,7 +110,7 @@ type Facts struct {
 
 	ProcCores int `json:"proc_cores"`
 
-	SystemUptimeSec int `json:"system_uptime_sec"`
+	SystemUptimeSec int64 `json:"system_uptime_sec"`
 
 	Timestamp int64  `json:"timestamp"`
 	Timezone  string `json:"timezone"`
