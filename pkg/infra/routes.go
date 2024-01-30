@@ -17,7 +17,7 @@ func Routes(g *gin.RouterGroup) {
 	g.GET("/domains/:key",
 		GetDomainByKey)
 	g.POST("/domains/:key",
-		AddNewDomainByKey)
+		PostNewDomainByKey)
 	g.PUT("/domains/:key",
 		UpdateDomainByKey)
 	g.DELETE("/domains/:key",
@@ -29,9 +29,9 @@ func Routes(g *gin.RouterGroup) {
 	g.GET("/hosts/:key",
 		GetHostByKey)
 	g.POST("/hosts/:key/facts",
-		PostHostFacts)
+		PostHostFactsByKey)
 	g.POST("/hosts/:key",
-		AddNewHostByKey)
+		PostNewHostByKey)
 	g.PUT("/hosts/:key",
 		UpdateHostByKey)
 	g.DELETE("/hosts/:key",
@@ -43,7 +43,7 @@ func Routes(g *gin.RouterGroup) {
 	g.GET("/networks/:key",
 		GetNetworkByKey)
 	g.POST("/networks/:key",
-		AddNewNetworkByKey)
+		PostNewNetworkByKey)
 	g.PUT("/networks/:key",
 		UpdateNetworkByKey)
 	g.DELETE("/networks/:key",

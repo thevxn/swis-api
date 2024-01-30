@@ -9,29 +9,12 @@ import (
 )
 
 var (
-	infrastructure = Infrastructure{}
-	CacheHosts     *core.Cache
-	CacheNetworks  *core.Cache
-	CacheDomains   *core.Cache
-	pkgName        string = "infra"
+	//infrastructure = Infrastructure{}
+	CacheHosts    *core.Cache
+	CacheNetworks *core.Cache
+	CacheDomains  *core.Cache
+	pkgName       string = "infra"
 )
-
-func findHostByHostname(c *gin.Context) (index *int, h *Host) {
-	// loop over hosts
-	var hosts = infrastructure.Hosts
-
-	for i, h := range hosts {
-		if h.HostnameShort == c.Param("hostname") || h.HostnameFQDN == c.Param("hostname") {
-			return &i, &h
-		}
-	}
-
-	c.IndentedJSON(http.StatusNotFound, gin.H{
-		"code":    http.StatusNotFound,
-		"message": "host not found",
-	})
-	return nil, nil
-}
 
 // @Summary Get whole infrastructure
 // @Description get all infrastructure details
@@ -39,13 +22,26 @@ func findHostByHostname(c *gin.Context) (index *int, h *Host) {
 // @Produce  json
 // @Success 200 {object} infra.Infrastructure
 // @Router /infra [get]
-func GetInfrastructure(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":           http.StatusOK,
-		"message":        "ok, dumping infrastructure",
-		"infrastructure": infrastructure,
+func GetInfrastructure(ctx *gin.Context) {
+	domains, _ := CacheDomains.GetAll()
+	hosts, _ := CacheHosts.GetAll()
+	networks, _ := CacheNetworks.GetAll()
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":     http.StatusOK,
+		"message":  "ok, dumping infrastructure",
+		"domains":  domains,
+		"hosts":    hosts,
+		"networks": networks,
+		//"infrastructure": infrastructure,
 	})
 }
+
+/*
+
+  DOMAINS CRUD
+
+*/
 
 // @Summary Get all domains
 // @Description get domain list
@@ -53,25 +49,138 @@ func GetInfrastructure(c *gin.Context) {
 // @Produce  json
 // @Success 200 {object} infra.Domain
 // @Router /infra/domains [get]
-func GetDomains(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"domains": infrastructure.Domains,
-	})
+func GetDomains(ctx *gin.Context) {
+	core.PrintAllRootItems(ctx, CacheDomains, pkgName)
+	return
 }
+
+// @Summary Get domain by Key
+// @Description get domain by :key param
+// @Tags infra
+// @Produce  json
+// @Success 200 {object} infra.Domain
+// @Router /infra/domains/{key} [get]
+func GetDomainByKey(ctx *gin.Context) {
+	core.PrintItemByParam(ctx, CacheDomains, pkgName, Domain{})
+	return
+}
+
+// @Summary Add new domain
+// @Description add new domain
+// @Tags infra
+// @Produce json
+// @Param request body infra.Domain true "query params"
+// @Success 200 {object} infra.Domain
+// @Router /infra/domains/{key} [post]
+func PostNewDomainByKey(ctx *gin.Context) {
+	core.AddNewItemByParam(ctx, CacheDomains, pkgName, Domain{})
+	return
+}
+
+// @Summary Update domain by its Key
+// @Description update domain by its Key
+// @Tags infra
+// @Produce json
+// @Param request body infra.Domain.ID true "query params"
+// @Success 200 {object} infra.Domain
+// @Router /infra/domains/{key} [put]
+func UpdateDomainByKey(ctx *gin.Context) {
+	core.UpdateItemByParam(ctx, CacheDomains, pkgName, Domain{})
+	return
+}
+
+// @Summary Delete domain by its Key
+// @Description delete domain by its Key
+// @Tags infra
+// @Produce json
+// @Param id path string true "domain ID/Key"
+// @Success 200 {object} infra.Domain.ID
+// @Router /infra/domains/{key} [delete]
+func DeleteDomainByKey(ctx *gin.Context) {
+	core.DeleteItemByParam(ctx, CacheDomains, pkgName)
+	return
+}
+
+/*
+
+  HOSTS CRUD
+
+*/
 
 // @Summary Get all hosts
 // @Description get hosts list
 // @Tags infra
 // @Produce  json
-// @Success 200 {object} infra.Hosts
+// @Success 200 {object} infra.Host
 // @Router /infra/hosts [get]
-func GetHosts(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":  http.StatusOK,
-		"hosts": infrastructure.Hosts,
-	})
+func GetHosts(ctx *gin.Context) {
+	core.PrintAllRootItems(ctx, CacheHosts, pkgName)
+	return
 }
+
+// @Summary Get host by Key
+// @Description get host by :key param
+// @Tags infra
+// @Produce  json
+// @Success 200 {object} infra.Host
+// @Router /infra/hosts/{key} [get]
+func GetHostByKey(ctx *gin.Context) {
+	core.PrintItemByParam(ctx, CacheHosts, pkgName, Host{})
+	return
+}
+
+// @Summary Upload current host facts
+// @Description update host's facts
+// @Tags infra
+// @Produce json
+// @Param request body infra.Host true "query params"
+// @Success 200 {object} infra.Host
+// @Router /infra/hosts/{key}/facts [post]
+func PostHostFactsByKey(ctx *gin.Context) {
+	return
+}
+
+// @Summary Add new host
+// @Description add new host
+// @Tags infra
+// @Produce json
+// @Param request body infra.Host true "query params"
+// @Success 200 {object} infra.Host
+// @Router /infra/hosts/{key} [post]
+func PostNewHostByKey(ctx *gin.Context) {
+	core.AddNewItemByParam(ctx, CacheHosts, pkgName, Host{})
+	return
+}
+
+// @Summary Update host by its Key
+// @Description update host by its Key
+// @Tags infra
+// @Produce json
+// @Param request body infra.Host.ID true "query params"
+// @Success 200 {object} infra.Host
+// @Router /infra/hosts/{key} [put]
+func UpdateHostByKey(ctx *gin.Context) {
+	core.UpdateItemByParam(ctx, CacheHosts, pkgName, Host{})
+	return
+}
+
+// @Summary Delete host by its Key
+// @Description delete host by its Key
+// @Tags infra
+// @Produce json
+// @Param id path string true "host ID/Key"
+// @Success 200 {object} infra.Host.ID
+// @Router /infra/hosts/{key} [delete]
+func DeleteHostByKey(ctx *gin.Context) {
+	core.DeleteItemByParam(ctx, CacheHosts, pkgName)
+	return
+}
+
+/*
+
+  NETWORKS CRUD
+
+*/
 
 // @Summary Get all networks
 // @Description get networks list
@@ -79,28 +188,63 @@ func GetHosts(c *gin.Context) {
 // @Produce  json
 // @Success 200 {object} infra.Infrastructure.Networks
 // @Router /infra/networks [get]
-func GetNetworks(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, gin.H{
-		"code":     http.StatusOK,
-		"networks": infrastructure.Networks,
-	})
+func GetNetworks(ctx *gin.Context) {
+	core.PrintAllRootItems(ctx, CacheNetworks, pkgName)
+	return
 }
 
-// @Summary Get host by Hostname
-// @Description get host by :hostname param
+// @Summary Get network by Key
+// @Description get network by :key param
 // @Tags infra
 // @Produce  json
-// @Success 200 {object} infra.Host
-// @Router /infra/hosts/{hostname} [get]
-func GetHostByHostname(c *gin.Context) {
-	if _, host := findHostByHostname(c); host != nil {
-		// host found
-		c.IndentedJSON(http.StatusOK, gin.H{
-			"code": http.StatusOK,
-			"host": host,
-		})
-	}
+// @Success 200 {object} infra.Network
+// @Router /infra/networks/{key} [get]
+func GetNetworkByKey(ctx *gin.Context) {
+	core.PrintItemByParam(ctx, CacheNetworks, pkgName, Network{})
+	return
 }
+
+// @Summary Add new network
+// @Description add new network
+// @Tags infra
+// @Produce json
+// @Param request body infra.Netowrk true "query params"
+// @Success 200 {object} infra.Network
+// @Router /infra/networks/{key} [post]
+func PostNewNetworkByKey(ctx *gin.Context) {
+	core.AddNewItemByParam(ctx, CacheNetworks, pkgName, Network{})
+	return
+}
+
+// @Summary Update network by its Key
+// @Description update network by its Key
+// @Tags infra
+// @Produce json
+// @Param request body infra.Network.ID true "query params"
+// @Success 200 {object} infra.Network
+// @Router /infra/networks/{key} [put]
+func UpdateNetworkByKey(ctx *gin.Context) {
+	core.UpdateItemByParam(ctx, CacheNetworks, pkgName, Network{})
+	return
+}
+
+// @Summary Delete network by its Key
+// @Description delete network by its Key
+// @Tags infra
+// @Produce json
+// @Param id path string true "network ID/Key"
+// @Success 200 {object} infra.Network.ID
+// @Router /infra/networks/{key} [delete]
+func DeleteNetworkByKey(ctx *gin.Context) {
+	core.DeleteItemByParam(ctx, CacheNetworks, pkgName)
+	return
+}
+
+/*
+
+  RESTORATION
+
+*/
 
 // @Summary Upload infrastructure JSON dump
 // @Description restore infrastructure data model
@@ -109,21 +253,21 @@ func GetHostByHostname(c *gin.Context) {
 // @Produce json
 // @Router /infra/restore [post]
 // PostDumpRestore
-func PostDumpRestore(c *gin.Context) {
+func PostDumpRestore(ctx *gin.Context) {
 	var importInfrastructure Infrastructures
 
-	if err := c.BindJSON(&importInfrastructure); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+	if err := ctx.BindJSON(&importInfrastructure); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "cannot parse input JSON stream",
 		})
 		return
 	}
 
-	infrastructure = importInfrastructure.Infrastructure
+	//infrastructure = importInfrastructure.Infrastructure
 
 	// HTTP 201 Created
-	c.IndentedJSON(http.StatusCreated, gin.H{
+	ctx.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"message": "infrastrcture imported successfully",
 	})
