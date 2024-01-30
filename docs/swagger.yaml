@@ -323,6 +323,41 @@ definitions:
         description: Name of the current registrar
         type: string
     type: object
+  infra.Facts:
+    properties:
+      is_virtual:
+        type: boolean
+      kernel_version:
+        type: string
+      memory_total_bytes:
+        type: integer
+      memory_used_bytes:
+        type: integer
+      net_domain:
+        type: string
+      net_fqdn:
+        type: string
+      net_hostname:
+        type: string
+      net_primary_ip:
+        type: string
+      net_primary_network:
+        type: string
+      os_arch:
+        type: string
+      os_family:
+        type: string
+      os_selinux_enabled:
+        type: boolean
+      proc_cores:
+        type: integer
+      system_uptime_sec:
+        type: integer
+      timestamp:
+        type: integer
+      timezone:
+        type: string
+    type: object
   infra.Host:
     properties:
       children:
@@ -331,6 +366,9 @@ definitions:
         items:
           type: string
         type: array
+      datacentre:
+        description: Datacentre is the physical locality of such machine.
+        type: string
       description:
         description: Brief node's description -- shown in node's MOTD on remote login.
         type: string
@@ -338,6 +376,13 @@ definitions:
         description: Host's default domain name (e.g. savla.su as internal domain
           name).
         type: string
+      expires_at:
+        description: EpiresAt is a time of the expiration of such hosting service.
+        type: string
+      facts:
+        allOf:
+        - $ref: '#/definitions/infra.Facts'
+        description: Exported system facts from facter.
       hostname_fqdn:
         description: Node hostname as FQDN-formatted.
         type: string
@@ -353,22 +398,22 @@ definitions:
         items:
           type: string
         type: array
+      provider:
+        description: Provider is the name of the hosting company of such machine.
+        type: string
       roles:
         description: Ansible roles to be applied to such host.
         items:
           type: string
         type: array
+      wireguarded:
+        description: Wireguarded bool indicates that the host is part of the core
+          network.
+        type: boolean
     required:
     - hostname_fqdn
     - hostname_short
     - id
-    type: object
-  infra.Hosts:
-    properties:
-      hosts:
-        items:
-          $ref: '#/definitions/infra.Host'
-        type: array
     type: object
   infra.Infrastructure:
     properties:
@@ -641,7 +686,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.8.2
+  version: 5.9.1
 paths:
   /alvax:
     get:
@@ -1306,6 +1351,75 @@ paths:
       summary: Get all domains
       tags:
       - infra
+  /infra/domains/{key}:
+    delete:
+      description: delete domain by its Key
+      parameters:
+      - description: domain ID/Key
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Domain'
+      summary: Delete domain by its Key
+      tags:
+      - infra
+    get:
+      description: get domain by :key param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Domain'
+      summary: Get domain by Key
+      tags:
+      - infra
+    post:
+      description: add new domain
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/infra.Domain'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Domain'
+      summary: Add new domain
+      tags:
+      - infra
+    put:
+      description: update domain by its Key
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/infra.Domain'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Domain'
+      summary: Update domain by its Key
+      tags:
+      - infra
   /infra/hosts:
     get:
       description: get hosts list
@@ -1315,13 +1429,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/infra.Hosts'
+            $ref: '#/definitions/infra.Host'
       summary: Get all hosts
       tags:
       - infra
-  /infra/hosts/{hostname}:
-    get:
-      description: get host by :hostname param
+  /infra/hosts/{key}:
+    delete:
+      description: delete host by its Key
+      parameters:
+      - description: host ID/Key
+        in: path
+        name: id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -1329,7 +1449,77 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/infra.Host'
-      summary: Get host by Hostname
+      summary: Delete host by its Key
+      tags:
+      - infra
+    get:
+      description: get host by :key param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Host'
+      summary: Get host by Key
+      tags:
+      - infra
+    post:
+      description: add new host
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/infra.Host'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Host'
+      summary: Add new host
+      tags:
+      - infra
+    put:
+      description: update host by its Key
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/infra.Host'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Host'
+      summary: Update host by its Key
+      tags:
+      - infra
+  /infra/hosts/{key}/facts:
+    post:
+      description: update host's facts
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/infra.Host'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Host'
+      summary: Upload current host facts
       tags:
       - infra
   /infra/networks:
@@ -1343,6 +1533,75 @@ paths:
           schema:
             $ref: '#/definitions/infra.Infrastructure'
       summary: Get all networks
+      tags:
+      - infra
+  /infra/networks/{key}:
+    delete:
+      description: delete network by its Key
+      parameters:
+      - description: network ID/Key
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Network'
+      summary: Delete network by its Key
+      tags:
+      - infra
+    get:
+      description: get network by :key param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Network'
+      summary: Get network by Key
+      tags:
+      - infra
+    post:
+      description: add new network
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/infra.Network'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Network'
+      summary: Add new network
+      tags:
+      - infra
+    put:
+      description: update network by its Key
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/infra.Network'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Network'
+      summary: Update network by its Key
       tags:
       - infra
   /infra/restore:

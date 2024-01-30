@@ -206,7 +206,7 @@ func GetNetworkByKey(ctx *gin.Context) {
 // @Description add new network
 // @Tags infra
 // @Produce json
-// @Param request body infra.Netowrk true "query params"
+// @Param request body infra.Network true "query params"
 // @Success 200 {object} infra.Network
 // @Router /infra/networks/{key} [post]
 func PostNewNetworkByKey(ctx *gin.Context) {

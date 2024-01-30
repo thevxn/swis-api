@@ -1032,6 +1032,111 @@ const docTemplate = `{
                 }
             }
         },
+        "/infra/domains/{key}": {
+            "get": {
+                "description": "get domain by :key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Get domain by Key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Domain"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update domain by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Update domain by its Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/infra.Domain"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Domain"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new domain",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Add new domain",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/infra.Domain"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Domain"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete domain by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Delete domain by its Key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "domain ID/Key",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Domain"
+                        }
+                    }
+                }
+            }
+        },
         "/infra/hosts": {
             "get": {
                 "description": "get hosts list",
@@ -1046,22 +1151,138 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Hosts"
+                            "$ref": "#/definitions/infra.Host"
                         }
                     }
                 }
             }
         },
-        "/infra/hosts/{hostname}": {
+        "/infra/hosts/{key}": {
             "get": {
-                "description": "get host by :hostname param",
+                "description": "get host by :key param",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "infra"
                 ],
-                "summary": "Get host by Hostname",
+                "summary": "Get host by Key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update host by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Update host by its Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new host",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Add new host",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete host by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Delete host by its Key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "host ID/Key",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/hosts/{key}/facts": {
+            "post": {
+                "description": "update host's facts",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Upload current host facts",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1087,6 +1308,111 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/infra.Infrastructure"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/networks/{key}": {
+            "get": {
+                "description": "get network by :key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Get network by Key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Network"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update network by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Update network by its Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/infra.Network"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Network"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new network",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Add new network",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/infra.Network"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Network"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete network by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Delete network by its Key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "network ID/Key",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Network"
                         }
                     }
                 }
@@ -2388,6 +2714,59 @@ const docTemplate = `{
                 }
             }
         },
+        "infra.Facts": {
+            "type": "object",
+            "properties": {
+                "is_virtual": {
+                    "type": "boolean"
+                },
+                "kernel_version": {
+                    "type": "string"
+                },
+                "memory_total_bytes": {
+                    "type": "integer"
+                },
+                "memory_used_bytes": {
+                    "type": "integer"
+                },
+                "net_domain": {
+                    "type": "string"
+                },
+                "net_fqdn": {
+                    "type": "string"
+                },
+                "net_hostname": {
+                    "type": "string"
+                },
+                "net_primary_ip": {
+                    "type": "string"
+                },
+                "net_primary_network": {
+                    "type": "string"
+                },
+                "os_arch": {
+                    "type": "string"
+                },
+                "os_family": {
+                    "type": "string"
+                },
+                "os_selinux_enabled": {
+                    "type": "boolean"
+                },
+                "proc_cores": {
+                    "type": "integer"
+                },
+                "system_uptime_sec": {
+                    "type": "integer"
+                },
+                "timestamp": {
+                    "type": "integer"
+                },
+                "timezone": {
+                    "type": "string"
+                }
+            }
+        },
         "infra.Host": {
             "type": "object",
             "required": [
@@ -2403,6 +2782,10 @@ const docTemplate = `{
                         "type": "string"
                     }
                 },
+                "datacentre": {
+                    "description": "Datacentre is the physical locality of such machine.",
+                    "type": "string"
+                },
                 "description": {
                     "description": "Brief node's description -- shown in node's MOTD on remote login.",
                     "type": "string"
@@ -2410,6 +2793,18 @@ const docTemplate = `{
                 "domain": {
                     "description": "Host's default domain name (e.g. savla.su as internal domain name).",
                     "type": "string"
+                },
+                "expires_at": {
+                    "description": "EpiresAt is a time of the expiration of such hosting service.",
+                    "type": "string"
+                },
+                "facts": {
+                    "description": "Exported system facts from facter.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/infra.Facts"
+                        }
+                    ]
                 },
                 "hostname_fqdn": {
                     "description": "Node hostname as FQDN-formatted.",
@@ -2430,23 +2825,20 @@ const docTemplate = `{
                         "type": "string"
                     }
                 },
+                "provider": {
+                    "description": "Provider is the name of the hosting company of such machine.",
+                    "type": "string"
+                },
                 "roles": {
                     "description": "Ansible roles to be applied to such host.",
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
-                }
-            }
-        },
-        "infra.Hosts": {
-            "type": "object",
-            "properties": {
-                "hosts": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/infra.Host"
-                    }
+                },
+                "wireguarded": {
+                    "description": "Wireguarded bool indicates that the host is part of the core network.",
+                    "type": "boolean"
                 }
             }
         },
@@ -2810,7 +3202,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.8.2",
+	Version:          "5.9.1",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
