@@ -1,8 +1,12 @@
 package infra
 
+import (
+	"time"
+)
+
 type Infrastructures struct {
 	// Whole infrastructure object.
-	Infrastructure []Infrastructure `json:"infrastructure"`
+	Infrastructure Infrastructure `json:"infrastructure"`
 }
 
 type Infrastructure struct {

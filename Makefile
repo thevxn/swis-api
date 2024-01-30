@@ -153,8 +153,8 @@ import_dump:
 .PHONY: push
 push:
 	@echo -e "\n${YELLOW} (re)tagging project and pushing to $(git branch --show-current) branch... ${RESET}\n"
-	@git tag -fa v${APP_VERSION} -m "v${APP_VERSION}"
-	@git push --set-upstream origin $(git branch --show-current) --follow-tags
+	@/usr/bin/git tag -fa v${APP_VERSION} -m "v${APP_VERSION}"
+	@/usr/bin/git push --set-upstream origin $(git branch --show-current) --follow-tags
 
 .PHONY: docs
 docs:
