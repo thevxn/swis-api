@@ -80,12 +80,12 @@ info:
 .PHONY: version
 version: 
 	@echo -e "\n${YELLOW} Updating app's version (docs) according to dot-env file... ${RESET}\n"
-	@sed -i 's/\(\/\/[ ]@version\) .*/\1 ${APP_VERSION}/' main.go
+	@/usr/bin/sed -i 's/\(\/\/[ ]@version\) .*/\1 ${APP_VERSION}/' main.go
 
 .PHONY: fmt
 fmt:
 	@echo -e "\n${YELLOW} Code reformating (gofmt)... ${RESET}\n"
-	@gofmt -s -w .
+	@/usr/local/go/bin/gofmt -s -w .
 #@find . -name "*.go" -exec gofmt {} \;
 
 .PHONY: unit

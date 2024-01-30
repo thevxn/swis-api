@@ -2,7 +2,7 @@ package infra
 
 type Infrastructures struct {
 	// Whole infrastructure object.
-	Infrastructure Infrastructure `json:"infrastructure"`
+	Infrastructure []Infrastructure `json:"infrastructure"`
 }
 
 type Infrastructure struct {
@@ -59,7 +59,7 @@ type Host struct {
 	Description string `json:"description"`
 
 	// Host's default domain name (e.g. savla.su as internal domain name).
-	Domain string `json:"domain" `
+	Domain string `json:"domain"`
 
 	// Ansible roles to be applied to such host.
 	Roles []string `json:"roles"`
@@ -68,17 +68,48 @@ type Host struct {
 	IPAddress []string `json:"ip_address"`
 
 	// Children of such machine -- should use machines' hashes for proper linking.
-	Child []string `json:"children"`
+	Children []string `json:"children"`
+
+	// Wireguarded bool indicates that the host is part of the core network.
+	Wireguarded bool `json:"wireguarded"`
+
+	// Exported system facts from facter.
+	Facts Facts `json:"facts"`
+
+	// Provider is the name of the hosting company of such machine.
+	Provider string `json"provider"`
+
+	// EpiresAt is a time of the expiration of such hosting service.
+	ExpiresAt time.Time `json:"expires_at"`
+
+	// Datacentre is the physical locality of such machine.
+	Datacentre string `json:"datacentre"`
 }
 
-// Hyper struct to model hypervisor machine
-type Hyper struct {
-	Host
-}
+// facter-parsed system info, to-be-described further later TODO
+type Facts struct {
+	IsVirtual     bool   `json:"is_virtual"`
+	KernelVersion string `json:"kernel_version"`
 
-// Virtual struct to model virtual machine
-type Virtual struct {
-	Host
+	MemoryTotalBytes int `json:"memory_total_bytes"`
+	MemoryUsedBytes  int `json:"memory_used_bytes"`
+
+	NetDomain         string `json:"net_domain"`
+	NetHostname       string `json:"net_hostname"`
+	NetFQDN           string `json:"net_fqdn"`
+	NetPrimaryIP      string `json:"net_primary_ip"`
+	NetPrimaryNetwork string `json:"net_primary_network"`
+
+	OSArch    string `json:"os_arch"`
+	OSFamily  string `json:"os_family"`
+	OSSELinux bool   `json:"os_selinux_enabled"`
+
+	ProcCores int `json:"proc_cores"`
+
+	SystemUptimeSec int `json:"system_uptime_sec"`
+
+	Timestamp int64  `json:"timestamp"`
+	Timezone  string `json:"timezone"`
 }
 
 type Network struct {
