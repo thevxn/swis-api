@@ -3,7 +3,7 @@ package dish
 import (
 	"encoding/json"
 	"io"
-	//"log"
+	"log"
 	"net/http"
 	"time"
 
@@ -288,7 +288,12 @@ func SubscribeToSSEStream(ctx *gin.Context) {
 	ctx.Stream(func(w io.Writer) bool {
 		// Stream message to client from message channel
 		if msg, ok := <-clientChan; ok {
-			m, _ := json.Marshal(msg)
+			m, err := json.Marshal(msg)
+			if err != nil {
+				log.Println("marshalling failed, invalid message")
+				return false
+			}
+
 			ctx.SSEvent("message", string(m))
 			//log.Println("wrote:", m)
 			return true

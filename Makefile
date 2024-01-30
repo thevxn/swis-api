@@ -22,6 +22,8 @@ ROOT_TOKEN?=${ROOT_TOKEN_DEFAULT}
 APP_URLS_TRAEFIK?=`${APP_URL}`,`swis-api-run.local`,`swis-api.example.com`
 GIN_MODE?=debug
 
+PATH=${PATH}:/usr/bin
+
 # test env
 POSTMAN_COLLECTION_FILE=.postman/swapi_E2E_dish.postman_collection.json
 HOSTNAME?=localhost
@@ -133,7 +135,7 @@ stop:
 .PHONY: dev
 dev: fmt
 	@echo -e "\n${YELLOW} Starting local swapi instance... ${RESET}\n"
-	@docker compose --file $(DOCKER_COMPOSE_DEV_FILE) up --force-recreate --remove-orphans --build
+	@/usr/bin/docker compose --file $(DOCKER_COMPOSE_DEV_FILE) up --force-recreate --remove-orphans --build
 
 .PHONY: dump
 dump: 
