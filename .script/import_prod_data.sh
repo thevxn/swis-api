@@ -88,7 +88,7 @@ declare -a paths=(
 	"/backups/restore"
 	"/business/restore"
 	"/depots/restore"
-	"/dish/sockets/restore"
+	"/dish/restore"
 
 	"/infra/restore"
 	"/links/restore"

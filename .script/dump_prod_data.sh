@@ -57,7 +57,7 @@ declare -a paths=(
 	"/backups/"
 	"/business/"
 	"/depots/"
-	"/dish/sockets"
+	"/dish/"
 
 	"/finance/"
 	"/infra/"
