@@ -167,6 +167,36 @@ definitions:
         description: Owner name according to users package.
         type: string
     type: object
+  dish.Incident:
+    properties:
+      comment:
+        description: Other commentary to the incident.
+        type: string
+      desc:
+        description: Further details about the incident like place, state of operation
+          etc.
+        type: string
+      end_date:
+        description: Estimated end of incident handling/resolving.
+        type: integer
+      id:
+        description: Incident ID, timestamp usually.
+        type: integer
+      name:
+        description: Incident name.
+        type: string
+      reason:
+        description: Reason of the incident that happened.
+        type: string
+      socket_id:
+        description: |-
+          ID of the referencing socket(s).
+          SocketID []string `json:"socket_id"`
+        type: string
+      start_date:
+        description: The very start datetime of such incident.
+        type: integer
+    type: object
   dish.Message:
     properties:
       content:
@@ -177,6 +207,17 @@ definitions:
         type: array
       timestamp:
         type: integer
+    type: object
+  dish.Root:
+    properties:
+      incidents:
+        additionalProperties:
+          $ref: '#/definitions/dish.Incident'
+        type: object
+      sockets:
+        additionalProperties:
+          $ref: '#/definitions/dish.Socket'
+        type: object
     type: object
   dish.Socket:
     properties:
@@ -686,7 +727,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.9.1
+  version: 5.10.0
 paths:
   /alvax:
     get:
@@ -1087,17 +1128,119 @@ paths:
       summary: Upload depot dump backup -- restores all depot items
       tags:
       - depots
+  /dish:
+    get:
+      description: get all dish details
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Root'
+      summary: Get whole dish package items
+      tags:
+      - dish
+  /dish/incident/{key}:
+    get:
+      description: get incident list by socket ID
+      parameters:
+      - description: socket ID
+        in: path
+        name: host
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get incident list by socket ID
+      tags:
+      - dish
+  /dish/incidents:
+    get:
+      description: get incident list, incident array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get all incidents
+      tags:
+      - dish
+  /dish/incidents/{key}:
+    delete:
+      description: delete incident by its key
+      parameters:
+      - description: incident ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Incident'
+      summary: Delete incidnet by its key
+      tags:
+      - dish
+    post:
+      description: add new incident
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dish.Incident'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Incident'
+      summary: Add new incident
+      tags:
+      - dish
+    put:
+      description: update incident by its key
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dish.Incident'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dish.Incident'
+      summary: Update incident by its key
+      tags:
+      - dish
   /dish/restore:
     post:
       consumes:
       - application/json
-      description: update dish JSON dump
+      description: import incidents and sockets JSON dump
       produces:
       - application/json
       responses:
         "201":
           description: Created
-      summary: Upload dish dump backup -- restores all loaded sockets
+      summary: Upload dish batch import
       tags:
       - dish
   /dish/sockets:

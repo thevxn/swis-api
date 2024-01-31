@@ -14,9 +14,16 @@ import (
 )
 
 var (
-	Cache   *core.Cache
-	pkgName string = "dish"
+	CacheIncidents *core.Cache
+	CacheSockets   *core.Cache
+	pkgName        string = "dish"
 )
+
+/*
+
+  sockets
+
+*/
 
 // Get all sockets loaded.
 // @Summary Get all sockets list
@@ -26,7 +33,7 @@ var (
 // @Success 200 {object} string "ok"
 // @Router /dish/sockets [get]
 func GetSocketList(ctx *gin.Context) {
-	core.PrintAllRootItems(ctx, Cache, pkgName)
+	core.PrintAllRootItems(ctx, CacheSockets, pkgName)
 	return
 }
 
@@ -39,7 +46,7 @@ func GetSocketList(ctx *gin.Context) {
 // @Success 200 {object} dish.Socket
 // @Router /dish/sockets/{key} [post]
 func PostNewSocketByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, Cache, pkgName, Socket{})
+	core.AddNewItemByParam(ctx, CacheSockets, pkgName, Socket{})
 	return
 }
 
@@ -52,7 +59,7 @@ func PostNewSocketByKey(ctx *gin.Context) {
 // @Success 200 {object} dish.Socket
 // @Router /dish/sockets/{key} [put]
 func UpdateSocketByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, Cache, pkgName, Socket{})
+	core.UpdateItemByParam(ctx, CacheSockets, pkgName, Socket{})
 	return
 }
 
@@ -65,19 +72,7 @@ func UpdateSocketByKey(ctx *gin.Context) {
 // @Success 200 {object} dish.Socket
 // @Router /dish/sockets/{key} [delete]
 func DeleteSocketByKey(ctx *gin.Context) {
-	core.DeleteItemByParam(ctx, Cache, pkgName)
-	return
-}
-
-// @Summary Upload dish dump backup -- restores all loaded sockets
-// @Description update dish JSON dump
-// @Tags dish
-// @Accept json
-// @Produce json
-// @Success 201
-// @Router /dish/restore [post]
-func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems(ctx, Cache, pkgName, Socket{})
+	core.DeleteItemByParam(ctx, CacheSockets, pkgName)
 	return
 }
 
@@ -94,7 +89,7 @@ func GetSocketListByHost(ctx *gin.Context) {
 	var exportedSockets = make(map[string]Socket)
 	var counter int = 0
 
-	rawSocketsMap, _ := Cache.GetAll()
+	rawSocketsMap, _ := CacheSockets.GetAll()
 
 	for _, rawSocket := range rawSocketsMap {
 		socket, ok := rawSocket.(Socket)
@@ -154,7 +149,7 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 		var socket Socket
 		var ok bool
 
-		if rawSocket, found := Cache.Get(key); !found {
+		if rawSocket, found := CacheSockets.Get(key); !found {
 			continue
 		} else {
 			if socket, ok = rawSocket.(Socket); !ok {
@@ -177,7 +172,7 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 		socket.TestTimestamp = time.Now().UnixNano()
 		count++
 
-		if saved := Cache.Set(key, socket); !saved {
+		if saved := CacheSockets.Set(key, socket); !saved {
 			ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 				"code":    http.StatusInternalServerError,
 				"key":     key,
@@ -219,7 +214,7 @@ func MuteToggleSocketByKey(ctx *gin.Context) {
 	var id string = ctx.Param("key")
 	var updatedSocket Socket
 
-	rawSocket, ok := Cache.Get(id)
+	rawSocket, ok := CacheSockets.Get(id)
 	if !ok {
 		ctx.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
@@ -245,7 +240,7 @@ func MuteToggleSocketByKey(ctx *gin.Context) {
 		updatedSocket.MutedFrom = time.Now().Unix()
 	}
 
-	if saved := Cache.Set(updatedSocket.ID, updatedSocket); !saved {
+	if saved := CacheSockets.Set(updatedSocket.ID, updatedSocket); !saved {
 		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
 			"message": "socket couldn't be saved to database",
@@ -299,5 +294,173 @@ func SubscribeToSSEStream(ctx *gin.Context) {
 			return true
 		}
 		return false
+	})
+}
+
+/*
+
+  incidents
+
+*/
+
+// @Summary Get all incidents
+// @Description get incident list, incident array
+// @Tags dish
+// @Produce  json
+// @Success 200 {object} string "ok"
+// @Router /dish/incidents [get]
+func GetIncidentList(ctx *gin.Context) {
+	core.PrintAllRootItems(ctx, CacheIncidents, pkgName)
+	return
+}
+
+// @Summary Add new incident
+// @Description add new incident
+// @Tags dish
+// @Produce json
+// @Param request body dish.Incident true "query params"
+// @Success 200 {object} dish.Incident
+// @Router /dish/incidents/{key} [post]
+func PostNewIncidentByKey(ctx *gin.Context) {
+	core.AddNewItemByParam(ctx, CacheIncidents, pkgName, Incident{})
+	return
+}
+
+// @Summary Update incident by its key
+// @Description update incident by its key
+// @Tags dish
+// @Produce json
+// @Param request body dish.Incident.ID true "query params"
+// @Success 200 {object} dish.Incident
+// @Router /dish/incidents/{key} [put]
+func UpdateIncidentByKey(ctx *gin.Context) {
+	core.UpdateItemByParam(ctx, CacheIncidents, pkgName, Incident{})
+	return
+}
+
+// @Summary Delete incidnet by its key
+// @Description delete incident by its key
+// @Tags dish
+// @Produce json
+// @Param  id  path  string  true  "incident ID"
+// @Success 200 {object} dish.Incident
+// @Router /dish/incidents/{key} [delete]
+func DeleteIncidentByKey(ctx *gin.Context) {
+	core.DeleteItemByParam(ctx, CacheIncidents, pkgName)
+	return
+}
+
+// @Summary Get incident list by socket ID
+// @Description get incident list by socket ID
+// @Tags dish
+// @Produce json
+// @Param host path string true "socket ID"
+// @Success 200 {string} string	"ok"
+// @Router /dish/incident/{key} [get]
+func GetIncidentListBySocketID(ctx *gin.Context) {
+	var key string = ctx.Param("key")
+	//var exportedIncidents = make(map[string]Incident)
+	var exportedIncidents []Incident = []Incident{}
+	var counter int = 0
+
+	if _, ok := CacheSockets.Get(key); !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"count":   0,
+			"items":   exportedIncidents,
+			"message": "no such socket",
+			"key":     key,
+		})
+		return
+	}
+
+	rawIncidentsMap, _ := CacheIncidents.GetAll()
+
+	for _, rawIncident := range rawIncidentsMap {
+		incident, ok := rawIncident.(Incident)
+		if !ok {
+			continue
+		}
+
+		if incident.SocketID == key {
+			//exportedIncidents[incident.SocketID] = incident
+			exportedIncidents = append(exportedIncidents, incident)
+			counter++
+		}
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"count":   counter,
+		"items":   exportedIncidents,
+		"message": "ok, dumping incidents list by socketID",
+		"key":     key,
+	})
+	return
+}
+
+/*
+
+  restoration
+
+*/
+
+// @Summary Get whole dish package items
+// @Description get all dish details
+// @Tags dish
+// @Produce  json
+// @Success 200 {object} dish.Root
+// @Router /dish [get]
+func GetDishRoot(ctx *gin.Context) {
+	incidents, _ := CacheIncidents.GetAll()
+	sockets, _ := CacheSockets.GetAll()
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":      http.StatusOK,
+		"message":   "ok, dumping dish root",
+		"incidents": incidents,
+		"sockets":   sockets,
+	})
+}
+
+// @Summary Upload dish batch import
+// @Description import incidents and sockets JSON dump
+// @Tags dish
+// @Accept json
+// @Produce json
+// @Success 201
+// @Router /dish/restore [post]
+func PostDumpRestore(ctx *gin.Context) {
+	var counter []int = []int{0, 0}
+
+	var importDish = struct {
+		Incidents map[string]Incident `json:"incidents"`
+		Sockets   map[string]Socket   `json:"sockets"`
+	}{}
+
+	if err := ctx.BindJSON(&importDish); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	for key, item := range importDish.Incidents {
+		CacheIncidents.Set(key, item)
+		counter[0]++
+	}
+
+	for key, item := range importDish.Sockets {
+		CacheSockets.Set(key, item)
+		counter[1]++
+	}
+
+	// HTTP 201 Created
+	ctx.IndentedJSON(http.StatusCreated, gin.H{
+		"code":    http.StatusCreated,
+		"counter": counter,
+		"message": "dish dump imported successfully",
 	})
 }

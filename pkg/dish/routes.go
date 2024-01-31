@@ -5,6 +5,24 @@ import (
 )
 
 func Routes(g *gin.RouterGroup) {
+	g.GET("/",
+		GetDishRoot)
+	g.POST("/restore",
+		PostDumpRestore)
+
+	g.GET("/incidents",
+		GetIncidentList)
+	g.GET("/incidents/:key",
+		GetIncidentListBySocketID)
+	g.POST("/incidents/:key",
+		PostNewIncidentByKey)
+	g.PUT("/incidents/:key",
+		UpdateIncidentByKey)
+	g.PATCH("/incidents/:key",
+		UpdateIncidentByKey)
+	g.DELETE("/incidents/:key",
+		DeleteIncidentByKey)
+
 	g.GET("/sockets",
 		GetSocketList)
 	g.GET("/sockets/status",
@@ -21,8 +39,6 @@ func Routes(g *gin.RouterGroup) {
 		MuteToggleSocketByKey)
 	g.DELETE("/sockets/:key",
 		DeleteSocketByKey)
-	g.POST("/sockets/restore",
-		PostDumpRestore)
 	g.POST("/sockets/results",
 		BatchPostHealthyStatus)
 }

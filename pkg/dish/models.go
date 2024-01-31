@@ -1,8 +1,8 @@
 package dish
 
-type Sockets struct {
-	//Sockets []Socket `json:"sockets"`
-	Sockets map[string]Socket `json:"sockets"`
+type Root struct {
+	Incidents map[string]Incident `json:"incidents"`
+	Sockets   map[string]Socket   `json:"sockets"`
 }
 
 type Socket struct {
@@ -52,6 +52,33 @@ type Socket struct {
 
 	// Public boolean tells the frontendee to show itself.
 	Public bool `json:"public" default:false`
+}
+
+type Incident struct {
+	// Incident ID, timestamp usually.
+	ID int64 `json:"id"`
+
+	// Incident name.
+	Name string `json:"name"`
+
+	// Further details about the incident like place, state of operation etc.
+	Description string `json:"desc"`
+
+	// ID of the referencing socket(s).
+	//SocketID []string `json:"socket_id"`
+	SocketID string `json:"socket_id"`
+
+	// The very start datetime of such incident.
+	StartTimestamp int64 `json:"start_date"`
+
+	// Estimated end of incident handling/resolving.
+	EndTimestamp int64 `json:"end_date"`
+
+	// Reason of the incident that happened.
+	Reason string `json:"reason"`
+
+	// Other commentary to the incident.
+	Comment string `json:"comment"`
 }
 
 type ClientChan chan Message

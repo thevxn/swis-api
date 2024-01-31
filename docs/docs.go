@@ -629,9 +629,165 @@ const docTemplate = `{
                 }
             }
         },
+        "/dish": {
+            "get": {
+                "description": "get all dish details",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get whole dish package items",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Root"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/incident/{key}": {
+            "get": {
+                "description": "get incident list by socket ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get incident list by socket ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "socket ID",
+                        "name": "host",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/incidents": {
+            "get": {
+                "description": "get incident list, incident array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get all incidents",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/incidents/{key}": {
+            "put": {
+                "description": "update incident by its key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Update incident by its key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new incident",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Add new incident",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete incident by its key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Delete incidnet by its key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "incident ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                }
+            }
+        },
         "/dish/restore": {
             "post": {
-                "description": "update dish JSON dump",
+                "description": "import incidents and sockets JSON dump",
                 "consumes": [
                     "application/json"
                 ],
@@ -641,7 +797,7 @@ const docTemplate = `{
                 "tags": [
                     "dish"
                 ],
-                "summary": "Upload dish dump backup -- restores all loaded sockets",
+                "summary": "Upload dish batch import",
                 "responses": {
                     "201": {
                         "description": "Created"
@@ -2515,6 +2671,43 @@ const docTemplate = `{
                 }
             }
         },
+        "dish.Incident": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "description": "Other commentary to the incident.",
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "Further details about the incident like place, state of operation etc.",
+                    "type": "string"
+                },
+                "end_date": {
+                    "description": "Estimated end of incident handling/resolving.",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "Incident ID, timestamp usually.",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Incident name.",
+                    "type": "string"
+                },
+                "reason": {
+                    "description": "Reason of the incident that happened.",
+                    "type": "string"
+                },
+                "socket_id": {
+                    "description": "ID of the referencing socket(s).\nSocketID []string ` + "`" + `json:\"socket_id\"` + "`" + `",
+                    "type": "string"
+                },
+                "start_date": {
+                    "description": "The very start datetime of such incident.",
+                    "type": "integer"
+                }
+            }
+        },
         "dish.Message": {
             "type": "object",
             "properties": {
@@ -2529,6 +2722,23 @@ const docTemplate = `{
                 },
                 "timestamp": {
                     "type": "integer"
+                }
+            }
+        },
+        "dish.Root": {
+            "type": "object",
+            "properties": {
+                "incidents": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/dish.Incident"
+                    }
+                },
+                "sockets": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/dish.Socket"
+                    }
                 }
             }
         },
@@ -3202,7 +3412,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.9.1",
+	Version:          "5.10.0",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
