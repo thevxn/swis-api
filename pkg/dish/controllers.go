@@ -356,7 +356,7 @@ func DeleteIncidentByKey(ctx *gin.Context) {
 // @Produce json
 // @Param host path string true "socket ID"
 // @Success 200 {string} string	"ok"
-// @Router /dish/incident/{key} [get]
+// @Router /dish/incidents/{key} [get]
 func GetIncidentListBySocketID(ctx *gin.Context) {
 	var key string = ctx.Param("key")
 	//var exportedIncidents = make(map[string]Incident)
