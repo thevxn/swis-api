@@ -1,5 +1,9 @@
 package finance
 
+import (
+	"time"
+)
+
 type Account struct {
 	// Account unique ID, snake_cased identifier.
 	ID string `json:"account_id"`
@@ -35,18 +39,33 @@ type Item struct {
 	// Item unique ID (e.g. datetime timestamp plus currency etc).
 	ID int `json:"id"`
 
-	// Payment amount in defined currency (often the account's currency).
-	Amount float32 `json:"amount"`
+	// Type defines whether the item is an income, or an expense.
+	Type string `json:"type"`
 
-	// Payment currency name (e.g. CZK, GBP, EUR, USD)
+	// Payment amount in defined currency (often the account's currency).
+	Amount float64 `json:"amount"`
+
+	// Payment currency name (e.g. CZK, GBP, EUR, USD).
 	Currency string `json:"currency"`
 
 	// Payment/item description.
 	Description string `json:"description"`
 
-	// Billing date of the payment.
-	BillingDate string `json:"billing_date"`
+	// PaymentDate is a datetime of the payment.
+	PaymentDate time.Time `json:"payment_date"`
+
+	// BusinessID is a reference to 'business' package.
+	BusinessID string `json:"business_id"`
+
+	// Invoice identification.
+	InvoiceNo string `json:"invoice_no"`
 
 	// Mescellaneous information about the payment (e.g. foreign currency and amount).
 	Misc string `json:"misc"`
+}
+
+type Tax struct {
+	IncomeTotal  float64 `json:"income_total"`
+	ExpenseTotal float64 `json:"expense_total"`
+	Summary      float64 `json:"summary"`
 }
