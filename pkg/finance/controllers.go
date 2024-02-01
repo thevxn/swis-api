@@ -10,8 +10,9 @@ import (
 )
 
 var (
-	Cache   *core.Cache
-	pkgName string = "finance"
+	CacheAccounts   *core.Cache
+	CacheItems      *core.Cache
+	pkgName         string = "finance"
 )
 
 /*
@@ -138,7 +139,9 @@ func DoTaxesByOwner(ctx *gin.Context) {
 				"key":     key,
 			})
 			return
+		}
 
+		if acc.Owner == key {
 			accounts = append(accounts, acc)
 		}
 	}
@@ -205,3 +208,28 @@ func DoTaxesByOwner(ctx *gin.Context) {
 	})
 	return
 }
+
+/*
+
+  restoration
+
+*/
+
+// @Summary Get whole finance package content
+// @Description get whole finance package content
+// @Tags finance
+// @Produce  json
+// @Success 200 {object} finance.Root
+// @Router /finance [get]
+func GetRootData(ctx *gin.Context) {
+	accounts, _ := CacheAccounts.GetAll()
+	items, _ := CacheItems.GetAll()
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":      http.StatusOK,
+		"message":   "ok, dumping dish root",
+		"accounts": accounts,
+		"items":   items,
+	})
+}
+

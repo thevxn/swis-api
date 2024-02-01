@@ -29,9 +29,6 @@ type Account struct {
 
 	// Owner's name/username to link account to.
 	Owner string `json:"account_owner"`
-
-	// Account items like (incoming/outcoming) payments.
-	Items []Item `json:"account_items"`
 }
 
 // ref: http://docs.savla.su/finance
@@ -54,6 +51,9 @@ type Item struct {
 	// PaymentDate is a datetime of the payment.
 	PaymentDate time.Time `json:"payment_date"`
 
+	// Referencing finance account.
+	AccountID string `json:"account_id"`
+
 	// BusinessID is a reference to 'business' package.
 	BusinessID string `json:"business_id"`
 
@@ -65,7 +65,12 @@ type Item struct {
 }
 
 type Tax struct {
+	// Sum of incomes.
 	IncomeTotal  float64 `json:"income_total"`
+
+	// Sum of expenses.
 	ExpenseTotal float64 `json:"expense_total"`
+
+	// Difference between incomes and expenses.
 	Summary      float64 `json:"summary"`
 }

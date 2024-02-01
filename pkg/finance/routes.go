@@ -24,6 +24,19 @@ func Routes(g *gin.RouterGroup) {
 	g.DELETE("/accounts/:key",
 		DeleteAccountByKey)
 
+	g.GET("/items/",
+		GetItems)
+	g.GET("/items/account/:key",
+		GetItemByAccountID)
+	g.POST("/items/:key",
+		PostNewItemByKey)
+	//g.GET("/items/:key",
+	//	GetItemByKey)
+	g.PUT("/items/:key",
+		UpdateItemByKey)
+	g.DELETE("/items/:key",
+		DeleteItemByKey)
+
 	g.GET("/taxes/:owner/:year",
 		DoTaxesByOwner)
 }
