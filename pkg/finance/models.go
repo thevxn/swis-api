@@ -66,11 +66,11 @@ type Item struct {
 
 type Tax struct {
 	// Sum of incomes.
-	IncomeTotal  float64 `json:"income_total"`
+	IncomeTotal float64 `json:"income_total"`
 
 	// Sum of expenses.
 	ExpenseTotal float64 `json:"expense_total"`
 
 	// Difference between incomes and expenses.
-	Summary      float64 `json:"summary"`
+	Summary float64 `json:"summary"`
 }

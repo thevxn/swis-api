@@ -13,12 +13,12 @@ func Routes(g *gin.RouterGroup) {
 
 	g.GET("/accounts/",
 		GetAccounts)
+	g.GET("/accounts/:key",
+		GetAccountByKey)
 	g.GET("/accounts/owner/:key",
 		GetAccountByOwnerKey)
 	g.POST("/accounts/:key",
 		PostNewAccountByKey)
-	//g.GET("/accounts/:key",
-	//	GetAccountByKey)
 	g.PUT("/accounts/:key",
 		UpdateAccountByKey)
 	g.DELETE("/accounts/:key",
@@ -26,12 +26,12 @@ func Routes(g *gin.RouterGroup) {
 
 	g.GET("/items/",
 		GetItems)
+	g.GET("/items/:key",
+		GetItemByKey)
 	g.GET("/items/account/:key",
-		GetItemByAccountID)
+		GetItemsByAccountID)
 	g.POST("/items/:key",
 		PostNewItemByKey)
-	//g.GET("/items/:key",
-	//	GetItemByKey)
 	g.PUT("/items/:key",
 		UpdateItemByKey)
 	g.DELETE("/items/:key",
