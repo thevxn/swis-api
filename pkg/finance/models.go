@@ -6,26 +6,26 @@ import (
 
 type Account struct {
 	// Account unique ID, snake_cased identifier.
-	ID string `json:"account_id"`
+	ID string `json:"account_id" binding:"required"`
 
 	// Account more verbose name.
 	Description string `json:"account_description"`
 
 	// Account number.
-	AccountNumber string `json:"account_number"`
+	AccountNumber string `json:"account_number" binding:"required"`
 
 	// Universal in-state bank code (CZ mainly).
 	// Bank codes such as "0100" would be invalid as type int!
 	BankCode string `json:"bank_code"`
 
 	// Account currency name (e.g. CZK, GBP, EUR, USD)
-	Currency string `json:"account_currency"`
+	Currency string `json:"account_currency" binidng:"required"`
 
 	// Account SWIFT/BIC code for international payments.
-	SWIFT string `json:"account_swift_bic"`
+	SWIFT string `json:"account_swift_bic" binding:"required"`
 
 	// Account IBAN code for international payments.
-	IBAN string `json:"account_iban"`
+	IBAN string `json:"account_iban" binding:"required"`
 
 	// Owner's name/username to link account to.
 	Owner string `json:"account_owner"`
@@ -40,7 +40,7 @@ type Item struct {
 	Type string `json:"type" binding:"required"`
 
 	// Payment amount in defined currency (often the account's currency).
-	Amount float64 `json:"amount" binding:"reuqired"`
+	Amount float64 `json:"amount" binding:"required"`
 
 	// Payment currency name (e.g. CZK, GBP, EUR, USD).
 	Currency string `json:"currency" binding:"required"`

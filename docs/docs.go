@@ -3021,6 +3021,12 @@ const docTemplate = `{
         },
         "finance.Account": {
             "type": "object",
+            "required": [
+                "account_iban",
+                "account_id",
+                "account_number",
+                "account_swift_bic"
+            ],
             "properties": {
                 "account_currency": {
                     "description": "Account currency name (e.g. CZK, GBP, EUR, USD)",
@@ -3060,6 +3066,7 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "account_id",
+                "amount",
                 "currency",
                 "id",
                 "payment_date",
@@ -3646,7 +3653,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.11.2",
+	Version:          "5.11.4",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

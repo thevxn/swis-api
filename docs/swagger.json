@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.11.2"
+        "version": "5.11.4"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -3015,6 +3015,12 @@
         },
         "finance.Account": {
             "type": "object",
+            "required": [
+                "account_iban",
+                "account_id",
+                "account_number",
+                "account_swift_bic"
+            ],
             "properties": {
                 "account_currency": {
                     "description": "Account currency name (e.g. CZK, GBP, EUR, USD)",
@@ -3054,6 +3060,7 @@
             "type": "object",
             "required": [
                 "account_id",
+                "amount",
                 "currency",
                 "id",
                 "payment_date",
