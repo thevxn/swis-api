@@ -356,7 +356,7 @@ func DoTaxesByOwner(ctx *gin.Context) {
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,
-		"message":  "ok, sending year stats for the user's taxes",
+		"message":  "ok, sending year stats for the user's taxes estimation",
 		"tax":      tax,
 		"key":      owner,
 		"year":     year,
