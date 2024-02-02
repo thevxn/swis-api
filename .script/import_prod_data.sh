@@ -111,7 +111,7 @@ declare -a files=(
 	"/infra.json"
 	"/links.json"
 	"/news_sources.json"
-	"/finance_accounts.json"
+	"/finance.json"
 	"/projects.json"
 
 	"/roles.json"
