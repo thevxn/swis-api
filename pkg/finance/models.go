@@ -73,4 +73,10 @@ type Tax struct {
 
 	// Difference between incomes and expenses. Base for income tax.
 	Base float64 `json:"base_sum"`
+
+	// Absolute estimation of the income tax per year, from given totals.
+	IncomeTaxEstAbs float64 `json:"income_tax_estimation_abs"`
+
+	// Weighted estimation of the income tax, where 60% of income are meant as expenses.
+	IncomeTaxEst60 float64 `json:"income_tax_estimation_60"`
 }

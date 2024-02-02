@@ -342,8 +342,17 @@ func DoTaxesByOwner(ctx *gin.Context) {
 			}
 		}
 	}
-		
-	tax.Base += tax.IncomeTotal - tax.ExpenseTotal
+
+	// define the tax constants
+	const incTaxRate = 0.15
+	const expRate60 = 0.60
+
+	// calculate the base for the income tax
+	tax.Base = tax.IncomeTotal - tax.ExpenseTotal
+
+	// calculate two estimations of the income tax
+	tax.IncomeTaxEstAbs = tax.Base * (1 - incTaxRate)
+	tax.IncomeTaxEst60 = (tax.IncomeTotal * (1 - expRate60) * (1 - incTaxRate))
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,
