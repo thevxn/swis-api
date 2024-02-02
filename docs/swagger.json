@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.11.4"
+        "version": "5.11.8"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -3118,6 +3118,14 @@
                 },
                 "expense_total": {
                     "description": "Sum of expenses.",
+                    "type": "number"
+                },
+                "income_tax_estimation_60": {
+                    "description": "Weighted estimation of the income tax, where 60% of income are meant as expenses.",
+                    "type": "number"
+                },
+                "income_tax_estimation_abs": {
+                    "description": "Absolute estimation of the income tax per year, from given totals.",
                     "type": "number"
                 },
                 "income_total": {

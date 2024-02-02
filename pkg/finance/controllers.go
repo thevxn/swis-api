@@ -351,8 +351,8 @@ func DoTaxesByOwner(ctx *gin.Context) {
 	tax.Base = tax.IncomeTotal - tax.ExpenseTotal
 
 	// calculate two estimations of the income tax
-	tax.IncomeTaxEstAbs = tax.Base * (1 - incTaxRate)
-	tax.IncomeTaxEst60 = (tax.IncomeTotal * (1 - expRate60) * (1 - incTaxRate))
+	tax.IncomeTaxEstAbs = tax.Base * incTaxRate
+	tax.IncomeTaxEst60 = tax.IncomeTotal * (1 - expRate60) * incTaxRate
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,

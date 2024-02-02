@@ -3126,6 +3126,14 @@ const docTemplate = `{
                     "description": "Sum of expenses.",
                     "type": "number"
                 },
+                "income_tax_estimation_60": {
+                    "description": "Weighted estimation of the income tax, where 60% of income are meant as expenses.",
+                    "type": "number"
+                },
+                "income_tax_estimation_abs": {
+                    "description": "Absolute estimation of the income tax per year, from given totals.",
+                    "type": "number"
+                },
                 "income_total": {
                     "description": "Sum of incomes.",
                     "type": "number"
@@ -3653,7 +3661,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.11.4",
+	Version:          "5.11.8",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

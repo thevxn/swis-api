@@ -367,6 +367,13 @@ definitions:
       expense_total:
         description: Sum of expenses.
         type: number
+      income_tax_estimation_60:
+        description: Weighted estimation of the income tax, where 60% of income are
+          meant as expenses.
+        type: number
+      income_tax_estimation_abs:
+        description: Absolute estimation of the income tax per year, from given totals.
+        type: number
       income_total:
         description: Sum of incomes.
         type: number
@@ -758,7 +765,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.11.4
+  version: 5.11.8
 paths:
   /alvax:
     get:
