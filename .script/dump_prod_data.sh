@@ -77,7 +77,7 @@ declare -a files=(
 	"/depots.json"
 	"/dish_sockets.json"
 
-	"/finance_accounts.json"
+	"/finance.json"
 	"/infra.json"
 	"/links.json"
 	"/news_sources.json"
