@@ -408,7 +408,7 @@ func PostDumpRestore(ctx *gin.Context) {
 	}
 
 	for key, item := range importFinance.Items {
-		CacheAccounts.Set(key, item)
+		CacheItems.Set(key, item)
 		counter[1]++
 	}
 
