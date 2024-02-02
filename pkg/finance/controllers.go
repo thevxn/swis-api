@@ -341,9 +341,9 @@ func DoTaxesByOwner(ctx *gin.Context) {
 				continue
 			}
 		}
-
-		tax.Base += tax.IncomeTotal - tax.ExpenseTotal
 	}
+		
+	tax.Base += tax.IncomeTotal - tax.ExpenseTotal
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":     http.StatusOK,
