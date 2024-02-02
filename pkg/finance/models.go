@@ -34,25 +34,25 @@ type Account struct {
 // ref: http://docs.savla.su/finance
 type Item struct {
 	// Item unique ID (e.g. datetime timestamp plus currency etc).
-	ID int `json:"id"`
+	ID string `json:"id" binding:"required"`
 
 	// Type defines whether the item is an income, or an expense.
-	Type string `json:"type"`
+	Type string `json:"type" binding:"required"`
 
 	// Payment amount in defined currency (often the account's currency).
-	Amount float64 `json:"amount"`
+	Amount float64 `json:"amount" binding:"reuqired"`
 
 	// Payment currency name (e.g. CZK, GBP, EUR, USD).
-	Currency string `json:"currency"`
+	Currency string `json:"currency" binding:"required"`
 
 	// Payment/item description.
 	Description string `json:"description"`
 
 	// PaymentDate is a datetime of the payment.
-	PaymentDate time.Time `json:"payment_date"`
+	PaymentDate time.Time `json:"payment_date" binding:"required"`
 
 	// Referencing finance account.
-	AccountID string `json:"account_id"`
+	AccountID string `json:"account_id" binding:"required"`
 
 	// BusinessID is a reference to 'business' package.
 	BusinessID string `json:"business_id"`
@@ -71,6 +71,6 @@ type Tax struct {
 	// Sum of expenses.
 	ExpenseTotal float64 `json:"expense_total"`
 
-	// Difference between incomes and expenses.
-	Summary float64 `json:"summary"`
+	// Difference between incomes and expenses. Base for income tax.
+	Base float64 `json:"base_sum"`
 }

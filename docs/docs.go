@@ -1036,14 +1036,14 @@ const docTemplate = `{
         },
         "/finance/accounts/owner/:key": {
             "get": {
-                "description": "get finance items by Owner key",
+                "description": "get finance accounts by Owner key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Get finance account by Owner key",
+                "summary": "Get finance accounts by Owner key",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1161,14 +1161,14 @@ const docTemplate = `{
         },
         "/finance/items": {
             "get": {
-                "description": "get finance list of items",
+                "description": "get account list of items",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Get all finance items",
+                "summary": "Get all account items",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1181,14 +1181,14 @@ const docTemplate = `{
         },
         "/finance/items/account/:key": {
             "get": {
-                "description": "get finance items by account ID",
+                "description": "get account items by account ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Get finance items by account ID",
+                "summary": "Get account items by account ID",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1201,14 +1201,14 @@ const docTemplate = `{
         },
         "/finance/items/{key}": {
             "get": {
-                "description": "get finance item by its key",
+                "description": "get account item by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Get finance item by key",
+                "summary": "Get account item by key",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1219,14 +1219,14 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "update finance item ba its key",
+                "description": "update account item ba its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Update finance item by its key",
+                "summary": "Update account item by its key",
                 "parameters": [
                     {
                         "description": "query params",
@@ -1248,14 +1248,14 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "add new finance item",
+                "description": "add new account item",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Add new finance item",
+                "summary": "Add new account item",
                 "parameters": [
                     {
                         "description": "query params",
@@ -1277,14 +1277,14 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "delete finance item by its ID",
+                "description": "delete account item by its ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Delete finance item by its ID",
+                "summary": "Delete account item by its ID",
                 "parameters": [
                     {
                         "type": "string",
@@ -1316,7 +1316,7 @@ const docTemplate = `{
                 "tags": [
                     "finance"
                 ],
-                "summary": "Upload finance iteme dump backup -- restores all finance accounts",
+                "summary": "Upload account iteme dump backup -- restores all finance accounts",
                 "responses": {}
             }
         },
@@ -3058,6 +3058,13 @@ const docTemplate = `{
         },
         "finance.Item": {
             "type": "object",
+            "required": [
+                "account_id",
+                "currency",
+                "id",
+                "payment_date",
+                "type"
+            ],
             "properties": {
                 "account_id": {
                     "description": "Referencing finance account.",
@@ -3081,7 +3088,7 @@ const docTemplate = `{
                 },
                 "id": {
                     "description": "Item unique ID (e.g. datetime timestamp plus currency etc).",
-                    "type": "integer"
+                    "type": "string"
                 },
                 "invoice_no": {
                     "description": "Invoice identification.",
@@ -3104,16 +3111,16 @@ const docTemplate = `{
         "finance.Tax": {
             "type": "object",
             "properties": {
+                "base_sum": {
+                    "description": "Difference between incomes and expenses. Base for income tax.",
+                    "type": "number"
+                },
                 "expense_total": {
                     "description": "Sum of expenses.",
                     "type": "number"
                 },
                 "income_total": {
                     "description": "Sum of incomes.",
-                    "type": "number"
-                },
-                "summary": {
-                    "description": "Difference between incomes and expenses.",
                     "type": "number"
                 }
             }
@@ -3639,7 +3646,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.11.0",
+	Version:          "5.11.1",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

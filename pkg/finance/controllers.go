@@ -79,13 +79,40 @@ func DeleteAccountByKey(ctx *gin.Context) {
 	return
 }
 
-// @Summary Get finance account by Owner key
-// @Description get finance items by Owner key
+// @Summary Get finance accounts by Owner key
+// @Description get finance accounts by Owner key
 // @Tags finance
 // @Produce json
 // @Success 200 {object} finance.Account
 // @Router /finance/accounts/owner/:key [get]
-func GetAccountByOwnerKey(ctx *gin.Context) {}
+func GetAccountByOwnerKey(ctx *gin.Context) {
+	owner := ctx.Param("key")
+	exportedAccounts := make(map[string]Account)
+	counter := 0
+
+	rawAccounts, _ := CacheAccounts.GetAll()
+
+	for _, rawAccount := range rawAccounts {
+		acc, ok := rawAccount.(Account)
+		if !ok {
+			continue
+		}
+
+		if acc.Owner == owner {
+			exportedAccounts[acc.ID] = acc
+			counter++
+		}
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"count":   counter,
+		"items":   exportedAccounts,
+		"message": "ok, dumping accounts by owner",
+		"owner":   owner,
+	})
+	return
+}
 
 /*
 
@@ -94,8 +121,8 @@ func GetAccountByOwnerKey(ctx *gin.Context) {}
 
 */
 
-// @Summary Get all finance items
-// @Description get finance list of items
+// @Summary Get all account items
+// @Description get account list of items
 // @Tags finance
 // @Produce json
 // @Success 200 {object} finance.Item
@@ -105,8 +132,8 @@ func GetItems(ctx *gin.Context) {
 	return
 }
 
-// @Summary Add new finance item
-// @Description add new finance item
+// @Summary Add new account item
+// @Description add new account item
 // @Tags finance
 // @Produce json
 // @Param request body finance.Item true "query params"
@@ -117,8 +144,8 @@ func PostNewItemByKey(ctx *gin.Context) {
 	return
 }
 
-// @Summary Get finance item by key
-// @Description get finance item by its key
+// @Summary Get account item by key
+// @Description get account item by its key
 // @Tags finance
 // @Produce json
 // @Success 200 {object} finance.Item
@@ -128,8 +155,8 @@ func GetItemByKey(ctx *gin.Context) {
 	return
 }
 
-// @Summary Update finance item by its key
-// @Description update finance item ba its key
+// @Summary Update account item by its key
+// @Description update account item ba its key
 // @Tags finance
 // @Produce json
 // @Param request body finance.Item.ID true "query params"
@@ -140,8 +167,8 @@ func UpdateItemByKey(ctx *gin.Context) {
 	return
 }
 
-// @Summary Delete finance item by its ID
-// @Description delete finance item by its ID
+// @Summary Delete account item by its ID
+// @Description delete account item by its ID
 // @Tags finance
 // @Produce json
 // @Param  id  path  string  true  "item ID"
@@ -152,13 +179,40 @@ func DeleteItemByKey(ctx *gin.Context) {
 	return
 }
 
-// @Summary Get finance items by account ID
-// @Description get finance items by account ID
+// @Summary Get account items by account ID
+// @Description get account items by account ID
 // @Tags finance
 // @Produce json
 // @Success 200 {object} finance.Item
 // @Router /finance/items/account/:key [get]
-func GetItemsByAccountID(ctx *gin.Context) {}
+func GetItemsByAccountID(ctx *gin.Context) {
+	acc := ctx.Param("key")
+	exportedItems := make(map[string]Item)
+	counter := 0
+
+	rawItems, _ := CacheItems.GetAll()
+
+	for _, rawItem := range rawItems {
+		item, ok := rawItem.(Item)
+		if !ok {
+			continue
+		}
+
+		if item.AccountID == acc {
+			exportedItems[item.ID] = item
+			counter++
+		}
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"count":   counter,
+		"items":   exportedItems,
+		"message": "ok, dumping items by accountID",
+		"account": acc,
+	})
+	return
+}
 
 /*
 
@@ -288,15 +342,16 @@ func DoTaxesByOwner(ctx *gin.Context) {
 			}
 		}
 
-		tax.Summary += tax.IncomeTotal - tax.ExpenseTotal
+		tax.Base += tax.IncomeTotal - tax.ExpenseTotal
 	}
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"message": "ok, sending year stats for the user's taxes",
-		"tax":     tax,
-		"key":     owner,
-		"year":    year,
+		"code":     http.StatusOK,
+		"message":  "ok, sending year stats for the user's taxes",
+		"tax":      tax,
+		"key":      owner,
+		"year":     year,
+		"currency": currency,
 	})
 	return
 }
@@ -324,7 +379,7 @@ func GetRootData(ctx *gin.Context) {
 	})
 }
 
-// @Summary Upload finance iteme dump backup -- restores all finance accounts
+// @Summary Upload account iteme dump backup -- restores all finance accounts
 // @Description upload accounts JSON dump
 // @Tags finance
 // @Accept json

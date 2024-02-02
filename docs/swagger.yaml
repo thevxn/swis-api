@@ -332,7 +332,7 @@ definitions:
         type: string
       id:
         description: Item unique ID (e.g. datetime timestamp plus currency etc).
-        type: integer
+        type: string
       invoice_no:
         description: Invoice identification.
         type: string
@@ -346,17 +346,23 @@ definitions:
       type:
         description: Type defines whether the item is an income, or an expense.
         type: string
+    required:
+    - account_id
+    - currency
+    - id
+    - payment_date
+    - type
     type: object
   finance.Tax:
     properties:
+      base_sum:
+        description: Difference between incomes and expenses. Base for income tax.
+        type: number
       expense_total:
         description: Sum of expenses.
         type: number
       income_total:
         description: Sum of incomes.
-        type: number
-      summary:
-        description: Difference between incomes and expenses.
         type: number
     type: object
   infra.Domain:
@@ -746,7 +752,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.11.0
+  version: 5.11.1
 paths:
   /alvax:
     get:
@@ -1484,7 +1490,7 @@ paths:
       - finance
   /finance/accounts/owner/:key:
     get:
-      description: get finance items by Owner key
+      description: get finance accounts by Owner key
       produces:
       - application/json
       responses:
@@ -1492,12 +1498,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/finance.Account'
-      summary: Get finance account by Owner key
+      summary: Get finance accounts by Owner key
       tags:
       - finance
   /finance/items:
     get:
-      description: get finance list of items
+      description: get account list of items
       produces:
       - application/json
       responses:
@@ -1505,12 +1511,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/finance.Item'
-      summary: Get all finance items
+      summary: Get all account items
       tags:
       - finance
   /finance/items/{key}:
     delete:
-      description: delete finance item by its ID
+      description: delete account item by its ID
       parameters:
       - description: item ID
         in: path
@@ -1524,11 +1530,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/finance.Item'
-      summary: Delete finance item by its ID
+      summary: Delete account item by its ID
       tags:
       - finance
     get:
-      description: get finance item by its key
+      description: get account item by its key
       produces:
       - application/json
       responses:
@@ -1536,11 +1542,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/finance.Item'
-      summary: Get finance item by key
+      summary: Get account item by key
       tags:
       - finance
     post:
-      description: add new finance item
+      description: add new account item
       parameters:
       - description: query params
         in: body
@@ -1555,11 +1561,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/finance.Item'
-      summary: Add new finance item
+      summary: Add new account item
       tags:
       - finance
     put:
-      description: update finance item ba its key
+      description: update account item ba its key
       parameters:
       - description: query params
         in: body
@@ -1574,12 +1580,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/finance.Item'
-      summary: Update finance item by its key
+      summary: Update account item by its key
       tags:
       - finance
   /finance/items/account/:key:
     get:
-      description: get finance items by account ID
+      description: get account items by account ID
       produces:
       - application/json
       responses:
@@ -1587,7 +1593,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/finance.Item'
-      summary: Get finance items by account ID
+      summary: Get account items by account ID
       tags:
       - finance
   /finance/restore:
@@ -1598,7 +1604,7 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Upload finance iteme dump backup -- restores all finance accounts
+      summary: Upload account iteme dump backup -- restores all finance accounts
       tags:
       - finance
   /finance/taxes/{owner}/{year}:
