@@ -174,7 +174,7 @@ func GetItemsByAccountID(ctx *gin.Context) {}
 // @Success 200 {object} finance.Tax
 // @Router /finance/taxes/{owner}/{year} [get]
 func DoTaxesByOwner(ctx *gin.Context) {
-	key := ctx.Param("owner")
+	owner := ctx.Param("owner")
 	tax := Tax{}
 	counter := 0
 
@@ -183,10 +183,9 @@ func DoTaxesByOwner(ctx *gin.Context) {
 	if err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
-			"count":   0,
 			"message": "invalid year on input",
 			"tax":     tax,
-			"key":     key,
+			"key":     owner,
 		})
 		return
 	}
@@ -204,13 +203,15 @@ func DoTaxesByOwner(ctx *gin.Context) {
 				"code":    http.StatusInternalServerError,
 				"message": "cannot assert type, backend data error",
 				"tax":     tax,
-				"key":     key,
+				"account": key,
+				"key":     owner,
 			})
 			return
 		}
 
-		if acc.Owner == key {
+		if acc.Owner == owner {
 			accounts[acc.ID] = acc
+			keys = append(keys, key)
 		}
 	}
 
@@ -223,7 +224,8 @@ func DoTaxesByOwner(ctx *gin.Context) {
 				"code":    http.StatusInternalServerError,
 				"message": "cannot assert type, backend data error",
 				"tax":     tax,
-				"key":     key,
+				"item":    key,
+				"key":     owner,
 			})
 			return
 		}
@@ -233,19 +235,20 @@ func DoTaxesByOwner(ctx *gin.Context) {
 		}
 	}
 
+	// TODO un-hardcode this
+	currency := "CZK"
+
 	// stop on zero accounts found
 	if len(accounts) == 0 {
 		ctx.IndentedJSON(http.StatusOK, gin.H{
-			"code":    http.StatusOK,
-			"message": "no account for such owner",
-			"tax":     tax,
-			"key":     key,
+			"code":     http.StatusOK,
+			"message":  "no account for such owner",
+			"tax":      tax,
+			"key":      owner,
+			"accounts": keys,
 		})
 		return
 	}
-
-	// TODO un-hardcode this
-	currency := "CZK"
 
 	// iterate over account keys --- accounts IDs
 	for _, id := range keys {
@@ -292,7 +295,7 @@ func DoTaxesByOwner(ctx *gin.Context) {
 		"code":    http.StatusOK,
 		"message": "ok, sending year stats for the user's taxes",
 		"tax":     tax,
-		"key":     key,
+		"key":     owner,
 		"year":    year,
 	})
 	return
@@ -308,7 +311,6 @@ func DoTaxesByOwner(ctx *gin.Context) {
 // @Description get whole finance package content
 // @Tags finance
 // @Produce  json
-// @Success 200 {object} finance.Root
 // @Router /finance [get]
 func GetRootData(ctx *gin.Context) {
 	accounts, _ := CacheAccounts.GetAll()

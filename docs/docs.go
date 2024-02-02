@@ -649,7 +649,27 @@ const docTemplate = `{
                 }
             }
         },
-        "/dish/incident/{key}": {
+        "/dish/incidents": {
+            "get": {
+                "description": "get incident list, incident array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get all incidents",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/incidents/{key}": {
             "get": {
                 "description": "get incident list by socket ID",
                 "produces": [
@@ -676,29 +696,7 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/dish/incidents": {
-            "get": {
-                "description": "get incident list, incident array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Get all incidents",
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/dish/incidents/{key}": {
+            },
             "put": {
                 "description": "update incident by its key",
                 "produces": [
@@ -1003,7 +1001,20 @@ const docTemplate = `{
                 }
             }
         },
-        "/finance/account": {
+        "/finance": {
+            "get": {
+                "description": "get whole finance package content",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Get whole finance package content",
+                "responses": {}
+            }
+        },
+        "/finance/accounts": {
             "get": {
                 "description": "get finance complete list",
                 "produces": [
@@ -1023,16 +1034,16 @@ const docTemplate = `{
                 }
             }
         },
-        "/finance/account/owner/{key}": {
+        "/finance/accounts/owner/:key": {
             "get": {
-                "description": "get finance account by :owner param",
+                "description": "get finance items by Owner key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Get finance account by its Owner",
+                "summary": "Get finance account by Owner key",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1043,16 +1054,34 @@ const docTemplate = `{
                 }
             }
         },
-        "/finance/account/{key}": {
-            "post": {
-                "description": "add new finance account",
+        "/finance/accounts/{key}": {
+            "get": {
+                "description": "get finance account by its key",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Add new finance account",
+                "summary": "Get finance account by its key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Account"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update finance account by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Update finance account by ID",
                 "parameters": [
                     {
                         "description": "query params",
@@ -1072,18 +1101,16 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/finance/accounts/{key}": {
-            "put": {
-                "description": "update finance account by ID",
+            },
+            "post": {
+                "description": "add new finance account",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "finance"
                 ],
-                "summary": "Update finance account by ID",
+                "summary": "Add new finance account",
                 "parameters": [
                     {
                         "description": "query params",
@@ -1132,6 +1159,151 @@ const docTemplate = `{
                 }
             }
         },
+        "/finance/items": {
+            "get": {
+                "description": "get finance list of items",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Get all finance items",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Item"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/items/account/:key": {
+            "get": {
+                "description": "get finance items by account ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Get finance items by account ID",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Item"
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/items/{key}": {
+            "get": {
+                "description": "get finance item by its key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Get finance item by key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Item"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update finance item ba its key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Update finance item by its key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/finance.Item"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Item"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new finance item",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Add new finance item",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/finance.Item"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Item"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete finance item by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Delete finance item by its ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "item ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Item"
+                        }
+                    }
+                }
+            }
+        },
         "/finance/restore": {
             "post": {
                 "description": "upload accounts JSON dump",
@@ -1144,8 +1316,37 @@ const docTemplate = `{
                 "tags": [
                     "finance"
                 ],
-                "summary": "Upload finance accounts dump backup -- restores all finance accounts",
+                "summary": "Upload finance iteme dump backup -- restores all finance accounts",
                 "responses": {}
+            }
+        },
+        "/finance/taxes/{owner}/{year}": {
+            "get": {
+                "description": "do taxes by the account Owner key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Do taxes by the account owner Owner key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "owner key",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/finance.Tax"
+                        }
+                    }
+                }
             }
         },
         "/infra": {
@@ -2837,13 +3038,6 @@ const docTemplate = `{
                     "description": "Account unique ID, snake_cased identifier.",
                     "type": "string"
                 },
-                "account_items": {
-                    "description": "Account items like (incoming/outcoming) payments.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/finance.Item"
-                    }
-                },
                 "account_number": {
                     "description": "Account number.",
                     "type": "string"
@@ -2865,16 +3059,20 @@ const docTemplate = `{
         "finance.Item": {
             "type": "object",
             "properties": {
+                "account_id": {
+                    "description": "Referencing finance account.",
+                    "type": "string"
+                },
                 "amount": {
                     "description": "Payment amount in defined currency (often the account's currency).",
                     "type": "number"
                 },
-                "billing_date": {
-                    "description": "Billing date of the payment.",
+                "business_id": {
+                    "description": "BusinessID is a reference to 'business' package.",
                     "type": "string"
                 },
                 "currency": {
-                    "description": "Payment currency name (e.g. CZK, GBP, EUR, USD)",
+                    "description": "Payment currency name (e.g. CZK, GBP, EUR, USD).",
                     "type": "string"
                 },
                 "description": {
@@ -2885,9 +3083,38 @@ const docTemplate = `{
                     "description": "Item unique ID (e.g. datetime timestamp plus currency etc).",
                     "type": "integer"
                 },
+                "invoice_no": {
+                    "description": "Invoice identification.",
+                    "type": "string"
+                },
                 "misc": {
                     "description": "Mescellaneous information about the payment (e.g. foreign currency and amount).",
                     "type": "string"
+                },
+                "payment_date": {
+                    "description": "PaymentDate is a datetime of the payment.",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Type defines whether the item is an income, or an expense.",
+                    "type": "string"
+                }
+            }
+        },
+        "finance.Tax": {
+            "type": "object",
+            "properties": {
+                "expense_total": {
+                    "description": "Sum of expenses.",
+                    "type": "number"
+                },
+                "income_total": {
+                    "description": "Sum of incomes.",
+                    "type": "number"
+                },
+                "summary": {
+                    "description": "Difference between incomes and expenses.",
+                    "type": "number"
                 }
             }
         },
@@ -3412,7 +3639,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.10.1",
+	Version:          "5.11.0",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

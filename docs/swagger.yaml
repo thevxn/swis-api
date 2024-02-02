@@ -298,11 +298,6 @@ definitions:
       account_id:
         description: Account unique ID, snake_cased identifier.
         type: string
-      account_items:
-        description: Account items like (incoming/outcoming) payments.
-        items:
-          $ref: '#/definitions/finance.Item'
-        type: array
       account_number:
         description: Account number.
         type: string
@@ -320,14 +315,17 @@ definitions:
     type: object
   finance.Item:
     properties:
+      account_id:
+        description: Referencing finance account.
+        type: string
       amount:
         description: Payment amount in defined currency (often the account's currency).
         type: number
-      billing_date:
-        description: Billing date of the payment.
+      business_id:
+        description: BusinessID is a reference to 'business' package.
         type: string
       currency:
-        description: Payment currency name (e.g. CZK, GBP, EUR, USD)
+        description: Payment currency name (e.g. CZK, GBP, EUR, USD).
         type: string
       description:
         description: Payment/item description.
@@ -335,10 +333,31 @@ definitions:
       id:
         description: Item unique ID (e.g. datetime timestamp plus currency etc).
         type: integer
+      invoice_no:
+        description: Invoice identification.
+        type: string
       misc:
         description: Mescellaneous information about the payment (e.g. foreign currency
           and amount).
         type: string
+      payment_date:
+        description: PaymentDate is a datetime of the payment.
+        type: string
+      type:
+        description: Type defines whether the item is an income, or an expense.
+        type: string
+    type: object
+  finance.Tax:
+    properties:
+      expense_total:
+        description: Sum of expenses.
+        type: number
+      income_total:
+        description: Sum of incomes.
+        type: number
+      summary:
+        description: Difference between incomes and expenses.
+        type: number
     type: object
   infra.Domain:
     properties:
@@ -727,7 +746,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.10.1
+  version: 5.11.0
 paths:
   /alvax:
     get:
@@ -1141,25 +1160,6 @@ paths:
       summary: Get whole dish package items
       tags:
       - dish
-  /dish/incident/{key}:
-    get:
-      description: get incident list by socket ID
-      parameters:
-      - description: socket ID
-        in: path
-        name: host
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      summary: Get incident list by socket ID
-      tags:
-      - dish
   /dish/incidents:
     get:
       description: get incident list, incident array
@@ -1190,6 +1190,24 @@ paths:
           schema:
             $ref: '#/definitions/dish.Incident'
       summary: Delete incidnet by its key
+      tags:
+      - dish
+    get:
+      description: get incident list by socket ID
+      parameters:
+      - description: socket ID
+        in: path
+        name: host
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get incident list by socket ID
       tags:
       - dish
     post:
@@ -1373,7 +1391,16 @@ paths:
       summary: Subscribe to dish SSE service.
       tags:
       - dish
-  /finance/account:
+  /finance:
+    get:
+      description: get whole finance package content
+      produces:
+      - application/json
+      responses: {}
+      summary: Get whole finance package content
+      tags:
+      - finance
+  /finance/accounts:
     get:
       description: get finance complete list
       produces:
@@ -1384,39 +1411,6 @@ paths:
           schema:
             $ref: '#/definitions/finance.Account'
       summary: Get all finance accounts
-      tags:
-      - finance
-  /finance/account/{key}:
-    post:
-      description: add new finance account
-      parameters:
-      - description: query params
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/finance.Account'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/finance.Account'
-      summary: Add new finance account
-      tags:
-      - finance
-  /finance/account/owner/{key}:
-    get:
-      description: get finance account by :owner param
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/finance.Account'
-      summary: Get finance account by its Owner
       tags:
       - finance
   /finance/accounts/{key}:
@@ -1438,6 +1432,37 @@ paths:
       summary: Delete finance account by ID
       tags:
       - finance
+    get:
+      description: get finance account by its key
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Get finance account by its key
+      tags:
+      - finance
+    post:
+      description: add new finance account
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/finance.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Add new finance account
+      tags:
+      - finance
     put:
       description: update finance account by ID
       parameters:
@@ -1457,6 +1482,114 @@ paths:
       summary: Update finance account by ID
       tags:
       - finance
+  /finance/accounts/owner/:key:
+    get:
+      description: get finance items by Owner key
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Account'
+      summary: Get finance account by Owner key
+      tags:
+      - finance
+  /finance/items:
+    get:
+      description: get finance list of items
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Item'
+      summary: Get all finance items
+      tags:
+      - finance
+  /finance/items/{key}:
+    delete:
+      description: delete finance item by its ID
+      parameters:
+      - description: item ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Item'
+      summary: Delete finance item by its ID
+      tags:
+      - finance
+    get:
+      description: get finance item by its key
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Item'
+      summary: Get finance item by key
+      tags:
+      - finance
+    post:
+      description: add new finance item
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/finance.Item'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Item'
+      summary: Add new finance item
+      tags:
+      - finance
+    put:
+      description: update finance item ba its key
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/finance.Item'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Item'
+      summary: Update finance item by its key
+      tags:
+      - finance
+  /finance/items/account/:key:
+    get:
+      description: get finance items by account ID
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Item'
+      summary: Get finance items by account ID
+      tags:
+      - finance
   /finance/restore:
     post:
       consumes:
@@ -1465,7 +1598,26 @@ paths:
       produces:
       - application/json
       responses: {}
-      summary: Upload finance accounts dump backup -- restores all finance accounts
+      summary: Upload finance iteme dump backup -- restores all finance accounts
+      tags:
+      - finance
+  /finance/taxes/{owner}/{year}:
+    get:
+      description: do taxes by the account Owner key
+      parameters:
+      - description: owner key
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/finance.Tax'
+      summary: Do taxes by the account owner Owner key
       tags:
       - finance
   /infra:
