@@ -27,7 +27,7 @@ FACTS_FACTER=(
 	"os.family"
 	"os.selinux.enabled"
 
-	"processors.cores"
+	"processors.count"
 
 	"system_uptime.seconds"
 	"timezone"
@@ -50,7 +50,7 @@ FACTS_SWAPI=(
 	"os_family"
 	"os_selinux_enabled"
 
-	"proc_cores"
+	"proc_count"
 
 	"system_uptime_sec"
 	"timezone"
