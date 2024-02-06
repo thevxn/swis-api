@@ -3,6 +3,9 @@ name: swis-api CI/CD pipeline
 on:
   push:
     branches: [ master ]
+    tags:
+    - 'v5.*'
+
 
 jobs:
   build:
