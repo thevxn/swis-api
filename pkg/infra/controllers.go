@@ -127,6 +127,76 @@ func GetHostByKey(ctx *gin.Context) {
 	return
 }
 
+// @Summary Upload current host configuration
+// @Description update host's configuration
+// @Tags infra
+// @Produce json
+// @Param request body infra.Configuration true "host's configuration"
+// @Success 200 {object} infra.Host
+// @Router /infra/hosts/{key}/config [post]
+func PostHostConfigByKey(ctx *gin.Context) {
+	key := ctx.Param("key")
+	rawHost, ok := CacheHosts.Get(key)
+	config := Configuration{}
+
+	// look up the host
+	if !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "such host not found",
+			"package": pkgName,
+			"key":     key,
+		})
+		return
+	}
+
+	// assert type Host to the fetched raw data
+	host, ok := rawHost.(Host)
+	if !ok {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"key":     key,
+			"message": "cannot assert data type, database internal error",
+			"package": pkgName,
+		})
+		return
+	}
+
+	// load the payload into configuration struct, must bind
+	if err := ctx.BindJSON(&config); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"message": "cannot parse input JSON stream",
+			"package": pkgName,
+			"key":     key,
+		})
+		return
+	}
+
+	// overwright the configuration
+	host.Configuration = config
+
+	if saved := CacheHosts.Set(key, host); !saved {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"key":     key,
+			"message": "item couldn't be saved to database",
+			"package": pkgName,
+		})
+		return
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"item":    host,
+		"key":     key,
+		"message": "host's configuration updated",
+		"packege": pkgName,
+	})
+	return
+}
+
 // @Summary Upload current host facts
 // @Description update host's facts
 // @Tags infra
@@ -194,8 +264,6 @@ func PostHostFactsByKey(ctx *gin.Context) {
 		"message": "host's facts updated",
 		"packege": pkgName,
 	})
-	return
-
 	return
 }
 

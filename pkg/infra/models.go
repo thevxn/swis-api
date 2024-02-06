@@ -77,6 +77,9 @@ type Host struct {
 	// Wireguarded bool indicates that the host is part of the core network.
 	Wireguarded bool `json:"wireguarded"`
 
+	// Configuration system variables.
+	Configuration Configuration `json:"configuration"`
+
 	// Exported system facts from facter.
 	Facts Facts `json:"facts"`
 
@@ -114,6 +117,64 @@ type Facts struct {
 
 	Timestamp int64  `json:"timestamp"`
 	Timezone  string `json:"timezone"`
+}
+
+// Configuration suits as a matrix for Ansible variables (as host_vars).
+type Configuration struct {
+	// ansible root vars
+	AnsibleHost string `json:"ansible_host" yaml:"ansible_host"`
+	AnsibleUser string `json:"ansible_user" yaml:"ansible_user"`
+	Become      bool   `json:"ansible_become" yaml:"become" default:true`
+	BecomeUser  string `json:"ansible_become_user" yaml:"become_user"`
+
+	// base role
+	// https://www.patorjk.com/software/taag/#p=display&f=ANSI%20Regular&t=stokrle
+	BaseMotd        string `json:"base_motd" yaml:"ascii_art_motd" default:false`
+	BaseDescription string `json:"base_description" yaml:"host_description"`
+
+	// container role
+	ContainerInstallk8sControl bool `json:"install_k8s_control_node" yaml:"install_k8s_controll_node" default:false`
+
+	// dialin-nas role
+	DialInPresent   bool `json:"dialin_present" yaml:"dialin_present" defualt:false`
+	AsteriskPresent bool `json:"dialin_asterisk_present" yaml:"asterisk_present" default:false`
+
+	// dns role
+	DNSServerPresent bool   `json:"dns_server_present" yaml:"dns_server_present" default:false`
+	DMSServerType    string `json:"dns_server_type" yaml:"dns_server_type"`
+
+	// ghar role
+	RunnerPresent      bool   `json:"runner_present" yaml:"runner_present" default:false`
+	RunnerAction       string `json:"runner_action" yaml:"runner_action"`
+	RunnerVersion      string `json:"runner_version" yaml:"runner_version"`
+	RunnerUser         string `json:"runner_user" yaml:"runner_user"`
+	RunnerGroup        string `json:"runner_group" yaml:"runner_group"`
+	RunnerConfigName   string `json:"runner_config_name" yaml:"runner_config_name"`
+	RunnerConfigLabels string `json:"runner_config_labels" yaml:"runner_config_labels"`
+	RunnerConfigToken  string `json:"runner_config_token" yaml:"runner_config_token"`
+
+	// hyp vars
+	IsHypervisor bool `json:"is_hypervisor" yaml:"is_hypervisor"`
+
+	// kpu role
+	KPUPresent bool `json:"kpu_present" yaml:"kpu_present" default:false`
+
+	// net role
+	NetWireguarded bool `json:"is_wireguarded" yaml:"is_wireguarded"`
+
+	// postfix role
+	IsEdgeRelay bool `json:"is_edge_relay" yaml:"is_edge_relay"`
+
+	// proxy role
+	IsBehindCf             bool   `json:"is_behind_cloudflare" yaml:"is_behind_cloudflare" default:false`
+	NginxPresent           bool   `json:"nginx_present" yaml:"ngnix_present" default:false`
+	NginxUseGeoIP          bool   `json:"use_geoip" yaml:"use_geoip" default:false`
+	TraefikPresent         bool   `json:"traefik_present" yaml:"traefik_present" default:true`
+	TraefikWebuiURL        string `json:"traefik_webui_url" yaml:"taefik_webui_url"`
+	TraefikWebuiPort       int    `json:"traefik_webui_external_port" yaml:"traefik_webui_external_port"`
+	TraefikDockerNet       string `json:"traefik_docker_network_name" yaml:"traefik_docker_network_name"`
+	TraefikDockerTag       string `json:"traefik_docker_tag_version" yaml:"traefik_docker_tag_version"`
+	TraefikDockarContainer string `json:"traefik_docker_container_name" yaml:"traefik_docker_container_name"`
 }
 
 type Network struct {

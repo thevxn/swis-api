@@ -28,6 +28,8 @@ func Routes(g *gin.RouterGroup) {
 		GetHosts)
 	g.GET("/hosts/:key",
 		GetHostByKey)
+	g.POST("/hosts/:key/config",
+		PostHostConfigByKey)
 	g.POST("/hosts/:key/facts",
 		PostHostFactsByKey)
 	g.POST("/hosts/:key",
