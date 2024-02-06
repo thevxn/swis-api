@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.11.8"
+        "version": "5.11.10"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -1625,12 +1625,12 @@
                 "summary": "Upload current host facts",
                 "parameters": [
                     {
-                        "description": "query params",
+                        "description": "host's facts",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/infra.Facts"
                         }
                     }
                 ],

@@ -765,7 +765,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.11.8
+  version: 5.11.10
 paths:
   /alvax:
     get:
@@ -1820,12 +1820,12 @@ paths:
     post:
       description: update host's facts
       parameters:
-      - description: query params
+      - description: host's facts
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/infra.Host'
+          $ref: '#/definitions/infra.Facts'
       produces:
       - application/json
       responses:

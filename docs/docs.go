@@ -1631,12 +1631,12 @@ const docTemplate = `{
                 "summary": "Upload current host facts",
                 "parameters": [
                     {
-                        "description": "query params",
+                        "description": "host's facts",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/infra.Facts"
                         }
                     }
                 ],
@@ -3661,7 +3661,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.11.8",
+	Version:          "5.11.10",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

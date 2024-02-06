@@ -131,7 +131,7 @@ func GetHostByKey(ctx *gin.Context) {
 // @Description update host's facts
 // @Tags infra
 // @Produce json
-// @Param request body infra.Host true "query params"
+// @Param request body infra.Facts true "host's facts"
 // @Success 200 {object} infra.Host
 // @Router /infra/hosts/{key}/facts [post]
 func PostHostFactsByKey(ctx *gin.Context) {
