@@ -108,7 +108,7 @@ type Facts struct {
 	OSFamily  string `json:"os_family"`
 	OSSELinux bool   `json:"os_selinux_enabled"`
 
-	ProcCores int `json:"proc_cores"`
+	ProcCount int `json:"proc_count"`
 
 	SystemUptimeSec int64 `json:"system_uptime_sec"`
 
