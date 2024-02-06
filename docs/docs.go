@@ -1619,6 +1619,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/infra/hosts/{key}/config": {
+            "post": {
+                "description": "update host's configuration",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Upload current host configuration",
+                "parameters": [
+                    {
+                        "description": "host's configuration",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/infra.Configuration"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                }
+            }
+        },
         "/infra/hosts/{key}/facts": {
             "post": {
                 "description": "update host's facts",
@@ -3140,6 +3171,158 @@ const docTemplate = `{
                 }
             }
         },
+        "infra.Configuration": {
+            "type": "object",
+            "properties": {
+                "ansible_become": {
+                    "type": "boolean"
+                },
+                "ansible_become_user": {
+                    "type": "string"
+                },
+                "ansible_host": {
+                    "description": "ansible root vars",
+                    "type": "string"
+                },
+                "ansible_user": {
+                    "type": "string"
+                },
+                "base_description": {
+                    "type": "string"
+                },
+                "base_motd": {
+                    "description": "base role\nhttps://www.patorjk.com/software/taag/#p=display\u0026f=ANSI%20Regular\u0026t=stokrle",
+                    "type": "string"
+                },
+                "dialin_asterisk_present": {
+                    "type": "boolean"
+                },
+                "dialin_present": {
+                    "description": "dialin-nas role",
+                    "type": "boolean"
+                },
+                "dns_server_present": {
+                    "description": "dns role",
+                    "type": "boolean"
+                },
+                "dns_server_type": {
+                    "type": "string"
+                },
+                "grafana_container_name": {
+                    "type": "string"
+                },
+                "grafana_docker_volume_name": {
+                    "type": "string"
+                },
+                "grafana_present": {
+                    "type": "boolean"
+                },
+                "grafana_webui_url": {
+                    "type": "string"
+                },
+                "install_k8s_control_node": {
+                    "description": "container role",
+                    "type": "boolean"
+                },
+                "is_behind_cloudflare": {
+                    "description": "proxy role",
+                    "type": "boolean"
+                },
+                "is_edge_relay": {
+                    "description": "postfix role",
+                    "type": "boolean"
+                },
+                "is_hypervisor": {
+                    "description": "hyp vars",
+                    "type": "boolean"
+                },
+                "is_relay": {
+                    "type": "boolean"
+                },
+                "is_wireguarded": {
+                    "description": "net role",
+                    "type": "boolean"
+                },
+                "kpu_present": {
+                    "description": "kpu role",
+                    "type": "boolean"
+                },
+                "loki_image_tag": {
+                    "type": "string"
+                },
+                "loki_present": {
+                    "description": "metrics role",
+                    "type": "boolean"
+                },
+                "nginx_present": {
+                    "type": "boolean"
+                },
+                "prmetheus_container_name": {
+                    "type": "string"
+                },
+                "prometheus_config_dir": {
+                    "type": "string"
+                },
+                "prometheus_docker_volume_name": {
+                    "type": "string"
+                },
+                "prometheus_image_tag": {
+                    "type": "string"
+                },
+                "prometheus_present": {
+                    "type": "boolean"
+                },
+                "prometheus_webui_url": {
+                    "type": "string"
+                },
+                "runner_action": {
+                    "type": "string"
+                },
+                "runner_config_labels": {
+                    "type": "string"
+                },
+                "runner_config_name": {
+                    "type": "string"
+                },
+                "runner_config_token": {
+                    "type": "string"
+                },
+                "runner_group": {
+                    "type": "string"
+                },
+                "runner_present": {
+                    "description": "ghar role",
+                    "type": "boolean"
+                },
+                "runner_user": {
+                    "type": "string"
+                },
+                "runner_version": {
+                    "type": "string"
+                },
+                "traefik_docker_container_name": {
+                    "type": "string"
+                },
+                "traefik_docker_network_name": {
+                    "type": "string"
+                },
+                "traefik_docker_tag_version": {
+                    "type": "string"
+                },
+                "traefik_present": {
+                    "type": "boolean"
+                },
+                "traefik_webui_external_port": {
+                    "type": "integer"
+                },
+                "traefik_webui_url": {
+                    "type": "string"
+                },
+                "use_geoip": {
+                    "type": "boolean"
+                }
+            }
+        },
         "infra.Domain": {
             "type": "object",
             "properties": {
@@ -3212,7 +3395,7 @@ const docTemplate = `{
                 "os_selinux_enabled": {
                     "type": "boolean"
                 },
-                "proc_cores": {
+                "proc_count": {
                     "type": "integer"
                 },
                 "system_uptime_sec": {
@@ -3240,6 +3423,14 @@ const docTemplate = `{
                     "items": {
                         "type": "string"
                     }
+                },
+                "configuration": {
+                    "description": "Configuration system variables.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/infra.Configuration"
+                        }
+                    ]
                 },
                 "datacentre": {
                     "description": "Datacentre is the physical locality of such machine.",
@@ -3661,7 +3852,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.11.10",
+	Version:          "5.11.13",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

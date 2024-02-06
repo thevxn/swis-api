@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.11.12
+// @version 5.11.13
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 

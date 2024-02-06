@@ -159,11 +159,26 @@ type Configuration struct {
 	// kpu role
 	KPUPresent bool `json:"kpu_present" yaml:"kpu_present" default:false`
 
+	// metrics role
+	LokiPresent bool `json:"loki_present" yaml:"loki_present" default:false`
+	LokiDockerTag string `json:"loki_image_tag" yaml:"loki_image_tag"`
+	GrafanaPresent bool `json:"grafana_present" yaml:"grafana_present" default:false`
+	GrafanaWebuiURL string `json:"grafana_webui_url" yaml:"grafana_webui_url"`
+	GrafanaDockerVolume string `json:"grafana_docker_volume_name" yaml:"grafana_docker_volume_name"`
+	GrafanaContainer string `json:"grafana_container_name" yaml:"grafana_container_name"`
+	PrometheusPresent bool `json:"prometheus_present" yaml:"prometheus_present" default:false`
+	PrometheusWebuiURL string `json:"prometheus_webui_url" yaml:"prometheus_webui_url"`
+	PrometheusDockerVolume string `json:"prometheus_docker_volume_name" yaml:"prometheus_docker_volume_name"`
+	PrometheusContainer string `json:"prmetheus_container_name" yaml:"prometheus_container_name"`
+	PrometheusDockerTag string `json:"prometheus_image_tag" yaml:"prometheus_image_tag"`
+	PrometheusConfigDir string `json:"prometheus_config_dir" yaml:"prometheus_config_dir"`
+
 	// net role
 	NetWireguarded bool `json:"is_wireguarded" yaml:"is_wireguarded"`
 
 	// postfix role
-	IsEdgeRelay bool `json:"is_edge_relay" yaml:"is_edge_relay"`
+	IsEdgeRelay bool `json:"is_edge_relay" yaml:"is_edge_relay" default:false`
+	IsRelay bool `json:"is_relay" yaml:"is_relay" default:false`
 
 	// proxy role
 	IsBehindCf             bool   `json:"is_behind_cloudflare" yaml:"is_behind_cloudflare" default:false`
