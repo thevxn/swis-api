@@ -3197,15 +3197,42 @@ const docTemplate = `{
                 "become_user": {
                     "type": "string"
                 },
+                "dc": {
+                    "type": "string"
+                },
                 "dialin_present": {
                     "description": "dialin-nas role",
                     "type": "boolean"
+                },
+                "disk1": {
+                    "type": "string"
+                },
+                "disk2": {
+                    "type": "string"
+                },
+                "disk3": {
+                    "type": "string"
+                },
+                "disk4": {
+                    "type": "string"
+                },
+                "dns_master_ip": {
+                    "type": "string"
                 },
                 "dns_server_present": {
                     "description": "dns role",
                     "type": "boolean"
                 },
                 "dns_server_type": {
+                    "type": "string"
+                },
+                "dns_slave_ip": {
+                    "type": "string"
+                },
+                "domain": {
+                    "type": "string"
+                },
+                "golang_version": {
                     "type": "string"
                 },
                 "grafana_container_name": {
@@ -3225,6 +3252,9 @@ const docTemplate = `{
                 },
                 "install_k8s_control_node": {
                     "description": "container role",
+                    "type": "boolean"
+                },
+                "install_k8s_worker_node": {
                     "type": "boolean"
                 },
                 "is_behind_cloudflare": {
@@ -3257,8 +3287,29 @@ const docTemplate = `{
                     "description": "metrics role",
                     "type": "boolean"
                 },
+                "nameserver_primary": {
+                    "type": "string"
+                },
+                "nameserver_secondary": {
+                    "type": "string"
+                },
                 "nginx_present": {
                     "type": "boolean"
+                },
+                "private_cidr": {
+                    "type": "integer"
+                },
+                "private_gateway": {
+                    "type": "string"
+                },
+                "private_ip": {
+                    "type": "string"
+                },
+                "private_netmask": {
+                    "type": "string"
+                },
+                "private_network": {
+                    "type": "string"
                 },
                 "prometheus_config_dir": {
                     "type": "string"
@@ -3277,6 +3328,17 @@ const docTemplate = `{
                 },
                 "prometheus_webui_url": {
                     "type": "string"
+                },
+                "public_ip": {
+                    "type": "string"
+                },
+                "raid": {
+                    "type": "boolean"
+                },
+                "remote_host_ip_address": {
+                    "description": "backup role",
+                    "type": "string",
+                    "default": "10.4.5.130"
                 },
                 "runner_action": {
                     "type": "string"
@@ -3302,6 +3364,9 @@ const docTemplate = `{
                 },
                 "runner_version": {
                     "type": "string"
+                },
+                "setup_ipsec": {
+                    "type": "boolean"
                 },
                 "traefik_docker_container_name": {
                     "type": "string"
@@ -3427,6 +3492,12 @@ const docTemplate = `{
                         "type": "string"
                     }
                 },
+                "children_configs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/infra.VMInstallConfig"
+                    }
+                },
                 "configuration": {
                     "description": "Configuration system variables.",
                     "allOf": [
@@ -3542,6 +3613,95 @@ const docTemplate = `{
                 },
                 "network_name": {
                     "description": "Network name, verbose ID.",
+                    "type": "string"
+                }
+            }
+        },
+        "infra.VMInstallConfig": {
+            "type": "object",
+            "properties": {
+                "autostart": {
+                    "type": "boolean"
+                },
+                "baseos_repo": {
+                    "type": "string"
+                },
+                "console_alias": {
+                    "type": "string",
+                    "default": "serial0"
+                },
+                "console_type": {
+                    "type": "string",
+                    "default": "pty"
+                },
+                "disk_alias": {
+                    "type": "string"
+                },
+                "disk_bus": {
+                    "type": "string",
+                    "default": "virtio"
+                },
+                "disk_source": {
+                    "type": "string"
+                },
+                "disk_type": {
+                    "type": "string",
+                    "default": "raw"
+                },
+                "hostname_fqdn": {
+                    "type": "string"
+                },
+                "ipv4_address": {
+                    "type": "string"
+                },
+                "ipv4_dns": {
+                    "type": "string"
+                },
+                "ipv4_gateway": {
+                    "type": "string"
+                },
+                "ipv4_netmask": {
+                    "type": "string"
+                },
+                "lock_root": {
+                    "type": "boolean"
+                },
+                "memory_size": {
+                    "type": "integer"
+                },
+                "memory_unit": {
+                    "type": "string",
+                    "default": "MB"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "network_name": {
+                    "type": "string"
+                },
+                "os_type": {
+                    "type": "string",
+                    "default": "linux"
+                },
+                "os_veriant": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string",
+                    "default": "absent"
+                },
+                "timezone": {
+                    "type": "string",
+                    "default": "Europe/Vienna"
+                },
+                "vcpu_count": {
+                    "type": "integer"
+                },
+                "virt_type": {
+                    "type": "string",
+                    "default": "kvm"
+                },
+                "xml_filename": {
                     "type": "string"
                 }
             }
@@ -3855,7 +4015,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.11.17",
+	Version:          "5.11.19",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

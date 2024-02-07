@@ -398,13 +398,31 @@ definitions:
         type: boolean
       become_user:
         type: string
+      dc:
+        type: string
       dialin_present:
         description: dialin-nas role
         type: boolean
+      disk1:
+        type: string
+      disk2:
+        type: string
+      disk3:
+        type: string
+      disk4:
+        type: string
+      dns_master_ip:
+        type: string
       dns_server_present:
         description: dns role
         type: boolean
       dns_server_type:
+        type: string
+      dns_slave_ip:
+        type: string
+      domain:
+        type: string
+      golang_version:
         type: string
       grafana_container_name:
         type: string
@@ -418,6 +436,8 @@ definitions:
         type: string
       install_k8s_control_node:
         description: container role
+        type: boolean
+      install_k8s_worker_node:
         type: boolean
       is_behind_cloudflare:
         description: proxy role
@@ -441,8 +461,22 @@ definitions:
       loki_present:
         description: metrics role
         type: boolean
+      nameserver_primary:
+        type: string
+      nameserver_secondary:
+        type: string
       nginx_present:
         type: boolean
+      private_cidr:
+        type: integer
+      private_gateway:
+        type: string
+      private_ip:
+        type: string
+      private_netmask:
+        type: string
+      private_network:
+        type: string
       prometheus_config_dir:
         type: string
       prometheus_container_name:
@@ -454,6 +488,14 @@ definitions:
       prometheus_present:
         type: boolean
       prometheus_webui_url:
+        type: string
+      public_ip:
+        type: string
+      raid:
+        type: boolean
+      remote_host_ip_address:
+        default: 10.4.5.130
+        description: backup role
         type: string
       runner_action:
         type: string
@@ -472,6 +514,8 @@ definitions:
         type: string
       runner_version:
         type: string
+      setup_ipsec:
+        type: boolean
       traefik_docker_container_name:
         type: string
       traefik_docker_network_name:
@@ -553,6 +597,10 @@ definitions:
           linking.
         items:
           type: string
+        type: array
+      children_configs:
+        items:
+          $ref: '#/definitions/infra.VMInstallConfig'
         type: array
       configuration:
         allOf:
@@ -641,6 +689,68 @@ definitions:
         type: string
       network_name:
         description: Network name, verbose ID.
+        type: string
+    type: object
+  infra.VMInstallConfig:
+    properties:
+      autostart:
+        type: boolean
+      baseos_repo:
+        type: string
+      console_alias:
+        default: serial0
+        type: string
+      console_type:
+        default: pty
+        type: string
+      disk_alias:
+        type: string
+      disk_bus:
+        default: virtio
+        type: string
+      disk_source:
+        type: string
+      disk_type:
+        default: raw
+        type: string
+      hostname_fqdn:
+        type: string
+      ipv4_address:
+        type: string
+      ipv4_dns:
+        type: string
+      ipv4_gateway:
+        type: string
+      ipv4_netmask:
+        type: string
+      lock_root:
+        type: boolean
+      memory_size:
+        type: integer
+      memory_unit:
+        default: MB
+        type: string
+      name:
+        type: string
+      network_name:
+        type: string
+      os_type:
+        default: linux
+        type: string
+      os_veriant:
+        type: string
+      state:
+        default: absent
+        type: string
+      timezone:
+        default: Europe/Vienna
+        type: string
+      vcpu_count:
+        type: integer
+      virt_type:
+        default: kvm
+        type: string
+      xml_filename:
         type: string
     type: object
   links.Link:
@@ -878,7 +988,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.11.17
+  version: 5.11.19
 paths:
   /alvax:
     get:
