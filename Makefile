@@ -116,7 +116,7 @@ e2e:
 	@postman collection run ${POSTMAN_COLLECTION_FILE} --timeout-request 5000 --env-var "token=${ROOT_TOKEN_TEST}" --env-var "baseUrl=${HOSTNAME}:${DOCKER_TEST_PORT}"; \
 		docker stop ${DOCKER_TEST_CONTAINER_NAME}
 
-APP_URLS_TRAEFIK?=\`${APP_URL}\`
+APP_URLS_TRAEFIK?=`${APP_URL}`
 .PHONY: run
 run:
 	@echo -e "\n${YELLOW} Starting project (docker compose up)... ${RESET}\n"
