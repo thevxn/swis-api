@@ -187,7 +187,7 @@ type Configuration struct {
 	LokiPresent            bool   `json:"loki_present" yaml:"loki_present" default:false`
 	LokiDockerTag          string `json:"loki_image_tag" yaml:"loki_image_tag"`
 	GrafanaPresent         bool   `json:"grafana_present" yaml:"grafana_present" default:false`
-	GrafanaDockerTag       string `json:"grafana_docker_tag_version" yaml:""`
+	GrafanaDockerTag       string `json:"grafana_docker_tag_version" yaml:"grafana_docker_tag_version"`
 	GrafanaWebuiURL        string `json:"grafana_webui_url" yaml:"grafana_webui_url"`
 	GrafanaDockerVolume    string `json:"grafana_docker_volume_name" yaml:"grafana_docker_volume_name"`
 	GrafanaContainer       string `json:"grafana_container_name" yaml:"grafana_container_name"`
@@ -219,8 +219,8 @@ type Configuration struct {
 
 // VMInstallConfig is a configuration sequence for a virtual machine installation. This configuration is appended per hypervisor's capacity.
 type VMInstallConfig struct {
-	Name         string `json:"name", yaml:"name"`
-	HostnameFQDN string `json:"hostname_fqdn", yaml:"hostname"`
+	Name         string `json:"name" yaml:"name"`
+	HostnameFQDN string `json:"hostname_fqdn" yaml:"hostname"`
 	State        string `json:"state" yaml:"state" default:"absent"`
 	VirtType     string `json:"virt_type" yaml:"virt_type" default:"kvm"`
 	XMLFileName  string `json:"xml_filename" yaml:"xml"`
