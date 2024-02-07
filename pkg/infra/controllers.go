@@ -197,6 +197,154 @@ func PostHostConfigByKey(ctx *gin.Context) {
 	return
 }
 
+// @Summary Add/update a VM install configuration
+// @Description add/update a VM install configuration
+// @Tags infra
+// @Produce json
+// @Param request body infra.VMInstallConfig true "host's VMIC"
+// @Success 200 {object} infra.Host
+// @Router /infra/hosts/{key}/vmic [post]
+func PostHostVMICByKey(ctx *gin.Context) {
+	key := ctx.Param("key")
+	rawHost, ok := CacheHosts.Get(key)
+	config := VMInstallConfig{}
+
+	// look up the host
+	if !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "such host not found",
+			"package": pkgName,
+			"key":     key,
+		})
+		return
+	}
+
+	// assert type Host to the fetched raw data
+	host, ok := rawHost.(Host)
+	if !ok {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"key":     key,
+			"message": "cannot assert data type, database internal error",
+			"package": pkgName,
+		})
+		return
+	}
+
+	// load the payload into VMIC struct, must bind
+	if err := ctx.BindJSON(&config); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"message": "cannot parse input JSON stream",
+			"package": pkgName,
+			"key":     key,
+		})
+		return
+	}
+
+	// loop over children, add/overwrite their install configs
+	for idx, name := range host.Children {
+		if config.LocalName == name {
+			configs := host.ChildrenConfigs
+			if len(configs) == 0 {
+				configs = append(configs, config)
+			} else {
+				configs[idx] = config
+			}
+			host.ChildrenConfigs = configs
+			break
+		}
+	}
+
+	// save updated Host struct to backend
+	if saved := CacheHosts.Set(key, host); !saved {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"key":     key,
+			"message": "item couldn't be saved to database",
+			"package": pkgName,
+		})
+		return
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"item":    host,
+		"key":     key,
+		"message": "host's VMIC updated",
+		"vm":      config.Name,
+		"packege": pkgName,
+	})
+	return
+}
+
+// @Summary Delete a VM install configuration
+// @Description delete a VM install configuration
+// @Tags infra
+// @Produce json
+// @Success 200 {object} infra.Host
+// @Router /infra/hosts/{key}/vmic/{vm} [delete]
+func DeleteHostVMICByKeyAndVM(ctx *gin.Context) {
+	key := ctx.Param("key")
+	vm := ctx.Param("vm")
+	rawHost, ok := CacheHosts.Get(key)
+
+	// look up the host
+	if !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "such host not found",
+			"package": pkgName,
+			"key":     key,
+		})
+		return
+	}
+
+	// assert type Host to the fetched raw data
+	host, ok := rawHost.(Host)
+	if !ok {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"key":     key,
+			"message": "cannot assert data type, database internal error",
+			"package": pkgName,
+		})
+		return
+	}
+
+	// loop over children, search for key with requested VM name
+	for idx, name := range host.Children {
+		if vm == name {
+			configs := host.ChildrenConfigs
+			configs[idx] = VMInstallConfig{}
+			host.ChildrenConfigs = configs
+		}
+	}
+
+	// save the updated Host struct to backend
+	if saved := CacheHosts.Set(key, host); !saved {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"key":     key,
+			"message": "item couldn't be saved to database",
+			"package": pkgName,
+		})
+		return
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"item":    host,
+		"key":     key,
+		"message": "host's VMIC deleted",
+		"vm":      vm,
+		"packege": pkgName,
+	})
+	return
+}
+
 // @Summary Upload current host facts
 // @Description update host's facts
 // @Tags infra

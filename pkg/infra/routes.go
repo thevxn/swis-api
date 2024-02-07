@@ -32,6 +32,10 @@ func Routes(g *gin.RouterGroup) {
 		PostHostConfigByKey)
 	g.POST("/hosts/:key/facts",
 		PostHostFactsByKey)
+	g.POST("/hosts/:key/vmic",
+		PostHostVMICByKey)
+	g.DELETE("/hosts/:key/vmic/:vm",
+		DeleteHostVMICByKeyAndVM)
 	g.POST("/hosts/:key",
 		PostNewHostByKey)
 	g.PUT("/hosts/:key",

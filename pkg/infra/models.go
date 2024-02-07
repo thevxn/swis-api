@@ -220,6 +220,7 @@ type Configuration struct {
 // VMInstallConfig is a configuration sequence for a virtual machine installation. This configuration is appended per hypervisor's capacity.
 type VMInstallConfig struct {
 	Name         string `json:"name" yaml:"name"`
+	LocalName    string `json:"locname" yaml:"locname"`
 	HostnameFQDN string `json:"hostname_fqdn" yaml:"hostname"`
 	State        string `json:"state" yaml:"state" default:"absent"`
 	VirtType     string `json:"virt_type" yaml:"virt_type" default:"kvm"`
@@ -244,6 +245,7 @@ type VMInstallConfig struct {
 	IPV4Gateway  string `json:"ipv4_gateway" yaml:"ipv4_gateway"`
 	IPV4Netmask  string `json:"ipv4_netmask" yaml:"ipv4_netmask"`
 	IPV4DNS      string `json:"ipv4_dns" yaml:"ipv4_dns"`
+	BridgeName   string `json:"bridge_name" yaml:"bridge_name"`
 }
 
 type Network struct {
