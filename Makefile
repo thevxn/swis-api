@@ -184,3 +184,8 @@ raw:
 fetch_facts:
 	@echo -e "\n${YELLOW} Executing a raw cURL request based on .env variables... ${RESET}\n"
 	@.script/fetch_facts.sh
+
+.PHONY: compose_host_vars
+compose_host_vars:
+	@echo -e "\n${YELLOW} Fetching hosts configuration, exporting as YAML host_vars... ${RESET}\n"
+	@.script/compose_host_vars.sh

@@ -124,8 +124,8 @@ type Configuration struct {
 	// ansible root vars
 	AnsibleHost string `json:"ansible_host" yaml:"ansible_host"`
 	AnsibleUser string `json:"ansible_user" yaml:"ansible_user"`
-	Become      bool   `json:"ansible_become" yaml:"become" default:true`
-	BecomeUser  string `json:"ansible_become_user" yaml:"become_user"`
+	Become      bool   `json:"become" yaml:"become" default:true`
+	BecomeUser  string `json:"become_user" yaml:"become_user"`
 
 	// base role
 	// https://www.patorjk.com/software/taag/#p=display&f=ANSI%20Regular&t=stokrle
@@ -133,11 +133,11 @@ type Configuration struct {
 	BaseDescription string `json:"base_description" yaml:"host_description"`
 
 	// container role
-	ContainerInstallk8sControl bool `json:"install_k8s_control_node" yaml:"install_k8s_controll_node" default:false`
+	ContainerInstallk8sControl bool `json:"install_k8s_control_node" yaml:"install_k8s_control_node" default:false`
 
 	// dialin-nas role
-	DialInPresent   bool `json:"dialin_present" yaml:"dialin_present" defualt:false`
-	AsteriskPresent bool `json:"dialin_asterisk_present" yaml:"asterisk_present" default:false`
+	DialInPresent   bool `json:"dialin_present" yaml:"dialin_present" default:false`
+	AsteriskPresent bool `json:"asterisk_present" yaml:"asterisk_present" default:false`
 
 	// dns role
 	DNSServerPresent bool   `json:"dns_server_present" yaml:"dns_server_present" default:false`
@@ -154,7 +154,7 @@ type Configuration struct {
 	RunnerConfigToken  string `json:"runner_config_token" yaml:"runner_config_token"`
 
 	// hyp vars
-	IsHypervisor bool `json:"is_hypervisor" yaml:"is_hypervisor"`
+	IsHypervisor bool `json:"is_hypervisor" yaml:"is_hypervisor" default:false`
 
 	// kpu role
 	KPUPresent bool `json:"kpu_present" yaml:"kpu_present" default:false`
@@ -174,7 +174,7 @@ type Configuration struct {
 	PrometheusConfigDir string `json:"prometheus_config_dir" yaml:"prometheus_config_dir"`
 
 	// net role
-	NetWireguarded bool `json:"is_wireguarded" yaml:"is_wireguarded"`
+	NetWireguarded bool `json:"is_wireguarded" yaml:"is_wireguarded" default:false`
 
 	// postfix role
 	IsEdgeRelay bool `json:"is_edge_relay" yaml:"is_edge_relay" default:false`
