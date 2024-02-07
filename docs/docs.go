@@ -1681,6 +1681,57 @@ const docTemplate = `{
                 }
             }
         },
+        "/infra/hosts/{key}/vmic": {
+            "post": {
+                "description": "add/update a VM install configuration",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Add/update a VM install configuration",
+                "parameters": [
+                    {
+                        "description": "host's VMIC",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/infra.VMInstallConfig"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/hosts/{key}/vmic/{vm}": {
+            "delete": {
+                "description": "delete a VM install configuration",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Delete a VM install configuration",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Host"
+                        }
+                    }
+                }
+            }
+        },
         "/infra/networks": {
             "get": {
                 "description": "get networks list",
@@ -3626,6 +3677,9 @@ const docTemplate = `{
                 "baseos_repo": {
                     "type": "string"
                 },
+                "bridge_name": {
+                    "type": "string"
+                },
                 "console_alias": {
                     "type": "string",
                     "default": "serial0"
@@ -3665,6 +3719,9 @@ const docTemplate = `{
                 },
                 "lock_root": {
                     "type": "boolean"
+                },
+                "locname": {
+                    "type": "string"
                 },
                 "memory_size": {
                     "type": "integer"
@@ -4015,7 +4072,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.11.20",
+	Version:          "5.12.0",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

@@ -697,6 +697,8 @@ definitions:
         type: boolean
       baseos_repo:
         type: string
+      bridge_name:
+        type: string
       console_alias:
         default: serial0
         type: string
@@ -725,6 +727,8 @@ definitions:
         type: string
       lock_root:
         type: boolean
+      locname:
+        type: string
       memory_size:
         type: integer
       memory_unit:
@@ -988,7 +992,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.11.20
+  version: 5.12.0
 paths:
   /alvax:
     get:
@@ -2077,6 +2081,39 @@ paths:
           schema:
             $ref: '#/definitions/infra.Host'
       summary: Upload current host facts
+      tags:
+      - infra
+  /infra/hosts/{key}/vmic:
+    post:
+      description: add/update a VM install configuration
+      parameters:
+      - description: host's VMIC
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/infra.VMInstallConfig'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Host'
+      summary: Add/update a VM install configuration
+      tags:
+      - infra
+  /infra/hosts/{key}/vmic/{vm}:
+    delete:
+      description: delete a VM install configuration
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infra.Host'
+      summary: Delete a VM install configuration
       tags:
       - infra
   /infra/networks:
