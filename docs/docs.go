@@ -3211,6 +3211,9 @@ const docTemplate = `{
                 "grafana_container_name": {
                     "type": "string"
                 },
+                "grafana_docker_tag_version": {
+                    "type": "string"
+                },
                 "grafana_docker_volume_name": {
                     "type": "string"
                 },
@@ -3852,7 +3855,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.11.14",
+	Version:          "5.11.17",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
