@@ -380,15 +380,13 @@ definitions:
     type: object
   infra.Configuration:
     properties:
-      ansible_become:
-        type: boolean
-      ansible_become_user:
-        type: string
       ansible_host:
         description: ansible root vars
         type: string
       ansible_user:
         type: string
+      asterisk_present:
+        type: boolean
       base_description:
         type: string
       base_motd:
@@ -396,8 +394,10 @@ definitions:
           base role
           https://www.patorjk.com/software/taag/#p=display&f=ANSI%20Regular&t=stokrle
         type: string
-      dialin_asterisk_present:
+      become:
         type: boolean
+      become_user:
+        type: string
       dialin_present:
         description: dialin-nas role
         type: boolean
@@ -441,9 +441,9 @@ definitions:
         type: boolean
       nginx_present:
         type: boolean
-      prmetheus_container_name:
-        type: string
       prometheus_config_dir:
+        type: string
+      prometheus_container_name:
         type: string
       prometheus_docker_volume_name:
         type: string
@@ -876,7 +876,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.11.13
+  version: 5.11.14
 paths:
   /alvax:
     get:

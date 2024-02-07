@@ -3174,18 +3174,15 @@ const docTemplate = `{
         "infra.Configuration": {
             "type": "object",
             "properties": {
-                "ansible_become": {
-                    "type": "boolean"
-                },
-                "ansible_become_user": {
-                    "type": "string"
-                },
                 "ansible_host": {
                     "description": "ansible root vars",
                     "type": "string"
                 },
                 "ansible_user": {
                     "type": "string"
+                },
+                "asterisk_present": {
+                    "type": "boolean"
                 },
                 "base_description": {
                     "type": "string"
@@ -3194,8 +3191,11 @@ const docTemplate = `{
                     "description": "base role\nhttps://www.patorjk.com/software/taag/#p=display\u0026f=ANSI%20Regular\u0026t=stokrle",
                     "type": "string"
                 },
-                "dialin_asterisk_present": {
+                "become": {
                     "type": "boolean"
+                },
+                "become_user": {
+                    "type": "string"
                 },
                 "dialin_present": {
                     "description": "dialin-nas role",
@@ -3257,10 +3257,10 @@ const docTemplate = `{
                 "nginx_present": {
                     "type": "boolean"
                 },
-                "prmetheus_container_name": {
+                "prometheus_config_dir": {
                     "type": "string"
                 },
-                "prometheus_config_dir": {
+                "prometheus_container_name": {
                     "type": "string"
                 },
                 "prometheus_docker_volume_name": {
@@ -3852,7 +3852,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.11.13",
+	Version:          "5.11.14",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

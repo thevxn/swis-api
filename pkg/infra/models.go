@@ -169,7 +169,7 @@ type Configuration struct {
 	PrometheusPresent bool `json:"prometheus_present" yaml:"prometheus_present" default:false`
 	PrometheusWebuiURL string `json:"prometheus_webui_url" yaml:"prometheus_webui_url"`
 	PrometheusDockerVolume string `json:"prometheus_docker_volume_name" yaml:"prometheus_docker_volume_name"`
-	PrometheusContainer string `json:"prmetheus_container_name" yaml:"prometheus_container_name"`
+	PrometheusContainer string `json:"prometheus_container_name" yaml:"prometheus_container_name"`
 	PrometheusDockerTag string `json:"prometheus_image_tag" yaml:"prometheus_image_tag"`
 	PrometheusConfigDir string `json:"prometheus_config_dir" yaml:"prometheus_config_dir"`
 
