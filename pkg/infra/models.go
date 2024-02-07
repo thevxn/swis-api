@@ -72,7 +72,8 @@ type Host struct {
 	IPAddress []string `json:"ip_address"`
 
 	// Children of such machine -- should use machines' hashes for proper linking.
-	Children []string `json:"children"`
+	Children        []string          `json:"children"`
+	ChildrenConfigs []VMInstallConfig `json:"children_configs"`
 
 	// Wireguarded bool indicates that the host is part of the core network.
 	Wireguarded bool `json:"wireguarded"`
@@ -127,13 +128,20 @@ type Configuration struct {
 	Become      bool   `json:"become" yaml:"become" default:true`
 	BecomeUser  string `json:"become_user" yaml:"become_user"`
 
+	// backup role
+	RemoteBackupHostIP string `json:"remote_host_ip_address" yaml:"remote_host_ip_address" default:"10.4.5.130"`
+
 	// base role
 	// https://www.patorjk.com/software/taag/#p=display&f=ANSI%20Regular&t=stokrle
 	BaseMotd        string `json:"base_motd" yaml:"ascii_art_motd" default:false`
 	BaseDescription string `json:"base_description" yaml:"host_description"`
+	BaseNSPrimary   string `json:"nameserver_primary" yaml:"nameserver_internal"`
+	BaseNSSecondary string `json:"nameserver_secondary" yaml:"nameserver_external"`
 
 	// container role
-	ContainerInstallk8sControl bool `json:"install_k8s_control_node" yaml:"install_k8s_control_node" default:false`
+	ContainerInstallk8sControl bool   `json:"install_k8s_control_node" yaml:"install_k8s_control_node" default:false`
+	ContainerInstallk8sWorker  bool   `json:"install_k8s_worker_node" yaml:"install_k8s_worker_node" default:false`
+	GolangVersion              string `json:"golang_version" yaml:"golang_version"`
 
 	// dialin-nas role
 	DialInPresent   bool `json:"dialin_present" yaml:"dialin_present" default:false`
@@ -142,6 +150,8 @@ type Configuration struct {
 	// dns role
 	DNSServerPresent bool   `json:"dns_server_present" yaml:"dns_server_present" default:false`
 	DMSServerType    string `json:"dns_server_type" yaml:"dns_server_type"`
+	DNSMasterIP      string `json:"dns_master_ip" yaml:"master_ip"`
+	DNSSlaveIP       string `json:"dns_slave_ip" yaml:"slave_ip"`
 
 	// ghar role
 	RunnerPresent      bool   `json:"runner_present" yaml:"runner_present" default:false`
@@ -154,32 +164,46 @@ type Configuration struct {
 	RunnerConfigToken  string `json:"runner_config_token" yaml:"runner_config_token"`
 
 	// hyp vars
-	IsHypervisor bool `json:"is_hypervisor" yaml:"is_hypervisor" default:false`
+	IsHypervisor      bool   `json:"is_hypervisor" yaml:"is_hypervisor" default:false`
+	HypPublicIP       string `json:"public_ip" yaml:"public_ip"`
+	HypPrivateIP      string `json:"private_ip" yaml:"private_ip"`
+	HypPrivateGateway string `json:"private_gateway" yaml:"private_gateway"`
+	HypPrivateNetmask string `json:"private_netmask" yaml:"private_netmask"`
+	HypPrivateNetwork string `json:"private_network" yaml:"private_network"`
+	HypPrivateCIDR    int    `json:"private_cidr" yaml:"private_cidr"`
+	HypSetupIPSec     bool   `json:"setup_ipsec" yaml:"setup_ipsec" default:false`
+	HypDatacentre     string `json:"dc" yaml:"dc"`
+	HypDomain         string `json:"domain" yaml:"domain"`
+	HypDisk1          string `json:"disk1" yaml:"disk1"`
+	HypDisk2          string `json:"disk2" yaml:"disk2"`
+	HypDisk3          string `json:"disk3" yaml:"disk3"`
+	HypDisk4          string `json:"disk4" yaml:"disk4"`
+	HypRAID           bool   `json:"raid" yaml:"raid" default:false`
 
 	// kpu role
 	KPUPresent bool `json:"kpu_present" yaml:"kpu_present" default:false`
 
 	// metrics role
-	LokiPresent bool `json:"loki_present" yaml:"loki_present" default:false`
-	LokiDockerTag string `json:"loki_image_tag" yaml:"loki_image_tag"`
-	GrafanaPresent bool `json:"grafana_present" yaml:"grafana_present" default:false`
-	GrafanaDockerTag string `json:"grafana_docker_tag_version" yaml:""`
-	GrafanaWebuiURL string `json:"grafana_webui_url" yaml:"grafana_webui_url"`
-	GrafanaDockerVolume string `json:"grafana_docker_volume_name" yaml:"grafana_docker_volume_name"`
-	GrafanaContainer string `json:"grafana_container_name" yaml:"grafana_container_name"`
-	PrometheusPresent bool `json:"prometheus_present" yaml:"prometheus_present" default:false`
-	PrometheusWebuiURL string `json:"prometheus_webui_url" yaml:"prometheus_webui_url"`
+	LokiPresent            bool   `json:"loki_present" yaml:"loki_present" default:false`
+	LokiDockerTag          string `json:"loki_image_tag" yaml:"loki_image_tag"`
+	GrafanaPresent         bool   `json:"grafana_present" yaml:"grafana_present" default:false`
+	GrafanaDockerTag       string `json:"grafana_docker_tag_version" yaml:""`
+	GrafanaWebuiURL        string `json:"grafana_webui_url" yaml:"grafana_webui_url"`
+	GrafanaDockerVolume    string `json:"grafana_docker_volume_name" yaml:"grafana_docker_volume_name"`
+	GrafanaContainer       string `json:"grafana_container_name" yaml:"grafana_container_name"`
+	PrometheusPresent      bool   `json:"prometheus_present" yaml:"prometheus_present" default:false`
+	PrometheusWebuiURL     string `json:"prometheus_webui_url" yaml:"prometheus_webui_url"`
 	PrometheusDockerVolume string `json:"prometheus_docker_volume_name" yaml:"prometheus_docker_volume_name"`
-	PrometheusContainer string `json:"prometheus_container_name" yaml:"prometheus_container_name"`
-	PrometheusDockerTag string `json:"prometheus_image_tag" yaml:"prometheus_image_tag"`
-	PrometheusConfigDir string `json:"prometheus_config_dir" yaml:"prometheus_config_dir"`
+	PrometheusContainer    string `json:"prometheus_container_name" yaml:"prometheus_container_name"`
+	PrometheusDockerTag    string `json:"prometheus_image_tag" yaml:"prometheus_image_tag"`
+	PrometheusConfigDir    string `json:"prometheus_config_dir" yaml:"prometheus_config_dir"`
 
 	// net role
 	NetWireguarded bool `json:"is_wireguarded" yaml:"is_wireguarded" default:false`
 
 	// postfix role
 	IsEdgeRelay bool `json:"is_edge_relay" yaml:"is_edge_relay" default:false`
-	IsRelay bool `json:"is_relay" yaml:"is_relay" default:false`
+	IsRelay     bool `json:"is_relay" yaml:"is_relay" default:false`
 
 	// proxy role
 	IsBehindCf             bool   `json:"is_behind_cloudflare" yaml:"is_behind_cloudflare" default:false`
@@ -191,6 +215,35 @@ type Configuration struct {
 	TraefikDockerNet       string `json:"traefik_docker_network_name" yaml:"traefik_docker_network_name"`
 	TraefikDockerTag       string `json:"traefik_docker_tag_version" yaml:"traefik_docker_tag_version"`
 	TraefikDockarContainer string `json:"traefik_docker_container_name" yaml:"traefik_docker_container_name"`
+}
+
+// VMInstallConfig is a configuration sequence for a virtual machine installation. This configuration is appended per hypervisor's capacity.
+type VMInstallConfig struct {
+	Name         string `json:"name", yaml:"name"`
+	HostnameFQDN string `json:"hostname_fqdn", yaml:"hostname"`
+	State        string `json:"state" yaml:"state" default:"absent"`
+	VirtType     string `json:"virt_type" yaml:"virt_type" default:"kvm"`
+	XMLFileName  string `json:"xml_filename" yaml:"xml"`
+	Timezone     string `json:"timezone" yaml:"timezone" default:"Europe/Vienna"`
+	Autostart    bool   `json:"autostart" yaml:"autostart" default:false`
+	BaseOSRepo   string `json:"baseos_repo" yaml:"baseos_repo"`
+	OSType       string `json:"os_type" yaml:"os_type" default:"linux"`
+	OsVariant    string `json:"os_veriant" yaml:"os_variant"`
+	LockRoot     bool   `json:"lock_root" yaml:"lock_root" default:false`
+	VCPUCount    int    `json:"vcpu_count" yaml:"vcpu_count"`
+	MemoryUnit   string `json:"memory_unit" yaml:"memory_unit" default:"MB"`
+	MemorySize   int    `json:"memory_size" yaml:"memory_size" default:2048`
+	DiskType     string `json:"disk_type" yaml:"disk_type" default:"raw"`
+	DiskSource   string `json:"disk_source" yaml:"disk_source"`
+	DiskBus      string `json:"disk_bus" yaml:"disk_bus" default:"virtio"`
+	DiskAlias    string `json:"disk_alias" yaml:"disk_alias"`
+	ConsoleType  string `json:"console_type" yaml:"console_type" default:"pty"`
+	ConsoleAlias string `json:"console_alias" yaml:"console_alias" default:"serial0"`
+	NetworkName  string `json:"network_name" yaml:"network_name"`
+	IPV4Address  string `json:"ipv4_address" yaml:"ipv4_address"`
+	IPV4Gateway  string `json:"ipv4_gateway" yaml:"ipv4_gateway"`
+	IPV4Netmask  string `json:"ipv4_netmask" yaml:"ipv4_netmask"`
+	IPV4DNS      string `json:"ipv4_dns" yaml:"ipv4_dns"`
 }
 
 type Network struct {
