@@ -163,6 +163,7 @@ type Configuration struct {
 	LokiPresent bool `json:"loki_present" yaml:"loki_present" default:false`
 	LokiDockerTag string `json:"loki_image_tag" yaml:"loki_image_tag"`
 	GrafanaPresent bool `json:"grafana_present" yaml:"grafana_present" default:false`
+	GrafanaDockerTag string `json:"grafana_docker_tag_version" yaml:""`
 	GrafanaWebuiURL string `json:"grafana_webui_url" yaml:"grafana_webui_url"`
 	GrafanaDockerVolume string `json:"grafana_docker_volume_name" yaml:"grafana_docker_volume_name"`
 	GrafanaContainer string `json:"grafana_container_name" yaml:"grafana_container_name"`
