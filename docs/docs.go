@@ -972,6 +972,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/dish/sockets/{key}/maintenance": {
+            "put": {
+                "description": "toggle maintenance mode on socket by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Toggle maintenance mode of a socket by its ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dish ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
+            }
+        },
         "/dish/sockets/{key}/mute": {
             "put": {
                 "description": "mute/unmute socket by its ID",
@@ -4076,7 +4105,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.12.1",
+	Version:          "5.13.1",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

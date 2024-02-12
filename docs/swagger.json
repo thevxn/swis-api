@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.12.1"
+        "version": "5.13.1"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -947,6 +947,35 @@
                     "dish"
                 ],
                 "summary": "Delete socket by its ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dish ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/sockets/{key}/maintenance": {
+            "put": {
+                "description": "toggle maintenance mode on socket by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Toggle maintenance mode of a socket by its ID",
                 "parameters": [
                     {
                         "type": "string",

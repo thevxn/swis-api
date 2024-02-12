@@ -97,7 +97,8 @@ func GetSocketListByHost(ctx *gin.Context) {
 			continue
 		}
 
-		if contains(socket.DishTarget, host) && !socket.Muted {
+		// nasty tweak incoming
+		if (contains(socket.DishTarget, host) && !socket.Muted) || host == "public" {
 			exportedSockets[socket.ID] = socket
 			counter++
 		}
