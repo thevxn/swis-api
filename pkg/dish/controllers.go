@@ -201,6 +201,59 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 	return
 }
 
+// @Summary Toggle maintenance mode of a socket by its ID
+// @Description toggle maintenance mode on socket by its ID
+// @Tags dish
+// @Produce json
+// @Param  id  path  string  true  "dish ID"
+// @Success 200 {object} dish.Socket
+// @Router /dish/sockets/{key}/maintenance [put]
+func MaintenanceToggleSocketByKey(ctx *gin.Context) {
+	var id string = ctx.Param("key")
+	var updatedSocket Socket
+
+	rawSocket, ok := CacheSockets.Get(id)
+	if !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "socket not found",
+			"id":      id,
+		})
+		return
+	}
+
+	updatedSocket, ok = rawSocket.(Socket)
+	if !ok {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot assert data type, database internal error",
+		})
+		return
+	}
+
+	// inverse the Maintenance field value
+	updatedSocket.Maintenance = !updatedSocket.Maintenance
+
+	if updatedSocket.Maintenance {
+		updatedSocket.Muted = true
+	}
+
+	if saved := CacheSockets.Set(updatedSocket.ID, updatedSocket); !saved {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "socket couldn't be saved to database",
+		})
+		return
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "socket mute toggle pressed!",
+		"socket":  updatedSocket,
+	})
+	return
+}
+
 // (PUT /dish/sockets/{id}/mute)
 // @Summary Mute/unmute socket by its ID
 // @Description mute/unmute socket by its ID
