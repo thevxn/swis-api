@@ -625,14 +625,67 @@
         },
         "/dish": {
             "get": {
-                "description": "get all dish details",
+                "description": "get all root items",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "dish"
                 ],
-                "summary": "Get whole dish package items",
+                "summary": "Get all root items",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Other commentary to the incident.",
+                        "name": "comment",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Further details about the incident like place, state of operation etc.",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Estimated end of incident handling/resolving.",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Incident ID, timestamp usually.",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Incident name.",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Reason of the incident that happened.",
+                        "name": "reason",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID of the referencing socket(s).\nSocketID []string `json:\"socket_id\"`",
+                        "name": "socket_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The very start datetime of such incident.",
+                        "name": "start_date",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -645,141 +698,7 @@
         },
         "/dish/incidents": {
             "get": {
-                "description": "get incident list, incident array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Get all incidents",
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/dish/incidents/{key}": {
-            "get": {
-                "description": "get incident list by socket ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Get incident list by socket ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "socket ID",
-                        "name": "host",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "update incident by its key",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Update incident by its key",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dish.Incident"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Incident"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new incident",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Add new incident",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dish.Incident"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Incident"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "delete incident by its key",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Delete incidnet by its key",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "incident ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Incident"
-                        }
-                    }
-                }
-            }
-        },
-        "/dish/restore": {
-            "post": {
-                "description": "import incidents and sockets JSON dump",
+                "description": "get all incidents",
                 "consumes": [
                     "application/json"
                 ],
@@ -789,10 +708,471 @@
                 "tags": [
                     "dish"
                 ],
-                "summary": "Upload dish batch import",
+                "summary": "Get all incidents",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/incidents/{key}": {
+            "get": {
+                "description": "get incident list by socket ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get incident list by socket ID",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "DishTarget is a string array, usually containing dish's host short name (e.g. frank).\nTo be referred as /dish/sockets/frank for example.",
+                        "name": "dish_target",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response codes are okay and not to alert upon.",
+                        "name": "expected_http_code_array",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "FailCount indicates how many times socket has to be in failed state before alerting.",
+                        "name": "fail_count",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Healthy boolean indicates wheter is socket okay, or the way around.",
+                        "name": "healthy",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).",
+                        "name": "host_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Maintenance boolean states for the M. mode being applied to such socket/endpoint.",
+                        "name": "maintenance",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Muted bool indicates that the socket is not propagated to any dish if true.",
+                        "name": "muted",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "MutedFrom UNIX timestamp.",
+                        "name": "muted_from",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "PathHTTP is any URL the site is about to be tested on, e.g. /dish/sockets",
+                        "name": "path_http",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Socket TCP port part\nEven default port 80 should be added here.",
+                        "name": "port_tcp",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Public boolean tells the frontendee to show itself.",
+                        "name": "public",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "ResponseTime is the time for the request to be processed.",
+                        "name": "response_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "More verbose name/description of the socket.",
+                        "name": "socket_description",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Socket ID, snake_cased for socket editing and deleting.",
+                        "name": "socket_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example.",
+                        "name": "socket_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "TestTimestamp tells the time of the last socket testing being executed upon.",
+                        "name": "test_timestamp",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update incident by its key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Update incident by its key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Other commentary to the incident.",
+                        "name": "comment",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Further details about the incident like place, state of operation etc.",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Estimated end of incident handling/resolving.",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Incident ID, timestamp usually.",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Incident name.",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Reason of the incident that happened.",
+                        "name": "reason",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID of the referencing socket(s).\nSocketID []string `json:\"socket_id\"`",
+                        "name": "socket_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The very start datetime of such incident.",
+                        "name": "start_date",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new incident",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Add new incident",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Other commentary to the incident.",
+                        "name": "comment",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Further details about the incident like place, state of operation etc.",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Estimated end of incident handling/resolving.",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Incident ID, timestamp usually.",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Incident name.",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Reason of the incident that happened.",
+                        "name": "reason",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID of the referencing socket(s).\nSocketID []string `json:\"socket_id\"`",
+                        "name": "socket_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The very start datetime of such incident.",
+                        "name": "start_date",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete incident by its key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Delete incident by its key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Other commentary to the incident.",
+                        "name": "comment",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Further details about the incident like place, state of operation etc.",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Estimated end of incident handling/resolving.",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Incident ID, timestamp usually.",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Incident name.",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Reason of the incident that happened.",
+                        "name": "reason",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID of the referencing socket(s).\nSocketID []string `json:\"socket_id\"`",
+                        "name": "socket_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The very start datetime of such incident.",
+                        "name": "start_date",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/restore": {
+            "post": {
+                "description": "restore dish package items",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Restore dish package items",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
                     }
                 }
             }
@@ -817,6 +1197,98 @@
                 }
             }
         },
+        "/dish/sockets/:key/maintenance": {
+            "put": {
+                "description": "toggle maintenance mode",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Togle maintenance mode",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name socket by key",
+                        "name": "key",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Socket"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/sockets/:key/mute": {
+            "put": {
+                "description": "toggle muted state",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Togle muted state",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name socket by key",
+                        "name": "key",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Socket"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
+            }
+        },
         "/dish/sockets/results": {
             "post": {
                 "description": "batch update socket's healthy state.",
@@ -832,19 +1304,25 @@
         },
         "/dish/sockets/status": {
             "get": {
-                "description": "subscribe to dish SSE service",
+                "description": "subscribe to dish SSE dispatcher",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "dish"
                 ],
-                "summary": "Subscribe to dish SSE service.",
+                "summary": "Subscribe to dish SSE dispatcher",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dish.Message"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Message"
+                            }
                         }
                     }
                 }
@@ -947,64 +1425,6 @@
                     "dish"
                 ],
                 "summary": "Delete socket by its ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "dish ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
-                        }
-                    }
-                }
-            }
-        },
-        "/dish/sockets/{key}/maintenance": {
-            "put": {
-                "description": "toggle maintenance mode on socket by its ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Toggle maintenance mode of a socket by its ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "dish ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Socket"
-                        }
-                    }
-                }
-            }
-        },
-        "/dish/sockets/{key}/mute": {
-            "put": {
-                "description": "mute/unmute socket by its ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Mute/unmute socket by its ID",
                 "parameters": [
                     {
                         "type": "string",
