@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.12.0"
+        "version": "5.12.1"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -3052,6 +3052,10 @@
                 "host_name": {
                     "description": "Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).",
                     "type": "string"
+                },
+                "maintenance": {
+                    "description": "Maintenance boolean states for the M. mode being applied to such socket/endpoint.",
+                    "type": "boolean"
                 },
                 "muted": {
                     "description": "Muted bool indicates that the socket is not propagated to any dish if true.",

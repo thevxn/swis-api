@@ -52,6 +52,9 @@ type Socket struct {
 
 	// Public boolean tells the frontendee to show itself.
 	Public bool `json:"public" default:false`
+
+	// Maintenance boolean states for the M. mode being applied to such socket/endpoint.
+	Maintenance bool `json:"maintenance" default>false`
 }
 
 type Incident struct {

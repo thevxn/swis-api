@@ -3059,6 +3059,10 @@ const docTemplate = `{
                     "description": "Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).",
                     "type": "string"
                 },
+                "maintenance": {
+                    "description": "Maintenance boolean states for the M. mode being applied to such socket/endpoint.",
+                    "type": "boolean"
+                },
                 "muted": {
                     "description": "Muted bool indicates that the socket is not propagated to any dish if true.",
                     "type": "boolean"
@@ -4072,7 +4076,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.12.0",
+	Version:          "5.12.1",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
