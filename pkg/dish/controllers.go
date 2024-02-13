@@ -1,9 +1,9 @@
 package dish
 
 import (
-	//"encoding/json"
+	"encoding/json"
 	"io"
-	"log"
+	//"log"
 	"net/http"
 	"time"
 
@@ -191,7 +191,7 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 			Timestamp:  time.Now().UnixNano(),
 		}
 
-		log.Println("sockets updated message sent")
+		//log.Println("sockets updated message sent")
 		Dispatcher.NewEvent(msg)
 	}
 
@@ -341,8 +341,7 @@ func SubscribeToSSEStream(ctx *gin.Context) {
 	}()
 
 	// set the stream headers
-	//ctx.Writer.Header().Set("Content-Type", "text/event-stream")
-	ctx.Writer.Header().Set("Content-Type", "application/json")
+	ctx.Writer.Header().Set("Content-Type", "text/event-stream")
 	ctx.Writer.Header().Set("Cache-Control", "no-cache")
 	ctx.Writer.Header().Set("Connection", "keep-alive")
 	ctx.Writer.Header().Set("Transfer-Encoding", "chunked")
@@ -350,18 +349,19 @@ func SubscribeToSSEStream(ctx *gin.Context) {
 	ctx.Stream(func(w io.Writer) bool {
 		// Stream message to client from message channel
 		if msg, ok := <-clientChan; ok {
-			//m, err := json.Marshal(msg)
-			//if err != nil {
-			//log.Println("marshalling failed, invalid message")
-			//return false
-			//}
+			m, err := json.Marshal(msg)
+			if err != nil {
+				//log.Println("marshalling failed, invalid message")
+				return false
+			}
 
-			ctx.SSEvent("message", msg.Content)
-			log.Println("wrote:", msg.Content)
+			ctx.SSEvent("message", m)
+			//log.Println("wrote:", msg.Content)
 			return true
 		}
 		return false
 	})
+	return
 }
 
 /*

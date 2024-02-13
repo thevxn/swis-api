@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: [ self-hosted, public, docker ]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build new swapi image (with staging).
       env:
         APP_URL: ${{ secrets.APP_URL }}
@@ -22,7 +22,7 @@ jobs:
     runs-on: [ self-hosted, public, docker ]
     needs: [ build ]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Run test container and run end-to-end test on it.
       env:
         LOKI_URL: ${{ secrets.LOKI_URL }}
@@ -34,7 +34,7 @@ jobs:
     runs-on: [ self-hosted, public, docker ]
     needs: [ test_deploy ]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Dump production data.
       env:
         APP_URL: ${{ secrets.APP_URL }}
@@ -45,7 +45,7 @@ jobs:
     runs-on: [ self-hosted, public, docker ]
     needs: [ dump_data ]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Deploy prod docker container, recreate container with fresh image.
       env:
         APP_ENVIRONMENT: production
@@ -59,7 +59,7 @@ jobs:
     runs-on: [ self-hosted, public, docker ]
     needs: [ prod_deploy ]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Import dumped data to production.
       env:
         APP_URL: ${{ secrets.APP_URL }}
@@ -70,7 +70,7 @@ jobs:
     runs-on: [ self-hosted, public, docker ]
     needs: [ import_data ]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: (re)Generate interface API swagger docs.
       env:
         APP_URL: ${{ secrets.APP_URL }}
