@@ -26,7 +26,7 @@ func Routes(g *gin.RouterGroup) {
 	g.GET("/sockets",
 		GetSocketList)
 	g.GET("/sockets/status",
-		SubscribeToSSEStream)
+		GetSSEvents)
 	g.GET("/sockets/:host",
 		GetSocketListByHost)
 	g.POST("/sockets/:key",

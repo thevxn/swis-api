@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.13.7
+// @version 5.13.8
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -142,7 +142,8 @@ func main() {
 	depots.Routes(router.Group("/depots"))
 
 	// dish CRUD
-	dish.Dispatcher = dish.NewDispatcher()
+	//dish.Dispatcher = dish.NewDispatcher()
+	dish.EventChannel = make(chan dish.Message)
 	dish.CacheIncidents = &core.Cache{}
 	dish.CacheSockets = &core.Cache{}
 	dish.Routes(router.Group("/dish"))
@@ -185,10 +186,10 @@ func main() {
 
 	// https://pkg.go.dev/net/http#Server
 	server := &http.Server{
-		Addr:         "0.0.0.0:" + os.Getenv("SERVER_PORT"),
-		Handler:      router,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 10 * time.Second,
+		Addr:        "0.0.0.0:" + os.Getenv("SERVER_PORT"),
+		Handler:     router,
+		ReadTimeout: 10 * time.Second,
+		//WriteTimeout: 10 * time.Second,
 		// = 1 * 2^23 = 1,048,576 * 8
 		MaxHeaderBytes: 1 << 23,
 		// use config.CORSMiddleware()

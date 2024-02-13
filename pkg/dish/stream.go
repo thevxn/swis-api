@@ -59,8 +59,8 @@ func (stream *Stream) heartbeat() {
 	for {
 		if !composingMessage && time.Now().Unix()%25 == 0 {
 			stream.Message <- Message{
-				Content:    "heartbeat",
-				Timestamp:  time.Now().Unix(),
+				Content:   "heartbeat",
+				Timestamp: time.Now().Unix(),
 			}
 			time.Sleep(time.Second * 1)
 			composingMessage = false

@@ -1,9 +1,8 @@
 package dish
 
 import (
-	"encoding/json"
+	//"encoding/json"
 	"io"
-	//"log"
 	"net/http"
 	"time"
 
@@ -16,6 +15,7 @@ import (
 var (
 	CacheIncidents *core.Cache
 	CacheSockets   *core.Cache
+	eventChannel   chan string
 	pkgName        string = "dish"
 )
 
@@ -192,7 +192,10 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 		}
 
 		//log.Println("sockets updated message sent")
-		Dispatcher.NewEvent(msg)
+		//Dispatcher.NewEvent(msg)
+		if EventChannel != nil {
+			EventChannel <- msg
+		}
 	}
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
@@ -319,7 +322,7 @@ func MuteToggleSocketByKey(ctx *gin.Context) {
 	return
 }
 
-// SubscribeToSSEStream sets muted state of a socket by its ID
+// GetSSEvents
 //
 // @Summary      Subscribe to dish SSE dispatcher
 // @Description  subscribe to dish SSE dispatcher
@@ -328,17 +331,9 @@ func MuteToggleSocketByKey(ctx *gin.Context) {
 // @Produce      json
 // @Success      200  {array}   dish.Message
 // @Router       /dish/sockets/status [get]
-func SubscribeToSSEStream(ctx *gin.Context) {
-	// initialize client channel
-	clientChan := make(ClientChan)
-
-	// send new connection to event server
-	Dispatcher.NewClients <- clientChan
-
-	defer func() {
-		// send closed connection to event server
-		Dispatcher.ClosedClients <- clientChan
-	}()
+func GetSSEvents(ctx *gin.Context) {
+	//log.Println("opening eventChannel")
+	//eventChannel = make(chan string)
 
 	// set the stream headers
 	ctx.Writer.Header().Set("Content-Type", "text/event-stream")
@@ -346,21 +341,24 @@ func SubscribeToSSEStream(ctx *gin.Context) {
 	ctx.Writer.Header().Set("Connection", "keep-alive")
 	ctx.Writer.Header().Set("Transfer-Encoding", "chunked")
 
-	ctx.Stream(func(w io.Writer) bool {
-		// Stream message to client from message channel
-		if msg, ok := <-clientChan; ok {
-			m, err := json.Marshal(msg)
-			if err != nil {
-				//log.Println("marshalling failed, invalid message")
-				return false
+	if closed := ctx.Stream(func(w io.Writer) bool {
+		select {
+		case msg, ok := <-EventChannel:
+			if ok {
+				ctx.SSEvent("swis-event", msg)
+				return true
 			}
 
-			ctx.SSEvent("message", m)
-			//log.Println("wrote:", msg.Content)
-			return true
+		// connection is closed then defer will be executed
+		case <-ctx.Done():
+			return false
 		}
+
 		return false
-	})
+	}); closed {
+		//log.Println("closing eventChannel")
+		//close(eventChannel)
+	}
 	return
 }
 
