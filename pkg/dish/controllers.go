@@ -193,9 +193,7 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 
 		//log.Println("sockets updated message sent")
 		//Dispatcher.NewEvent(msg)
-		if EventChannel != nil {
-			EventChannel <- msg
-		}
+		Dispatcher.Message <- msg
 	}
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
@@ -332,8 +330,16 @@ func MuteToggleSocketByKey(ctx *gin.Context) {
 // @Success      200  {array}   dish.Message
 // @Router       /dish/sockets/status [get]
 func GetSSEvents(ctx *gin.Context) {
-	//log.Println("opening eventChannel")
-	//eventChannel = make(chan string)
+	// initialize client channel
+	clientChan := make(chan Message)
+
+	// send new connection to event server
+	Dispatcher.NewClients <- clientChan
+
+	defer func() {
+		// send closed connection to event server
+		Dispatcher.ClosedClients <- clientChan
+	}()
 
 	// set the stream headers
 	ctx.Writer.Header().Set("Content-Type", "text/event-stream")
@@ -343,9 +349,9 @@ func GetSSEvents(ctx *gin.Context) {
 
 	if closed := ctx.Stream(func(w io.Writer) bool {
 		select {
-		case msg, ok := <-EventChannel:
+		case msg, ok := <-clientChan:
 			if ok {
-				ctx.SSEvent("swis-event", msg)
+				ctx.SSEvent("message", msg)
 				return true
 			}
 
@@ -354,7 +360,7 @@ func GetSSEvents(ctx *gin.Context) {
 			return false
 		}
 
-		return false
+		return true
 	}); closed {
 		//log.Println("closing eventChannel")
 		//close(eventChannel)

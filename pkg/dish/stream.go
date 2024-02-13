@@ -1,7 +1,7 @@
 package dish
 
 import (
-	"log"
+	//"log"
 	"time"
 )
 
@@ -47,23 +47,23 @@ func (stream *Stream) listen() {
 		case eventMsg := <-stream.Message:
 			for clientMessageChan := range stream.TotalClients {
 				clientMessageChan <- eventMsg
-				log.Println("sent message to client channel")
+				//log.Println("sent message to client channel")
 			}
 		}
 	}
 }
 
 func (stream *Stream) heartbeat() {
-	var composingMessage bool = false
-
 	for {
-		if !composingMessage && time.Now().Unix()%25 == 0 {
-			stream.Message <- Message{
-				Content:   "heartbeat",
-				Timestamp: time.Now().Unix(),
+		if time.Now().Unix()%30 == 0 {
+			//stream.Message <- Message{
+			Dispatcher.Message <- Message{
+				Content:    "heartbeat",
+				SocketList: []string{},
+				Timestamp:  time.Now().Unix(),
 			}
+
 			time.Sleep(time.Second * 1)
-			composingMessage = false
 		}
 	}
 }

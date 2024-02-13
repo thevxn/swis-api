@@ -142,8 +142,7 @@ func main() {
 	depots.Routes(router.Group("/depots"))
 
 	// dish CRUD
-	//dish.Dispatcher = dish.NewDispatcher()
-	dish.EventChannel = make(chan dish.Message)
+	dish.Dispatcher = dish.NewDispatcher()
 	dish.CacheIncidents = &core.Cache{}
 	dish.CacheSockets = &core.Cache{}
 	dish.Routes(router.Group("/dish"))
