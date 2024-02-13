@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.13.3"
+        "version": "5.13.5"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -3695,6 +3695,10 @@
                 "become_user": {
                     "type": "string"
                 },
+                "bind_exporter_present": {
+                    "description": "metrics role",
+                    "type": "boolean"
+                },
                 "dc": {
                     "type": "string"
                 },
@@ -3781,9 +3785,15 @@
                 "loki_image_tag": {
                     "type": "string"
                 },
+                "loki_port": {
+                    "type": "integer"
+                },
                 "loki_present": {
-                    "description": "metrics role",
                     "type": "boolean"
+                },
+                "loki_url": {
+                    "type": "string",
+                    "default": "loki.savla.su"
                 },
                 "nameserver_primary": {
                     "type": "string"
@@ -3826,6 +3836,9 @@
                 },
                 "prometheus_webui_url": {
                     "type": "string"
+                },
+                "promtail_present": {
+                    "type": "boolean"
                 },
                 "public_ip": {
                     "type": "string"

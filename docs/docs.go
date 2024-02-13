@@ -3701,6 +3701,10 @@ const docTemplate = `{
                 "become_user": {
                     "type": "string"
                 },
+                "bind_exporter_present": {
+                    "description": "metrics role",
+                    "type": "boolean"
+                },
                 "dc": {
                     "type": "string"
                 },
@@ -3787,9 +3791,15 @@ const docTemplate = `{
                 "loki_image_tag": {
                     "type": "string"
                 },
+                "loki_port": {
+                    "type": "integer"
+                },
                 "loki_present": {
-                    "description": "metrics role",
                     "type": "boolean"
+                },
+                "loki_url": {
+                    "type": "string",
+                    "default": "loki.savla.su"
                 },
                 "nameserver_primary": {
                     "type": "string"
@@ -3832,6 +3842,9 @@ const docTemplate = `{
                 },
                 "prometheus_webui_url": {
                     "type": "string"
+                },
+                "promtail_present": {
+                    "type": "boolean"
                 },
                 "public_ip": {
                     "type": "string"
@@ -4525,7 +4538,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.3",
+	Version:          "5.13.5",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

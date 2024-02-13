@@ -402,6 +402,9 @@ definitions:
         type: boolean
       become_user:
         type: string
+      bind_exporter_present:
+        description: metrics role
+        type: boolean
       dc:
         type: string
       dialin_present:
@@ -462,9 +465,13 @@ definitions:
         type: boolean
       loki_image_tag:
         type: string
+      loki_port:
+        type: integer
       loki_present:
-        description: metrics role
         type: boolean
+      loki_url:
+        default: loki.savla.su
+        type: string
       nameserver_primary:
         type: string
       nameserver_secondary:
@@ -493,6 +500,8 @@ definitions:
         type: boolean
       prometheus_webui_url:
         type: string
+      promtail_present:
+        type: boolean
       public_ip:
         type: string
       raid:
@@ -996,7 +1005,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.3
+  version: 5.13.5
 paths:
   /alvax:
     get:

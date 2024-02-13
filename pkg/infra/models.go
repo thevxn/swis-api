@@ -184,8 +184,11 @@ type Configuration struct {
 	KPUPresent bool `json:"kpu_present" yaml:"kpu_present" default:false`
 
 	// metrics role
+	BindExporterPresent    bool   `json:"bind_exporter_present" yaml:"bind_exporter_present" default:false`
 	LokiPresent            bool   `json:"loki_present" yaml:"loki_present" default:false`
 	LokiDockerTag          string `json:"loki_image_tag" yaml:"loki_image_tag"`
+	LokiURL                string `json:"loki_url" yaml:"loki_url" default:"loki.savla.su"`
+	LokiPort               int    `json:"loki_port" yaml:"loki_port" default:3000`
 	GrafanaPresent         bool   `json:"grafana_present" yaml:"grafana_present" default:false`
 	GrafanaDockerTag       string `json:"grafana_docker_tag_version" yaml:"grafana_docker_tag_version"`
 	GrafanaWebuiURL        string `json:"grafana_webui_url" yaml:"grafana_webui_url"`
@@ -197,6 +200,7 @@ type Configuration struct {
 	PrometheusContainer    string `json:"prometheus_container_name" yaml:"prometheus_container_name"`
 	PrometheusDockerTag    string `json:"prometheus_image_tag" yaml:"prometheus_image_tag"`
 	PrometheusConfigDir    string `json:"prometheus_config_dir" yaml:"prometheus_config_dir"`
+	PromtailPresent        bool   `json:"promtail_present" yaml:"promtail_present" default:false`
 
 	// net role
 	NetWireguarded bool `json:"is_wireguarded" yaml:"is_wireguarded" default:false`
