@@ -14,9 +14,12 @@ FROM golang:${GOLANG_VERSION}-alpine AS swapi-build
 ARG APP_NAME
 ENV APP_NAME ${APP_NAME}
 
-RUN apk --no-cache add git
+RUN apk add git
 
 WORKDIR /go/src/${APP_NAME}
+COPY ./go.mod .
+RUN go mod download
+
 COPY . .
 
 # force use locked version
@@ -38,7 +41,7 @@ ARG DOCKER_USER
 
 ENV APP_NAME ${APP_NAME}
 
-RUN apk --no-cache add tzdata
+RUN apk add tzdata
 RUN adduser -D -h ${APP_ROOT} -s /bin/sh ${DOCKER_USER}
 
 # compose release image

@@ -1,7 +1,8 @@
 package dish
 
 import (
-// "log"
+	"log"
+	"time"
 )
 
 var (
@@ -18,8 +19,9 @@ func NewDispatcher() (stream *Stream) {
 	}
 
 	go stream.listen()
+	go stream.heartbeat()
 
-	return
+	return stream
 }
 
 func (stream *Stream) NewEvent(msg Message) {
@@ -33,19 +35,38 @@ func (stream *Stream) listen() {
 		// Add new available client
 		case client := <-stream.NewClients:
 			stream.TotalClients[client] = true
-			//log.Printf("Client added. %d registered clients", len(stream.TotalClients))
+			log.Printf("Client added. %d registered clients", len(stream.TotalClients))
 
 		// Remove closed client
 		case client := <-stream.ClosedClients:
 			delete(stream.TotalClients, client)
 			close(client)
-			//log.Printf("Removed client. %d registered clients", len(stream.TotalClients))
+			log.Printf("Removed client. %d registered clients", len(stream.TotalClients))
 
 		// Broadcast message to client
 		case eventMsg := <-stream.Message:
 			for clientMessageChan := range stream.TotalClients {
 				clientMessageChan <- eventMsg
+				log.Println("send message")
 			}
+		}
+	}
+}
+
+func (stream *Stream) heartbeat() {
+	var composingMessage bool = false
+
+	for {
+		if !composingMessage && time.Now().Unix()%25 == 0 {
+			stream.Message <- Message{
+				Content:    "heartbeat",
+				SocketList: []string{"lmaoooo"},
+				Timestamp:  time.Now().Unix(),
+			}
+			log.Println("message composed")
+
+			time.Sleep(time.Second * 1)
+			composingMessage = false
 		}
 	}
 }

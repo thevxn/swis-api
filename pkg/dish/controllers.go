@@ -1,7 +1,7 @@
 package dish
 
 import (
-	"encoding/json"
+	//"encoding/json"
 	"io"
 	"log"
 	"net/http"
@@ -167,11 +167,11 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 		// add socket ID to the exported array (via event dispatcher) if changed its state only
 		if socket.Healthy != result {
 			sockets = append(sockets, socket.ID)
+			count++
+			socket.Healthy = result
 		}
 
-		socket.Healthy = result
 		socket.TestTimestamp = time.Now().UnixNano()
-		count++
 
 		if saved := CacheSockets.Set(key, socket); !saved {
 			ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
@@ -183,7 +183,7 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 		}
 	}
 
-	if len(sockets) > 0 {
+	if count > 0 {
 		// generate and send a SSE message
 		msg := Message{
 			Content:    "sockets updated",
@@ -191,6 +191,7 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 			Timestamp:  time.Now().UnixNano(),
 		}
 
+		log.Println("sockets updated message sent")
 		Dispatcher.NewEvent(msg)
 	}
 
@@ -204,16 +205,16 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 
 // MaintenanceToggleSocketByKey sets maintenance mode of a socket by its ID
 //
-//  @Summary      Togle maintenance mode
-//  @Description  toggle maintenance mode
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Param        key  query     string  false  "name socket by key"
-//  @Success      200  {array}   dish.Socket
-//  @Failure      404  {object}  dish.Socket
-//  @Failure      500  {object}  dish.Socket
-//  @Router       /dish/sockets/:key/maintenance [put]
+//	@Summary      Togle maintenance mode
+//	@Description  toggle maintenance mode
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Param        key  query     string  false  "name socket by key"
+//	@Success      200  {array}   dish.Socket
+//	@Failure      404  {object}  dish.Socket
+//	@Failure      500  {object}  dish.Socket
+//	@Router       /dish/sockets/:key/maintenance [put]
 func MaintenanceToggleSocketByKey(ctx *gin.Context) {
 	var id string = ctx.Param("key")
 	var updatedSocket Socket
@@ -262,16 +263,16 @@ func MaintenanceToggleSocketByKey(ctx *gin.Context) {
 
 // MuteToggleSocketByKey sets muted state of a socket by its ID
 //
-//  @Summary      Togle muted state
-//  @Description  toggle muted state
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Param        key  query     string  false  "name socket by key"
-//  @Success      200  {array}   dish.Socket
-//  @Failure      404  {object}  dish.Socket
-//  @Failure      500  {object}  dish.Socket
-//  @Router       /dish/sockets/:key/mute [put]
+//	@Summary      Togle muted state
+//	@Description  toggle muted state
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Param        key  query     string  false  "name socket by key"
+//	@Success      200  {array}   dish.Socket
+//	@Failure      404  {object}  dish.Socket
+//	@Failure      500  {object}  dish.Socket
+//	@Router       /dish/sockets/:key/mute [put]
 func MuteToggleSocketByKey(ctx *gin.Context) {
 	var id string = ctx.Param("key")
 	var updatedSocket Socket
@@ -320,13 +321,13 @@ func MuteToggleSocketByKey(ctx *gin.Context) {
 
 // SubscribeToSSEStream sets muted state of a socket by its ID
 //
-//  @Summary      Subscribe to dish SSE dispatcher
-//  @Description  subscribe to dish SSE dispatcher
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Success      200  {array}   dish.Message
-//  @Router       /dish/sockets/status [get]
+// @Summary      Subscribe to dish SSE dispatcher
+// @Description  subscribe to dish SSE dispatcher
+// @Tags         dish
+// @Accept       json
+// @Produce      json
+// @Success      200  {array}   dish.Message
+// @Router       /dish/sockets/status [get]
 func SubscribeToSSEStream(ctx *gin.Context) {
 	// initialize client channel
 	clientChan := make(ClientChan)
@@ -340,7 +341,8 @@ func SubscribeToSSEStream(ctx *gin.Context) {
 	}()
 
 	// set the stream headers
-	ctx.Writer.Header().Set("Content-Type", "text/event-stream")
+	//ctx.Writer.Header().Set("Content-Type", "text/event-stream")
+	ctx.Writer.Header().Set("Content-Type", "application/json")
 	ctx.Writer.Header().Set("Cache-Control", "no-cache")
 	ctx.Writer.Header().Set("Connection", "keep-alive")
 	ctx.Writer.Header().Set("Transfer-Encoding", "chunked")
@@ -348,14 +350,14 @@ func SubscribeToSSEStream(ctx *gin.Context) {
 	ctx.Stream(func(w io.Writer) bool {
 		// Stream message to client from message channel
 		if msg, ok := <-clientChan; ok {
-			m, err := json.Marshal(msg)
-			if err != nil {
-				log.Println("marshalling failed, invalid message")
-				return false
-			}
+			//m, err := json.Marshal(msg)
+			//if err != nil {
+			//log.Println("marshalling failed, invalid message")
+			//return false
+			//}
 
-			ctx.SSEvent("message", string(m))
-			//log.Println("wrote:", m)
+			ctx.SSEvent("message", msg.Content)
+			log.Println("wrote:", msg.Content)
 			return true
 		}
 		return false
@@ -370,13 +372,13 @@ func SubscribeToSSEStream(ctx *gin.Context) {
 
 // GetIncidentList lists all available incidents
 //
-//  @Summary      Get all incidents
-//  @Description  get all incidents
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Success      200  {array}   dish.Incident
-//  @Router       /dish/incidents [get]
+//	@Summary      Get all incidents
+//	@Description  get all incidents
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Success      200  {array}   dish.Incident
+//	@Router       /dish/incidents [get]
 func GetIncidentList(ctx *gin.Context) {
 	core.PrintAllRootItems(ctx, CacheIncidents, pkgName)
 	return
@@ -384,17 +386,17 @@ func GetIncidentList(ctx *gin.Context) {
 
 // PostNewIncidentByKey produces and broadcasts a new incident to be happening
 //
-//  @Summary      Add new incident
-//  @Description  add new incident
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Param        key  query     dish.Incident true "socket body"
-//  @Success      201  {array}   dish.Incident
-//  @Failure      400  {object}  dish.Incident
-//  @Failure      409  {object}  dish.Incident
-//  @Failure      500  {object}  dish.Incident
-//  @Router       /dish/incidents/{key} [post]
+//	@Summary      Add new incident
+//	@Description  add new incident
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Param        key  query     dish.Incident true "socket body"
+//	@Success      201  {array}   dish.Incident
+//	@Failure      400  {object}  dish.Incident
+//	@Failure      409  {object}  dish.Incident
+//	@Failure      500  {object}  dish.Incident
+//	@Router       /dish/incidents/{key} [post]
 func PostNewIncidentByKey(ctx *gin.Context) {
 	core.AddNewItemByParam(ctx, CacheIncidents, pkgName, Incident{})
 	return
@@ -402,17 +404,17 @@ func PostNewIncidentByKey(ctx *gin.Context) {
 
 // UpdateIncidentByKey update requested incident
 //
-//  @Summary      Update incident by its key
-//  @Description  update incident by its key
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Param        key  query     dish.Incident.ID true "socket body"
-//  @Success      200  {array}   dish.Incident
-//  @Failure      400  {object}  dish.Incident
-//  @Failure      404  {object}  dish.Incident
-//  @Failure      500  {object}  dish.Incident
-//  @Router       /dish/incidents/{key} [put]
+//	@Summary      Update incident by its key
+//	@Description  update incident by its key
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Param        key  query     dish.Incident.ID true "socket body"
+//	@Success      200  {array}   dish.Incident
+//	@Failure      400  {object}  dish.Incident
+//	@Failure      404  {object}  dish.Incident
+//	@Failure      500  {object}  dish.Incident
+//	@Router       /dish/incidents/{key} [put]
 func UpdateIncidentByKey(ctx *gin.Context) {
 	core.UpdateItemByParam(ctx, CacheIncidents, pkgName, Incident{})
 	return
@@ -420,16 +422,16 @@ func UpdateIncidentByKey(ctx *gin.Context) {
 
 // DeleteIncidentByKey deletes given incident
 //
-//  @Summary      Delete incident by its key
-//  @Description  delete incident by its key
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Param        key  query     dish.Incident.ID true "socket name"
-//  @Success      200  {array}   dish.Incident
-//  @Failure      404  {object}  dish.Incident
-//  @Failure      500  {object}  dish.Incident
-//  @Router       /dish/incidents/{key} [delete]
+//	@Summary      Delete incident by its key
+//	@Description  delete incident by its key
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Param        key  query     dish.Incident.ID true "socket name"
+//	@Success      200  {array}   dish.Incident
+//	@Failure      404  {object}  dish.Incident
+//	@Failure      500  {object}  dish.Incident
+//	@Router       /dish/incidents/{key} [delete]
 func DeleteIncidentByKey(ctx *gin.Context) {
 	core.DeleteItemByParam(ctx, CacheIncidents, pkgName)
 	return
@@ -437,15 +439,15 @@ func DeleteIncidentByKey(ctx *gin.Context) {
 
 // GetIncidentListBySocketID returns list of incidents for such Socket.ID
 //
-//  @Summary      Get incident list by socket ID
-//  @Description  get incident list by socket ID
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Param        key  query  dish.Socket.ID true "socket name"
-//  @Success      200  {array}   dish.Incident
-//  @Failure      404  {object}  dish.Incident
-//  @Router       /dish/incidents/{key} [get]
+//	@Summary      Get incident list by socket ID
+//	@Description  get incident list by socket ID
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Param        key  query  dish.Socket.ID true "socket name"
+//	@Success      200  {array}   dish.Incident
+//	@Failure      404  {object}  dish.Incident
+//	@Router       /dish/incidents/{key} [get]
 func GetIncidentListBySocketID(ctx *gin.Context) {
 	var key string = ctx.Param("key")
 	//var exportedIncidents = make(map[string]Incident)
@@ -496,14 +498,14 @@ func GetIncidentListBySocketID(ctx *gin.Context) {
 
 // GetDishRoot returns all possible items of dish package
 //
-//  @Summary      Get all root items
-//  @Description  get all root items
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Param        key  query     dish.Incident.ID true "socket name"
-//  @Success      200  {object}   dish.Root
-//  @Router       /dish [get]
+//	@Summary      Get all root items
+//	@Description  get all root items
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Param        key  query     dish.Incident.ID true "socket name"
+//	@Success      200  {object}   dish.Root
+//	@Router       /dish [get]
 func GetDishRoot(ctx *gin.Context) {
 	incidents, _ := CacheIncidents.GetAll()
 	sockets, _ := CacheSockets.GetAll()
@@ -518,15 +520,15 @@ func GetDishRoot(ctx *gin.Context) {
 
 // PostDumpRestore is a helper function to load all root items
 //
-//  @Summary      Restore dish package items
-//  @Description  restore dish package items
-//  @Tags         dish
-//  @Accept       json
-//  @Produce      json
-//  @Success      201  {array}   dish.Incident
-//  @Failure      404  {array}   dish.Incident
-//  @Failure      500  {array}   dish.Incident
-//  @Router       /dish/restore [post]
+//	@Summary      Restore dish package items
+//	@Description  restore dish package items
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Success      201  {array}   dish.Incident
+//	@Failure      404  {array}   dish.Incident
+//	@Failure      500  {array}   dish.Incident
+//	@Router       /dish/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
 	var counter []int = []int{0, 0}
 
