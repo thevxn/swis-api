@@ -191,9 +191,8 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 			Timestamp:  time.Now().UnixNano(),
 		}
 
-		//log.Println("sockets updated message sent")
-		//Dispatcher.NewEvent(msg)
-		Dispatcher.Message <- msg
+		// emit an server-sent event to subscribers
+		Dispatcher.NewMessage(msg)
 	}
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
@@ -331,7 +330,7 @@ func MuteToggleSocketByKey(ctx *gin.Context) {
 // @Router       /dish/sockets/status [get]
 func GetSSEvents(ctx *gin.Context) {
 	// initialize client channel
-	clientChan := make(chan Message)
+	clientChan := make(chan string)
 
 	// send new connection to event server
 	Dispatcher.NewClients <- clientChan

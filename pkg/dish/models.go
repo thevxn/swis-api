@@ -89,12 +89,12 @@ type ClientChan chan Message
 // Stream is a SSE data structure
 type Stream struct {
 	// Message is a string of volatile length that carries the very event saying and its metadata.
-	Message chan Message `json:"message"`
+	Message chan string `json:"message"`
 
 	// Client connections monitoring
-	NewClients    chan chan Message
-	ClosedClients chan chan Message
-	TotalClients  map[chan Message]bool
+	NewClients    chan chan string
+	ClosedClients chan chan string
+	TotalClients  map[chan string]bool
 }
 
 type Message struct {

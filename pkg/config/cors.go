@@ -12,6 +12,7 @@ var origins map[string]bool = map[string]bool{
 	"http://swjango.savla.su":    true,
 	"http://swapp.savla.su":      true,
 	"http://swapi-docs.savla.su": true,
+	"http://swife-xp.savla.su":   true,
 }
 
 // https://stackoverflow.com/a/29439630

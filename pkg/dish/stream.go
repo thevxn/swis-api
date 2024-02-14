@@ -1,6 +1,7 @@
 package dish
 
 import (
+	"encoding/json"
 	//"log"
 	"time"
 )
@@ -12,10 +13,10 @@ var (
 // https://github.com/gin-gonic/examples/blob/master/server-sent-event/main.go
 func NewDispatcher() (stream *Stream) {
 	stream = &Stream{
-		Message:       make(chan Message),
-		NewClients:    make(chan chan Message),
-		ClosedClients: make(chan chan Message),
-		TotalClients:  make(map[chan Message]bool),
+		Message:       make(chan string),
+		NewClients:    make(chan chan string),
+		ClosedClients: make(chan chan string),
+		TotalClients:  make(map[chan string]bool),
 	}
 
 	go stream.listen()
@@ -24,8 +25,11 @@ func NewDispatcher() (stream *Stream) {
 	return stream
 }
 
-func (stream *Stream) NewEvent(msg Message) {
-	stream.Message <- msg
+func (stream *Stream) NewMessage(msg Message) {
+	jsonMsg, err := json.Marshal(msg)
+	if err == nil {
+		stream.Message <- string(jsonMsg)
+	}
 }
 
 // https://github.com/gin-gonic/examples/blob/master/server-sent-event/main.go
@@ -57,11 +61,11 @@ func (stream *Stream) heartbeat() {
 	for {
 		if time.Now().Unix()%30 == 0 {
 			//stream.Message <- Message{
-			Dispatcher.Message <- Message{
+			Dispatcher.NewMessage(Message{
 				Content:    "heartbeat",
 				SocketList: []string{},
 				Timestamp:  time.Now().Unix(),
-			}
+			})
 
 			time.Sleep(time.Second * 1)
 		}
