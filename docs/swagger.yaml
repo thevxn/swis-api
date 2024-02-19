@@ -1005,7 +1005,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.11
+  version: 5.13.12
 paths:
   /alvax:
     get:
@@ -1973,6 +1973,19 @@ paths:
           schema:
             $ref: '#/definitions/dish.Socket'
       summary: Update socket by its ID
+      tags:
+      - dish
+  /dish/sockets/public:
+    get:
+      description: get public socket list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get public socket list
       tags:
       - dish
   /dish/sockets/results:

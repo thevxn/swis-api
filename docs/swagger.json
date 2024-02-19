@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.13.11"
+        "version": "5.13.12"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -1330,6 +1330,26 @@
                         "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/dish.Socket"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/sockets/public": {
+            "get": {
+                "description": "get public socket list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get public socket list",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }

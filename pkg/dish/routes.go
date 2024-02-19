@@ -27,6 +27,8 @@ func Routes(g *gin.RouterGroup) {
 		GetSocketList)
 	g.GET("/sockets/status",
 		GetSSEvents)
+	g.GET("/sockets/public",
+		GetSocketListPublic)
 	g.GET("/sockets/:host",
 		GetSocketListByHost)
 	g.POST("/sockets/:key",

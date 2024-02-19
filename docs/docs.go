@@ -1341,6 +1341,26 @@ const docTemplate = `{
                 }
             }
         },
+        "/dish/sockets/public": {
+            "get": {
+                "description": "get public socket list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get public socket list",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/dish/sockets/results": {
             "post": {
                 "description": "batch update socket's healthy state.",
@@ -4584,7 +4604,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.11",
+	Version:          "5.13.12",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

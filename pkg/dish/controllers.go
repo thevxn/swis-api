@@ -76,6 +76,39 @@ func DeleteSocketByKey(ctx *gin.Context) {
 	return
 }
 
+// @Summary Get public socket list
+// @Description get public socket list
+// @Tags dish
+// @Produce json
+// @Success 200 {string} string	"ok"
+// @Router /dish/sockets/public [get]
+func GetSocketListPublic(ctx *gin.Context) {
+	var exportedSockets = make(map[string]Socket)
+	var counter int = 0
+
+	rawSocketsMap, _ := CacheSockets.GetAll()
+
+	for _, rawSocket := range rawSocketsMap {
+		socket, ok := rawSocket.(Socket)
+		if !ok {
+			continue
+		}
+
+		if socket.Public {
+			exportedSockets[socket.ID] = socket
+			counter++
+		}
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"count":   counter,
+		"items":   exportedSockets,
+		"message": "ok, dumping public sockets",
+	})
+	return
+}
+
 // @Summary Get socket list by host
 // @Description get socket list by Host
 // @Tags dish
@@ -97,27 +130,17 @@ func GetSocketListByHost(ctx *gin.Context) {
 			continue
 		}
 
-		// nasty tweak incoming
-		if (contains(socket.DishTarget, host) && !socket.Muted) || (host == "public" && contains(socket.DishTarget, host) && socket.Maintenance) {
+		if contains(socket.DishTarget, host) && !socket.Muted {
 			exportedSockets[socket.ID] = socket
 			counter++
 		}
 	}
 
-	if len(exportedSockets) > 0 {
-		ctx.IndentedJSON(http.StatusOK, gin.H{
-			"code":    http.StatusOK,
-			"count":   counter,
-			"items":   exportedSockets,
-			"message": "ok, dumping socket by host",
-			"host":    host,
-		})
-		return
-	}
-
-	ctx.IndentedJSON(http.StatusNotFound, gin.H{
-		"code":    http.StatusNotFound,
-		"message": "no sockets for given 'host'",
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"count":   counter,
+		"items":   exportedSockets,
+		"message": "ok, dumping sockets by host",
 		"host":    host,
 	})
 	return
