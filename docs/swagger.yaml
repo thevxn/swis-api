@@ -1005,7 +1005,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.8
+  version: 5.13.11
 paths:
   /alvax:
     get:
@@ -1836,7 +1836,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dish.Socket'
-      summary: Togle maintenance mode
+      summary: Toggle maintenance mode
       tags:
       - dish
   /dish/sockets/:key/mute:
@@ -1866,7 +1866,37 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dish.Socket'
-      summary: Togle muted state
+      summary: Toggle muted state
+      tags:
+      - dish
+  /dish/sockets/:key/public:
+    put:
+      consumes:
+      - application/json
+      description: toggle public state
+      parameters:
+      - description: name socket by key
+        in: query
+        name: key
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dish.Socket'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dish.Socket'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dish.Socket'
+      summary: Toggle public state
       tags:
       - dish
   /dish/sockets/{host}:

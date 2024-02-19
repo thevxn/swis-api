@@ -39,6 +39,8 @@ func Routes(g *gin.RouterGroup) {
 		MuteToggleSocketByKey)
 	g.PUT("/sockets/:key/maintenance",
 		MaintenanceToggleSocketByKey)
+	g.PUT("/sockets/:key/public",
+		PublicToggleSocketByKey)
 	g.DELETE("/sockets/:key",
 		DeleteSocketByKey)
 	g.POST("/sockets/results",

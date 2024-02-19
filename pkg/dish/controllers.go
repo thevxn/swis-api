@@ -205,7 +205,7 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 
 // MaintenanceToggleSocketByKey sets maintenance mode of a socket by its ID
 //
-//	@Summary      Togle maintenance mode
+//	@Summary      Toggle maintenance mode
 //	@Description  toggle maintenance mode
 //	@Tags         dish
 //	@Accept       json
@@ -263,7 +263,7 @@ func MaintenanceToggleSocketByKey(ctx *gin.Context) {
 
 // MuteToggleSocketByKey sets muted state of a socket by its ID
 //
-//	@Summary      Togle muted state
+//	@Summary      Toggle muted state
 //	@Description  toggle muted state
 //	@Tags         dish
 //	@Accept       json
@@ -314,6 +314,60 @@ func MuteToggleSocketByKey(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"message": "socket mute toggle pressed!",
+		"socket":  updatedSocket,
+	})
+	return
+}
+
+// PublicToggleSocketByKey sets public state of a socket by its ID
+//
+//	@Summary      Toggle public state
+//	@Description  toggle public state
+//	@Tags         dish
+//	@Accept       json
+//	@Produce      json
+//	@Param        key  query     string  false  "name socket by key"
+//	@Success      200  {array}   dish.Socket
+//	@Failure      404  {object}  dish.Socket
+//	@Failure      500  {object}  dish.Socket
+//	@Router       /dish/sockets/:key/public [put]
+func PublicToggleSocketByKey(ctx *gin.Context) {
+	var id string = ctx.Param("key")
+	var updatedSocket Socket
+
+	rawSocket, ok := CacheSockets.Get(id)
+	if !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "socket not found",
+			"id":      id,
+		})
+		return
+	}
+
+	updatedSocket, ok = rawSocket.(Socket)
+	if !ok {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot assert data type, database internal error",
+		})
+		return
+	}
+
+	// inverse the Muted field value
+	updatedSocket.Public = !updatedSocket.Public
+
+	if saved := CacheSockets.Set(updatedSocket.ID, updatedSocket); !saved {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "socket couldn't be saved to database",
+		})
+		return
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "socket public toggle pressed!",
 		"socket":  updatedSocket,
 	})
 	return
