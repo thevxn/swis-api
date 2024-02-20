@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.13.13
+// @version 5.13.14
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -86,6 +86,14 @@ func main() {
 		c.String(http.StatusOK, "pong")
 	})
 
+	// default 404 route
+	router.NoRoute(func(c *gin.Context) {
+		c.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "unknown route, or disallowed method",
+		})
+	})
+
 	// use custom swapi Auth middlewares --- token auth
 	// AuthenticationMiddleware takes care of token verification against loaded Users data structure.
 	// AuthorizationMiddleware checks Access Control List (ACL) and the right for dangerous methods usage.
@@ -110,14 +118,6 @@ func main() {
 				"acl":   auth.Params.ACL,
 				"roles": auth.Params.Roles,
 			},
-		})
-	})
-
-	// default 404 route
-	router.NoRoute(func(c *gin.Context) {
-		c.IndentedJSON(http.StatusNotFound, gin.H{
-			"code":    http.StatusNotFound,
-			"message": "unknown route, or disallowed method",
 		})
 	})
 
