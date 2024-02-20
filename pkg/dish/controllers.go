@@ -4,6 +4,7 @@ import (
 	//"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
 	"time"
 
 	//"go.savla.dev/dish/pkg/socket"
@@ -464,7 +465,7 @@ func GetIncidentList(ctx *gin.Context) {
 	return
 }
 
-// PostNewIncidentByKey produces and broadcasts a new incident to be happening
+// PostNewIncident produces and broadcasts a new incident to be happening
 //
 // @Summary      Add new incident
 // @Description  add new incident
@@ -472,13 +473,53 @@ func GetIncidentList(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        key  query     dish.Incident true "socket body"
-// @Success      201  {array}   dish.Incident
+// @Success      201  {object}   dish.Incident
 // @Failure      400  {object}  dish.Incident
 // @Failure      409  {object}  dish.Incident
 // @Failure      500  {object}  dish.Incident
-// @Router       /dish/incidents/{key} [post]
-func PostNewIncidentByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, CacheIncidents, pkgName, Incident{})
+// @Router       /dish/incidents [post]
+func PostNewIncident(ctx *gin.Context) {
+	//core.AddNewItemByParam(ctx, CacheIncidents, pkgName, Incident{})
+
+	var id string
+
+	// loop until new incident ID is generated and usable
+	for {
+		id = strconv.FormatInt(time.Now().Unix(), 10)
+
+		_, found := CacheIncidents.Get(id)
+		if !found {
+			break
+		}
+	}
+
+	var newIncident Incident
+
+	if err := ctx.BindJSON(&newIncident); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"message": "cannot parse input JSON stream",
+		})
+		return
+	}
+
+	newIncident.ID = id
+
+	if saved := CacheIncidents.Set(id, newIncident); !saved {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "incident couldn't be saved to database",
+		})
+		return
+	}
+
+	ctx.IndentedJSON(http.StatusCreated, gin.H{
+		"code":     http.StatusCreated,
+		"message":  "new incident created",
+		"incident": newIncident,
+		"id":       id,
+	})
 	return
 }
 

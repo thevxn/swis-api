@@ -662,8 +662,8 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "Incident ID, timestamp usually.",
+                        "type": "string",
+                        "description": "Incident ID, stringified timestamp usually.",
                         "name": "id",
                         "in": "query"
                     },
@@ -723,6 +723,95 @@ const docTemplate = `{
                             "items": {
                                 "$ref": "#/definitions/dish.Incident"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new incident",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Add new incident",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Other commentary to the incident.",
+                        "name": "comment",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Further details about the incident like place, state of operation etc.",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Estimated end of incident handling/resolving.",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Incident ID, stringified timestamp usually.",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Incident name.",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Reason of the incident that happened.",
+                        "name": "reason",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID of the referencing socket(s).\nSocketID []string ` + "`" + `json:\"socket_id\"` + "`" + `",
+                        "name": "socket_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The very start datetime of such incident.",
+                        "name": "start_date",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dish.Incident"
                         }
                     }
                 }
@@ -900,8 +989,8 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "Incident ID, timestamp usually.",
+                        "type": "string",
+                        "description": "Incident ID, stringified timestamp usually.",
                         "name": "id",
                         "in": "query"
                     },
@@ -960,98 +1049,6 @@ const docTemplate = `{
                     }
                 }
             },
-            "post": {
-                "description": "add new incident",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Add new incident",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Other commentary to the incident.",
-                        "name": "comment",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Further details about the incident like place, state of operation etc.",
-                        "name": "desc",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Estimated end of incident handling/resolving.",
-                        "name": "end_date",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Incident ID, timestamp usually.",
-                        "name": "id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Incident name.",
-                        "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Reason of the incident that happened.",
-                        "name": "reason",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "ID of the referencing socket(s).\nSocketID []string ` + "`" + `json:\"socket_id\"` + "`" + `",
-                        "name": "socket_id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "The very start datetime of such incident.",
-                        "name": "start_date",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/dish.Incident"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Incident"
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Incident"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/dish.Incident"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "delete incident by its key",
                 "consumes": [
@@ -1084,8 +1081,8 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "Incident ID, timestamp usually.",
+                        "type": "string",
+                        "description": "Incident ID, stringified timestamp usually.",
                         "name": "id",
                         "in": "query"
                     },
@@ -3485,8 +3482,8 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "id": {
-                    "description": "Incident ID, timestamp usually.",
-                    "type": "integer"
+                    "description": "Incident ID, stringified timestamp usually.",
+                    "type": "string"
                 },
                 "name": {
                     "description": "Incident name.",
@@ -4604,7 +4601,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.13",
+	Version:          "5.13.15",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

@@ -14,8 +14,8 @@ func Routes(g *gin.RouterGroup) {
 		GetIncidentList)
 	g.GET("/incidents/:key",
 		GetIncidentListBySocketID)
-	g.POST("/incidents/:key",
-		PostNewIncidentByKey)
+	g.POST("/incidents",
+		PostNewIncident)
 	g.PUT("/incidents/:key",
 		UpdateIncidentByKey)
 	g.PATCH("/incidents/:key",

@@ -58,8 +58,8 @@ type Socket struct {
 }
 
 type Incident struct {
-	// Incident ID, timestamp usually.
-	ID int64 `json:"id"`
+	// Incident ID, stringified timestamp usually.
+	ID string `json:"id"`
 
 	// Incident name.
 	Name string `json:"name"`

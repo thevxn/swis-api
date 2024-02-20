@@ -180,8 +180,8 @@ definitions:
         description: Estimated end of incident handling/resolving.
         type: integer
       id:
-        description: Incident ID, timestamp usually.
-        type: integer
+        description: Incident ID, stringified timestamp usually.
+        type: string
       name:
         description: Incident name.
         type: string
@@ -1005,7 +1005,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.13
+  version: 5.13.15
 paths:
   /alvax:
     get:
@@ -1425,10 +1425,10 @@ paths:
         in: query
         name: end_date
         type: integer
-      - description: Incident ID, timestamp usually.
+      - description: Incident ID, stringified timestamp usually.
         in: query
         name: id
-        type: integer
+        type: string
       - description: Incident name.
         in: query
         name: name
@@ -1474,6 +1474,68 @@ paths:
       summary: Get all incidents
       tags:
       - dish
+    post:
+      consumes:
+      - application/json
+      description: add new incident
+      parameters:
+      - description: Other commentary to the incident.
+        in: query
+        name: comment
+        type: string
+      - description: Further details about the incident like place, state of operation
+          etc.
+        in: query
+        name: desc
+        type: string
+      - description: Estimated end of incident handling/resolving.
+        in: query
+        name: end_date
+        type: integer
+      - description: Incident ID, stringified timestamp usually.
+        in: query
+        name: id
+        type: string
+      - description: Incident name.
+        in: query
+        name: name
+        type: string
+      - description: Reason of the incident that happened.
+        in: query
+        name: reason
+        type: string
+      - description: |-
+          ID of the referencing socket(s).
+          SocketID []string `json:"socket_id"`
+        in: query
+        name: socket_id
+        type: string
+      - description: The very start datetime of such incident.
+        in: query
+        name: start_date
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dish.Incident'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dish.Incident'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/dish.Incident'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dish.Incident'
+      summary: Add new incident
+      tags:
+      - dish
   /dish/incidents/{key}:
     delete:
       consumes:
@@ -1493,10 +1555,10 @@ paths:
         in: query
         name: end_date
         type: integer
-      - description: Incident ID, timestamp usually.
+      - description: Incident ID, stringified timestamp usually.
         in: query
         name: id
-        type: integer
+        type: string
       - description: Incident name.
         in: query
         name: name
@@ -1639,70 +1701,6 @@ paths:
       summary: Get incident list by socket ID
       tags:
       - dish
-    post:
-      consumes:
-      - application/json
-      description: add new incident
-      parameters:
-      - description: Other commentary to the incident.
-        in: query
-        name: comment
-        type: string
-      - description: Further details about the incident like place, state of operation
-          etc.
-        in: query
-        name: desc
-        type: string
-      - description: Estimated end of incident handling/resolving.
-        in: query
-        name: end_date
-        type: integer
-      - description: Incident ID, timestamp usually.
-        in: query
-        name: id
-        type: integer
-      - description: Incident name.
-        in: query
-        name: name
-        type: string
-      - description: Reason of the incident that happened.
-        in: query
-        name: reason
-        type: string
-      - description: |-
-          ID of the referencing socket(s).
-          SocketID []string `json:"socket_id"`
-        in: query
-        name: socket_id
-        type: string
-      - description: The very start datetime of such incident.
-        in: query
-        name: start_date
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            items:
-              $ref: '#/definitions/dish.Incident'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/dish.Incident'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/dish.Incident'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dish.Incident'
-      summary: Add new incident
-      tags:
-      - dish
     put:
       consumes:
       - application/json
@@ -1721,10 +1719,10 @@ paths:
         in: query
         name: end_date
         type: integer
-      - description: Incident ID, timestamp usually.
+      - description: Incident ID, stringified timestamp usually.
         in: query
         name: id
-        type: integer
+        type: string
       - description: Incident name.
         in: query
         name: name
