@@ -16,7 +16,7 @@ import (
 var (
 	CacheIncidents *core.Cache
 	CacheSockets   *core.Cache
-	eventChannel   chan string
+	Dispatcher     *Stream
 	pkgName        string = "dish"
 )
 
@@ -26,7 +26,6 @@ var (
 
 */
 
-// Get all sockets loaded.
 // @Summary Get all sockets list
 // @Description get socket list, socket array
 // @Tags dish
@@ -167,7 +166,8 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 		return
 	}
 
-	var sockets []string
+	var socketsDown []string
+	var socketsUp []string
 	var count int = 0
 
 	for key, result := range results.Map {
@@ -190,7 +190,11 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 
 		// add socket ID to the exported array (via event dispatcher) if changed its state only
 		if socket.Healthy != result {
-			sockets = append(sockets, socket.ID)
+			if result {
+				socketsUp = append(socketsUp, socket.ID)
+			} else {
+				socketsDown = append(socketsDown, socket.ID)
+			}
 			count++
 			socket.Healthy = result
 		}
@@ -208,15 +212,29 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 	}
 
 	if count > 0 {
-		// generate and send a SSE message
-		msg := Message{
-			Content:    "sockets updated",
-			SocketList: sockets,
-			Timestamp:  time.Now().UnixNano(),
+		if len(socketsUp) > 0 {
+			// generate and send a SSE message
+			msg := Message{
+				Content:    "socket-up",
+				SocketList: socketsUp,
+				Timestamp:  time.Now().UnixNano(),
+			}
+
+			// emit an server-sent event to subscribers
+			Dispatcher.NewMessage(msg)
 		}
 
-		// emit an server-sent event to subscribers
-		Dispatcher.NewMessage(msg)
+		if len(socketsDown) > 0 {
+			// generate and send a SSE message
+			msg := Message{
+				Content:    "socket-down",
+				SocketList: socketsDown,
+				Timestamp:  time.Now().UnixNano(),
+			}
+
+			// emit an server-sent event to subscribers
+			Dispatcher.NewMessage(msg)
+		}
 	}
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{

@@ -6,10 +6,6 @@ import (
 	"time"
 )
 
-var (
-	Dispatcher *Stream
-)
-
 // https://github.com/gin-gonic/examples/blob/master/server-sent-event/main.go
 func NewDispatcher() (stream *Stream) {
 	stream = &Stream{
