@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.13.17"
+        "version": "5.13.18"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -818,6 +818,58 @@
                         "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/dish.Incident"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/incidents/global": {
+            "get": {
+                "description": "get global incident list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get global incident list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/incidents/public": {
+            "get": {
+                "description": "get public incident list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get public incident list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
                         }
                     }
                 }

@@ -829,6 +829,58 @@ const docTemplate = `{
                 }
             }
         },
+        "/dish/incidents/global": {
+            "get": {
+                "description": "get global incident list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get global incident list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/incidents/public": {
+            "get": {
+                "description": "get public incident list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get public incident list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dish.Incident"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/dish/incidents/{key}": {
             "get": {
                 "description": "get incident list by socket ID",
@@ -4629,7 +4681,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.17",
+	Version:          "5.13.18",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

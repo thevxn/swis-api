@@ -584,7 +584,7 @@ func DeleteIncidentByKey(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Success      200  {array}   dish.Incident
-// @Router       /dish/incidents/{key} [get]
+// @Router       /dish/incidents/global [get]
 func GetGlobalIncidentList(ctx *gin.Context) {
 	var exportedIncidents []Incident = []Incident{}
 	var counter int = 0
@@ -608,6 +608,42 @@ func GetGlobalIncidentList(ctx *gin.Context) {
 		"count":   counter,
 		"items":   exportedIncidents,
 		"message": "ok, dumping global incidents list",
+	})
+	return
+}
+
+// GetPublicIncidentList returns list of public incidents only
+//
+// @Summary      Get public incident list
+// @Description  get public incident list
+// @Tags         dish
+// @Accept       json
+// @Produce      json
+// @Success      200  {array}   dish.Incident
+// @Router       /dish/incidents/public [get]
+func GetPublicIncidentList(ctx *gin.Context) {
+	var exportedIncidents []Incident = []Incident{}
+	var counter int = 0
+
+	rawIncidentsMap, _ := CacheIncidents.GetAll()
+
+	for _, rawIncident := range rawIncidentsMap {
+		incident, ok := rawIncident.(Incident)
+		if !ok {
+			continue
+		}
+
+		if incident.Public {
+			exportedIncidents = append(exportedIncidents, incident)
+			counter++
+		}
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"count":   counter,
+		"items":   exportedIncidents,
+		"message": "ok, dumping public incidents list",
 	})
 	return
 }
