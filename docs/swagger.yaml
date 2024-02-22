@@ -185,6 +185,9 @@ definitions:
       name:
         description: Incident name.
         type: string
+      public:
+        description: Public indicates the state of visibility for all.
+        type: boolean
       reason:
         description: Reason of the incident that happened.
         type: string
@@ -1005,7 +1008,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.15
+  version: 5.13.17
 paths:
   /alvax:
     get:
@@ -1433,6 +1436,10 @@ paths:
         in: query
         name: name
         type: string
+      - description: Public indicates the state of visibility for all.
+        in: query
+        name: public
+        type: boolean
       - description: Reason of the incident that happened.
         in: query
         name: reason
@@ -1500,6 +1507,10 @@ paths:
         in: query
         name: name
         type: string
+      - description: Public indicates the state of visibility for all.
+        in: query
+        name: public
+        type: boolean
       - description: Reason of the incident that happened.
         in: query
         name: reason
@@ -1563,6 +1574,10 @@ paths:
         in: query
         name: name
         type: string
+      - description: Public indicates the state of visibility for all.
+        in: query
+        name: public
+        type: boolean
       - description: Reason of the incident that happened.
         in: query
         name: reason
@@ -1727,6 +1742,10 @@ paths:
         in: query
         name: name
         type: string
+      - description: Public indicates the state of visibility for all.
+        in: query
+        name: public
+        type: boolean
       - description: Reason of the incident that happened.
         in: query
         name: reason

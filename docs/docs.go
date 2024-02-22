@@ -674,6 +674,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "description": "Public indicates the state of visibility for all.",
+                        "name": "public",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "Reason of the incident that happened.",
                         "name": "reason",
@@ -768,6 +774,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Public indicates the state of visibility for all.",
+                        "name": "public",
                         "in": "query"
                     },
                     {
@@ -1001,6 +1013,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "description": "Public indicates the state of visibility for all.",
+                        "name": "public",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "Reason of the incident that happened.",
                         "name": "reason",
@@ -1090,6 +1108,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Public indicates the state of visibility for all.",
+                        "name": "public",
                         "in": "query"
                     },
                     {
@@ -3489,6 +3513,10 @@ const docTemplate = `{
                     "description": "Incident name.",
                     "type": "string"
                 },
+                "public": {
+                    "description": "Public indicates the state of visibility for all.",
+                    "type": "boolean"
+                },
                 "reason": {
                     "description": "Reason of the incident that happened.",
                     "type": "string"
@@ -4601,7 +4629,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.15",
+	Version:          "5.13.17",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

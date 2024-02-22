@@ -12,6 +12,8 @@ func Routes(g *gin.RouterGroup) {
 
 	g.GET("/incidents",
 		GetIncidentList)
+	g.GET("/incidents/global",
+		GetGlobalIncidentList)
 	g.GET("/incidents/:key",
 		GetIncidentListBySocketID)
 	g.POST("/incidents",

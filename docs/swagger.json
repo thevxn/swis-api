@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.13.15"
+        "version": "5.13.17"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -668,6 +668,12 @@
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "description": "Public indicates the state of visibility for all.",
+                        "name": "public",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "Reason of the incident that happened.",
                         "name": "reason",
@@ -762,6 +768,12 @@
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Public indicates the state of visibility for all.",
+                        "name": "public",
                         "in": "query"
                     },
                     {
@@ -995,6 +1007,12 @@
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "description": "Public indicates the state of visibility for all.",
+                        "name": "public",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "Reason of the incident that happened.",
                         "name": "reason",
@@ -1084,6 +1102,12 @@
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Public indicates the state of visibility for all.",
+                        "name": "public",
                         "in": "query"
                     },
                     {
@@ -3482,6 +3506,10 @@
                 "name": {
                     "description": "Incident name.",
                     "type": "string"
+                },
+                "public": {
+                    "description": "Public indicates the state of visibility for all.",
+                    "type": "boolean"
                 },
                 "reason": {
                     "description": "Reason of the incident that happened.",

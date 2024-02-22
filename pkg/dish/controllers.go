@@ -576,6 +576,42 @@ func DeleteIncidentByKey(ctx *gin.Context) {
 	return
 }
 
+// GetGlobalIncidentList returns list of global incidents (no socketID assigned)
+//
+// @Summary      Get global incident list
+// @Description  get global incident list
+// @Tags         dish
+// @Accept       json
+// @Produce      json
+// @Success      200  {array}   dish.Incident
+// @Router       /dish/incidents/{key} [get]
+func GetGlobalIncidentList(ctx *gin.Context) {
+	var exportedIncidents []Incident = []Incident{}
+	var counter int = 0
+
+	rawIncidentsMap, _ := CacheIncidents.GetAll()
+
+	for _, rawIncident := range rawIncidentsMap {
+		incident, ok := rawIncident.(Incident)
+		if !ok {
+			continue
+		}
+
+		if incident.SocketID == "" {
+			exportedIncidents = append(exportedIncidents, incident)
+			counter++
+		}
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"count":   counter,
+		"items":   exportedIncidents,
+		"message": "ok, dumping global incidents list",
+	})
+	return
+}
+
 // GetIncidentListBySocketID returns list of incidents for such Socket.ID
 //
 // @Summary      Get incident list by socket ID

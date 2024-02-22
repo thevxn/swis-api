@@ -80,6 +80,9 @@ type Incident struct {
 	// Reason of the incident that happened.
 	Reason string `json:"reason"`
 
+	// Public indicates the state of visibility for all.
+	Public bool `json:"public" default:false`
+
 	// Other commentary to the incident.
 	Comment string `json:"comment"`
 }
