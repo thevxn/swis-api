@@ -3912,6 +3912,9 @@ const docTemplate = `{
                     "description": "proxy role",
                     "type": "boolean"
                 },
+                "is_cdn": {
+                    "type": "boolean"
+                },
                 "is_edge_relay": {
                     "description": "postfix role",
                     "type": "boolean"
@@ -4681,7 +4684,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.18",
+	Version:          "5.13.19",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

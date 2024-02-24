@@ -211,6 +211,7 @@ type Configuration struct {
 
 	// proxy role
 	IsBehindCf             bool   `json:"is_behind_cloudflare" yaml:"is_behind_cloudflare" default:false`
+	IsCDN                  bool   `json:"is_cdn" yaml:"is_cdn" defualt:false`
 	NginxPresent           bool   `json:"nginx_present" yaml:"ngnix_present" default:false`
 	NginxUseGeoIP          bool   `json:"use_geoip" yaml:"use_geoip" default:false`
 	TraefikPresent         bool   `json:"traefik_present" yaml:"traefik_present" default:true`

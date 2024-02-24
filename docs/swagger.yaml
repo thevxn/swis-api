@@ -452,6 +452,8 @@ definitions:
       is_behind_cloudflare:
         description: proxy role
         type: boolean
+      is_cdn:
+        type: boolean
       is_edge_relay:
         description: postfix role
         type: boolean
@@ -1008,7 +1010,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.18
+  version: 5.13.19
 paths:
   /alvax:
     get:
