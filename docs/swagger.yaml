@@ -1010,7 +1010,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.19
+  version: 5.13.20
 paths:
   /alvax:
     get:
@@ -1329,7 +1329,7 @@ paths:
       summary: Get all depots and their users/owners
       tags:
       - depots
-  /depots/{key}:
+  /depots/items/{key}:
     delete:
       description: delete depot item by its key
       parameters:
@@ -1346,6 +1346,18 @@ paths:
           schema:
             $ref: '#/definitions/depots.DepotItem'
       summary: Delete depot item by its key
+      tags:
+      - depots
+    get:
+      description: get depot item's details by :key route param
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/depots.DepotItem'
+      summary: Get depot item by key
       tags:
       - depots
     post:
@@ -1385,7 +1397,7 @@ paths:
       summary: Update depot item by its key
       tags:
       - depots
-  /depots/{owner}:
+  /depots/items/owner/{owner}:
     get:
       description: get depot item list by :owner param
       produces:

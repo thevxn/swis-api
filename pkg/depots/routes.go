@@ -7,15 +7,18 @@ import (
 // depot CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
-		GetDepotItems)
-	g.POST("/:key",
-		PostNewDepotItemByKey)
-	g.GET("/:owner",
-		GetDepotItemsByOwner)
-	g.PUT("/:key",
-		UpdateDepotItemByKey)
-	g.DELETE("/:key",
-		DeleteDepotItemByKey)
+		GetAllDepotItems)
 	g.POST("/restore",
 		PostDumpRestore)
+
+	g.POST("/items/:key",
+		PostNewDepotItemByKey)
+	g.GET("/items/:key",
+		GetDepotItemByKey)
+	g.GET("/items/owner/:owner",
+		GetDepotItemsByOwner)
+	g.PUT("/items/:key",
+		UpdateDepotItemByKey)
+	g.DELETE("/items/:key",
+		DeleteDepotItemByKey)
 }

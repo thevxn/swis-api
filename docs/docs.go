@@ -505,23 +505,48 @@ const docTemplate = `{
                 }
             }
         },
-        "/depots/restore": {
-            "post": {
-                "description": "upload depots JSON dump",
-                "consumes": [
-                    "application/json"
-                ],
+        "/depots/items/owner/{owner}": {
+            "get": {
+                "description": "get depot item list by :owner param",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "depots"
                 ],
-                "summary": "Upload depot dump backup -- restores all depot items",
-                "responses": {}
+                "summary": "Get depot item list by Owner",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/depots.DepotItem"
+                            }
+                        }
+                    }
+                }
             }
         },
-        "/depots/{key}": {
+        "/depots/items/{key}": {
+            "get": {
+                "description": "get depot item's details by :key route param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Get depot item by key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/depots.DepotItem"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "update depot by its key",
                 "produces": [
@@ -606,27 +631,20 @@ const docTemplate = `{
                 }
             }
         },
-        "/depots/{owner}": {
-            "get": {
-                "description": "get depot item list by :owner param",
+        "/depots/restore": {
+            "post": {
+                "description": "upload depots JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "depots"
                 ],
-                "summary": "Get depot item list by Owner",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/depots.DepotItem"
-                            }
-                        }
-                    }
-                }
+                "summary": "Upload depot dump backup -- restores all depot items",
+                "responses": {}
             }
         },
         "/dish": {
@@ -4684,7 +4702,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.19",
+	Version:          "5.13.20",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
