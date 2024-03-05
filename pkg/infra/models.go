@@ -206,8 +206,8 @@ type Configuration struct {
 	NetWireguarded bool `json:"is_wireguarded" yaml:"is_wireguarded" default:false`
 
 	// postfix role
-	PostfixMyhostame string `json:"postifx.myhostname" yaml:"postfix.myhostname"`
-	PostfixBanner    string `json:"postfix.smtpd_banner" yaml:"postfix.smtpd_banner"`
+	PostfixMyhostame string `json:"postfix_myhostname" yaml:"postfix_myhostname"`
+	PostfixBanner    string `json:"postfix_smtpd_banner" yaml:"postfix_smtpd_banner"`
 	HasTLS           bool   `json:"has_tls" yaml:"has_tls" default:false`
 	IsEdgeRelay      bool   `json:"is_edge_relay" yaml:"is_edge_relay" default:false`
 	IsRelay          bool   `json:"is_relay" yaml:"is_relay" default:false`

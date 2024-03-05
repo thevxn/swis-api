@@ -3976,11 +3976,11 @@ const docTemplate = `{
                 "nginx_present": {
                     "type": "boolean"
                 },
-                "postfix.smtpd_banner": {
+                "postfix_myhostname": {
+                    "description": "postfix role",
                     "type": "string"
                 },
-                "postifx.myhostname": {
-                    "description": "postfix role",
+                "postfix_smtpd_banner": {
                     "type": "string"
                 },
                 "private_cidr": {
@@ -4711,7 +4711,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.21",
+	Version:          "5.13.22",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

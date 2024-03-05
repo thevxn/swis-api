@@ -484,10 +484,10 @@ definitions:
         type: string
       nginx_present:
         type: boolean
-      postfix.smtpd_banner:
-        type: string
-      postifx.myhostname:
+      postfix_myhostname:
         description: postfix role
+        type: string
+      postfix_smtpd_banner:
         type: string
       private_cidr:
         type: integer
@@ -1016,7 +1016,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.21
+  version: 5.13.22
 paths:
   /alvax:
     get:

@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.13.21"
+        "version": "5.13.22"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -3970,11 +3970,11 @@
                 "nginx_present": {
                     "type": "boolean"
                 },
-                "postfix.smtpd_banner": {
+                "postfix_myhostname": {
+                    "description": "postfix role",
                     "type": "string"
                 },
-                "postifx.myhostname": {
-                    "description": "postfix role",
+                "postfix_smtpd_banner": {
                     "type": "string"
                 },
                 "private_cidr": {
