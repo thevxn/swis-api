@@ -3919,6 +3919,9 @@ const docTemplate = `{
                 "grafana_webui_url": {
                     "type": "string"
                 },
+                "has_tls": {
+                    "type": "boolean"
+                },
                 "install_k8s_control_node": {
                     "description": "container role",
                     "type": "boolean"
@@ -3934,7 +3937,6 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "is_edge_relay": {
-                    "description": "postfix role",
                     "type": "boolean"
                 },
                 "is_hypervisor": {
@@ -3973,6 +3975,13 @@ const docTemplate = `{
                 },
                 "nginx_present": {
                     "type": "boolean"
+                },
+                "postfix.smtpd_banner": {
+                    "type": "string"
+                },
+                "postifx.myhostname": {
+                    "description": "postfix role",
+                    "type": "string"
                 },
                 "private_cidr": {
                     "type": "integer"
@@ -4702,7 +4711,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.20",
+	Version:          "5.13.21",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
