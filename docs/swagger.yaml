@@ -444,6 +444,8 @@ definitions:
         type: boolean
       grafana_webui_url:
         type: string
+      has_tls:
+        type: boolean
       install_k8s_control_node:
         description: container role
         type: boolean
@@ -455,7 +457,6 @@ definitions:
       is_cdn:
         type: boolean
       is_edge_relay:
-        description: postfix role
         type: boolean
       is_hypervisor:
         description: hyp vars
@@ -483,6 +484,11 @@ definitions:
         type: string
       nginx_present:
         type: boolean
+      postfix.smtpd_banner:
+        type: string
+      postifx.myhostname:
+        description: postfix role
+        type: string
       private_cidr:
         type: integer
       private_gateway:
@@ -1010,7 +1016,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.20
+  version: 5.13.21
 paths:
   /alvax:
     get:
