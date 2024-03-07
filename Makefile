@@ -14,6 +14,7 @@ APP_ENVIRONMENT?=development
 PROJECT_NAME?=${APP_NAME}
 DOCKER_COMPOSE_FILE?=./docker-compose.yml
 DOCKER_COMPOSE_DEV_FILE?=./docker-compose.dev.yml
+DOCKER_COMPOSE_DEV_OVERRIDE?=./docker-compose.dev.override.yml
 SWAG_BINARY?=~/go/bin/swag
 
 APP_URL?=swapi.example.com
@@ -135,7 +136,9 @@ stop:
 .PHONY: dev
 dev: fmt
 	@echo -e "\n${YELLOW} Starting local swapi instance... ${RESET}\n"
-	@/usr/bin/docker compose --file $(DOCKER_COMPOSE_DEV_FILE) up --force-recreate --remove-orphans --build
+	@[ -f "${DOCKER_COMPOSE_DEV_OVERRIDE}"  ] \
+		&& /usr/bin/docker compose --file $(DOCKER_COMPOSE_DEV_FILE) --file ${DOCKER_COMPOSE_DEV_OVERRIDE} up --force-recreate --remove-orphans --build \
+		|| /usr/bin/docker compose --file $(DOCKER_COMPOSE_DEV_FILE) up --force-recreate --remove-orphans --build
 
 .PHONY: dump
 dump: 
