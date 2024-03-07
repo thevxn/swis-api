@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.13.24
+// @version 5.13.25
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -192,7 +192,7 @@ func main() {
 		// = 1 * 2^23 = 1,048,576 * 8
 		MaxHeaderBytes: 1 << 23,
 		// use config.CORSMiddleware()
-		DisableGeneralOptionsHandler: true,
+		//DisableGeneralOptionsHandler: true,
 	}
 	server.ListenAndServe()
 }
