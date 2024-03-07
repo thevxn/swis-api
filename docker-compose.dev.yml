@@ -52,3 +52,5 @@ services:
     #  - "traefik.http.routers.${APP_NAME}-dev.rule=Host(${APP_URLS_TRAEFIK})"
     #  - "traefik.http.services.${APP_NAME}-dev.loadbalancer.server.port=${DOCKER_DEV_PORT}"
     #  - "traefik.docker.network=${DOCKER_NETWORK_NAME}"
+    #  - "traefik.http.middlewares.compress-no-stream.compress=true"
+    #  - "traefik.http.middlewares.compress-no-stream.compress.excludedcontenttypes=text/event-stream"
