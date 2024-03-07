@@ -25,7 +25,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Run unit/integration tests.
       env:
-        GIN_MODE: testing
+        GIN_MODE: test
         HOSTNAME: ${{ vars.HOSTNAME }}
       run: make test
 
