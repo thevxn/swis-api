@@ -9,24 +9,13 @@ import (
 
 	"go.savla.dev/swis/v5/pkg/core"
 
-	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )
 
-// https://circleci.com/blog/gin-gonic-testing/
-func setupRouter() *gin.Engine {
-	gin.SetMode(gin.TestMode)
-	router := gin.Default()
-
-	projectsRouter := router.Group("/projects")
-	Routes(projectsRouter)
-	return router
-}
-
-func setupCache() {
-	if Cache == nil {
-		Cache = &core.Cache{}
-	}
+var pkg *core.Package = &core.Package{
+	GroupName: pkgName,
+	Cache:     &Cache,
+	Routes:    Routes,
 }
 
 /*
@@ -34,8 +23,7 @@ func setupCache() {
  */
 
 func TestPostNewProjectByKey(t *testing.T) {
-	setupCache()
-	r := setupRouter()
+	r := core.SetupTestEnv(pkg)
 
 	var project Project = Project{
 		ID:          "test_project",
@@ -58,8 +46,7 @@ func TestPostNewProjectByKey(t *testing.T) {
 }
 
 func TestGetProjects(t *testing.T) {
-	setupCache()
-	r := setupRouter()
+	r := core.SetupTestEnv(pkg)
 
 	req, _ := http.NewRequest("GET", "/projects/", nil)
 	w := httptest.NewRecorder()
@@ -80,8 +67,7 @@ func TestGetProjects(t *testing.T) {
 }
 
 func TestGetProjectByKey(t *testing.T) {
-	setupCache()
-	r := setupRouter()
+	r := core.SetupTestEnv(pkg)
 
 	req, _ := http.NewRequest("GET", "/projects/test_project", nil)
 	w := httptest.NewRecorder()
@@ -98,8 +84,7 @@ func TestGetProjectByKey(t *testing.T) {
 }
 
 func TestUpdateProjectByKey(t *testing.T) {
-	setupCache()
-	r := setupRouter()
+	r := core.SetupTestEnv(pkg)
 
 	var project Project = Project{
 		ID:          "test_project",
@@ -127,8 +112,7 @@ func TestUpdateProjectByKey(t *testing.T) {
 }
 
 func TestDeleteProjectByKey(t *testing.T) {
-	setupCache()
-	r := setupRouter()
+	r := core.SetupTestEnv(pkg)
 
 	req, _ := http.NewRequest("DELETE", "/projects/test_project", nil)
 	w := httptest.NewRecorder()
@@ -148,8 +132,7 @@ func TestDeleteProjectByKey(t *testing.T) {
  */
 
 func BenchmarkUpdateProjectByKey(b *testing.B) {
-	setupCache()
-	r := setupRouter()
+	r := core.SetupTestEnv(pkg)
 
 	var project Project = Project{
 		ID:          "test_project",
@@ -173,8 +156,7 @@ func BenchmarkUpdateProjectByKey(b *testing.B) {
 }
 
 func TestPostDumpRestore(t *testing.T) {
-	setupCache()
-	r := setupRouter()
+	r := core.SetupTestEnv(pkg)
 
 	var items = struct {
 		Projects map[string]Project `json:"items"`
@@ -196,7 +178,7 @@ func TestPostDumpRestore(t *testing.T) {
 			/* run #2: blank keys SHOULD be ignored at all --- patched in pkg/core/package.go */
 			/* result: the project struct below is skipped */
 			"": {
-				ID:          "",
+				ID: "",
 				//Name:        "Next Project",
 				Description: "Description for the next project",
 				DocsLink:    "https://savla.dev",
@@ -219,7 +201,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &ret)
 
-	//t.Logf("%s", jsonValue) 
+	//t.Logf("%s", jsonValue)
 
 	assert.Equal(t, http.StatusCreated, w.Code)
 	assert.Equal(t, 1, ret.Count)

@@ -8,6 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Package struct {
+	GroupName string                   `json:"group_name"`
+	Cache     **Cache                   `json:"cache_pointer"`
+	Routes    func(r *gin.RouterGroup) `json:"routes_func"`
+}
+
 func PrintAllRootItems(ctx *gin.Context, cache *Cache, pkgName string) {
 	items, count := cache.GetAll()
 
