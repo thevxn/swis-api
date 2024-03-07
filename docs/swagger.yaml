@@ -891,6 +891,7 @@ definitions:
         type: string
     required:
     - project_id
+    - project_name
     type: object
   roles.Role:
     properties:
@@ -1016,7 +1017,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.25
+  version: 5.13.26
 paths:
   /alvax:
     get:

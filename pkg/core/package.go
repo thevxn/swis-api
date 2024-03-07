@@ -196,6 +196,9 @@ func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, pkgName string, mo
 	}
 
 	for key, item := range items.Items {
+		if key == "" {
+			continue
+		}
 		cache.Set(key, item)
 		counter++
 	}

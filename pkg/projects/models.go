@@ -2,10 +2,10 @@ package projects
 
 type Project struct {
 	// Project's unique identificator.
-	ID string `json:"project_id" binding:"required"`
+	ID string `json:"project_id" binding:"required" validation:"required"`
 
 	// Project name.
-	Name string `json:"project_name"`
+	Name string `json:"project_name" binding:"required" validation:"required"`
 
 	// Brief project description.
 	Description string `json:"project_desc"`

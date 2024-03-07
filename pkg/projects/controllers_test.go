@@ -190,9 +190,14 @@ func TestPostDumpRestore(t *testing.T) {
 				Backuped:    true,
 				URL:         "http://savla.dev",
 			},
-			"next_project": {
-				ID:          "next_project",
-				Name:        "Next Project",
+			/* run #1: this item was 'crippled' on purpose to see how binding would act */
+			/* result: it cannot be arsed, all fields are exported to JSON, even unlisted ones... */
+			/* --- */
+			/* run #2: blank keys SHOULD be ignored at all --- patched in pkg/core/package.go */
+			/* result: the project struct below is skipped */
+			"": {
+				ID:          "",
+				//Name:        "Next Project",
 				Description: "Description for the next project",
 				DocsLink:    "https://savla.dev",
 				Manager:     "random",
@@ -214,6 +219,8 @@ func TestPostDumpRestore(t *testing.T) {
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &ret)
 
+	//t.Logf("%s", jsonValue) 
+
 	assert.Equal(t, http.StatusCreated, w.Code)
-	assert.Equal(t, 2, ret.Count)
+	assert.Equal(t, 1, ret.Count)
 }
