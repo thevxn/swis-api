@@ -30,9 +30,7 @@ func setupCache() {
 }
 
 /*
- * POST /projects
- * GET  /projects
- * GET  /projects/:id
+ *  unit/integration tests
  */
 
 func TestPostNewProjectByKey(t *testing.T) {
@@ -145,3 +143,77 @@ func TestDeleteProjectByKey(t *testing.T) {
 	assert.Equal(t, ret.Key, "test_project")
 }
 
+/*
+ *  benchmarks
+ */
+
+func BenchmarkUpdateProjectByKey(b *testing.B) {
+	setupCache()
+	r := setupRouter()
+
+	var project Project = Project{
+		ID:          "test_project",
+		Name:        "Test Project",
+		Description: "Description for a test project",
+		DocsLink:    "https://savla.dev",
+		Manager:     "genuine person",
+		Published:   true,
+		Backuped:    true,
+		URL:         "http://savla.dev",
+	}
+
+	jsonValue, _ := json.Marshal(project)
+
+	for i := 0; i < b.N; i++ {
+		Cache = &core.Cache{}
+		req, _ := http.NewRequest("POST", "/projects/test_project", bytes.NewBuffer(jsonValue))
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+	}
+}
+
+func TestPostDumpRestore(t *testing.T) {
+	setupCache()
+	r := setupRouter()
+
+	var items = struct {
+		Projects map[string]Project `json:"items"`
+	}{
+		Projects: map[string]Project{
+			"test_project": {
+				ID:          "test_project",
+				Name:        "Test Project",
+				Description: "Description for a test project",
+				DocsLink:    "https://savla.dev",
+				Manager:     "random",
+				Published:   false,
+				Backuped:    true,
+				URL:         "http://savla.dev",
+			},
+			"next_project": {
+				ID:          "next_project",
+				Name:        "Next Project",
+				Description: "Description for the next project",
+				DocsLink:    "https://savla.dev",
+				Manager:     "random",
+				Published:   false,
+				Backuped:    true,
+				URL:         "http://savla.dev/next",
+			},
+		},
+	}
+
+	jsonValue, _ := json.Marshal(items)
+	req, _ := http.NewRequest("POST", "/projects/restore", bytes.NewBuffer(jsonValue))
+
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	var ret = struct {
+		Count int `json:"count"`
+	}{}
+	json.Unmarshal(w.Body.Bytes(), &ret)
+
+	assert.Equal(t, http.StatusCreated, w.Code)
+	assert.Equal(t, 2, ret.Count)
+}

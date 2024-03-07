@@ -18,9 +18,20 @@ jobs:
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
       run: make build
 
-  test_deploy:
+  unit:
     runs-on: [ self-hosted, public, docker ]
     needs: [ build ]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run unit/integration tests.
+      env:
+        GIN_MODE: testing
+        HOSTNAME: ${{ vars.HOSTNAME }}
+      run: make test
+
+  test_deploy:
+    runs-on: [ self-hosted, public, docker ]
+    needs: [ unit ]
     steps:
     - uses: actions/checkout@v4
     - name: Run test container and run end-to-end test on it.

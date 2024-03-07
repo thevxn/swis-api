@@ -101,6 +101,12 @@ build:  version
 	@docker compose --file $(DOCKER_COMPOSE_FILE) build
 #@docker compose --file $(DOCKER_COMPOSE_FILE) build --no-cache
 
+.PHONY: test
+test:
+	go test -v ./...
+	go test -coverage=coverage.out ./...
+#go test -bench=. ./...
+
 .PHONY: test_deploy
 test_deploy:
 	@echo -e "\n${YELLOW} Starting temporary test container... ${RESET}\n"
