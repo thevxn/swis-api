@@ -10,7 +10,9 @@ func SetupTestEnv(pkg *Package) *gin.Engine {
 	}
 
 	// initialize pkg's cache
-	setupTestCache(pkg.Cache)
+	for _, cache := range pkg.Cache {
+		setupTestCache(cache)
+	}
 
 	// register pkg's routes
 	router := setupTestRouter(pkg.Name, pkg.Routes)

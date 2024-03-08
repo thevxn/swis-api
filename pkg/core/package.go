@@ -10,7 +10,7 @@ import (
 
 type Package struct {
 	Name   string
-	Cache  **Cache
+	Cache  []**Cache
 	Routes func(r *gin.RouterGroup)
 }
 
