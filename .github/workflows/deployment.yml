@@ -9,19 +9,8 @@ on:
 
 
 jobs:
-  build:
-    runs-on: [ self-hosted, public, docker ]
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build new swapi image (with staging).
-      env:
-        APP_URL: ${{ secrets.APP_URL }}
-        ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
-      run: make build
-
   unit:
     runs-on: [ self-hosted, public, docker ]
-    needs: [ build ]
     steps:
     - uses: actions/checkout@v4
     - name: Run unit/integration tests.
@@ -29,6 +18,17 @@ jobs:
         GIN_MODE: test
         HOSTNAME: ${{ vars.HOSTNAME }}
       run: make test
+
+  build:
+    runs-on: [ self-hosted, public, docker ]
+    needs: [ unit ]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build new swapi image (with staging).
+      env:
+        APP_URL: ${{ secrets.APP_URL }}
+        ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
+      run: make build
 
   test_deploy:
     runs-on: [ self-hosted, public, docker ]
