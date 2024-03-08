@@ -1020,7 +1020,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.34
+  version: 5.13.35
 paths:
   /alvax:
     get:

@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.13.34"
+        "version": "5.13.35"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
