@@ -134,7 +134,7 @@ func TestPostNewAccountByKey(t *testing.T) {
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &item)
 
-	// this accout has already been imported/created using the dump restore test
+	// this account has already been imported/created using the dump restore test
 	// --- thus resulting in HTTP/409 Conflict
 	//assert.NotEqual(t, "", item.Account.AccountNumber)
 	//assert.NotEqual(t, "", item.Account.ID)
@@ -243,25 +243,21 @@ func TestDeleteAccountByKey(t *testing.T) {
 /*
  *  items (financial)
  */
-/*
+
 func TestPostNewItemByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	var socket Socket = Socket{
-		ID:   "test_socket",
-		Name: "test-socket",
-		Host: "host.example.com",
-		Port: 80,
-		DishTarget: []string{
-			"dish_target1",
-		},
-		Muted:   true,
-		Public:  true,
-		Healthy: false,
+	var item Item = Item{
+		ID:          "test_item2",
+		Type:        "income",
+		Amount:      5.77,
+		Currency:    "EUR",
+		AccountID:   "test_acc",
+		PaymentDate: time.Now(),
 	}
 
-	jsonValue, _ := json.Marshal(socket)
-	req, _ := http.NewRequest("POST", "/dish/sockets/test_socket", bytes.NewBuffer(jsonValue))
+	jsonValue, _ := json.Marshal(item)
+	req, _ := http.NewRequest("POST", "/finance/items/test_item2", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -269,175 +265,70 @@ func TestPostNewItemByKey(t *testing.T) {
 	assert.Equal(t, http.StatusCreated, w.Code)
 }
 
-func TestGetSockets(t *testing.T) {
+func TestGetItems(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/dish/sockets", nil)
+	req, _ := http.NewRequest("GET", "/finance/items/", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	var sockets = struct {
-		Sockets map[string]Socket `json:"items"`
+	var items = struct {
+		Items map[string]Item `json:"items"`
 	}{}
-	json.Unmarshal(w.Body.Bytes(), &sockets)
+	json.Unmarshal(w.Body.Bytes(), &items)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.NotEmpty(t, sockets.Sockets)
+	assert.NotEmpty(t, items.Items)
 }
 
-func TestGetSocketListPublic(t *testing.T) {
+func TestGetItemsByAccountID(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/dish/sockets/public", nil)
+	req, _ := http.NewRequest("GET", "/finance/items/account/test_acc", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	var sockets = struct {
-		Sockets map[string]Socket `json:"items"`
+	var items = struct {
+		Items map[string]Item `json:"items"`
+		Count int             `json:"count"`
 	}{}
-	json.Unmarshal(w.Body.Bytes(), &sockets)
+	json.Unmarshal(w.Body.Bytes(), &items)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.NotEmpty(t, sockets.Sockets)
+	assert.Equal(t, 2, items.Count)
+	assert.NotEmpty(t, items.Items)
 }
 
-/*func TestGetSSEvents(t *testing.T) {}*
-
-func TestUpdateSocketByKey(t *testing.T) {
+func TestUpdateItemByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	var socket Socket = Socket{
-		ID:   "test_socket",
-		Name: "test-socket",
-		Host: "host.example.com",
-		Port: 80,
-		DishTarget: []string{
-			"dish_target1",
-			"dish_target2",
-		},
-		Muted:   false,
-		Public:  true,
-		Healthy: false,
+	var item Item = Item{
+		ID:          "test_item2",
+		Type:        "income",
+		Amount:      6.88,
+		Currency:    "EUR",
+		AccountID:   "test_acc",
+		PaymentDate: time.Now(),
 	}
 
-	jsonValue, _ := json.Marshal(socket)
-	req, _ := http.NewRequest("PUT", "/dish/sockets/test_socket", bytes.NewBuffer(jsonValue))
+	jsonValue, _ := json.Marshal(item)
+	req, _ := http.NewRequest("PUT", "/finance/items/test_item2", bytes.NewBuffer(jsonValue))
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	var item = struct {
-		Socket Socket `json:"item"`
+	var ret = struct {
+		Item Item `json:"item"`
 	}{}
-	json.Unmarshal(w.Body.Bytes(), &item)
+	json.Unmarshal(w.Body.Bytes(), &ret)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, 2, len(item.Socket.DishTarget))
-	assert.Equal(t, false, item.Socket.Muted)
-	assert.Equal(t, true, item.Socket.Public)
-	assert.Equal(t, false, item.Socket.Healthy)
+	assert.Equal(t, 6.88, ret.Item.Amount)
 }
 
-func TestGetSocketListByHost(t *testing.T) {
+func TestDeleteItemByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/dish/sockets/dish_target2", nil)
-	w := httptest.NewRecorder()
-	r.ServeHTTP(w, req)
-
-	var sockets = struct {
-		Sockets map[string]Socket `json:"items"`
-	}{}
-	json.Unmarshal(w.Body.Bytes(), &sockets)
-
-	assert.Equal(t, http.StatusOK, w.Code)
-	assert.NotEmpty(t, sockets.Sockets)
-}
-
-func TestMuteToggleSocketByKey(t *testing.T) {
-	r := core.SetupTestEnv(TestPackage)
-
-	muted := true
-
-	req, _ := http.NewRequest("PUT", "/dish/sockets/test_socket/mute", nil)
-	w := httptest.NewRecorder()
-	r.ServeHTTP(w, req)
-
-	var item = struct {
-		Socket Socket `json:"item"`
-	}{}
-	json.Unmarshal(w.Body.Bytes(), &item)
-
-	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, !muted, item.Socket.Muted)
-}
-
-func TestMaintenanceToggleSocketByKey(t *testing.T) {
-	r := core.SetupTestEnv(TestPackage)
-
-	maintenance := true
-
-	req, _ := http.NewRequest("PUT", "/dish/sockets/test_socket/maintenance", nil)
-	w := httptest.NewRecorder()
-	r.ServeHTTP(w, req)
-
-	var item = struct {
-		Socket Socket `json:"item"`
-	}{}
-	json.Unmarshal(w.Body.Bytes(), &item)
-
-	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, !maintenance, item.Socket.Maintenance)
-}
-
-func TestPublicToggleSocketByKey(t *testing.T) {
-	r := core.SetupTestEnv(TestPackage)
-
-	public := true
-
-	req, _ := http.NewRequest("PUT", "/dish/sockets/test_socket/public", nil)
-	w := httptest.NewRecorder()
-	r.ServeHTTP(w, req)
-
-	var item = struct {
-		Socket Socket `json:"item"`
-	}{}
-	json.Unmarshal(w.Body.Bytes(), &item)
-
-	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, !public, item.Socket.Public)
-}
-
-func TestBatchPostHealthyStatus(t *testing.T) {
-	r := core.SetupTestEnv(TestPackage)
-
-	results := make(map[string]bool)
-	results["test_socket"] = true
-
-	socketNames := struct {
-		Results map[string]bool `json:"dish_results"`
-	}{
-		Results: results,
-	}
-
-	jsonValue, _ := json.Marshal(socketNames)
-	req, _ := http.NewRequest("POST", "/dish/sockets/results", bytes.NewBuffer(jsonValue))
-
-	w := httptest.NewRecorder()
-	r.ServeHTTP(w, req)
-
-	var item = struct {
-		Count int `json:"count"`
-	}{}
-	json.Unmarshal(w.Body.Bytes(), &item)
-
-	assert.Equal(t, 1, item.Count)
-	assert.Equal(t, http.StatusOK, w.Code)
-}
-
-func TestDeleteSocketByKey(t *testing.T) {
-	r := core.SetupTestEnv(TestPackage)
-
-	req, _ := http.NewRequest("DELETE", "/dish/sockets/test_socket", nil)
+	req, _ := http.NewRequest("DELETE", "/finance/items/test_item2", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -447,5 +338,5 @@ func TestDeleteSocketByKey(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &ret)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, "test_socket", ret.Key)
-}*/
+	assert.Equal(t, "test_item2", ret.Key)
+}
