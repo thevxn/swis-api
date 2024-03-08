@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.13.36"
+        "version": "5.13.37"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -683,7 +683,8 @@
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "boolean",
@@ -786,7 +787,8 @@
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "boolean",
@@ -1006,7 +1008,8 @@
                         "type": "string",
                         "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example.",
                         "name": "socket_name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "integer",
@@ -1074,7 +1077,8 @@
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "boolean",
@@ -1172,7 +1176,8 @@
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "boolean",
@@ -3547,6 +3552,9 @@
         },
         "dish.Incident": {
             "type": "object",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "comment": {
                     "description": "Other commentary to the incident.",
@@ -3625,7 +3633,8 @@
             "required": [
                 "host_name",
                 "port_tcp",
-                "socket_id"
+                "socket_id",
+                "socket_name"
             ],
             "properties": {
                 "dish_target": {

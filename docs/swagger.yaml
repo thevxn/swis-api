@@ -204,6 +204,8 @@ definitions:
       start_date:
         description: The very start datetime of such incident.
         type: integer
+    required:
+    - name
     type: object
   dish.Message:
     properties:
@@ -295,6 +297,7 @@ definitions:
     - host_name
     - port_tcp
     - socket_id
+    - socket_name
     type: object
   finance.Account:
     properties:
@@ -1022,7 +1025,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.36
+  version: 5.13.37
 paths:
   /alvax:
     get:
@@ -1461,6 +1464,7 @@ paths:
       - description: Incident name.
         in: query
         name: name
+        required: true
         type: string
       - description: Public indicates the state of visibility for all.
         in: query
@@ -1532,6 +1536,7 @@ paths:
       - description: Incident name.
         in: query
         name: name
+        required: true
         type: string
       - description: Public indicates the state of visibility for all.
         in: query
@@ -1599,6 +1604,7 @@ paths:
       - description: Incident name.
         in: query
         name: name
+        required: true
         type: string
       - description: Public indicates the state of visibility for all.
         in: query
@@ -1720,6 +1726,7 @@ paths:
           one endpoint for example.
         in: query
         name: socket_name
+        required: true
         type: string
       - description: TestTimestamp tells the time of the last socket testing being
           executed upon.
@@ -1767,6 +1774,7 @@ paths:
       - description: Incident name.
         in: query
         name: name
+        required: true
         type: string
       - description: Public indicates the state of visibility for all.
         in: query

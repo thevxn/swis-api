@@ -689,7 +689,8 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "boolean",
@@ -792,7 +793,8 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "boolean",
@@ -1012,7 +1014,8 @@ const docTemplate = `{
                         "type": "string",
                         "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example.",
                         "name": "socket_name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "integer",
@@ -1080,7 +1083,8 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "boolean",
@@ -1178,7 +1182,8 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Incident name.",
                         "name": "name",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "boolean",
@@ -3553,6 +3558,9 @@ const docTemplate = `{
         },
         "dish.Incident": {
             "type": "object",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "comment": {
                     "description": "Other commentary to the incident.",
@@ -3631,7 +3639,8 @@ const docTemplate = `{
             "required": [
                 "host_name",
                 "port_tcp",
-                "socket_id"
+                "socket_id",
+                "socket_name"
             ],
             "properties": {
                 "dish_target": {
@@ -4703,7 +4712,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.36",
+	Version:          "5.13.37",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
