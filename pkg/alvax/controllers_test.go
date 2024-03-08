@@ -73,8 +73,8 @@ func TestGetConfigByKey(t *testing.T) {
 func TestUpdateConfigByKey(t *testing.T) {
 	r := core.SetupTestEnv(Package)
 
-	var cfg ConfigRoot= ConfigRoot{
-		Key:        "bot",
+	var cfg ConfigRoot = ConfigRoot{
+		Key: "bot",
 	}
 
 	jsonValue, _ := json.Marshal(cfg)
@@ -115,7 +115,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Configs: map[string]ConfigRoot{
 			"bot": {
-				Key:        "bot",
+				Key: "bot",
 			},
 			/* run #1: this item was 'crippled' on purpose to see how binding would act */
 			/* result: it cannot be arsed, all fields are exported to JSON, even unlisted ones... */
@@ -123,7 +123,7 @@ func TestPostDumpRestore(t *testing.T) {
 			/* run #2: blank keys SHOULD be ignored at all --- patched in pkg/core/package.go */
 			/* result: the struct below is skipped */
 			"": {
-				Key:        "",
+				Key: "",
 			},
 		},
 	}
