@@ -12,8 +12,8 @@ var (
 )
 
 var Package *core.Package = &core.Package{
-	Name:   pkgName,
-	Cache:  []**core.Cache{
+	Name: pkgName,
+	Cache: []**core.Cache{
 		&Cache,
 	},
 	Routes: Routes,
