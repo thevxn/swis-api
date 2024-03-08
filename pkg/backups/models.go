@@ -25,6 +25,9 @@ type Backup struct {
 	// Dumping script, git URL.
 	ExecutorURL string `json:"executor_url"`
 
+	// Reference to projects pkg's instance.
+	ProjectID string `json:"project_id"`
+
 	// Boolean indicating if the service is to be backuped.
 	Active bool `json:"active" default:false`
 }

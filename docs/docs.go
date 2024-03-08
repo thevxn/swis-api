@@ -3457,6 +3457,10 @@ const docTemplate = `{
                     "type": "string",
                     "default": "unknown"
                 },
+                "project_id": {
+                    "description": "Reference to projects pkg's instance.",
+                    "type": "string"
+                },
                 "service_name": {
                     "description": "Backuped service name -- unique identifier.",
                     "type": "string"
@@ -4696,7 +4700,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.33",
+	Version:          "5.13.34",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

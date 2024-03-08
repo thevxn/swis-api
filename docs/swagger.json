@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.13.33"
+        "version": "5.13.34"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -3450,6 +3450,10 @@
                     "description": "Last status string of such backup (e.g. success, failure).",
                     "type": "string",
                     "default": "unknown"
+                },
+                "project_id": {
+                    "description": "Reference to projects pkg's instance.",
+                    "type": "string"
                 },
                 "service_name": {
                     "description": "Backuped service name -- unique identifier.",

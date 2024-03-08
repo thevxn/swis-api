@@ -6,7 +6,7 @@ import (
 
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
-		GetBackupStatusAll)
+		GetBackups)
 	g.POST("/:key",
 		PostBackedupServiceByServiceKey)
 	g.GET("/:key",

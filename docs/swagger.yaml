@@ -102,6 +102,9 @@ definitions:
         default: unknown
         description: Last status string of such backup (e.g. success, failure).
         type: string
+      project_id:
+        description: Reference to projects pkg's instance.
+        type: string
       service_name:
         description: Backuped service name -- unique identifier.
         type: string
@@ -1017,7 +1020,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.33
+  version: 5.13.34
 paths:
   /alvax:
     get:

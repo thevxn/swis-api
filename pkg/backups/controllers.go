@@ -19,7 +19,7 @@ var (
 // @Produce json
 // @Success 200 {object} string "ok"
 // @Router /backups [get]
-func GetBackupStatusAll(ctx *gin.Context) {
+func GetBackups(ctx *gin.Context) {
 	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
 }
@@ -150,7 +150,7 @@ func ActiveToggleBackupByServiceKey(ctx *gin.Context) {
 		ctx.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
 			"message": "backed up service not found",
-			"name":    name,
+			"key":     name,
 		})
 		return
 	}
