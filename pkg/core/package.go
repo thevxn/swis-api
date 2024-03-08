@@ -9,9 +9,9 @@ import (
 )
 
 type Package struct {
-	GroupName string                   `json:"group_name"`
-	Cache     **Cache                  `json:"cache_pointer"`
-	Routes    func(r *gin.RouterGroup) `json:"routes_func"`
+	Name   string  
+	Cache  **Cache 
+	Routes func(r *gin.RouterGroup)
 }
 
 func PrintAllRootItems(ctx *gin.Context, cache *Cache, pkgName string) {

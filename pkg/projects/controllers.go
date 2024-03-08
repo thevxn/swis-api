@@ -11,6 +11,12 @@ var (
 	pkgName string = "projects"
 )
 
+var Package *core.Package = &core.Package{
+	Name:   pkgName,
+	Cache:  &Cache,
+	Routes: Routes,
+}
+
 // GetProjects function dumps the projects cache contents.
 // @Summary Get all projects
 // @Description get project list

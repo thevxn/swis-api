@@ -2,30 +2,48 @@ package core
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
-func MountPackage(pkg *Package) *gin.Engine {
-	if pkg == nil {
-		fmt.Errorf("failed to mount a package: Package input cannot be nil")
-		return nil
+func RegisterAndMount(parentRouter *gin.Engine, pkgs ...*Package) {
+	if parentRouter == nil {
+		return
 	}
 
-	if pkg.Name == "" || *pkg.Name == nil {
+	for _, pkg := range pkgs {
+		if pkg == nil {
+			continue
+		}
+
+		// TODO: catch the error
+		MountPackage(parentRouter, pkg)
+	}
+}
+
+func MountPackage(router *gin.Engine, pkg *Package) bool {
+	if pkg == nil {
+		fmt.Errorf("failed to mount a package: Package input cannot be nil")
+		return false
+	}
+
+	if pkg.Name == "" || &pkg.Name == nil {
 		fmt.Errorf("failed to mount a package: Name cannot be blank")
-		return nil
+		return false
 	}
 
 	if err := initCache(pkg.Cache); err != nil {
 		fmt.Errorf("failed to mount '%s' package: %s", pkg.Name, err.Error())
-		return nil
+		return false
 	}
 
-	if err := mountRouterGroup(pkg.Name, pkg.Routes); err != nil {
+	if err := mountRouterGroup(router, pkg.Name, pkg.Routes); err != nil {
 		fmt.Errorf("failed to mount '%s' package: %s", pkg.Name, err.Error())
-		return nil
+		return false
 	}
+
+	return true
 }
 
 func initCache(cache **Cache) error {
@@ -43,7 +61,7 @@ func initCache(cache **Cache) error {
 	return nil
 }
 
-func mountRouterGroup(router *gin.Server, groupName string, subRoutes func(r *gin.RouterGroup)) error {
+func mountRouterGroup(router *gin.Engine, groupName string, subRoutes func(r *gin.RouterGroup)) error {
 	if router == nil {
 		return errors.New("nil router pointer")
 	}
@@ -52,7 +70,7 @@ func mountRouterGroup(router *gin.Server, groupName string, subRoutes func(r *gi
 		return errors.New("blank groupName parameter")
 	}
 
-	if *subRoutes == nil {
+	if &subRoutes == nil {
 		return errors.New("nil pointer to routes function")
 	}
 

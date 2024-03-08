@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.13.29
+// @version 5.13.30
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -166,9 +166,14 @@ func main() {
 	news.Cache = &core.Cache{}
 	news.Routes(router.Group("/news"))
 
-	// projects CRUD
-	projects.Cache = &core.Cache{}
-	projects.Routes(router.Group("/projects"))
+	// projects pkg registration
+	core.MountPackage(router, projects.Package)
+
+	// bulk registration and mounting of packages
+	/*core.RegisterAndMount(router,
+		projects.Package,
+		roles.Package,
+	)*/
 
 	// roles CRUD
 	roles.Cache = &core.Cache{}

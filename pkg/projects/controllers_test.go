@@ -12,10 +12,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var pkg *core.Package = &core.Package{
-	GroupName: pkgName,
-	Cache:     &Cache,
-	Routes:    Routes,
+var TestPackage *core.Package = &core.Package{
+	Name:   pkgName,
+	Cache:  &Cache,
+	Routes: Routes,
 }
 
 /*
@@ -23,7 +23,7 @@ var pkg *core.Package = &core.Package{
  */
 
 func TestPostNewProjectByKey(t *testing.T) {
-	r := core.SetupTestEnv(pkg)
+	r := core.SetupTestEnv(TestPackage)
 
 	var project Project = Project{
 		ID:          "test_project",
@@ -46,7 +46,7 @@ func TestPostNewProjectByKey(t *testing.T) {
 }
 
 func TestGetProjects(t *testing.T) {
-	r := core.SetupTestEnv(pkg)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/projects/", nil)
 	w := httptest.NewRecorder()
@@ -68,7 +68,7 @@ func TestGetProjects(t *testing.T) {
 }
 
 func TestGetProjectByKey(t *testing.T) {
-	r := core.SetupTestEnv(pkg)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/projects/test_project", nil)
 	w := httptest.NewRecorder()
@@ -85,7 +85,7 @@ func TestGetProjectByKey(t *testing.T) {
 }
 
 func TestUpdateProjectByKey(t *testing.T) {
-	r := core.SetupTestEnv(pkg)
+	r := core.SetupTestEnv(TestPackage)
 
 	var project Project = Project{
 		ID:          "test_project",
@@ -113,7 +113,7 @@ func TestUpdateProjectByKey(t *testing.T) {
 }
 
 func TestDeleteProjectByKey(t *testing.T) {
-	r := core.SetupTestEnv(pkg)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("DELETE", "/projects/test_project", nil)
 	w := httptest.NewRecorder()
@@ -129,7 +129,7 @@ func TestDeleteProjectByKey(t *testing.T) {
 }
 
 func TestPostDumpRestore(t *testing.T) {
-	r := core.SetupTestEnv(pkg)
+	r := core.SetupTestEnv(TestPackage)
 
 	var items = struct {
 		Projects map[string]Project `json:"items"`
@@ -185,7 +185,7 @@ func TestPostDumpRestore(t *testing.T) {
  */
 
 func BenchmarkUpdateProjectByKey(b *testing.B) {
-	r := core.SetupTestEnv(pkg)
+	r := core.SetupTestEnv(TestPackage)
 
 	var project Project = Project{
 		ID:          "test_project",
