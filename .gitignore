@@ -23,6 +23,8 @@ go.work
 .env
 .dumps/*
 
+*.swp
+
 swis
 swis-api
 swapi

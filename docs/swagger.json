@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.13.35"
+        "version": "5.13.36"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -3519,6 +3519,9 @@
         },
         "depots.DepotItem": {
             "type": "object",
+            "required": [
+                "id"
+            ],
             "properties": {
                 "depot": {
                     "description": "Location name of such Item.",

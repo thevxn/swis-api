@@ -3525,6 +3525,9 @@ const docTemplate = `{
         },
         "depots.DepotItem": {
             "type": "object",
+            "required": [
+                "id"
+            ],
             "properties": {
                 "depot": {
                     "description": "Location name of such Item.",
@@ -4700,7 +4703,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.35",
+	Version:          "5.13.36",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
