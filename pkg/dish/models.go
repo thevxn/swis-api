@@ -7,20 +7,20 @@ type Root struct {
 
 type Socket struct {
 	// Socket ID, snake_cased for socket editing and deleting.
-	ID string `json:"socket_id" validate:"required"`
+	ID string `json:"socket_id" binding:"required" validation:"required"`
 
 	// GEneric name of the socket, to be used in dish results as failed one endpoint for example.
-	Name string `json:"socket_name"`
+	Name string `json:"socket_name" binding:"required"`
 
 	// More verbose name/description of the socket.
 	Description string `json:"socket_description"`
 
 	// Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).
-	Host string `json:"host_name" validate:"required"`
+	Host string `json:"host_name" binding:"required" validation:"required"`
 
 	// Socket TCP port part
 	// Even default port 80 should be added here.
-	Port int `json:"port_tcp" validate:"required"`
+	Port int `json:"port_tcp" binding:"" validation:"required"`
 
 	// If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response codes are okay and not to alert upon.
 	ExpectedHTTPCodes []int `json:"expected_http_code_array"`
@@ -62,7 +62,7 @@ type Incident struct {
 	ID string `json:"id"`
 
 	// Incident name.
-	Name string `json:"name"`
+	Name string `json:"name" binding:"required"`
 
 	// Further details about the incident like place, state of operation etc.
 	Description string `json:"desc"`

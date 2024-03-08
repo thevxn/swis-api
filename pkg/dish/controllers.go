@@ -665,6 +665,16 @@ func GetIncidentListBySocketID(ctx *gin.Context) {
 	var exportedIncidents []Incident = []Incident{}
 	var counter int = 0
 
+	if CacheSockets == nil {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"count":   counter,
+			"message": "cannot access socket cache",
+			"key":     key,
+		})
+		return
+	}
+
 	if _, ok := CacheSockets.Get(key); !ok {
 		ctx.IndentedJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
