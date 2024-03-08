@@ -20,7 +20,7 @@ type Socket struct {
 
 	// Socket TCP port part
 	// Even default port 80 should be added here.
-	Port int `json:"port_tcp" binding:"" validation:"required"`
+	Port int `json:"port_tcp" binding:"required" validation:"required"`
 
 	// If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response codes are okay and not to alert upon.
 	ExpectedHTTPCodes []int `json:"expected_http_code_array"`

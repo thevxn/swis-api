@@ -221,7 +221,9 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 			}
 
 			// emit an server-sent event to subscribers
-			Dispatcher.NewMessage(msg)
+			if Dispatcher != nil {
+				Dispatcher.NewMessage(msg)
+			}
 		}
 
 		if len(socketsDown) > 0 {
@@ -768,11 +770,19 @@ func PostDumpRestore(ctx *gin.Context) {
 	}
 
 	for key, item := range importDish.Incidents {
+		if key == "" {
+			continue
+		}
+
 		CacheIncidents.Set(key, item)
 		counter[0]++
 	}
 
 	for key, item := range importDish.Sockets {
+		if key == "" {
+			continue
+		}
+
 		CacheSockets.Set(key, item)
 		counter[1]++
 	}
