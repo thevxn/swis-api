@@ -14,7 +14,9 @@ import (
 
 var TestPackage *core.Package = &core.Package{
 	Name:   pkgName,
-	Cache:  &Cache,
+	Cache:  []**core.Cache{
+		&Cache,
+	},
 	Routes: Routes,
 }
 

@@ -12,9 +12,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var Package *core.Package = &core.Package{
+var TestPackage *core.Package = &core.Package{
 	Name:   pkgName,
-	Cache:  &Cache,
+	Cache:  []**core.Cache{
+		&Cache,
+	},
 	Routes: Routes,
 }
 
@@ -23,7 +25,7 @@ var Package *core.Package = &core.Package{
  */
 
 func TestPostNewRoleByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var role Role = Role{
 		Name:        "operators",
@@ -42,7 +44,7 @@ func TestPostNewRoleByKey(t *testing.T) {
 }
 
 func TestGetRoles(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/roles/", nil)
 	w := httptest.NewRecorder()
@@ -58,7 +60,7 @@ func TestGetRoles(t *testing.T) {
 }
 
 func TestGetRoleByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/roles/operators", nil)
 	w := httptest.NewRecorder()
@@ -74,7 +76,7 @@ func TestGetRoleByKey(t *testing.T) {
 }
 
 func TestUpdateRoleByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var role Role = Role{
 		Name:        "operators",
@@ -99,7 +101,7 @@ func TestUpdateRoleByKey(t *testing.T) {
 }
 
 func TestDeleteRoleByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("DELETE", "/roles/operators", nil)
 	w := httptest.NewRecorder()
@@ -115,7 +117,7 @@ func TestDeleteRoleByKey(t *testing.T) {
 }
 
 func TestPostDumpRestore(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var items = struct {
 		Roles map[string]Role `json:"items"`

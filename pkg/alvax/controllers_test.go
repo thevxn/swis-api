@@ -12,9 +12,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var Package *core.Package = &core.Package{
+var TestPackage *core.Package = &core.Package{
 	Name:   pkgName,
-	Cache:  &Cache,
+	Cache:  []**core.Cache{
+		&Cache,
+	},
 	Routes: Routes,
 }
 
@@ -23,7 +25,7 @@ var Package *core.Package = &core.Package{
  */
 
 func TestPostNewConfigByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var cfg ConfigRoot = ConfigRoot{
 		Key: "bot",
@@ -39,7 +41,7 @@ func TestPostNewConfigByKey(t *testing.T) {
 }
 
 func TestGetConfigs(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/alvax/", nil)
 	w := httptest.NewRecorder()
@@ -55,7 +57,7 @@ func TestGetConfigs(t *testing.T) {
 }
 
 func TestGetConfigByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/alvax/bot", nil)
 	w := httptest.NewRecorder()
@@ -71,7 +73,7 @@ func TestGetConfigByKey(t *testing.T) {
 }
 
 func TestUpdateConfigByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var cfg ConfigRoot = ConfigRoot{
 		Key: "bot",
@@ -92,7 +94,7 @@ func TestUpdateConfigByKey(t *testing.T) {
 }
 
 func TestDeleteConfigByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("DELETE", "/alvax/bot", nil)
 	w := httptest.NewRecorder()
@@ -108,7 +110,7 @@ func TestDeleteConfigByKey(t *testing.T) {
 }
 
 func TestPostDumpRestore(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var items = struct {
 		Configs map[string]ConfigRoot `json:"items"`

@@ -12,9 +12,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var Package *core.Package = &core.Package{
+var TestPackage *core.Package = &core.Package{
 	Name:   pkgName,
-	Cache:  &Cache,
+	Cache:  []**core.Cache{
+		&Cache,
+	},
 	Routes: Routes,
 }
 
@@ -23,7 +25,7 @@ var Package *core.Package = &core.Package{
  */
 
 func TestPostBusinessByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var biz Business = Business{
 		ID:        "savla-dev",
@@ -40,7 +42,7 @@ func TestPostBusinessByKey(t *testing.T) {
 }
 
 func TestGetBusinessEntities(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/business/", nil)
 	w := httptest.NewRecorder()
@@ -56,7 +58,7 @@ func TestGetBusinessEntities(t *testing.T) {
 }
 
 func TestGetBusinessByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/business/savla-dev", nil)
 	w := httptest.NewRecorder()
@@ -73,7 +75,7 @@ func TestGetBusinessByKey(t *testing.T) {
 }
 
 func TestUpdateBusinessByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var biz Business = Business{
 		ID:        "savla-dev",
@@ -97,7 +99,7 @@ func TestUpdateBusinessByKey(t *testing.T) {
 }
 
 func TestDeleteBusinessByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("DELETE", "/business/savla-dev", nil)
 	w := httptest.NewRecorder()
@@ -113,7 +115,7 @@ func TestDeleteBusinessByKey(t *testing.T) {
 }
 
 func TestPostDumpRestore(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var items = struct {
 		Entities map[string]Business `json:"items"`

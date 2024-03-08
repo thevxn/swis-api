@@ -12,9 +12,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var Package *core.Package = &core.Package{
+var TestPackage *core.Package = &core.Package{
 	Name:   pkgName,
-	Cache:  &Cache,
+	Cache:  []**core.Cache{
+		&Cache,
+	},
 	Routes: Routes,
 }
 
@@ -23,7 +25,7 @@ var Package *core.Package = &core.Package{
  */
 
 func TestPostNewDepotItemByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var item DepotItem = DepotItem{
 		ID:          1,
@@ -40,7 +42,7 @@ func TestPostNewDepotItemByKey(t *testing.T) {
 }
 
 func TestGetAllDepotItems(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/depots/", nil)
 	w := httptest.NewRecorder()
@@ -56,7 +58,7 @@ func TestGetAllDepotItems(t *testing.T) {
 }
 
 func TestGetDepotItemByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/depots/items/1", nil)
 	w := httptest.NewRecorder()
@@ -73,7 +75,7 @@ func TestGetDepotItemByKey(t *testing.T) {
 }
 
 func TestUpdateDepotItemByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var item DepotItem = DepotItem{
 		ID:          1,
@@ -97,7 +99,7 @@ func TestUpdateDepotItemByKey(t *testing.T) {
 }
 
 func TestDeleteDepotItemByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("DELETE", "/depots/items/1", nil)
 	w := httptest.NewRecorder()
@@ -113,7 +115,7 @@ func TestDeleteDepotItemByKey(t *testing.T) {
 }
 
 func TestPostDumpRestore(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var items = struct {
 		DepotItem map[string]DepotItem `json:"items"`

@@ -12,9 +12,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var Package *core.Package = &core.Package{
+var TestPackage *core.Package = &core.Package{
 	Name:   pkgName,
-	Cache:  &Cache,
+	Cache:  []**core.Cache{
+		&Cache,
+	},
 	Routes: Routes,
 }
 
@@ -23,7 +25,7 @@ var Package *core.Package = &core.Package{
  */
 
 func TestPostBackeduServicepByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var bcp Backup = Backup{
 		ServiceName: "swapi",
@@ -41,7 +43,7 @@ func TestPostBackeduServicepByKey(t *testing.T) {
 }
 
 func TestGetBackups(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/backups/", nil)
 	w := httptest.NewRecorder()
@@ -57,7 +59,7 @@ func TestGetBackups(t *testing.T) {
 }
 
 func TestGetBackedupStatusByServiceKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/backups/swapi", nil)
 	w := httptest.NewRecorder()
@@ -73,7 +75,7 @@ func TestGetBackedupStatusByServiceKey(t *testing.T) {
 }
 
 func TestUpdateBackupStatusByServiceKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var bcp Backup = Backup{
 		ServiceName: "swapi",
@@ -96,7 +98,7 @@ func TestUpdateBackupStatusByServiceKey(t *testing.T) {
 }
 
 func TestDeleteBackupByServiceKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("DELETE", "/backups/swapi", nil)
 	w := httptest.NewRecorder()
@@ -112,7 +114,7 @@ func TestDeleteBackupByServiceKey(t *testing.T) {
 }
 
 func TestPostDumpRestore(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var items = struct {
 		Backups map[string]Backup `json:"items"`
@@ -154,7 +156,7 @@ func TestPostDumpRestore(t *testing.T) {
 }
 
 func TestActiveToggleBackupByServiceKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	active := true
 

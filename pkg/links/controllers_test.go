@@ -12,9 +12,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var Package *core.Package = &core.Package{
+var TestPackage *core.Package = &core.Package{
 	Name:   pkgName,
-	Cache:  &Cache,
+	Cache:  []**core.Cache{
+		&Cache,
+	},
 	Routes: Routes,
 }
 
@@ -23,7 +25,7 @@ var Package *core.Package = &core.Package{
  */
 
 func TestPostNewLinkByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var link Link = Link{
 		Name:        "sd",
@@ -48,7 +50,7 @@ func TestPostNewLinkByKey(t *testing.T) {
 }
 
 func TestGetLinks(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/links/", nil)
 	w := httptest.NewRecorder()
@@ -64,7 +66,7 @@ func TestGetLinks(t *testing.T) {
 }
 
 func TestGetLinkByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("GET", "/links/sd", nil)
 	w := httptest.NewRecorder()
@@ -80,7 +82,7 @@ func TestGetLinkByKey(t *testing.T) {
 }
 
 func TestUpdateLinkByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var link Link = Link{
 		Name:        "sd",
@@ -104,7 +106,7 @@ func TestUpdateLinkByKey(t *testing.T) {
 }
 
 func TestDeleteLinkByKey(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	req, _ := http.NewRequest("DELETE", "/links/sd", nil)
 	w := httptest.NewRecorder()
@@ -120,7 +122,7 @@ func TestDeleteLinkByKey(t *testing.T) {
 }
 
 func TestPostDumpRestore(t *testing.T) {
-	r := core.SetupTestEnv(Package)
+	r := core.SetupTestEnv(TestPackage)
 
 	var items = struct {
 		Links map[string]Link `json:"items"`
