@@ -58,6 +58,7 @@ func TestGetProjects(t *testing.T) {
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &projects)
 
+	// (update Mar 08, 2024) this was sorted out using a common cache via sync.Map struct
 	// (krusty Oct 22, 2022) this is not right: cannot get any POST'd project, even when there is time.Sleep()
 	// function used, even if the order is POST then GET, both functions even points to the same memory address,
 	// garbage collector (GC) does nothing between the two requests, so maybe it is the testing package
@@ -127,34 +128,6 @@ func TestDeleteProjectByKey(t *testing.T) {
 	assert.Equal(t, ret.Key, "test_project")
 }
 
-/*
- *  benchmarks
- */
-
-func BenchmarkUpdateProjectByKey(b *testing.B) {
-	r := core.SetupTestEnv(pkg)
-
-	var project Project = Project{
-		ID:          "test_project",
-		Name:        "Test Project",
-		Description: "Description for a test project",
-		DocsLink:    "https://savla.dev",
-		Manager:     "genuine person",
-		Published:   true,
-		Backuped:    true,
-		URL:         "http://savla.dev",
-	}
-
-	jsonValue, _ := json.Marshal(project)
-
-	for i := 0; i < b.N; i++ {
-		Cache = &core.Cache{}
-		req, _ := http.NewRequest("POST", "/projects/test_project", bytes.NewBuffer(jsonValue))
-		w := httptest.NewRecorder()
-		r.ServeHTTP(w, req)
-	}
-}
-
 func TestPostDumpRestore(t *testing.T) {
 	r := core.SetupTestEnv(pkg)
 
@@ -205,4 +178,32 @@ func TestPostDumpRestore(t *testing.T) {
 
 	assert.Equal(t, http.StatusCreated, w.Code)
 	assert.Equal(t, 1, ret.Count)
+}
+
+/*
+ *  benchmarks
+ */
+
+func BenchmarkUpdateProjectByKey(b *testing.B) {
+	r := core.SetupTestEnv(pkg)
+
+	var project Project = Project{
+		ID:          "test_project",
+		Name:        "Test Project",
+		Description: "Description for a test project",
+		DocsLink:    "https://savla.dev",
+		Manager:     "genuine person",
+		Published:   true,
+		Backuped:    true,
+		URL:         "http://savla.dev",
+	}
+
+	jsonValue, _ := json.Marshal(project)
+
+	for i := 0; i < b.N; i++ {
+		Cache = &core.Cache{}
+		req, _ := http.NewRequest("POST", "/projects/test_project", bytes.NewBuffer(jsonValue))
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+	}
 }

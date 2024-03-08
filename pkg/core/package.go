@@ -10,7 +10,7 @@ import (
 
 type Package struct {
 	GroupName string                   `json:"group_name"`
-	Cache     **Cache                   `json:"cache_pointer"`
+	Cache     **Cache                  `json:"cache_pointer"`
 	Routes    func(r *gin.RouterGroup) `json:"routes_func"`
 }
 
