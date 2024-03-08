@@ -26,8 +26,8 @@ func TestPostNewUserByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var user User = User{
-		Name:          "operator",
-		FullName:        "Mr. Operator",
+		Name:      "operator",
+		FullName:  "Mr. Operator",
 		TokenHash: "",
 	}
 
@@ -76,10 +76,10 @@ func TestUpdateUserByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var user User = User{
-		Name:        "operator",
-		FullName:    "Mrs. Operator",
-		TokenHash:   "0x33",
-		Active:      false,
+		Name:      "operator",
+		FullName:  "Mrs. Operator",
+		TokenHash: "0x33",
+		Active:    false,
 	}
 
 	jsonValue, _ := json.Marshal(user)
@@ -109,7 +109,7 @@ func TestDeleteUserByKey(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &ret)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, ret.Key, "operator")
+	assert.Equal(t, "operator", ret.Key)
 }
 
 func TestPostDumpRestore(t *testing.T) {
@@ -120,7 +120,8 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Users: map[string]User{
 			"operator": {
-				Name:        "operator",
+				Name:   "operator",
+				Active: true,
 			},
 			/* run #1: this item was 'crippled' on purpose to see how binding would act */
 			/* result: it cannot be arsed, all fields are exported to JSON, even unlisted ones... */
@@ -128,7 +129,7 @@ func TestPostDumpRestore(t *testing.T) {
 			/* run #2: blank keys SHOULD be ignored at all costs --- patched in pkg/core/package.go */
 			/* result: the project struct below is skipped */
 			"": {
-				Name:        "",
+				Name: "",
 			},
 		},
 	}
@@ -150,3 +151,59 @@ func TestPostDumpRestore(t *testing.T) {
 	assert.Equal(t, 1, ret.Count)
 }
 
+func TestActiveToggleUserByKey(t *testing.T) {
+	r := core.SetupTestEnv(TestPackage)
+
+	active := true
+
+	req, _ := http.NewRequest("PUT", "/users/operator/active", nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	var item = struct {
+		User User `json:"item"`
+	}{}
+	json.Unmarshal(w.Body.Bytes(), &item)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, !active, item.User.Active)
+}
+
+func TestPostUserSSHKeys(t *testing.T) {
+	r := core.SetupTestEnv(TestPackage)
+
+	keys := struct {
+		Keys []string `json:"keys"`
+	}{
+		Keys: []string{
+			"ssh-rsa AAAAB3Nzaza42EAAAADAQABAAABgQCr/69RZt3kwGrCkPKt0sP4cQ4z opkey1@station",
+			"ssh-rsa AAAAB3Nzaza42EAAAADAQABAAABgQCe/69RZt3kwGrCkPKt0sP4cQ4y opkey2@station",
+		},
+	}
+
+	jsonValue, _ := json.Marshal(keys)
+	req, _ := http.NewRequest("POST", "/users/operator/keys/ssh", bytes.NewBuffer(jsonValue))
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	var item = struct {
+		User User `json:"user"`
+	}{}
+	json.Unmarshal(w.Body.Bytes(), &item)
+
+	assert.Equal(t, http.StatusAccepted, w.Code)
+	assert.Equal(t, keys.Keys, item.User.SSHKeys)
+}
+
+func TestGetUserSSHKeys(t *testing.T) {
+	r := core.SetupTestEnv(TestPackage)
+
+	req, _ := http.NewRequest("GET", "/users/operator/keys/ssh", nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	var keys string = "ssh-rsa AAAAB3Nzaza42EAAAADAQABAAABgQCr/69RZt3kwGrCkPKt0sP4cQ4z opkey1@station" + "\n" + "ssh-rsa AAAAB3Nzaza42EAAAADAQABAAABgQCe/69RZt3kwGrCkPKt0sP4cQ4y opkey2@station"
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, keys, string(w.Body.Bytes()))
+}

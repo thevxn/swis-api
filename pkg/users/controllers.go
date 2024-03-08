@@ -187,7 +187,9 @@ func PostUsersSSHKeys(c *gin.Context) {
 	}
 
 	// to be reimplemented later
-	var sshKeys []string
+	var sshKeys struct {
+		Keys []string `json:"keys"`
+	}
 
 	// load SSH keys from POST request
 	if err := c.BindJSON(&sshKeys); err != nil {
@@ -198,7 +200,7 @@ func PostUsersSSHKeys(c *gin.Context) {
 		return
 	}
 
-	user.SSHKeys = sshKeys
+	user.SSHKeys = sshKeys.Keys
 
 	if saved := Cache.Set(userName, user); !saved {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{
@@ -212,6 +214,7 @@ func PostUsersSSHKeys(c *gin.Context) {
 		"code":    http.StatusAccepted,
 		"message": "ssh keys for user (re)imported",
 		"name":    userName,
+		"user":    user,
 	})
 	return
 }
