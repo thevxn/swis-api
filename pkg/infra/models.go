@@ -22,7 +22,7 @@ type Infrastructure struct {
 
 type Domain struct {
 	// Unique domain identifier.
-	ID string `json:"domain_id"`
+	ID string `json:"domain_id" binding:"required"`
 
 	// Fully qualified domain name.
 	FQDN string `json:"domain_fqdn"`
@@ -258,7 +258,7 @@ type VMInstallConfig struct {
 
 type Network struct {
 	// Unique network's identifier
-	Hash string `json:"hash"`
+	Hash string `json:"hash" binding:"required"`
 
 	// Network name, verbose ID.
 	Name string `json:"network_name"`

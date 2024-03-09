@@ -547,16 +547,28 @@ func PostDumpRestore(ctx *gin.Context) {
 	}
 
 	for key, item := range importInfra.Domains {
+		if key == "" {
+			continue
+		}
+
 		CacheDomains.Set(key, item)
 		counter[0]++
 	}
 
 	for key, item := range importInfra.Hosts {
+		if key == "" {
+			continue
+		}
+
 		CacheHosts.Set(key, item)
 		counter[1]++
 	}
 
 	for key, item := range importInfra.Networks {
+		if key == "" {
+			continue
+		}
+
 		CacheNetworks.Set(key, item)
 		counter[2]++
 	}
