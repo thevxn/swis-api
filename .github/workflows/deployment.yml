@@ -32,7 +32,7 @@ jobs:
 
   test_deploy:
     runs-on: [ self-hosted, public, docker ]
-    needs: [ unit ]
+    needs: [ build ]
     steps:
     - uses: actions/checkout@v4
     - name: Run test container and run end-to-end test on it.
