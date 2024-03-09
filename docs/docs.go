@@ -4083,6 +4083,9 @@ const docTemplate = `{
         },
         "infra.Domain": {
             "type": "object",
+            "required": [
+                "domain_id"
+            ],
             "properties": {
                 "cf_zone_id": {
                     "description": "Cloudflare Zone ID",
@@ -4284,6 +4287,9 @@ const docTemplate = `{
         },
         "infra.Network": {
             "type": "object",
+            "required": [
+                "hash"
+            ],
             "properties": {
                 "hash": {
                     "description": "Unique network's identifier",
@@ -4712,7 +4718,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.13.38",
+	Version:          "5.14.0",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

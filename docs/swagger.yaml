@@ -586,6 +586,8 @@ definitions:
       registrar_name:
         description: Name of the current registrar
         type: string
+    required:
+    - domain_id
     type: object
   infra.Facts:
     properties:
@@ -722,6 +724,8 @@ definitions:
       network_name:
         description: Network name, verbose ID.
         type: string
+    required:
+    - hash
     type: object
   infra.VMInstallConfig:
     properties:
@@ -1025,7 +1029,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.13.38
+  version: 5.14.0
 paths:
   /alvax:
     get:

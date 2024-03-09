@@ -330,3 +330,96 @@ func TestDeleteHostByKey(t *testing.T) {
 /*
  *  networks
  */
+
+func TestPostNewNetworkByKey(t *testing.T) {
+	r := core.SetupTestEnv(TestPackage)
+
+	var net Network = Network{
+		Hash:      "net_br32",
+		Name:      "net_br32",
+		Interface: "br32",
+		CIDRBlock: "/27",
+	}
+
+	jsonValue, _ := json.Marshal(net)
+	req, _ := http.NewRequest("POST", "/infra/networks/test_net", bytes.NewBuffer(jsonValue))
+
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	//assert.Equal(t, http.StatusCreated, w.Code)
+	assert.Equal(t, http.StatusConflict, w.Code)
+}
+
+func TestGetNetworks(t *testing.T) {
+	r := core.SetupTestEnv(TestPackage)
+
+	req, _ := http.NewRequest("GET", "/infra/networks", nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	var nets = struct {
+		Networks map[string]Network `json:"items"`
+	}{}
+	json.Unmarshal(w.Body.Bytes(), &nets)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.NotEmpty(t, nets.Networks)
+}
+
+func TestGetNetworkByKey(t *testing.T) {
+	r := core.SetupTestEnv(TestPackage)
+
+	req, _ := http.NewRequest("GET", "/infra/networks/test_net", nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	var net = struct {
+		Network Network `json:"item"`
+	}{}
+	json.Unmarshal(w.Body.Bytes(), &net)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.NotEmpty(t, net.Network)
+}
+
+func TestUpdateNetworkByKey(t *testing.T) {
+	r := core.SetupTestEnv(TestPackage)
+
+	var net Network = Network{
+		Hash:      "net_br32",
+		Name:      "net_br32",
+		Interface: "br32",
+		CIDRBlock: "/26",
+	}
+
+	jsonValue, _ := json.Marshal(net)
+	req, _ := http.NewRequest("PUT", "/infra/networks/test_net", bytes.NewBuffer(jsonValue))
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	var item = struct {
+		Network Network `json:"item"`
+	}{}
+	json.Unmarshal(w.Body.Bytes(), &item)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.NotEqual(t, "", item.Network.Hash)
+	assert.Equal(t, "/26", item.Network.CIDRBlock)
+}
+
+func TestDeleteNetworkByKey(t *testing.T) {
+	r := core.SetupTestEnv(TestPackage)
+
+	req, _ := http.NewRequest("DELETE", "/infra/networks/test_net", nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	var ret = struct {
+		Key string `json:"key"`
+	}{}
+	json.Unmarshal(w.Body.Bytes(), &ret)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, "test_net", ret.Key)
+}
