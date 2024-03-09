@@ -90,11 +90,6 @@ fmt:
 	@/usr/local/go/bin/gofmt -s -w .
 #@find . -name "*.go" -exec gofmt {} \;
 
-.PHONY: unit
-unit:	
-	@echo -e "\n${YELLOW} Running tests in all packages (go test)... ${RESET}\n"
-	@go test -v ./...
-
 .PHONY: build
 build:  version
 	@echo -e "\n${YELLOW} Building project (docker compose build)... ${RESET}\n"
@@ -103,10 +98,22 @@ build:  version
 
 .PHONY: test
 test:
+	@echo -e "\n${YELLOW} Running tests in all packages (go test)... ${RESET}\n"
 	go test -count=1 -v ./...
-	go test -coverprofile -v ./...
+
+.PHONY: unit
+unit: test
+
+.PHONY: bench
+bench:
+	@echo -e "\n${YELLOW} Running benchmark tests (go test)... ${RESET}\n"
+	go test -bench=. ./...
+
+.PHONY: coverage
+coverage:
+	@echo -e "\n${YELLOW} Running code coverage evaluation (go test)... ${RESET}\n"
+	go test -coverprofile -v ./... 
 	go tool cover -html=coverage.out
-#go test -bench=. ./...
 
 .PHONY: test_deploy
 test_deploy:
