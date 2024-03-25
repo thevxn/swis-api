@@ -211,6 +211,7 @@ type Configuration struct {
 	HasTLS           bool   `json:"has_tls" yaml:"has_tls" default:false`
 	IsEdgeRelay      bool   `json:"is_edge_relay" yaml:"is_edge_relay" default:false`
 	IsRelay          bool   `json:"is_relay" yaml:"is_relay" default:false`
+	DkimSelector     string `json:"dkim_selector" yaml:"dkim_selector"`
 
 	// proxy role
 	IsBehindCf             bool   `json:"is_behind_cloudflare" yaml:"is_behind_cloudflare" default:false`
