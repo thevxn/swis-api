@@ -212,6 +212,7 @@ type Configuration struct {
 	IsEdgeRelay      bool   `json:"is_edge_relay" yaml:"is_edge_relay" default:false`
 	IsRelay          bool   `json:"is_relay" yaml:"is_relay" default:false`
 	DkimSelector     string `json:"dkim_selector" yaml:"dkim_selector"`
+	PostfixExporterPresent bool `json:"postfix_exporter_present" yaml:"postfix_exporter_present" default:false`
 
 	// proxy role
 	IsBehindCf             bool   `json:"is_behind_cloudflare" yaml:"is_behind_cloudflare" default:false`

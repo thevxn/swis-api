@@ -3885,6 +3885,9 @@ const docTemplate = `{
                 "disk4": {
                     "type": "string"
                 },
+                "dkim_selector": {
+                    "type": "string"
+                },
                 "dns_master_ip": {
                     "type": "string"
                 },
@@ -3974,6 +3977,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "nginx_present": {
+                    "type": "boolean"
+                },
+                "postfix_exporter_present": {
                     "type": "boolean"
                 },
                 "postfix_myhostname": {
@@ -4718,7 +4724,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.14.0",
+	Version:          "5.14.4",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},

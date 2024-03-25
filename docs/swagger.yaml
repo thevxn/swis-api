@@ -429,6 +429,8 @@ definitions:
         type: string
       disk4:
         type: string
+      dkim_selector:
+        type: string
       dns_master_ip:
         type: string
       dns_server_present:
@@ -491,6 +493,8 @@ definitions:
       nameserver_secondary:
         type: string
       nginx_present:
+        type: boolean
+      postfix_exporter_present:
         type: boolean
       postfix_myhostname:
         description: postfix role
@@ -1029,7 +1033,7 @@ info:
     url: https://github.com/savla-dev/swis-api/blob/master/LICENSE
   termsOfService: http://swagger.io/terms/
   title: swis-api (swapi) v5
-  version: 5.14.0
+  version: 5.14.4
 paths:
   /alvax:
     get:
