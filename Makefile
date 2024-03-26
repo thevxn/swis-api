@@ -22,6 +22,11 @@ LOKI_URL?=loki.example.com/loki/api/v1/push
 ROOT_TOKEN?=${ROOT_TOKEN_DEFAULT}
 GIN_MODE?=debug
 
+GOARCH := $(shell go env GOARCH)
+GOCACHE?=/home/${USER}/.cache/go-build
+GOMODCACHE?=/home/${USER}/go/pkg/mod
+GOOS := $(shell go env GOOS)
+
 PATH:=${PATH}:/usr/bin
 
 # test env

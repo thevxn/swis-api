@@ -8,7 +8,6 @@
 
 # https://hub.docker.com/_/golang
 ARG GOLANG_VERSION
-ARG ALPINE_VERSION
 FROM golang:${GOLANG_VERSION}-alpine AS swapi-build
 
 ARG APP_NAME
@@ -18,14 +17,18 @@ RUN apk add git
 
 WORKDIR /go/src/${APP_NAME}
 COPY ./go.mod .
-RUN go mod download
+
+ARG GOMODCACHE GOCACHE
+RUN --mount=type=cache,target="$GOMODCACHE" go mod download
 
 COPY . .
 
 # force use locked version
-ARG APP_VERSION
+ARG APP_VERSION GOARCH GOOS
 #RUN go install go.savla.dev/swis/v5@v${APP_VERSION}
-RUN go build -o /go/bin/swis
+RUN --mount=type=cache,target="$GOMODCACHE" \
+	--mount=type=cache,target="$GOCACHE" \
+	CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -o /go/bin/swis
 
 
 #
@@ -34,10 +37,7 @@ RUN go build -o /go/bin/swis
 
 FROM alpine:${ALPINE_VERSION} AS swapi-release
 
-ARG APP_NAME
-ARG APP_ROOT
-ARG DOCKER_INTERNAL_PORT
-ARG DOCKER_USER
+ARG APP_NAME APP_ROOT DOCKER_INTERNAL_PORT DOCKER_USER
 
 ENV APP_NAME ${APP_NAME}
 
