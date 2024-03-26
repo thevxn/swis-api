@@ -35,6 +35,7 @@ RUN --mount=type=cache,target="$GOMODCACHE" \
 # stage 1 -- release, combine build image and config(s), pre-runtime
 #
 
+ARG ALPINE_VERSION
 FROM alpine:${ALPINE_VERSION} AS swapi-release
 
 ARG APP_NAME APP_ROOT DOCKER_INTERNAL_PORT DOCKER_USER
