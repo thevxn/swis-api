@@ -7,13 +7,14 @@
 #
 
 # https://hub.docker.com/_/golang
-ARG GOLANG_VERSION
+ARG ALPINE_VERSION GOLANG_VERSION
 FROM golang:${GOLANG_VERSION}-alpine AS swapi-build
 
 ARG APP_NAME
 ENV APP_NAME ${APP_NAME}
 
-RUN apk add git
+RUN --mount=type=cache,target=/var/cache/apk \
+	apk add git
 
 WORKDIR /go/src/${APP_NAME}
 COPY ./go.mod .
@@ -35,7 +36,6 @@ RUN --mount=type=cache,target="$GOMODCACHE" \
 # stage 1 -- release, combine build image and config(s), pre-runtime
 #
 
-ARG ALPINE_VERSION
 FROM alpine:${ALPINE_VERSION} AS swapi-release
 
 ARG APP_NAME APP_ROOT DOCKER_INTERNAL_PORT DOCKER_USER
