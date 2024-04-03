@@ -187,7 +187,7 @@ push:
 docs:
 	@echo -e "\n${YELLOW} Regenerating documentation for swagger and rebuilding binary file... ${RESET}\n"
 	@go install github.com/swaggo/swag/cmd/swag@latest
-	@${SWAG_BINARY} init . 
+	@${SWAG_BINARY} init --parseDependency -ot json .
 	@docker compose --file $(DOCKER_COMPOSE_FILE) up swagger_ui --detach --force-recreate
 
 .PHONY: sh
