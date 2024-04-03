@@ -67,6 +67,9 @@ type Incident struct {
 	// Further details about the incident like place, state of operation etc.
 	Description string `json:"desc"`
 
+	// Type of incident, e.g. planned, maintenance, outage etc
+	Type string `json:"type"`
+
 	// ID of the referencing socket(s).
 	//SocketID []string `json:"socket_id"`
 	SocketID string `json:"socket_id"`

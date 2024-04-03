@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.14.5"
+        "version": "5.14.6"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -709,6 +709,12 @@
                         "description": "The very start datetime of such incident.",
                         "name": "start_date",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                        "name": "type",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -812,6 +818,12 @@
                         "type": "integer",
                         "description": "The very start datetime of such incident.",
                         "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                        "name": "type",
                         "in": "query"
                     }
                 ],
@@ -1103,6 +1115,12 @@
                         "description": "The very start datetime of such incident.",
                         "name": "start_date",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                        "name": "type",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1201,6 +1219,12 @@
                         "type": "integer",
                         "description": "The very start datetime of such incident.",
                         "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                        "name": "type",
                         "in": "query"
                     }
                 ],
@@ -3591,6 +3615,10 @@
                 "start_date": {
                     "description": "The very start datetime of such incident.",
                     "type": "integer"
+                },
+                "type": {
+                    "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                    "type": "string"
                 }
             }
         },

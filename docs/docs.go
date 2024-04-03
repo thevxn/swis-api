@@ -715,6 +715,12 @@ const docTemplate = `{
                         "description": "The very start datetime of such incident.",
                         "name": "start_date",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                        "name": "type",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -818,6 +824,12 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "The very start datetime of such incident.",
                         "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                        "name": "type",
                         "in": "query"
                     }
                 ],
@@ -1109,6 +1121,12 @@ const docTemplate = `{
                         "description": "The very start datetime of such incident.",
                         "name": "start_date",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                        "name": "type",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1207,6 +1225,12 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "The very start datetime of such incident.",
                         "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                        "name": "type",
                         "in": "query"
                     }
                 ],
@@ -3597,6 +3621,10 @@ const docTemplate = `{
                 "start_date": {
                     "description": "The very start datetime of such incident.",
                     "type": "integer"
+                },
+                "type": {
+                    "description": "Type of incident, e.g. planned, maintenance, outage etc",
+                    "type": "string"
                 }
             }
         },
@@ -4724,7 +4752,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "5.14.5",
+	Version:          "5.14.6",
 	Host:             "swis-api-run-prod:8050",
 	BasePath:         "/",
 	Schemes:          []string{},
