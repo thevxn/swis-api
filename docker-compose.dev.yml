@@ -22,7 +22,11 @@ services:
         APP_VERSION: ${APP_VERSION}
         DOCKER_INTERNAL_PORT: ${DOCKER_INTERNAL_PORT} 
         DOCKER_USER: ${DOCKER_USER}
+        GOARCH: ${GOARCH}
+        GOCACHE: ${GOCACHE}
+        GOMODCACHE: ${GOMODCACHE}
         GOLANG_VERSION: ${GOLANG_VERSION} 
+        GOOS: ${GOOS}
     restart: unless-stopped
     command: ${APP_FLAGS}
     environment:
