@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.14.6"
+        "version": "5.15.0"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -2957,6 +2957,186 @@
                 }
             }
         },
+        "/queue/restore": {
+            "post": {
+                "description": "update tasks JSON dump",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queue"
+                ],
+                "summary": "Upload tasks dump backup -- restore all tasks",
+                "responses": {}
+            }
+        },
+        "/queue/tasks": {
+            "get": {
+                "description": "get tasks complete list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queue"
+                ],
+                "summary": "Get all tasks",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new task to queue",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queue"
+                ],
+                "summary": "Add new task to queue",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    }
+                }
+            }
+        },
+        "/queue/tasks/{key}": {
+            "get": {
+                "description": "get task by its key param",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queue"
+                ],
+                "summary": "Get task by timestamp key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update task by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queue"
+                ],
+                "summary": "Update task by its Key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete task by its Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queue"
+                ],
+                "summary": "Delete task by its Key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "task Key",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    }
+                }
+            }
+        },
+        "/queue/tasks/{key}/processed": {
+            "put": {
+                "description": "toggle processed boolean by task's key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queue"
+                ],
+                "summary": "Toggle processed boolean by task's key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "key",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/queue.Task"
+                        }
+                    }
+                }
+            }
+        },
         "/roles": {
             "get": {
                 "description": "get roules complete list",
@@ -4587,6 +4767,38 @@
                 },
                 "redmine_link": {
                     "description": "URL to redmine project overview.",
+                    "type": "string"
+                }
+            }
+        },
+        "queue.Task": {
+            "type": "object",
+            "required": [
+                "worker_name"
+            ],
+            "properties": {
+                "description": {
+                    "description": "Description of such task in human-readable format.",
+                    "type": "string"
+                },
+                "last_change_timestamp": {
+                    "description": "Timestamp of the last activity made on this task.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Taks's ID as an unique identifier in the queue.",
+                    "type": "string"
+                },
+                "processed": {
+                    "description": "Processed is an indicator that such task is being worked on.",
+                    "type": "boolean"
+                },
+                "state": {
+                    "description": "State is a human-readable string describing the actual state of the task.",
+                    "type": "string"
+                },
+                "worker_name": {
+                    "description": "An identifier of a worker for the task to be executed with.",
                     "type": "string"
                 }
             }

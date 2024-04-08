@@ -111,11 +111,9 @@ func TestPostNewIncident(t *testing.T) {
 	now := time.Now().UnixNano()
 
 	var inc Incident = Incident{
-		ID:             "123123",
 		Name:           "site down",
 		StartTimestamp: now,
 		Public:         true,
-		//SocketID:  "https_savla_dev",
 	}
 
 	jsonValue, _ := json.Marshal(inc)

@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.14.6
+// @version 5.15.0
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -45,6 +45,7 @@ import (
 	"go.savla.dev/swis/v5/pkg/links"
 	"go.savla.dev/swis/v5/pkg/news"
 	"go.savla.dev/swis/v5/pkg/projects"
+	"go.savla.dev/swis/v5/pkg/queue"
 	"go.savla.dev/swis/v5/pkg/roles"
 	"go.savla.dev/swis/v5/pkg/users"
 
@@ -166,8 +167,9 @@ func main() {
 	news.Cache = &core.Cache{}
 	news.Routes(router.Group("/news"))
 
-	// projects pkg registration
+	// projects and queue pkgis registration
 	core.MountPackage(router, projects.Package)
+	core.MountPackage(router, queue.Package)
 
 	// bulk registration and mounting of packages
 	/*core.RegisterAndMount(router,
