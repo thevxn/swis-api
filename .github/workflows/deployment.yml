@@ -65,6 +65,7 @@ jobs:
         LOKI_URL: ${{ secrets.LOKI_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
         GIN_MODE: ${{ secrets.GIN_MODE }}
+        CF_BEARER_TOKEN: ${{ secrets.CF_BEARER_TOKEN }}
       run: make run
 
   import_data:
