@@ -12,13 +12,14 @@ import (
 
 // https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-create-dns-record
 type DNSRecord struct {
-	Content string   `json:"content"`
-	Name    string   `json:"name"`
-	Proxied bool     `json:"proxied"`
-	Type    string   `json:"type"`
-	Comment string   `json:"comment"`
-	Tags    []string `json:"tags"`
-	TTL     int64    `json:"ttl"`
+	Content  string   `json:"content"`
+	Name     string   `json:"name"`
+	Proxied  bool     `json:"proxied"`
+	Priority int64    `json:"priority"`
+	Type     string   `json:"type"`
+	Comment  string   `json:"comment"`
+	Tags     []string `json:"tags"`
+	TTL      int64    `json:"ttl"`
 }
 
 // https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-create-dns-record
