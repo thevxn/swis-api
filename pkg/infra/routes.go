@@ -18,6 +18,8 @@ func Routes(g *gin.RouterGroup) {
 		GetDomainByKey)
 	g.POST("/domains/:key",
 		PostNewDomainByKey)
+	g.POST("/domains/:key/deployment",
+		PostDomainDeploymentByKey)
 	g.PUT("/domains/:key",
 		UpdateDomainByKey)
 	g.DELETE("/domains/:key",
