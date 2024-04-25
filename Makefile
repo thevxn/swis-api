@@ -22,6 +22,9 @@ APP_URL?=swapi.example.com
 LOKI_URL?=loki.example.com/loki/api/v1/push
 ROOT_TOKEN?=${ROOT_TOKEN_DEFAULT}
 GIN_MODE?=debug
+CF_API_EMAIL?=
+CF_API_TOKEN?=
+CF_BEARER_TOKEN?=
 
 GOARCH := $(shell go env GOARCH)
 GOCACHE?=/home/${USER}/.cache/go-build

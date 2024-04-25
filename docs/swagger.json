@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.15.0"
+        "version": "5.15.1"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -2123,6 +2123,40 @@
                 }
             }
         },
+        "/infra/domains/{key}/deployment": {
+            "post": {
+                "description": "post domain deployment by key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Post domain deployment by key",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/infra.DNSRecord"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/infra.Domain"
+                        }
+                    }
+                }
+            }
+        },
         "/infra/hosts": {
             "get": {
                 "description": "get hosts list",
@@ -4007,6 +4041,13 @@
                     "description": "PaymentDate is a datetime of the payment.",
                     "type": "string"
                 },
+                "tags": {
+                    "description": "Tags to filter items.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "type": {
                     "description": "Type defines whether the item is an income, or an expense.",
                     "type": "string"
@@ -4286,6 +4327,35 @@
                 },
                 "use_geoip": {
                     "type": "boolean"
+                }
+            }
+        },
+        "infra.DNSRecord": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "proxied": {
+                    "type": "boolean"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ttl": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         },

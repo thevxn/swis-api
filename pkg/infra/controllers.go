@@ -2,6 +2,7 @@ package infra
 
 import (
 	"net/http"
+	"os"
 
 	"go.savla.dev/swis/v5/pkg/core"
 
@@ -96,6 +97,90 @@ func UpdateDomainByKey(ctx *gin.Context) {
 // @Router /infra/domains/{key} [delete]
 func DeleteDomainByKey(ctx *gin.Context) {
 	core.DeleteItemByParam(ctx, CacheDomains, pkgName)
+	return
+}
+
+// @Summary Post domain deployment by key
+// @Description post domain deployment by key
+// @Tags infra
+// @Produce json
+// @Param request body []infra.DNSRecord true "query params"
+// @Success 200 {object} infra.Domain
+// @Router /infra/domains/{key}/deployment [post]
+func PostDomainDeploymentByKey(ctx *gin.Context) {
+	key := ctx.Param("key")
+
+	rawDomain, ok := CacheDomains.Get(key)
+	if !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "domain not found by key",
+			"package": pkgName,
+			"key":     key,
+		})
+		return
+	}
+
+	var domain Domain
+
+	domain, ok = rawDomain.(Domain)
+	if !ok {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot assert Domain data type",
+			"package": pkgName,
+			"key":     key,
+		})
+		return
+	}
+
+	email := os.Getenv("CF_API_EMAIL")
+	token := os.Getenv("CF_API_TOKEN")
+
+	if email == "" || token == "" {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "Cloudflare API key and e-mail not provided as ENV variables",
+			"package": pkgName,
+		})
+		return
+	}
+
+	var records []DNSRecord
+
+	if err := ctx.BindJSON(&records); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"key":     key,
+			"message": "cannot bind input JSON stream",
+			"package": pkgName,
+		})
+		return
+	}
+
+	// range records to call the Cloudflare API once per a record
+	for id, record := range records {
+		//if err := callCfAPI([]string{email, token}, domain.CfZoneID, record); err != nil {
+		if err := callCfAPI(domain.CfZoneID, record); err != nil {
+			ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+				"code":      http.StatusInternalServerError,
+				"error":     err.Error(),
+				"key":       key,
+				"record_id": id,
+				"message":   "error occured while calling Cloudflare API",
+				"package":   pkgName,
+			})
+			return
+		}
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"key":     key,
+		"message": "domain records successfuly deployed",
+		"package": pkgName,
+	})
 	return
 }
 
