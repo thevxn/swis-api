@@ -60,6 +60,9 @@ type Item struct {
 	// Invoice identification.
 	InvoiceNo string `json:"invoice_no"`
 
+	// Tags to filter items.
+	Tags []string `json:"tags"`
+
 	// Mescellaneous information about the payment (e.g. foreign currency and amount).
 	Misc string `json:"misc"`
 }
