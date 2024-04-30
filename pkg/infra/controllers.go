@@ -168,7 +168,7 @@ func PostDomainDeploymentByKey(ctx *gin.Context) {
 				"error":     err.Error(),
 				"key":       key,
 				"record_id": id,
-				"message":   "error occured while calling Cloudflare API",
+				"message":   "error occurred while calling Cloudflare API",
 				"package":   pkgName,
 			})
 			return
@@ -178,7 +178,7 @@ func PostDomainDeploymentByKey(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"key":     key,
-		"message": "domain records successfuly deployed",
+		"message": "domain records successfully deployed",
 		"package": pkgName,
 	})
 	return
