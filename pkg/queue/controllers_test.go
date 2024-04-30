@@ -66,7 +66,7 @@ func TestGetTasks(t *testing.T) {
 
 	var items = struct {
 		Tasks map[string]Task `json:"items"`
-		Count int `json:"count"`
+		Count int             `json:"count"`
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &items)
 
