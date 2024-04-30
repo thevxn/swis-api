@@ -12,10 +12,10 @@ include .env.example
 
 APP_ENVIRONMENT?=development
 PROJECT_NAME?=${APP_NAME}
-DOCKER_COMPOSE_FILE?=./docker-compose.yml
-DOCKER_COMPOSE_OVERRIDE?=./docker-compose.override.yml
-DOCKER_COMPOSE_DEV_FILE?=./docker-compose.dev.yml
-DOCKER_COMPOSE_DEV_OVERRIDE?=./docker-compose.dev.override.yml
+DOCKER_COMPOSE_FILE?=deployments/docker-compose.yml
+DOCKER_COMPOSE_OVERRIDE?=deployments/docker-compose.override.yml
+DOCKER_COMPOSE_DEV_FILE?=deployments/docker-compose.dev.yml
+DOCKER_COMPOSE_DEV_OVERRIDE?=deployments/docker-compose.dev.override.yml
 SWAG_BINARY?=~/go/bin/swag
 
 APP_URL?=swapi.example.com
@@ -34,7 +34,7 @@ GOOS := $(shell go env GOOS)
 PATH:=${PATH}:/usr/bin
 
 # test env
-POSTMAN_COLLECTION_FILE=.postman/swapi_E2E_dish.postman_collection.json
+POSTMAN_COLLECTION_FILE=test/postman/swapi_E2E_dish.postman_collection.json
 HOSTNAME?=localhost
 ROOT_TOKEN_TEST=fsdFD33FdsfK3dcc00Wef223kffDSrrrr
 
@@ -88,10 +88,16 @@ info:
 	@echo -e "${YELLOW} make backup${RESET}      --- ${BLUE}execute data dump and tar/gzip data backup ${RESET}"
 	@echo -e ""
 
+.PHONY: config
+config: 
+	@echo -e "\n${YELLOW} Installing additional tools and packages... ${RESET}\n"
+	@go install github.com/swaggo/swag/cmd/swag@latest
+	
+
 .PHONY: version
 version: 
 	@echo -e "\n${YELLOW} Updating app's version (docs) according to dot-env file... ${RESET}\n"
-	@/usr/bin/sed -i 's/\(\/\/[ ]@version\) .*/\1 ${APP_VERSION}/' main.go
+	@/usr/bin/sed -i 's/\(\/\/[ ]@version\) .*/\1 ${APP_VERSION}/' cmd/swis-api/main.go
 
 .PHONY: fmt
 fmt:
@@ -168,17 +174,17 @@ dev: fmt
 .PHONY: dump
 dump: 
 	@echo -e "\n${YELLOW} Dumping prod data to ${DUMP_DIR}... ${RESET}\n"
-	@.script/dump_prod_data.sh
+	@scripts/dump_prod_data.sh
 
 .PHONY: backup
 backup: dump
 	@echo -e "\n${YELLOW} Archiving and compressing dumped data... ${RESET}\n"
-	@.script/backup_dumped_files.sh
+	@scripts/backup_dumped_files.sh
 
 .PHONY: import_dump
 import_dump: 
 	@echo -e "\n${YELLOW} Import stored data (${DUMP_DIR}) to backend... ${RESET}\n"
-	@.script/import_prod_data.sh
+	@scripts/import_prod_data.sh
 
 .PHONY: push
 push:
@@ -190,7 +196,7 @@ push:
 docs:
 	@echo -e "\n${YELLOW} Regenerating documentation for swagger and rebuilding binary file... ${RESET}\n"
 	@go install github.com/swaggo/swag/cmd/swag@latest
-	@${SWAG_BINARY} init --parseDependency -ot json .
+	@${SWAG_BINARY} init --parseDependency -ot json . -g ./cmd/swis-api/main.go 
 	@docker compose --file $(DOCKER_COMPOSE_FILE) up swagger_ui --detach --force-recreate
 
 .PHONY: sh
@@ -211,9 +217,9 @@ raw:
 .PHONY: fetch_facts
 fetch_facts:
 	@echo -e "\n${YELLOW} Executing a raw cURL request based on .env variables... ${RESET}\n"
-	@.script/fetch_facts.sh
+	@scripts/fetch_facts.sh
 
 .PHONY: compose_host_vars
 compose_host_vars:
 	@echo -e "\n${YELLOW} Fetching hosts configuration, exporting as YAML host_vars... ${RESET}\n"
-	@.script/compose_host_vars.sh
+	@scripts/compose_host_vars.sh
