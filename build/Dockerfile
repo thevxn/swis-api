@@ -22,6 +22,7 @@ COPY ./go.mod .
 ARG GOMODCACHE GOCACHE
 RUN --mount=type=cache,target="$GOMODCACHE" go mod download
 
+COPY cmd/swis-api/ /go/src/swis-api/
 COPY . .
 
 # force use locked version

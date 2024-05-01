@@ -1,4 +1,5 @@
-version: '3.9'
+#version: '3.9'
+name: ${PROJECT_NAME}
 
 networks:
   traefik_hermes:
@@ -13,8 +14,8 @@ services:
     image: ${DOCKER_IMAGE_TAG}
     container_name: ${DOCKER_DEV_CONTAINER_NAME}
     build:
-      context: .
-      dockerfile: .docker/Dockerfile
+      context: ..
+      dockerfile: build/Dockerfile
       args: 
         ALPINE_VERSION: ${ALPINE_VERSION}
         APP_NAME: ${APP_NAME}
