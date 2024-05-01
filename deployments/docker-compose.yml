@@ -80,7 +80,7 @@ services:
     networks: 
       - ${DOCKER_NETWORK_NAME}
     volumes: 
-      - "./docs/swagger.json:/tmp/swagger.json"
+      - "../api/swagger.json:/tmp/swagger.json"
     labels:
       - "traefik.http.routers.${APP_NAME}-swagger.rule=Host(`swapi-docs.savla.su`)"
       #- "traefik.http.routers.${APP_NAME}-swagger.rule=Host(`swapi-docs.savla.su`) && PathPrefix(`/docs`)"
