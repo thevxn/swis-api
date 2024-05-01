@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.15.2"
+        "version": "5.16.0"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -34,7 +34,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/alvax.ConfigRoot"
+                                "$ref": "#/definitions/pkg_alvax.ConfigRoot"
                             }
                         }
                     }
@@ -71,7 +71,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/alvax.ConfigRoot"
+                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
                         }
                     }
                 }
@@ -92,7 +92,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/alvax.ConfigRoot"
+                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
                         }
                     }
                 ],
@@ -100,7 +100,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/alvax.ConfigRoot"
+                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
                         }
                     }
                 }
@@ -121,7 +121,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/alvax.ConfigRoot"
+                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
                         }
                     }
                 ],
@@ -129,7 +129,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/alvax.ConfigRoot"
+                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
                         }
                     }
                 }
@@ -156,7 +156,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/alvax.ConfigRoot"
+                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
                         }
                     }
                 }
@@ -242,7 +242,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/backups.Backup"
+                            "$ref": "#/definitions/pkg_backups.Backup"
                         }
                     }
                 ],
@@ -250,7 +250,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/backups.Backup"
+                            "$ref": "#/definitions/pkg_backups.Backup"
                         }
                     }
                 }
@@ -271,7 +271,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/backups.Backup"
+                            "$ref": "#/definitions/pkg_backups.Backup"
                         }
                     }
                 ],
@@ -279,7 +279,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/backups.Backup"
+                            "$ref": "#/definitions/pkg_backups.Backup"
                         }
                     }
                 }
@@ -326,7 +326,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/backups.Backup"
+                            "$ref": "#/definitions/pkg_backups.Backup"
                         }
                     }
                 }
@@ -348,7 +348,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/business.Business"
+                                "$ref": "#/definitions/pkg_business.Business"
                             }
                         }
                     }
@@ -385,7 +385,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/business.Business"
+                            "$ref": "#/definitions/pkg_business.Business"
                         }
                     }
                 }
@@ -406,7 +406,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/business.Business"
+                            "$ref": "#/definitions/pkg_business.Business"
                         }
                     }
                 ],
@@ -414,7 +414,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/business.Business"
+                            "$ref": "#/definitions/pkg_business.Business"
                         }
                     }
                 }
@@ -435,7 +435,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/business.Business"
+                            "$ref": "#/definitions/pkg_business.Business"
                         }
                     }
                 ],
@@ -443,7 +443,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/business.Business"
+                            "$ref": "#/definitions/pkg_business.Business"
                         }
                     }
                 }
@@ -470,7 +470,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/business.Business"
+                            "$ref": "#/definitions/pkg_business.Business"
                         }
                     }
                 }
@@ -492,7 +492,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/depots.DepotItem"
+                                "$ref": "#/definitions/pkg_depots.DepotItem"
                             }
                         }
                     }
@@ -515,7 +515,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/depots.DepotItem"
+                                "$ref": "#/definitions/pkg_depots.DepotItem"
                             }
                         }
                     }
@@ -536,7 +536,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.DepotItem"
+                            "$ref": "#/definitions/pkg_depots.DepotItem"
                         }
                     }
                 }
@@ -563,7 +563,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.DepotItem"
+                            "$ref": "#/definitions/pkg_depots.DepotItem"
                         }
                     }
                 }
@@ -584,7 +584,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/depots.DepotItem"
+                            "$ref": "#/definitions/pkg_depots.DepotItem"
                         }
                     }
                 ],
@@ -592,7 +592,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.DepotItem"
+                            "$ref": "#/definitions/pkg_depots.DepotItem"
                         }
                     }
                 }
@@ -619,7 +619,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/depots.DepotItem"
+                            "$ref": "#/definitions/pkg_depots.DepotItem"
                         }
                     }
                 }
@@ -721,7 +721,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dish.Root"
+                            "$ref": "#/definitions/pkg_dish.Root"
                         }
                     }
                 }
@@ -746,7 +746,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Incident"
+                                "$ref": "#/definitions/pkg_dish.Incident"
                             }
                         }
                     }
@@ -831,25 +831,25 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     }
                 }
@@ -874,7 +874,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Incident"
+                                "$ref": "#/definitions/pkg_dish.Incident"
                             }
                         }
                     }
@@ -900,7 +900,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Incident"
+                                "$ref": "#/definitions/pkg_dish.Incident"
                             }
                         }
                     }
@@ -1036,14 +1036,14 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Incident"
+                                "$ref": "#/definitions/pkg_dish.Incident"
                             }
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     }
                 }
@@ -1129,26 +1129,26 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Incident"
+                                "$ref": "#/definitions/pkg_dish.Incident"
                             }
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     }
                 }
@@ -1234,20 +1234,20 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Incident"
+                                "$ref": "#/definitions/pkg_dish.Incident"
                             }
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dish.Incident"
+                            "$ref": "#/definitions/pkg_dish.Incident"
                         }
                     }
                 }
@@ -1272,7 +1272,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Incident"
+                                "$ref": "#/definitions/pkg_dish.Incident"
                             }
                         }
                     },
@@ -1281,7 +1281,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Incident"
+                                "$ref": "#/definitions/pkg_dish.Incident"
                             }
                         }
                     },
@@ -1290,7 +1290,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Incident"
+                                "$ref": "#/definitions/pkg_dish.Incident"
                             }
                         }
                     }
@@ -1369,7 +1369,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Message"
+                                "$ref": "#/definitions/pkg_dish.Message"
                             }
                         }
                     }
@@ -1422,7 +1422,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     }
                 ],
@@ -1430,7 +1430,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     }
                 }
@@ -1451,7 +1451,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     }
                 ],
@@ -1459,7 +1459,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     }
                 }
@@ -1486,7 +1486,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     }
                 }
@@ -1519,20 +1519,20 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Socket"
+                                "$ref": "#/definitions/pkg_dish.Socket"
                             }
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     }
                 }
@@ -1565,20 +1565,20 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Socket"
+                                "$ref": "#/definitions/pkg_dish.Socket"
                             }
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     }
                 }
@@ -1611,20 +1611,20 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dish.Socket"
+                                "$ref": "#/definitions/pkg_dish.Socket"
                             }
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dish.Socket"
+                            "$ref": "#/definitions/pkg_dish.Socket"
                         }
                     }
                 }
@@ -1657,7 +1657,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Account"
+                            "$ref": "#/definitions/pkg_finance.Account"
                         }
                     }
                 }
@@ -1677,7 +1677,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Account"
+                            "$ref": "#/definitions/pkg_finance.Account"
                         }
                     }
                 }
@@ -1697,7 +1697,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Account"
+                            "$ref": "#/definitions/pkg_finance.Account"
                         }
                     }
                 }
@@ -1718,7 +1718,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/finance.Account"
+                            "$ref": "#/definitions/pkg_finance.Account"
                         }
                     }
                 ],
@@ -1726,7 +1726,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Account"
+                            "$ref": "#/definitions/pkg_finance.Account"
                         }
                     }
                 }
@@ -1747,7 +1747,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/finance.Account"
+                            "$ref": "#/definitions/pkg_finance.Account"
                         }
                     }
                 ],
@@ -1755,7 +1755,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Account"
+                            "$ref": "#/definitions/pkg_finance.Account"
                         }
                     }
                 }
@@ -1782,7 +1782,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Account"
+                            "$ref": "#/definitions/pkg_finance.Account"
                         }
                     }
                 }
@@ -1802,7 +1802,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Item"
+                            "$ref": "#/definitions/pkg_finance.Item"
                         }
                     }
                 }
@@ -1822,7 +1822,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Item"
+                            "$ref": "#/definitions/pkg_finance.Item"
                         }
                     }
                 }
@@ -1842,7 +1842,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Item"
+                            "$ref": "#/definitions/pkg_finance.Item"
                         }
                     }
                 }
@@ -1863,7 +1863,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/finance.Item"
+                            "$ref": "#/definitions/pkg_finance.Item"
                         }
                     }
                 ],
@@ -1871,7 +1871,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Item"
+                            "$ref": "#/definitions/pkg_finance.Item"
                         }
                     }
                 }
@@ -1892,7 +1892,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/finance.Item"
+                            "$ref": "#/definitions/pkg_finance.Item"
                         }
                     }
                 ],
@@ -1900,7 +1900,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Item"
+                            "$ref": "#/definitions/pkg_finance.Item"
                         }
                     }
                 }
@@ -1927,7 +1927,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Item"
+                            "$ref": "#/definitions/pkg_finance.Item"
                         }
                     }
                 }
@@ -1972,7 +1972,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/finance.Tax"
+                            "$ref": "#/definitions/pkg_finance.Tax"
                         }
                     }
                 }
@@ -1992,7 +1992,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Infrastructure"
+                            "$ref": "#/definitions/pkg_infra.Infrastructure"
                         }
                     }
                 }
@@ -2012,7 +2012,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Domain"
+                            "$ref": "#/definitions/pkg_infra.Domain"
                         }
                     }
                 }
@@ -2032,7 +2032,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Domain"
+                            "$ref": "#/definitions/pkg_infra.Domain"
                         }
                     }
                 }
@@ -2053,7 +2053,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Domain"
+                            "$ref": "#/definitions/pkg_infra.Domain"
                         }
                     }
                 ],
@@ -2061,7 +2061,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Domain"
+                            "$ref": "#/definitions/pkg_infra.Domain"
                         }
                     }
                 }
@@ -2082,7 +2082,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Domain"
+                            "$ref": "#/definitions/pkg_infra.Domain"
                         }
                     }
                 ],
@@ -2090,7 +2090,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Domain"
+                            "$ref": "#/definitions/pkg_infra.Domain"
                         }
                     }
                 }
@@ -2117,7 +2117,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Domain"
+                            "$ref": "#/definitions/pkg_infra.Domain"
                         }
                     }
                 }
@@ -2142,7 +2142,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/infra.DNSRecord"
+                                "$ref": "#/definitions/pkg_infra.DNSRecord"
                             }
                         }
                     }
@@ -2151,7 +2151,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Domain"
+                            "$ref": "#/definitions/pkg_infra.Domain"
                         }
                     }
                 }
@@ -2171,7 +2171,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 }
@@ -2191,7 +2191,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 }
@@ -2212,7 +2212,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 ],
@@ -2220,7 +2220,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 }
@@ -2241,7 +2241,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 ],
@@ -2249,7 +2249,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 }
@@ -2276,7 +2276,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 }
@@ -2299,7 +2299,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Configuration"
+                            "$ref": "#/definitions/pkg_infra.Configuration"
                         }
                     }
                 ],
@@ -2307,7 +2307,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 }
@@ -2330,7 +2330,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Facts"
+                            "$ref": "#/definitions/pkg_infra.Facts"
                         }
                     }
                 ],
@@ -2338,7 +2338,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 }
@@ -2361,7 +2361,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.VMInstallConfig"
+                            "$ref": "#/definitions/pkg_infra.VMInstallConfig"
                         }
                     }
                 ],
@@ -2369,7 +2369,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 }
@@ -2389,7 +2389,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Host"
+                            "$ref": "#/definitions/pkg_infra.Host"
                         }
                     }
                 }
@@ -2409,7 +2409,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Infrastructure"
+                            "$ref": "#/definitions/pkg_infra.Infrastructure"
                         }
                     }
                 }
@@ -2429,7 +2429,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Network"
+                            "$ref": "#/definitions/pkg_infra.Network"
                         }
                     }
                 }
@@ -2450,7 +2450,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Network"
+                            "$ref": "#/definitions/pkg_infra.Network"
                         }
                     }
                 ],
@@ -2458,7 +2458,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Network"
+                            "$ref": "#/definitions/pkg_infra.Network"
                         }
                     }
                 }
@@ -2479,7 +2479,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/infra.Network"
+                            "$ref": "#/definitions/pkg_infra.Network"
                         }
                     }
                 ],
@@ -2487,7 +2487,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Network"
+                            "$ref": "#/definitions/pkg_infra.Network"
                         }
                     }
                 }
@@ -2514,7 +2514,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/infra.Network"
+                            "$ref": "#/definitions/pkg_infra.Network"
                         }
                     }
                 }
@@ -2550,7 +2550,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/links.Link"
+                            "$ref": "#/definitions/pkg_links.Link"
                         }
                     }
                 }
@@ -2586,7 +2586,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/links.Link"
+                            "$ref": "#/definitions/pkg_links.Link"
                         }
                     }
                 }
@@ -2607,7 +2607,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/links.Link"
+                            "$ref": "#/definitions/pkg_links.Link"
                         }
                     }
                 ],
@@ -2615,7 +2615,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/links.Link"
+                            "$ref": "#/definitions/pkg_links.Link"
                         }
                     }
                 }
@@ -2636,7 +2636,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/links.Link"
+                            "$ref": "#/definitions/pkg_links.Link"
                         }
                     }
                 ],
@@ -2644,7 +2644,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/links.Link"
+                            "$ref": "#/definitions/pkg_links.Link"
                         }
                     }
                 }
@@ -2671,7 +2671,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/links.Link"
+                            "$ref": "#/definitions/pkg_links.Link"
                         }
                     }
                 }
@@ -2700,7 +2700,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/links.Link"
+                            "$ref": "#/definitions/pkg_links.Link"
                         }
                     }
                 }
@@ -2720,7 +2720,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.NewsSources"
+                            "$ref": "#/definitions/pkg_news.NewsSources"
                         }
                     }
                 }
@@ -2756,7 +2756,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.Source"
+                            "$ref": "#/definitions/pkg_news.Source"
                         }
                     }
                 }
@@ -2777,7 +2777,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/news.Source"
+                            "$ref": "#/definitions/pkg_news.Source"
                         }
                     }
                 ],
@@ -2785,7 +2785,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.Source"
+                            "$ref": "#/definitions/pkg_news.Source"
                         }
                     }
                 }
@@ -2803,7 +2803,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.Source"
+                            "$ref": "#/definitions/pkg_news.Source"
                         }
                     }
                 }
@@ -2841,7 +2841,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/news.Item"
+                            "$ref": "#/definitions/pkg_news.Item"
                         }
                     }
                 }
@@ -2863,7 +2863,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/projects.Project"
+                                "$ref": "#/definitions/pkg_projects.Project"
                             }
                         }
                     }
@@ -2900,7 +2900,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/projects.Project"
+                            "$ref": "#/definitions/pkg_projects.Project"
                         }
                     }
                 }
@@ -2921,7 +2921,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/projects.Project"
+                            "$ref": "#/definitions/pkg_projects.Project"
                         }
                     }
                 ],
@@ -2929,7 +2929,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/projects.Project"
+                            "$ref": "#/definitions/pkg_projects.Project"
                         }
                     }
                 }
@@ -2950,7 +2950,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/projects.Project"
+                            "$ref": "#/definitions/pkg_projects.Project"
                         }
                     }
                 ],
@@ -2958,7 +2958,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/projects.Project"
+                            "$ref": "#/definitions/pkg_projects.Project"
                         }
                     }
                 }
@@ -2985,7 +2985,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/projects.Project"
+                            "$ref": "#/definitions/pkg_projects.Project"
                         }
                     }
                 }
@@ -3021,7 +3021,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     }
                 }
@@ -3042,25 +3042,25 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     }
                 }
@@ -3080,7 +3080,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     }
                 }
@@ -3101,7 +3101,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     }
                 ],
@@ -3109,7 +3109,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     }
                 }
@@ -3136,7 +3136,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     }
                 }
@@ -3165,7 +3165,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/queue.Task"
+                            "$ref": "#/definitions/pkg_queue.Task"
                         }
                     }
                 }
@@ -3187,7 +3187,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/roles.Role"
+                                "$ref": "#/definitions/pkg_roles.Role"
                             }
                         }
                     }
@@ -3224,7 +3224,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/roles.Role"
+                            "$ref": "#/definitions/pkg_roles.Role"
                         }
                     }
                 }
@@ -3245,7 +3245,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/roles.Role"
+                            "$ref": "#/definitions/pkg_roles.Role"
                         }
                     }
                 ],
@@ -3253,7 +3253,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/roles.Role"
+                            "$ref": "#/definitions/pkg_roles.Role"
                         }
                     }
                 }
@@ -3274,7 +3274,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/roles.Role"
+                            "$ref": "#/definitions/pkg_roles.Role"
                         }
                     }
                 ],
@@ -3282,7 +3282,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/roles.Role"
+                            "$ref": "#/definitions/pkg_roles.Role"
                         }
                     }
                 }
@@ -3309,7 +3309,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/roles.Role"
+                            "$ref": "#/definitions/pkg_roles.Role"
                         }
                     }
                 }
@@ -3331,7 +3331,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/users.User"
+                                "$ref": "#/definitions/pkg_users.User"
                             }
                         }
                     }
@@ -3368,7 +3368,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/users.User"
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 }
@@ -3389,7 +3389,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/users.User"
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 ],
@@ -3397,7 +3397,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/users.User"
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 }
@@ -3418,7 +3418,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/users.User"
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 ],
@@ -3426,7 +3426,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/users.User"
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 }
@@ -3453,7 +3453,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/users.User"
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 }
@@ -3482,7 +3482,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/users.User"
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 }
@@ -3502,7 +3502,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/users.User"
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 }
@@ -3531,7 +3531,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/users.User"
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 }
@@ -3539,7 +3539,7 @@
         }
     },
     "definitions": {
-        "alvax.Channel": {
+        "pkg_alvax.Channel": {
             "type": "object",
             "properties": {
                 "baseUrl": {
@@ -3551,7 +3551,7 @@
                 "commands": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/alvax.Command"
+                        "$ref": "#/definitions/pkg_alvax.Command"
                     }
                 },
                 "defaultGroupId": {
@@ -3592,7 +3592,7 @@
                 }
             }
         },
-        "alvax.Command": {
+        "pkg_alvax.Command": {
             "type": "object",
             "properties": {
                 "description": {
@@ -3612,30 +3612,30 @@
                 }
             }
         },
-        "alvax.ConfigRoot": {
+        "pkg_alvax.ConfigRoot": {
             "type": "object",
             "properties": {
                 "channels": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/definitions/alvax.Channel"
+                        "$ref": "#/definitions/pkg_alvax.Channel"
                     }
                 },
                 "docker": {
-                    "$ref": "#/definitions/alvax.Docker"
+                    "$ref": "#/definitions/pkg_alvax.Docker"
                 },
                 "key": {
                     "type": "string"
                 },
                 "ngrok": {
-                    "$ref": "#/definitions/alvax.Ngrok"
+                    "$ref": "#/definitions/pkg_alvax.Ngrok"
                 },
                 "server": {
-                    "$ref": "#/definitions/alvax.Server"
+                    "$ref": "#/definitions/pkg_alvax.Server"
                 }
             }
         },
-        "alvax.Docker": {
+        "pkg_alvax.Docker": {
             "type": "object",
             "properties": {
                 "host": {
@@ -3643,7 +3643,7 @@
                 }
             }
         },
-        "alvax.Ngrok": {
+        "pkg_alvax.Ngrok": {
             "type": "object",
             "properties": {
                 "tunnelsUrl": {
@@ -3651,7 +3651,7 @@
                 }
             }
         },
-        "alvax.Server": {
+        "pkg_alvax.Server": {
             "type": "object",
             "properties": {
                 "port": {
@@ -3659,7 +3659,7 @@
                 }
             }
         },
-        "backups.Backup": {
+        "pkg_backups.Backup": {
             "type": "object",
             "required": [
                 "service_name"
@@ -3708,7 +3708,7 @@
                 }
             }
         },
-        "business.Business": {
+        "pkg_business.Business": {
             "type": "object",
             "required": [
                 "id"
@@ -3718,7 +3718,7 @@
                     "description": "Array of contacts of different type.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/business.Contact"
+                        "$ref": "#/definitions/pkg_business.Contact"
                     }
                 },
                 "ico": {
@@ -3747,7 +3747,7 @@
                 }
             }
         },
-        "business.Contact": {
+        "pkg_business.Contact": {
             "type": "object",
             "properties": {
                 "content": {
@@ -3760,7 +3760,7 @@
                 }
             }
         },
-        "depots.DepotItem": {
+        "pkg_depots.DepotItem": {
             "type": "object",
             "required": [
                 "id"
@@ -3788,7 +3788,7 @@
                 }
             }
         },
-        "dish.Incident": {
+        "pkg_dish.Incident": {
             "type": "object",
             "required": [
                 "name"
@@ -3836,7 +3836,7 @@
                 }
             }
         },
-        "dish.Message": {
+        "pkg_dish.Message": {
             "type": "object",
             "properties": {
                 "content": {
@@ -3853,24 +3853,24 @@
                 }
             }
         },
-        "dish.Root": {
+        "pkg_dish.Root": {
             "type": "object",
             "properties": {
                 "incidents": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/definitions/dish.Incident"
+                        "$ref": "#/definitions/pkg_dish.Incident"
                     }
                 },
                 "sockets": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/definitions/dish.Socket"
+                        "$ref": "#/definitions/pkg_dish.Socket"
                     }
                 }
             }
         },
-        "dish.Socket": {
+        "pkg_dish.Socket": {
             "type": "object",
             "required": [
                 "host_name",
@@ -3951,7 +3951,7 @@
                 }
             }
         },
-        "finance.Account": {
+        "pkg_finance.Account": {
             "type": "object",
             "required": [
                 "account_iban",
@@ -3994,7 +3994,7 @@
                 }
             }
         },
-        "finance.Item": {
+        "pkg_finance.Item": {
             "type": "object",
             "required": [
                 "account_id",
@@ -4054,7 +4054,7 @@
                 }
             }
         },
-        "finance.Tax": {
+        "pkg_finance.Tax": {
             "type": "object",
             "properties": {
                 "base_sum": {
@@ -4079,7 +4079,7 @@
                 }
             }
         },
-        "infra.Configuration": {
+        "pkg_infra.Configuration": {
             "type": "object",
             "properties": {
                 "ansible_host": {
@@ -4330,7 +4330,7 @@
                 }
             }
         },
-        "infra.DNSRecord": {
+        "pkg_infra.DNSRecord": {
             "type": "object",
             "properties": {
                 "comment": {
@@ -4362,7 +4362,7 @@
                 }
             }
         },
-        "infra.Domain": {
+        "pkg_infra.Domain": {
             "type": "object",
             "required": [
                 "domain_id"
@@ -4398,7 +4398,7 @@
                 }
             }
         },
-        "infra.Facts": {
+        "pkg_infra.Facts": {
             "type": "object",
             "properties": {
                 "is_virtual": {
@@ -4451,7 +4451,7 @@
                 }
             }
         },
-        "infra.Host": {
+        "pkg_infra.Host": {
             "type": "object",
             "required": [
                 "hostname_fqdn",
@@ -4469,14 +4469,14 @@
                 "children_configs": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/infra.VMInstallConfig"
+                        "$ref": "#/definitions/pkg_infra.VMInstallConfig"
                     }
                 },
                 "configuration": {
                     "description": "Configuration system variables.",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/infra.Configuration"
+                            "$ref": "#/definitions/pkg_infra.Configuration"
                         }
                     ]
                 },
@@ -4500,7 +4500,7 @@
                     "description": "Exported system facts from facter.",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/infra.Facts"
+                            "$ref": "#/definitions/pkg_infra.Facts"
                         }
                     ]
                 },
@@ -4540,33 +4540,33 @@
                 }
             }
         },
-        "infra.Infrastructure": {
+        "pkg_infra.Infrastructure": {
             "type": "object",
             "properties": {
                 "domains": {
                     "description": "Domains linked to such infrastructure.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/infra.Domain"
+                        "$ref": "#/definitions/pkg_infra.Domain"
                     }
                 },
                 "hosts": {
                     "description": "Hosts/nodes linked to such infrastructure.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/infra.Host"
+                        "$ref": "#/definitions/pkg_infra.Host"
                     }
                 },
                 "networks": {
                     "description": "Networks linked to such infrastructure.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/infra.Network"
+                        "$ref": "#/definitions/pkg_infra.Network"
                     }
                 }
             }
         },
-        "infra.Network": {
+        "pkg_infra.Network": {
             "type": "object",
             "required": [
                 "hash"
@@ -4594,7 +4594,7 @@
                 }
             }
         },
-        "infra.VMInstallConfig": {
+        "pkg_infra.VMInstallConfig": {
             "type": "object",
             "properties": {
                 "autostart": {
@@ -4689,7 +4689,7 @@
                 }
             }
         },
-        "links.Link": {
+        "pkg_links.Link": {
             "type": "object",
             "required": [
                 "name",
@@ -4714,7 +4714,7 @@
                 }
             }
         },
-        "news.Item": {
+        "pkg_news.Item": {
             "type": "object",
             "properties": {
                 "link": {
@@ -4743,18 +4743,18 @@
                 }
             }
         },
-        "news.NewsSources": {
+        "pkg_news.NewsSources": {
             "type": "object",
             "properties": {
                 "user_sources": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/news.UserSource"
+                        "$ref": "#/definitions/pkg_news.UserSource"
                     }
                 }
             }
         },
-        "news.Source": {
+        "pkg_news.Source": {
             "type": "object",
             "properties": {
                 "source_id": {
@@ -4771,14 +4771,14 @@
                 }
             }
         },
-        "news.UserSource": {
+        "pkg_news.UserSource": {
             "type": "object",
             "properties": {
                 "news_sources": {
                     "description": "Actual user's news sources.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/news.Source"
+                        "$ref": "#/definitions/pkg_news.Source"
                     }
                 },
                 "user_name": {
@@ -4787,7 +4787,7 @@
                 }
             }
         },
-        "projects.Project": {
+        "pkg_projects.Project": {
             "type": "object",
             "required": [
                 "project_id",
@@ -4844,7 +4844,7 @@
                 }
             }
         },
-        "queue.Task": {
+        "pkg_queue.Task": {
             "type": "object",
             "required": [
                 "worker_name"
@@ -4876,7 +4876,7 @@
                 }
             }
         },
-        "roles.Role": {
+        "pkg_roles.Role": {
             "type": "object",
             "required": [
                 "name"
@@ -4900,7 +4900,7 @@
                 }
             }
         },
-        "users.User": {
+        "pkg_users.User": {
             "type": "object",
             "required": [
                 "name"
@@ -4982,12 +4982,12 @@
                     "description": "All Wireguard config objects -- an array.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/users.Wireguard"
+                        "$ref": "#/definitions/pkg_users.Wireguard"
                     }
                 }
             }
         },
-        "users.Wireguard": {
+        "pkg_users.Wireguard": {
             "type": "object",
             "properties": {
                 "allowed_ips": {
