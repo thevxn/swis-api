@@ -49,7 +49,7 @@ func GetAccounts(ctx *gin.Context) {
 // @Success 200 {object} finance.Account
 // @Router /finance/accounts/{key} [post]
 func PostNewAccountByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, CacheAccounts, pkgName, Account{})
+	core.AddNewItemByParam[Account](ctx, CacheAccounts, pkgName)
 	return
 }
 
@@ -60,7 +60,7 @@ func PostNewAccountByKey(ctx *gin.Context) {
 // @Success 200 {object} finance.Account
 // @Router /finance/accounts/{key} [get]
 func GetAccountByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, CacheAccounts, pkgName, Account{})
+	core.PrintItemByParam[Account](ctx, CacheAccounts, pkgName)
 	return
 }
 
@@ -72,7 +72,7 @@ func GetAccountByKey(ctx *gin.Context) {
 // @Success 200 {object} finance.Account
 // @Router /finance/accounts/{key} [put]
 func UpdateAccountByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, CacheAccounts, pkgName, Account{})
+	core.UpdateItemByParam[Account](ctx, CacheAccounts, pkgName)
 	return
 }
 
@@ -149,7 +149,7 @@ func GetItems(ctx *gin.Context) {
 // @Success 200 {object} finance.Item
 // @Router /finance/items/{key} [post]
 func PostNewItemByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, CacheItems, pkgName, Item{})
+	core.AddNewItemByParam[Item](ctx, CacheItems, pkgName)
 	return
 }
 
@@ -160,7 +160,7 @@ func PostNewItemByKey(ctx *gin.Context) {
 // @Success 200 {object} finance.Item
 // @Router /finance/items/{key} [get]
 func GetItemByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, CacheItems, pkgName, Item{})
+	core.PrintItemByParam[Item](ctx, CacheItems, pkgName)
 	return
 }
 
@@ -172,7 +172,7 @@ func GetItemByKey(ctx *gin.Context) {
 // @Success 200 {object} finance.Item
 // @Router /finance/items/{key} [put]
 func UpdateItemByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, CacheItems, pkgName, Item{})
+	core.UpdateItemByParam[Item](ctx, CacheItems, pkgName)
 	return
 }
 

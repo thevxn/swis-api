@@ -39,7 +39,7 @@ func GetConfigs(ctx *gin.Context) {
 // @Success 200 {object} alvax.ConfigRoot
 // @Router /alvax/{key} [get]
 func GetConfigByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, Cache, pkgName, ConfigRoot{})
+	core.PrintItemByParam[ConfigRoot](ctx, Cache, pkgName)
 	return
 }
 
@@ -51,7 +51,7 @@ func GetConfigByKey(ctx *gin.Context) {
 // @Success 200 {object} alvax.ConfigRoot
 // @Router /alvax/{key} [post]
 func PostNewConfigByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, Cache, pkgName, ConfigRoot{})
+	core.AddNewItemByParam[ConfigRoot](ctx, Cache, pkgName)
 	return
 }
 
@@ -63,7 +63,7 @@ func PostNewConfigByKey(ctx *gin.Context) {
 // @Success 200 {object} alvax.ConfigRoot
 // @Router /alvax/{key} [put]
 func UpdateConfigByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, Cache, pkgName, ConfigRoot{})
+	core.UpdateItemByParam[ConfigRoot](ctx, Cache, pkgName)
 	return
 }
 
@@ -87,6 +87,6 @@ func DeleteConfigByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /alvax/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems(ctx, Cache, pkgName, ConfigRoot{})
+	core.BatchRestoreItems[ConfigRoot](ctx, Cache, pkgName)
 	return
 }

@@ -38,7 +38,7 @@ func GetRoles(ctx *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{key} [get]
 func GetRoleByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, Cache, pkgName, Role{})
+	core.PrintItemByParam[Role](ctx, Cache, pkgName)
 	return
 }
 
@@ -51,7 +51,7 @@ func GetRoleByKey(ctx *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{key} [post]
 func PostNewRoleByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, Cache, pkgName, Role{})
+	core.AddNewItemByParam[Role](ctx, Cache, pkgName)
 	return
 }
 
@@ -63,7 +63,7 @@ func PostNewRoleByKey(ctx *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{key} [put]
 func UpdateRoleByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, Cache, pkgName, Role{})
+	core.UpdateItemByParam[Role](ctx, Cache, pkgName)
 	return
 }
 
@@ -87,6 +87,6 @@ func DeleteRoleByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /roles/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems(ctx, Cache, pkgName, Role{})
+	core.BatchRestoreItems[Role](ctx, Cache, pkgName)
 	return
 }

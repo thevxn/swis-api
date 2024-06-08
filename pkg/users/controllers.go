@@ -60,7 +60,7 @@ func GetUsers(ctx *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{key} [get]
 func GetUserByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, Cache, pkgName, User{})
+	core.PrintItemByParam[User](ctx, Cache, pkgName)
 	return
 }
 
@@ -73,7 +73,7 @@ func GetUserByKey(ctx *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{key} [post]
 func PostNewUserByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, Cache, pkgName, User{})
+	core.AddNewItemByParam[User](ctx, Cache, pkgName)
 	return
 }
 
@@ -85,7 +85,7 @@ func PostNewUserByKey(ctx *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{key} [put]
 func UpdateUserByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, Cache, pkgName, User{})
+	core.UpdateItemByParam[User](ctx, Cache, pkgName)
 	return
 }
 
@@ -109,7 +109,7 @@ func DeleteUserByKey(ctx *gin.Context) {
 // @Router /users/restore [post]
 // PostDumpRestore
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems(ctx, Cache, pkgName, User{})
+	core.BatchRestoreItems[User](ctx, Cache, pkgName)
 	return
 }
 

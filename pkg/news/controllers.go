@@ -44,7 +44,7 @@ func GetSources(ctx *gin.Context) {
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [get]
 func GetSourcesByUserKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, Cache, pkgName, []Source{})
+	core.PrintItemByParam[[]Source](ctx, Cache, pkgName)
 	return
 }
 
@@ -55,7 +55,7 @@ func GetSourcesByUserKey(ctx *gin.Context) {
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [post]
 func PostNewSourcesByUserKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, Cache, pkgName, []Source{})
+	core.AddNewItemByParam[[]Source](ctx, Cache, pkgName)
 	return
 }
 
@@ -67,7 +67,7 @@ func PostNewSourcesByUserKey(ctx *gin.Context) {
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [put]
 func UpdateSourcesByUserKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, Cache, pkgName, []Source{})
+	core.UpdateItemByParam[[]Source](ctx, Cache, pkgName)
 	return
 }
 
@@ -90,7 +90,7 @@ func DeleteSourcesByUserKey(ctx *gin.Context) {
 // @Produce json
 // @Router /news/sources/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems(ctx, Cache, pkgName, []Source{})
+	core.BatchRestoreItems[[]Source](ctx, Cache, pkgName)
 	return
 }
 

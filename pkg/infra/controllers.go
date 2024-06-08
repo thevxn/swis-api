@@ -70,7 +70,7 @@ func GetDomains(ctx *gin.Context) {
 // @Success 200 {object} infra.Domain
 // @Router /infra/domains/{key} [get]
 func GetDomainByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, CacheDomains, pkgName, Domain{})
+	core.PrintItemByParam[Domain](ctx, CacheDomains, pkgName)
 	return
 }
 
@@ -82,7 +82,7 @@ func GetDomainByKey(ctx *gin.Context) {
 // @Success 200 {object} infra.Domain
 // @Router /infra/domains/{key} [post]
 func PostNewDomainByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, CacheDomains, pkgName, Domain{})
+	core.AddNewItemByParam[Domain](ctx, CacheDomains, pkgName)
 	return
 }
 
@@ -94,7 +94,7 @@ func PostNewDomainByKey(ctx *gin.Context) {
 // @Success 200 {object} infra.Domain
 // @Router /infra/domains/{key} [put]
 func UpdateDomainByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, CacheDomains, pkgName, Domain{})
+	core.UpdateItemByParam[Domain](ctx, CacheDomains, pkgName)
 	return
 }
 
@@ -218,7 +218,7 @@ func GetHosts(ctx *gin.Context) {
 // @Success 200 {object} infra.Host
 // @Router /infra/hosts/{key} [get]
 func GetHostByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, CacheHosts, pkgName, Host{})
+	core.PrintItemByParam[Host](ctx, CacheHosts, pkgName)
 	return
 }
 
@@ -518,7 +518,7 @@ func PostHostFactsByKey(ctx *gin.Context) {
 // @Success 200 {object} infra.Host
 // @Router /infra/hosts/{key} [post]
 func PostNewHostByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, CacheHosts, pkgName, Host{})
+	core.AddNewItemByParam[Host](ctx, CacheHosts, pkgName)
 	return
 }
 
@@ -530,7 +530,7 @@ func PostNewHostByKey(ctx *gin.Context) {
 // @Success 200 {object} infra.Host
 // @Router /infra/hosts/{key} [put]
 func UpdateHostByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, CacheHosts, pkgName, Host{})
+	core.UpdateItemByParam[Host](ctx, CacheHosts, pkgName)
 	return
 }
 
@@ -570,7 +570,7 @@ func GetNetworks(ctx *gin.Context) {
 // @Success 200 {object} infra.Network
 // @Router /infra/networks/{key} [get]
 func GetNetworkByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, CacheNetworks, pkgName, Network{})
+	core.PrintItemByParam[Network](ctx, CacheNetworks, pkgName)
 	return
 }
 
@@ -582,7 +582,7 @@ func GetNetworkByKey(ctx *gin.Context) {
 // @Success 200 {object} infra.Network
 // @Router /infra/networks/{key} [post]
 func PostNewNetworkByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, CacheNetworks, pkgName, Network{})
+	core.AddNewItemByParam[Network](ctx, CacheNetworks, pkgName)
 	return
 }
 
@@ -594,7 +594,7 @@ func PostNewNetworkByKey(ctx *gin.Context) {
 // @Success 200 {object} infra.Network
 // @Router /infra/networks/{key} [put]
 func UpdateNetworkByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, CacheNetworks, pkgName, Network{})
+	core.UpdateItemByParam[Network](ctx, CacheNetworks, pkgName)
 	return
 }
 

@@ -27,7 +27,7 @@ func PrintAllRootItems(ctx *gin.Context, cache *Cache, pkgName string) {
 	return
 }
 
-func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
+func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string) {
 	key := ctx.Param("key")
 
 	rawItem, ok := cache.Get(key)
@@ -62,9 +62,11 @@ func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mod
 	return
 }
 
-func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
+func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string) {
 	//key := model.Name | model.ID
 	key := ctx.Param("key")
+
+	model := new(T)
 
 	if err := ctx.BindJSON(&model); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
@@ -108,7 +110,7 @@ func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mo
 	return
 }
 
-func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
+func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string) {
 	key := ctx.Param("key")
 
 	if _, found := cache.Get(key); !found {
@@ -120,6 +122,8 @@ func UpdateItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mo
 		})
 		return
 	}
+
+	model := new(T)
 
 	if err := ctx.BindJSON(&model); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
@@ -184,7 +188,7 @@ func DeleteItemByParam(ctx *gin.Context, cache *Cache, pkgName string) {
 	return
 }
 
-func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
+func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, pkgName string) {
 	var counter int = 0
 
 	items := struct {

@@ -43,7 +43,7 @@ func GetTasks(ctx *gin.Context) {
 // @Success 200 {object} queue.Task
 // @Router /queue/tasks/{key} [get]
 func GetTaskByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, CacheTasks, pkgName, Task{})
+	core.PrintItemByParam[Task](ctx, CacheTasks, pkgName)
 	return
 }
 
@@ -110,7 +110,7 @@ func PostNewTask(ctx *gin.Context) {
 // @Produce json
 // @Router /queue/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems(ctx, CacheTasks, pkgName, Task{})
+	core.BatchRestoreItems[Task](ctx, CacheTasks, pkgName)
 	return
 }
 
@@ -122,7 +122,7 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Success 200 {object} queue.Task
 // @Router /queue/tasks/{key} [put]
 func UpdateTaskByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, CacheTasks, pkgName, Task{})
+	core.UpdateItemByParam[Task](ctx, CacheTasks, pkgName)
 	return
 }
 

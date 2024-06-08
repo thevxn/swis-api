@@ -37,7 +37,7 @@ func GetBusinessEntities(ctx *gin.Context) {
 // @Success 200 {object} business.Business
 // @Router /business/{key} [get]
 func GetBusinessByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, Cache, pkgName, Business{})
+	core.PrintItemByParam[Business](ctx, Cache, pkgName)
 	return
 }
 
@@ -49,7 +49,7 @@ func GetBusinessByKey(ctx *gin.Context) {
 // @Success 200 {object} business.Business
 // @Router /business/{key} [post]
 func PostBusinessByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, Cache, pkgName, Business{})
+	core.AddNewItemByParam[Business](ctx, Cache, pkgName)
 	return
 }
 
@@ -61,7 +61,7 @@ func PostBusinessByKey(ctx *gin.Context) {
 // @Success 200 {object} business.Business
 // @Router /business/{key} [put]
 func UpdateBusinessByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, Cache, pkgName, Business{})
+	core.UpdateItemByParam[Business](ctx, Cache, pkgName)
 	return
 }
 
@@ -85,6 +85,6 @@ func DeleteBusinessByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /business/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems(ctx, Cache, pkgName, Business{})
+	core.BatchRestoreItems[Business](ctx, Cache, pkgName)
 	return
 }

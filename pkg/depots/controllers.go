@@ -45,7 +45,7 @@ func GetAllDepotItems(ctx *gin.Context) {
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/items/{key} [get]
 func GetDepotItemByKey(ctx *gin.Context) {
-	core.PrintItemByParam(ctx, Cache, pkgName, DepotItem{})
+	core.PrintItemByParam[DepotItem](ctx, Cache, pkgName)
 	return
 }
 
@@ -57,7 +57,7 @@ func GetDepotItemByKey(ctx *gin.Context) {
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/items/{key} [post]
 func PostNewDepotItemByKey(ctx *gin.Context) {
-	core.AddNewItemByParam(ctx, Cache, pkgName, DepotItem{})
+	core.AddNewItemByParam[DepotItem](ctx, Cache, pkgName)
 	return
 }
 
@@ -69,7 +69,7 @@ func PostNewDepotItemByKey(ctx *gin.Context) {
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/items/{key} [put]
 func UpdateDepotItemByKey(ctx *gin.Context) {
-	core.UpdateItemByParam(ctx, Cache, pkgName, DepotItem{})
+	core.UpdateItemByParam[DepotItem](ctx, Cache, pkgName)
 	return
 }
 
@@ -92,7 +92,7 @@ func DeleteDepotItemByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /depots/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems(ctx, Cache, pkgName, DepotItem{})
+	core.BatchRestoreItems[DepotItem](ctx, Cache, pkgName)
 	return
 }
 
