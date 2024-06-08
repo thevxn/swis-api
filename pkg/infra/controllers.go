@@ -16,6 +16,16 @@ var (
 	pkgName       string = "infra"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&CacheDomains,
+		&CacheHosts,
+		&CacheNetworks,
+	},
+	Routes: Routes,
+}
+
 // @Summary Get whole infrastructure
 // @Description get all infrastructure details
 // @Tags infra

@@ -11,6 +11,14 @@ var (
 	pkgName string = "alvax"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&Cache,
+	},
+	Routes: Routes,
+}
+
 // GetConfigs function dumps the alvax cache contents.
 // @Summary Get all alvax configs
 // @Description get alvax config list

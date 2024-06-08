@@ -14,6 +14,14 @@ var (
 	pkgName string = "users"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&Cache,
+	},
+	Routes: Routes,
+}
+
 func FindUserByToken(token string) *User {
 	rawUsers, _ := Cache.GetAll()
 

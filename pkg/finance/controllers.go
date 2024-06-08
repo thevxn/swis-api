@@ -15,6 +15,15 @@ var (
 	pkgName       string = "finance"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&CacheAccounts,
+		&CacheItems,
+	},
+	Routes: Routes,
+}
+
 /*
 
   accounts

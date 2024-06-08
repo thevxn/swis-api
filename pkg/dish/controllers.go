@@ -20,6 +20,15 @@ var (
 	pkgName        string = "dish"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&CacheIncidents,
+		&CacheSockets,
+	},
+	Routes: Routes,
+}
+
 /*
 
   sockets

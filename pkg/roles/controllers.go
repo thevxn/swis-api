@@ -11,6 +11,14 @@ var (
 	pkgName string = "roles"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&Cache,
+	},
+	Routes: Routes,
+}
+
 // GetRoles returns JSON serialized list of roles and their properties.
 // @Summary Get all roles
 // @Description get roules complete list

@@ -13,6 +13,14 @@ var (
 	pkgName string = "backups"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&Cache,
+	},
+	Routes: Routes,
+}
+
 // @Summary Get all backed up services
 // @Description get backed up services
 // @Tags backups

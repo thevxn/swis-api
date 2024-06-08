@@ -11,6 +11,14 @@ var (
 	pkgName string = "business"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&Cache,
+	},
+	Routes: Routes,
+}
+
 // @Summary Get all business entities
 // @Description get business entities list
 // @Tags business

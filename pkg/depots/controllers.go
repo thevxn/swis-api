@@ -15,6 +15,14 @@ var (
 	pkgName string = "depots"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&Cache,
+	},
+	Routes: Routes,
+}
+
 // GetAllDepotItems GET method
 //
 // @Summary Get all depots and their users/owners

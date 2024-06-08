@@ -13,6 +13,14 @@ var (
 	pkgName string = "links"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&Cache,
+	},
+	Routes: Routes,
+}
+
 // GetLinks returns JSON serialized list of links and their properties.
 // @Summary Get all links
 // @Description get links complete list

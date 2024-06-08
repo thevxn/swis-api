@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.16.1
+// @version 5.16.2
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -126,64 +126,27 @@ func main() {
 	// swis pkg registration
 	//
 
-	// alvax CRUD
-	alvax.Cache = &core.Cache{}
-	alvax.Routes(router.Group("/alvax"))
-
-	// backups CRUD
-	backups.Cache = &core.Cache{}
-	backups.Routes(router.Group("/backups"))
-
-	// business CRUD
-	business.Cache = &core.Cache{}
-	business.Routes(router.Group("/business"))
-
-	// depots CRUD
-	depots.Cache = &core.Cache{}
-	depots.Routes(router.Group("/depots"))
-
-	// dish CRUD
 	dish.Dispatcher = dish.NewDispatcher()
-	dish.CacheIncidents = &core.Cache{}
-	dish.CacheSockets = &core.Cache{}
-	dish.Routes(router.Group("/dish"))
 
-	// finance accounts CRUD
-	finance.CacheAccounts = &core.Cache{}
-	finance.CacheItems = &core.Cache{}
-	finance.Routes(router.Group("/finance"))
-
-	// infra CRUD
-	infra.CacheHosts = &core.Cache{}
-	infra.CacheNetworks = &core.Cache{}
-	infra.CacheDomains = &core.Cache{}
-	infra.Routes(router.Group("/infra"))
-
-	// links CRUD
-	links.Cache = &core.Cache{}
-	links.Routes(router.Group("/links"))
-
-	// news CRUD
-	news.Cache = &core.Cache{}
-	news.Routes(router.Group("/news"))
-
-	// projects and queue pkgis registration
+	core.MountPackage(router, alvax.Package)
+	core.MountPackage(router, backups.Package)
+	core.MountPackage(router, business.Package)
+	core.MountPackage(router, depots.Package)
+	core.MountPackage(router, dish.Package)
+	core.MountPackage(router, finance.Package)
+	core.MountPackage(router, infra.Package)
+	core.MountPackage(router, links.Package)
+	core.MountPackage(router, news.Package)
 	core.MountPackage(router, projects.Package)
 	core.MountPackage(router, queue.Package)
+	core.MountPackage(router, roles.Package)
+	core.MountPackage(router, users.Package)
 
 	// bulk registration and mounting of packages
 	/*core.RegisterAndMount(router,
 		projects.Package,
 		roles.Package,
 	)*/
-
-	// roles CRUD
-	roles.Cache = &core.Cache{}
-	roles.Routes(router.Group("/roles"))
-
-	// users CRUD
-	users.Cache = &core.Cache{}
-	users.Routes(router.Group("/users"))
 
 	// attach router to http.Server and start it, check for SERVER_PORT env variable
 	if os.Getenv("SERVER_PORT") == "" {

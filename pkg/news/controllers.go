@@ -16,6 +16,14 @@ var (
 	pkgName string = "news"
 )
 
+var Package *core.Package = &core.Package{
+	Name: pkgName,
+	Cache: []**core.Cache{
+		&Cache,
+	},
+	Routes: Routes,
+}
+
 // GetSources
 // @Summary Get news source list
 // @Description get all news sources
