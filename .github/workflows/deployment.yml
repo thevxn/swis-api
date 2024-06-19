@@ -51,7 +51,7 @@ jobs:
         LOKI_URL: ${{ secrets.LOKI_URL }}
         GIN_MODE: debug
         HOSTNAME: ${{ vars.HOSTNAME }}
-	REGISTRY: ${{ secrets.REGISTRY }}
+        REGISTRY: ${{ secrets.REGISTRY }}
       run: make test_deploy e2e
 
   dump_data:
@@ -80,7 +80,7 @@ jobs:
         CF_BEARER_TOKEN: ${{ secrets.CF_BEARER_TOKEN }}
         CF_API_EMAIL: ${{ secrets.CF_API_EMAIL }}
         CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-	REGISTRY: ${{ secrets.REGISTRY }}
+        REGISTRY: ${{ secrets.REGISTRY }}
       run: make run
 
   import_data:
