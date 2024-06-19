@@ -44,7 +44,7 @@ func GetSources(ctx *gin.Context) {
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [get]
 func GetSourcesByUserKey(ctx *gin.Context) {
-	core.PrintItemByParam[[]Source](ctx, Cache, pkgName)
+	core.PrintItemByParam[[]Source](ctx, Cache, pkgName, []Source{})
 	return
 }
 
@@ -55,7 +55,7 @@ func GetSourcesByUserKey(ctx *gin.Context) {
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [post]
 func PostNewSourcesByUserKey(ctx *gin.Context) {
-	core.AddNewItemByParam[[]Source](ctx, Cache, pkgName)
+	core.AddNewItemByParam[[]Source](ctx, Cache, pkgName, []Source{})
 	return
 }
 
@@ -67,7 +67,7 @@ func PostNewSourcesByUserKey(ctx *gin.Context) {
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [put]
 func UpdateSourcesByUserKey(ctx *gin.Context) {
-	core.UpdateItemByParam[[]Source](ctx, Cache, pkgName)
+	core.UpdateItemByParam[[]Source](ctx, Cache, pkgName, []Source{})
 	return
 }
 

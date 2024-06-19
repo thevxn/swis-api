@@ -60,7 +60,7 @@ func GetUsers(ctx *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{key} [get]
 func GetUserByKey(ctx *gin.Context) {
-	core.PrintItemByParam[User](ctx, Cache, pkgName)
+	core.PrintItemByParam[User](ctx, Cache, pkgName, User{})
 	return
 }
 
@@ -73,7 +73,7 @@ func GetUserByKey(ctx *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{key} [post]
 func PostNewUserByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[User](ctx, Cache, pkgName)
+	core.AddNewItemByParam[User](ctx, Cache, pkgName, User{})
 	return
 }
 
@@ -85,7 +85,7 @@ func PostNewUserByKey(ctx *gin.Context) {
 // @Success 200 {object} users.User
 // @Router /users/{key} [put]
 func UpdateUserByKey(ctx *gin.Context) {
-	core.UpdateItemByParam[User](ctx, Cache, pkgName)
+	core.UpdateItemByParam[User](ctx, Cache, pkgName, User{})
 	return
 }
 

@@ -41,7 +41,7 @@ func GetLinks(ctx *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{key} [get]
 func GetLinkByKey(ctx *gin.Context) {
-	core.PrintItemByParam[Link](ctx, Cache, pkgName)
+	core.PrintItemByParam[Link](ctx, Cache, pkgName, Link{})
 	return
 }
 
@@ -54,7 +54,7 @@ func GetLinkByKey(ctx *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{key} [post]
 func PostNewLinkByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Link](ctx, Cache, pkgName)
+	core.AddNewItemByParam[Link](ctx, Cache, pkgName, Link{})
 	return
 }
 
@@ -77,7 +77,7 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Success 200 {object} links.Link
 // @Router /links/{key} [put]
 func UpdateLinkByKey(ctx *gin.Context) {
-	core.UpdateItemByParam[Link](ctx, Cache, pkgName)
+	core.UpdateItemByParam[Link](ctx, Cache, pkgName, Link{})
 	return
 }
 

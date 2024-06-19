@@ -55,7 +55,7 @@ func GetSocketList(ctx *gin.Context) {
 // @Success 200 {object} dish.Socket
 // @Router /dish/sockets/{key} [post]
 func PostNewSocketByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Socket](ctx, CacheSockets, pkgName)
+	core.AddNewItemByParam[Socket](ctx, CacheSockets, pkgName, Socket{})
 	return
 }
 
@@ -68,7 +68,7 @@ func PostNewSocketByKey(ctx *gin.Context) {
 // @Success 200 {object} dish.Socket
 // @Router /dish/sockets/{key} [put]
 func UpdateSocketByKey(ctx *gin.Context) {
-	core.UpdateItemByParam[Socket](ctx, CacheSockets, pkgName)
+	core.UpdateItemByParam[Socket](ctx, CacheSockets, pkgName, Socket{})
 	return
 }
 
@@ -244,7 +244,9 @@ func BatchPostHealthyStatus(ctx *gin.Context) {
 			}
 
 			// emit an server-sent event to subscribers
-			Dispatcher.NewMessage(msg)
+			if Dispatcher != nil {
+				Dispatcher.NewMessage(msg)
+			}
 		}
 	}
 
@@ -566,7 +568,7 @@ func PostNewIncident(ctx *gin.Context) {
 // @Failure      500  {object}  dish.Incident
 // @Router       /dish/incidents/{key} [put]
 func UpdateIncidentByKey(ctx *gin.Context) {
-	core.UpdateItemByParam[Incident](ctx, CacheIncidents, pkgName)
+	core.UpdateItemByParam[Incident](ctx, CacheIncidents, pkgName, Incident{})
 	return
 }
 

@@ -40,7 +40,7 @@ func GetBackups(ctx *gin.Context) {
 // @Success 200 {string} string	"ok"
 // @Router /backups/{key} [get]
 func GetBackedupStatusByServiceKey(ctx *gin.Context) {
-	core.PrintItemByParam[Backup](ctx, Cache, pkgName)
+	core.PrintItemByParam[Backup](ctx, Cache, pkgName, Backup{})
 	return
 }
 
@@ -52,7 +52,7 @@ func GetBackedupStatusByServiceKey(ctx *gin.Context) {
 // @Success 200 {object} backups.Backup
 // @Router /backups/{key} [post]
 func PostBackedupServiceByServiceKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Backup](ctx, Cache, pkgName)
+	core.AddNewItemByParam[Backup](ctx, Cache, pkgName, Backup{})
 	return
 }
 

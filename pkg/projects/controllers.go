@@ -39,7 +39,7 @@ func GetProjects(ctx *gin.Context) {
 // @Success 200 {object} projects.Project
 // @Router /projects/{key} [get]
 func GetProjectByKey(ctx *gin.Context) {
-	core.PrintItemByParam[Project](ctx, Cache, pkgName)
+	core.PrintItemByParam[Project](ctx, Cache, pkgName, Project{})
 	return
 }
 
@@ -51,7 +51,7 @@ func GetProjectByKey(ctx *gin.Context) {
 // @Success 200 {object} projects.Project
 // @Router /projects/{key} [post]
 func PostNewProjectByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Project](ctx, Cache, pkgName)
+	core.AddNewItemByParam[Project](ctx, Cache, pkgName, Project{})
 	return
 }
 
@@ -63,7 +63,7 @@ func PostNewProjectByKey(ctx *gin.Context) {
 // @Success 200 {object} projects.Project
 // @Router /projects/{key} [put]
 func UpdateProjectByKey(ctx *gin.Context) {
-	core.UpdateItemByParam[Project](ctx, Cache, pkgName)
+	core.UpdateItemByParam[Project](ctx, Cache, pkgName, Project{})
 	return
 }
 

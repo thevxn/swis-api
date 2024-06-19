@@ -45,7 +45,7 @@ func GetAllDepotItems(ctx *gin.Context) {
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/items/{key} [get]
 func GetDepotItemByKey(ctx *gin.Context) {
-	core.PrintItemByParam[DepotItem](ctx, Cache, pkgName)
+	core.PrintItemByParam[DepotItem](ctx, Cache, pkgName, DepotItem{})
 	return
 }
 
@@ -57,7 +57,7 @@ func GetDepotItemByKey(ctx *gin.Context) {
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/items/{key} [post]
 func PostNewDepotItemByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[DepotItem](ctx, Cache, pkgName)
+	core.AddNewItemByParam[DepotItem](ctx, Cache, pkgName, DepotItem{})
 	return
 }
 
@@ -69,7 +69,7 @@ func PostNewDepotItemByKey(ctx *gin.Context) {
 // @Success 200 {object} depots.DepotItem
 // @Router /depots/items/{key} [put]
 func UpdateDepotItemByKey(ctx *gin.Context) {
-	core.UpdateItemByParam[DepotItem](ctx, Cache, pkgName)
+	core.UpdateItemByParam[DepotItem](ctx, Cache, pkgName, DepotItem{})
 	return
 }
 

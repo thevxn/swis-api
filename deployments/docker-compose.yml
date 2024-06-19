@@ -11,7 +11,7 @@ volumes:
 
 services:
   swis-api-prod:
-    image: ${DOCKER_IMAGE_TAG}
+    image: ${REGISTRY}${DOCKER_IMAGE_TAG}
     container_name: ${DOCKER_CONTAINER_NAME}
     build:
       context: ..

@@ -43,7 +43,7 @@ func GetTasks(ctx *gin.Context) {
 // @Success 200 {object} queue.Task
 // @Router /queue/tasks/{key} [get]
 func GetTaskByKey(ctx *gin.Context) {
-	core.PrintItemByParam[Task](ctx, CacheTasks, pkgName)
+	core.PrintItemByParam[Task](ctx, CacheTasks, pkgName, Task{})
 	return
 }
 
@@ -122,7 +122,7 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Success 200 {object} queue.Task
 // @Router /queue/tasks/{key} [put]
 func UpdateTaskByKey(ctx *gin.Context) {
-	core.UpdateItemByParam[Task](ctx, CacheTasks, pkgName)
+	core.UpdateItemByParam[Task](ctx, CacheTasks, pkgName, Task{})
 	return
 }
 

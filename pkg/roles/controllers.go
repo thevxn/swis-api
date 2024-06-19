@@ -38,7 +38,7 @@ func GetRoles(ctx *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{key} [get]
 func GetRoleByKey(ctx *gin.Context) {
-	core.PrintItemByParam[Role](ctx, Cache, pkgName)
+	core.PrintItemByParam[Role](ctx, Cache, pkgName, Role{})
 	return
 }
 
@@ -51,7 +51,7 @@ func GetRoleByKey(ctx *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{key} [post]
 func PostNewRoleByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Role](ctx, Cache, pkgName)
+	core.AddNewItemByParam[Role](ctx, Cache, pkgName, Role{})
 	return
 }
 
@@ -63,7 +63,7 @@ func PostNewRoleByKey(ctx *gin.Context) {
 // @Success 200 {object} roles.Role
 // @Router /roles/{key} [put]
 func UpdateRoleByKey(ctx *gin.Context) {
-	core.UpdateItemByParam[Role](ctx, Cache, pkgName)
+	core.UpdateItemByParam[Role](ctx, Cache, pkgName, Role{})
 	return
 }
 
