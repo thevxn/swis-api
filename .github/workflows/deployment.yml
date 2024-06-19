@@ -95,7 +95,7 @@ jobs:
       run: make import_dump
 
   generate_docs:
-    runs-on: [ self-hosted, builder, docker ]
+    runs-on: [ self-hosted, public, docker ]
     needs: [ import_data ]
     steps:
     - uses: actions/checkout@v4
