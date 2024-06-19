@@ -28,7 +28,7 @@ jobs:
       env:
         APP_URL: ${{ secrets.APP_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
-	REGISTRY: ${{ secrets.REGISTRY }}
+        REGISTRY: ${{ secrets.REGISTRY }} 
       run: make build
 
   push:
@@ -38,7 +38,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Push the image to registry.
       env:
-	REGISTRY: ${{ secrets.REGISTRY }}
+        REGISTRY: ${{ secrets.REGISTRY }}
       run: make push_to_registry
 
   test_deploy:
