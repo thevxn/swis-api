@@ -138,7 +138,7 @@ test_deploy:
 		-p ${DOCKER_TEST_PORT}:${DOCKER_TEST_PORT} \
 		-e ROOT_TOKEN=${ROOT_TOKEN_TEST} \
 		-e SERVER_PORT=${DOCKER_TEST_PORT} \
-		${DOCKER_IMAGE_TAG}
+		${REGISTRY}${DOCKER_IMAGE_TAG}
 
 .PHONY: e2e
 e2e:	
@@ -203,6 +203,13 @@ docs:
 sh: 
 	@echo -e "\n${YELLOW} Attaching container's (${DOCKER_CONTAINER_NAME}) shell... ${RESET}\n"
 	@docker exec -it ${DOCKER_CONTAINER_NAME} sh
+
+.PHONY: push_to_registry
+push_to_registry:
+	@echo -e "\n${YELLOW} Pushing new image to registry... ${RESET}\n"
+	@[ -n "${REGISTRY}" ] && \
+		docker push ${REGISTRY}${DOCKER_IMAGE_TAG}
+	
 
 USER_TOKEN?=xxx
 TARGET_INSTANCE_URL?=http://localhost:${DOCKER_EXTERNAL_PORT}

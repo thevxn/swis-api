@@ -10,7 +10,7 @@ on:
 
 jobs:
   unit:
-    runs-on: [ self-hosted, public, docker ]
+    runs-on: [ self-hosted, builder, docker ]
     steps:
     - uses: actions/checkout@v4
     - name: Run unit/integration tests.
@@ -20,7 +20,7 @@ jobs:
       run: make unit
 
   build:
-    runs-on: [ self-hosted, public, docker ]
+    runs-on: [ self-hosted, builder, docker ]
     needs: [ unit ]
     steps:
     - uses: actions/checkout@v4
@@ -28,11 +28,22 @@ jobs:
       env:
         APP_URL: ${{ secrets.APP_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
+	REGISTRY: ${{ secrets.REGISTRY }}
       run: make build
+
+  push:
+    runs-on: [ self-hosted, builder, docker ]
+    needs: [ build ]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Push the image to registry.
+      env:
+	REGISTRY: ${{ secrets.REGISTRY }}
+      run: make push_to_registry
 
   test_deploy:
     runs-on: [ self-hosted, public, docker ]
-    needs: [ build ]
+    needs: [ push ]
     steps:
     - uses: actions/checkout@v4
     - name: Run test container and run end-to-end test on it.
@@ -40,6 +51,7 @@ jobs:
         LOKI_URL: ${{ secrets.LOKI_URL }}
         GIN_MODE: debug
         HOSTNAME: ${{ vars.HOSTNAME }}
+	REGISTRY: ${{ secrets.REGISTRY }}
       run: make test_deploy e2e
 
   dump_data:
@@ -68,6 +80,7 @@ jobs:
         CF_BEARER_TOKEN: ${{ secrets.CF_BEARER_TOKEN }}
         CF_API_EMAIL: ${{ secrets.CF_API_EMAIL }}
         CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+	REGISTRY: ${{ secrets.REGISTRY }}
       run: make run
 
   import_data:
@@ -82,7 +95,7 @@ jobs:
       run: make import_dump
 
   generate_docs:
-    runs-on: [ self-hosted, public, docker ]
+    runs-on: [ self-hosted, builder, docker ]
     needs: [ import_data ]
     steps:
     - uses: actions/checkout@v4
