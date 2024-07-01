@@ -230,3 +230,9 @@ fetch_facts:
 compose_host_vars:
 	@echo -e "\n${YELLOW} Fetching hosts configuration, exporting as YAML host_vars... ${RESET}\n"
 	@scripts/compose_host_vars.sh
+
+.PHONY: go2ts
+go2ts:
+	@echo -e "\n${YELLOW} Regenerating swapi-types: Go structs models into TS code... ${RESET}\n"
+	@scripts/go2ts.sh
+

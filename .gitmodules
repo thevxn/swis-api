@@ -1,0 +1,6 @@
+[submodule "third_party/swapi-types"]
+	path = third_party/swapi-types
+	url = ssh://git@github.com/savla-dev/swapi-types
+[submodule "third_party/go2ts"]
+	path = third_party/go2ts
+	url = https://github.com/go-generalize/go2ts.git
