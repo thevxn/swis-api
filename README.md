@@ -2,6 +2,8 @@
 
 [![Go Reference](https://pkg.go.dev/badge/go.savla.dev/swis/v5.svg)](https://pkg.go.dev/go.savla.dev/swis/v5)
 [![Go Report Card](https://goreportcard.com/badge/go.savla.dev/swis/v5)](https://goreportcard.com/report/go.savla.dev/swis/v5)
+[![release](https://img.shields.io/github/release/savla-dev/swis-api.svg?style=flat-square)](https://github.com/savla-dev/swis-api/releases/latest)
+
 [![swis-api CI/CD pipeline](https://github.com/savla-dev/swis-api/actions/workflows/deployment.yml/badge.svg?branch=master)](https://github.com/savla-dev/swis-api/actions/workflows/deployment.yml)
 
 sakalWebIS v5 RESTful JSON API in Go for Docker
