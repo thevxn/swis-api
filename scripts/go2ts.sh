@@ -56,16 +56,30 @@ truncate --size 0 $TS_INDEX
 # iterate over PKGS and generate .ts files from each item
 for (( i=0; i<${#PKGS[@]}; i++ )); do
 	PKG=${PKGS[$i]}
-	echo $PKG
+	echo ${PKG}
 
 	# check if such item exists
 	[ -d "${PKG_DIR}/${PKG}" ] || continue
 
-	$GO2TS_BIN $PKG_DIR/$PKG > $TS_SRC_DIR/$PKG.ts 2> /dev/null && {
-		echo "export * from './$PKG'" >> $TS_INDEX
+	# run the GO2TS code translation
+	${GO2TS_BIN} ${PKG_DIR}/${PKG} > ${TS_SRC_DIR}/${PKG}.ts 2> /dev/null && {
+		echo "export * from './${PKG}'" >> ${TS_INDEX}
+		continue
 	} || {
-		warn "pkg '${PKG}' not converted into TS code, skipping..."
+		warn "pkg '${PKG}': translation failed, hotfixing..."
+		mkdir -p ./tmp/${PKG}
+		cat ${PKG_DIR}/${PKG}/models.go | sed -e '/chan/d' > ./tmp/${PKG}/models.go
+	}
+
+	# try again (hotfix for unsupported types.Chan issue)
+	${GO2TS_BIN} ./tmp/${PKG} > ${TS_SRC_DIR}/${PKG}.ts && {
+		warn "pkg '${PKG}': code translation hotfixed (chan type removed)..."
+		echo "export * from './${PKG}'" >> ${TS_INDEX}
+	} || {
+		warn "pkg '${PKG}': code translation hotfix failed, skipping..."
 	};
+
+	rm -rf ./tmp/${PKG}
 done
 
 
