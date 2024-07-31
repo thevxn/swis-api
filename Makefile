@@ -18,6 +18,9 @@ DOCKER_COMPOSE_DEV_FILE?=deployments/docker-compose.dev.yml
 DOCKER_COMPOSE_DEV_OVERRIDE?=deployments/docker-compose.dev.override.yml
 SWAG_BINARY?=~/go/bin/swag
 
+ALPINE_VERSION?=3.19
+GOLANG_VERSION?=1.22
+
 APP_URL?=swapi.example.com
 LOKI_URL?=loki.example.com/loki/api/v1/push
 ROOT_TOKEN?=${ROOT_TOKEN_DEFAULT}
@@ -31,7 +34,7 @@ GOCACHE?=/home/${USER}/.cache/go-build
 GOMODCACHE?=/home/${USER}/go/pkg/mod
 GOOS := $(shell go env GOOS)
 
-PATH:=${PATH}:/usr/bin
+PATH := ${PATH}:/usr/bin
 
 # test env
 POSTMAN_COLLECTION_FILE=test/postman/swapi_E2E_dish.postman_collection.json

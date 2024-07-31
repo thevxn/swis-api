@@ -9,3 +9,4 @@ Makefile
 swis-api
 .env
 .env.example
+third_party/
