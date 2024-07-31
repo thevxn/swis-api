@@ -1,5 +1,5 @@
 // @title swis-api (swapi) v5
-// @version 5.16.4
+// @version 5.16.5
 // @description sakalWeb Information System v5 RESTful API documentation
 // @termsOfService http://swagger.io/terms/
 
@@ -47,6 +47,7 @@ import (
 	"go.savla.dev/swis/v5/pkg/projects"
 	"go.savla.dev/swis/v5/pkg/queue"
 	"go.savla.dev/swis/v5/pkg/roles"
+	"go.savla.dev/swis/v5/pkg/system"
 	"go.savla.dev/swis/v5/pkg/users"
 
 	// remote dependencies
@@ -126,27 +127,28 @@ func main() {
 	// swis pkg registration
 	//
 
-	dish.Dispatcher = dish.NewDispatcher()
-
-	core.MountPackage(router, alvax.Package)
-	core.MountPackage(router, backups.Package)
-	core.MountPackage(router, business.Package)
-	core.MountPackage(router, depots.Package)
-	core.MountPackage(router, dish.Package)
-	core.MountPackage(router, finance.Package)
-	core.MountPackage(router, infra.Package)
-	core.MountPackage(router, links.Package)
-	core.MountPackage(router, news.Package)
-	core.MountPackage(router, projects.Package)
-	core.MountPackage(router, queue.Package)
-	core.MountPackage(router, roles.Package)
-	core.MountPackage(router, users.Package)
+	// preregister system cache to track registered packages
+	core.MountPackage(router, system.Package)
 
 	// bulk registration and mounting of packages
-	/*core.RegisterAndMount(router,
+	core.MountMany(router, &system.Cache,
+		alvax.Package,
+		backups.Package,
+		business.Package,
+		depots.Package,
+		dish.Package,
+		finance.Package,
+		infra.Package,
+		links.Package,
+		news.Package,
 		projects.Package,
+		queue.Package,
 		roles.Package,
-	)*/
+		users.Package,
+	)
+
+	// initialize other components
+	dish.Dispatcher = dish.NewDispatcher()
 
 	// attach router to http.Server and start it, check for SERVER_PORT env variable
 	if os.Getenv("SERVER_PORT") == "" {

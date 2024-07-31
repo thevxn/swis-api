@@ -4,21 +4,30 @@ import (
 	"errors"
 	"fmt"
 
+	//"go.savla.dev/swis/v5/pkg/system"
+
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterAndMount(parentRouter *gin.Engine, pkgs ...*Package) {
+func MountMany(parentRouter *gin.Engine, systemCache **Cache, pkgs ...*Package) {
 	if parentRouter == nil {
 		return
 	}
+
+	var mountedPkgs []string
 
 	for _, pkg := range pkgs {
 		if pkg == nil {
 			continue
 		}
 
-		// TODO: catch the error
-		MountPackage(parentRouter, pkg)
+		if mounted := MountPackage(parentRouter, pkg); mounted {
+			mountedPkgs = append(mountedPkgs, pkg.Name)
+		}
+	}
+
+	if systemCache != nil {
+		(*systemCache).Set("mounted", mountedPkgs)
 	}
 }
 
@@ -63,6 +72,10 @@ func initCaches(caches []**Cache) error {
 	return nil
 }
 
+func registerPkg(groupName string) {
+
+}
+
 func mountRouterGroup(router *gin.Engine, groupName string, subRoutes func(r *gin.RouterGroup)) error {
 	if router == nil {
 		return errors.New("nil router pointer")
@@ -81,6 +94,9 @@ func mountRouterGroup(router *gin.Engine, groupName string, subRoutes func(r *gi
 
 	// register pkg's routes
 	subRoutes(pkgRouter)
+
+	// register package name to system's helper cache
+	registerPkg(groupName)
 
 	return nil
 }
