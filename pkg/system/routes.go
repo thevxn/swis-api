@@ -6,6 +6,8 @@ import (
 
 // system CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/packages",
-		GetMountedPackages)
+	g.GET("/packages/mounted",
+		GetAllMountedPackages)
+	g.GET("/packages/generic",
+		GetGenericMountedPackages)
 }

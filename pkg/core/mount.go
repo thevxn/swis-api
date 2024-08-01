@@ -15,6 +15,7 @@ func MountMany(parentRouter *gin.Engine, systemCache **Cache, pkgs ...*Package) 
 	}
 
 	var mountedPkgs []string
+	var genericPkgs []string
 
 	for _, pkg := range pkgs {
 		if pkg == nil {
@@ -23,11 +24,16 @@ func MountMany(parentRouter *gin.Engine, systemCache **Cache, pkgs ...*Package) 
 
 		if mounted := MountPackage(parentRouter, pkg); mounted {
 			mountedPkgs = append(mountedPkgs, pkg.Name)
+
+			if pkg.Generic {
+				genericPkgs = append(genericPkgs, pkg.Name)
+			}
 		}
 	}
 
 	if systemCache != nil {
 		(*systemCache).Set("mounted", mountedPkgs)
+		(*systemCache).Set("generic", genericPkgs)
 	}
 }
 

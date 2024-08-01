@@ -18,7 +18,8 @@ var Package *core.Package = &core.Package{
 	Cache: []**core.Cache{
 		&Cache,
 	},
-	Routes: Routes,
+	Routes:  Routes,
+	Generic: true,
 }
 
 // GetLinks returns JSON serialized list of links and their properties.

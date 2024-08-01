@@ -9,9 +9,10 @@ import (
 )
 
 type Package struct {
-	Name   string
-	Cache  []**Cache
-	Routes func(r *gin.RouterGroup)
+	Name    string
+	Cache   []**Cache
+	Routes  func(r *gin.RouterGroup)
+	Generic bool
 }
 
 func PrintAllRootItems(ctx *gin.Context, cache *Cache, pkgName string) {

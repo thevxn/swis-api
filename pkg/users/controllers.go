@@ -19,7 +19,8 @@ var Package *core.Package = &core.Package{
 	Cache: []**core.Cache{
 		&Cache,
 	},
-	Routes: Routes,
+	Routes:  Routes,
+	Generic: true,
 }
 
 func FindUserByToken(token string) *User {
