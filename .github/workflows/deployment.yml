@@ -42,7 +42,7 @@ jobs:
       run: make push_to_registry
 
   test_deploy:
-    runs-on: [ self-hosted, public, docker ]
+    runs-on: [ self-hosted, rabbit, docker ]
     needs: [ push ]
     steps:
     - uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
       run: make test_deploy e2e
 
   dump_data:
-    runs-on: [ self-hosted, public, docker ]
+    runs-on: [ self-hosted, rabbit, docker ]
     needs: [ test_deploy ]
     steps:
     - uses: actions/checkout@v4
@@ -66,7 +66,7 @@ jobs:
       run: make dump
 
   prod_deploy:
-    runs-on: [ self-hosted, public, docker ]
+    runs-on: [ self-hosted, rabbit, docker ]
     needs: [ dump_data ]
     steps:
     - uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
       run: make run
 
   import_data:
-    runs-on: [ self-hosted, public, docker ]
+    runs-on: [ self-hosted, rabbit, docker ]
     needs: [ prod_deploy ]
     steps:
     - uses: actions/checkout@v4
@@ -95,7 +95,7 @@ jobs:
       run: make import_dump
 
   generate_docs:
-    runs-on: [ self-hosted, public, docker ]
+    runs-on: [ self-hosted, rabbit, docker ]
     needs: [ import_data ]
     steps:
     - uses: actions/checkout@v4
