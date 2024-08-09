@@ -1,8 +1,8 @@
 package alvax
 
 type ConfigRoot struct {
-	Key      string             `json:"key"`
-	Server   Server             `json:"server"`
+	Key      string             `json:"key" reuqired:"true"`
+	Server   Server             `json:"server" required:"true"`
 	Ngrok    Ngrok              `json:"ngrok"`
 	Docker   Docker             `json:"docker"`
 	Channels map[string]Channel `json:"channels"`

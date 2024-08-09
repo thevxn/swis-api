@@ -376,9 +376,20 @@ func DoTaxesByOwner(ctx *gin.Context) {
 
 /*
 
-  restoration
+  restoration and types
 
 */
+
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags finance
+// @Accept json
+// @Produce json
+// @Router /finance/types [get]
+func ListTypes(ctx *gin.Context) {
+	core.ParsePackageTypes(ctx, pkgName, Account{}, Item{})
+	return
+}
 
 // @Summary Get whole finance package content
 // @Description get whole finance package content

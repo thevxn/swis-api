@@ -9,6 +9,8 @@ func Routes(g *gin.RouterGroup) {
 		GetDishRoot)
 	g.POST("/restore",
 		PostDumpRestore)
+	g.GET("/types",
+		ListTypes)
 
 	g.GET("/incidents",
 		GetIncidentList)

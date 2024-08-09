@@ -2,7 +2,7 @@ package depots
 
 type DepotItem struct {
 	// Numeric unique ID of such Item.
-	ID int `json:"id" binding:"required"`
+	ID int `json:"id" binding:"required" required:"true"`
 
 	// Item description, name, amount, type etc.
 	Description string `json:"desc"`
@@ -11,7 +11,7 @@ type DepotItem struct {
 	Misc string `json:"misc"`
 
 	// Location name of such Item.
-	Location string `json:"depot"`
+	Location string `json:"depot" required:"true"`
 
 	// Owner name according to users package.
 	Owner string `json:"owner_name"`

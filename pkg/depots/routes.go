@@ -21,4 +21,6 @@ func Routes(g *gin.RouterGroup) {
 		UpdateDepotItemByKey)
 	g.DELETE("/items/:key",
 		DeleteDepotItemByKey)
+	g.GET("/types",
+		ListTypes)
 }

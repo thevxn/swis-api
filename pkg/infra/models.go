@@ -22,7 +22,7 @@ type Infrastructure struct {
 
 type Domain struct {
 	// Unique domain identifier.
-	ID string `json:"domain_id" binding:"required"`
+	ID string `json:"domain_id" binding:"required" required:"true"`
 
 	// Fully qualified domain name.
 	FQDN string `json:"domain_fqdn"`
@@ -51,13 +51,13 @@ type Hosts struct {
 // Low-level Host model for a generic machine.
 type Host struct {
 	// Unique hash/ID to link to such host record.
-	ID string `json:"id" binding:"required"`
+	ID string `json:"id" binding:"required" required:"true"`
 
 	// Node hostname without its domain.
-	HostnameShort string `json:"hostname_short" binding:"required"`
+	HostnameShort string `json:"hostname_short" binding:"required" required:"true"`
 
 	// Node hostname as FQDN-formatted.
-	HostnameFQDN string `json:"hostname_fqdn" binding:"required"`
+	HostnameFQDN string `json:"hostname_fqdn" binding:"required" required:"true"`
 
 	// Brief node's description -- shown in node's MOTD on remote login.
 	Description string `json:"description"`
@@ -260,7 +260,7 @@ type VMInstallConfig struct {
 
 type Network struct {
 	// Unique network's identifier
-	Hash string `json:"hash" binding:"required"`
+	Hash string `json:"hash" binding:"required" required:"true"`
 
 	// Network name, verbose ID.
 	Name string `json:"network_name"`

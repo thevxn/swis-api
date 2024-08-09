@@ -94,6 +94,17 @@ func PostDumpRestore(ctx *gin.Context) {
 	return
 }
 
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags news
+// @Accept json
+// @Produce json
+// @Router /news/types [get]
+func ListTypes(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, []Source{})
+	return
+}
+
 // GetNewsByUser returns all possible news from all sources loaded in memory
 // @Summary Get news by user key
 // @Description fetch and parse news for :key param

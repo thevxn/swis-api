@@ -726,9 +726,20 @@ func GetIncidentListBySocketID(ctx *gin.Context) {
 
 /*
 
-  restoration
+  restoration and types
 
 */
+
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags dish
+// @Accept json
+// @Produce json
+// @Router /dish/types [get]
+func ListTypes(ctx *gin.Context) {
+	core.ParsePackageTypes(ctx, pkgName, Socket{}, Incident{})
+	return
+}
 
 // GetDishRoot returns all possible items of dish package
 //

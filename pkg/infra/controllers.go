@@ -612,9 +612,20 @@ func DeleteNetworkByKey(ctx *gin.Context) {
 
 /*
 
-  RESTORATION
+  restoration and types
 
 */
+
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags infra
+// @Accept json
+// @Produce json
+// @Router /infra/types [get]
+func ListTypes(ctx *gin.Context) {
+	core.ParsePackageTypes(ctx, pkgName, Domain{}, Host{}, Network{})
+	return
+}
 
 // @Summary Upload infrastructure JSON dump
 // @Description restore infrastructure data model

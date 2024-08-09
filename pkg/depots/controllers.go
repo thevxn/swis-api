@@ -96,6 +96,17 @@ func PostDumpRestore(ctx *gin.Context) {
 	return
 }
 
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags depots
+// @Accept json
+// @Produce json
+// @Router /depots/types [get]
+func ListTypes(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, DepotItem{})
+	return
+}
+
 // @Summary Get depot item list by Owner
 // @Description get depot item list by :owner param
 // @Tags depots

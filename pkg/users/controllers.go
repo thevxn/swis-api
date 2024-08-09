@@ -114,6 +114,17 @@ func PostDumpRestore(ctx *gin.Context) {
 	return
 }
 
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags users
+// @Accept json
+// @Produce json
+// @Router /users/types [get]
+func ListTypes(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, User{})
+	return
+}
+
 // (PUT /users/{name}/active)
 // @Summary Toggle active boolean for {user}
 // @Description toggle active boolean for {user}
