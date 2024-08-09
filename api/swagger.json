@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.16.4"
+        "version": "5.16.7"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -54,6 +54,22 @@
                     "alvax"
                 ],
                 "summary": "Upload alvax configs dump -- restore configs",
+                "responses": {}
+            }
+        },
+        "/alvax/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "List package model's field types",
                 "responses": {}
             }
         },
@@ -195,6 +211,22 @@
                     "backups"
                 ],
                 "summary": "Upload backups dump backup -- restores all backup services",
+                "responses": {}
+            }
+        },
+        "/backups/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "List package model's field types",
                 "responses": {}
             }
         },
@@ -368,6 +400,22 @@
                     "business"
                 ],
                 "summary": "Upload business dump backup -- restores all business entities",
+                "responses": {}
+            }
+        },
+        "/business/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "List package model's field types",
                 "responses": {}
             }
         },
@@ -638,6 +686,22 @@
                     "depots"
                 ],
                 "summary": "Upload depot dump backup -- restores all depot items",
+                "responses": {}
+            }
+        },
+        "/depots/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "List package model's field types",
                 "responses": {}
             }
         },
@@ -1630,6 +1694,22 @@
                 }
             }
         },
+        "/dish/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
+            }
+        },
         "/finance": {
             "get": {
                 "description": "get whole finance package content",
@@ -1976,6 +2056,22 @@
                         }
                     }
                 }
+            }
+        },
+        "/finance/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
             }
         },
         "/infra": {
@@ -2536,6 +2632,22 @@
                 "responses": {}
             }
         },
+        "/infra/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
+            }
+        },
         "/links": {
             "get": {
                 "description": "get links complete list",
@@ -2569,6 +2681,22 @@
                     "links"
                 ],
                 "summary": "Upload links dump backup -- restore all links",
+                "responses": {}
+            }
+        },
+        "/links/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "List package model's field types",
                 "responses": {}
             }
         },
@@ -2827,6 +2955,22 @@
                 }
             }
         },
+        "/news/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
+            }
+        },
         "/news/{key}": {
             "get": {
                 "description": "fetch and parse news for :key param",
@@ -2883,6 +3027,22 @@
                     "projects"
                 ],
                 "summary": "Upload projects dump -- restore projects",
+                "responses": {}
+            }
+        },
+        "/projects/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "List package model's field types",
                 "responses": {}
             }
         },
@@ -3171,6 +3331,22 @@
                 }
             }
         },
+        "/queue/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queue"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
+            }
+        },
         "/roles": {
             "get": {
                 "description": "get roules complete list",
@@ -3207,6 +3383,22 @@
                     "roles"
                 ],
                 "summary": "Upload roles dump backup -- restores all roles",
+                "responses": {}
+            }
+        },
+        "/roles/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "List package model's field types",
                 "responses": {}
             }
         },
@@ -3351,6 +3543,22 @@
                     "users"
                 ],
                 "summary": "Upload users dump backup -- restores all users",
+                "responses": {}
+            }
+        },
+        "/users/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "List package model's field types",
                 "responses": {}
             }
         },
