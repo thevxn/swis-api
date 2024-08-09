@@ -1,9 +1,9 @@
-// generics and first class functions PoC
 package core
 
 import (
 	"fmt"
 	"net/http"
+	"reflect"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,6 +13,11 @@ type Package struct {
 	Cache   []**Cache
 	Routes  func(r *gin.RouterGroup)
 	Generic bool
+}
+
+type FieldDetail struct {
+	Type     string `json:"type"`
+	Required bool   `json:"required"`
 }
 
 func PrintAllRootItems(ctx *gin.Context, cache *Cache, pkgName string) {
@@ -217,4 +222,86 @@ func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, pkgName string) {
 		"package": pkgName,
 	})
 	return
+}
+
+func ParsePackageTypes(ctx *gin.Context, pkgName string, models ...interface{}) {
+	var types = make(map[string]map[string]FieldDetail)
+
+	for _, model := range models {
+		typ := reflect.TypeOf(model)
+
+		types[typ.Name()] = listFieldTypes(model)
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "parsing pkg's model types",
+		"types":   types,
+		"package": pkgName,
+	})
+	return
+}
+
+func ParsePackageType(ctx *gin.Context, pkgName string, model interface{}) {
+	var types = make(map[string]FieldDetail)
+
+	types = listFieldTypes(model)
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": "parsing pkg's model field types",
+		"types":   types,
+		"package": pkgName,
+	})
+	return
+}
+
+func listFieldTypes(str interface{}) map[string]FieldDetail {
+	var body = make(map[string]FieldDetail)
+
+	val := reflect.ValueOf(str)
+
+	if val.Kind() == reflect.Ptr {
+		val = val.Elem()
+	}
+
+	if val.Kind() != reflect.Struct {
+		return nil
+	}
+
+	typ := val.Type()
+
+	for i := 0; i < val.NumField(); i++ {
+		field := typ.Field(i)
+		fieldType := field.Type
+
+		jsonTag := field.Tag.Get("json")
+		requiredTag := field.Tag.Get("required")
+
+		if fieldType.Kind() == reflect.Array || fieldType.Kind() == reflect.Slice {
+			elemType := fieldType.Elem()
+			if elemType.Kind() == reflect.Struct {
+				body[jsonTag] = FieldDetail{
+					Type:     "json",
+					Required: requiredTag == "true",
+				}
+				continue
+			}
+		}
+
+		if fieldType.Kind() == reflect.Struct {
+			body[jsonTag] = FieldDetail{
+				Type:     "json",
+				Required: requiredTag == "true",
+			}
+			continue
+		}
+
+		body[jsonTag] = FieldDetail{
+			Type:     fmt.Sprintf("%s", fieldType),
+			Required: requiredTag == "true",
+		}
+	}
+
+	return body
 }
