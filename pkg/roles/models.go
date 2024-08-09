@@ -2,7 +2,7 @@ package roles
 
 type Role struct {
 	// Role name is its unique description, acts like an ID too.
-	Name string `json:"name" binding:"required"`
+	Name string `json:"name" binding:"required" required:"true"`
 
 	// Role description to make more sense when listing those.
 	Description string `json:"description"`

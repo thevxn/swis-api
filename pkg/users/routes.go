@@ -18,6 +18,8 @@ func Routes(g *gin.RouterGroup) {
 		DeleteUserByKey)
 	g.POST("/restore",
 		PostDumpRestore)
+	g.GET("/types",
+		ListTypes)
 
 	g.PUT("/:key/active",
 		ActiveToggleUserByKey)

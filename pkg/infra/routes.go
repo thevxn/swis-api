@@ -10,6 +10,8 @@ func Routes(g *gin.RouterGroup) {
 		GetInfrastructure)
 	g.POST("/restore",
 		PostDumpRestore)
+	g.GET("/types",
+		ListTypes)
 
 	// domains CRUD
 	g.GET("/domains",

@@ -3,7 +3,7 @@ package business
 // Business structure
 type Business struct {
 	// Business' unique identifier.
-	ID string `json:"id" binding:"required"`
+	ID string `json:"id" binding:"required" required:"true"`
 
 	// Czech Company ICO/ID number.
 	ICO int `json:"ico"`

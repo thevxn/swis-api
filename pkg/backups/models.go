@@ -2,7 +2,7 @@ package backups
 
 type Backup struct {
 	// Backuped service name -- unique identifier.
-	ServiceName string `json:"service_name" binding:"required" validation:"required"`
+	ServiceName string `json:"service_name" binding:"required" validation:"required" required:"true"`
 
 	// More verbose description of such service backup.
 	Description string `json:"description"`

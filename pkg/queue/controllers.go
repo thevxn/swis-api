@@ -114,6 +114,17 @@ func PostDumpRestore(ctx *gin.Context) {
 	return
 }
 
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags queue
+// @Accept json
+// @Produce json
+// @Router /queue/types [get]
+func ListTypes(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Task{})
+	return
+}
+
 // @Summary Update task by its Key
 // @Description update task by its Key
 // @Tags queue

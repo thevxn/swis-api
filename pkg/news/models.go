@@ -14,7 +14,7 @@ type NewsSources struct {
 
 type UserSource struct {
 	// News sources linked username.
-	User string `json:"user_name"`
+	User string `json:"user_name" required:"true"`
 
 	// Actual user's news sources.
 	Sources []Source `json:"news_sources"`
@@ -22,7 +22,7 @@ type UserSource struct {
 
 type Source struct {
 	// Source unique identificator.
-	ID string `json:"source_id"`
+	ID string `json:"source_id" required:"true"`
 
 	// Source's more natural name.
 	Name string `json:"source_name"`

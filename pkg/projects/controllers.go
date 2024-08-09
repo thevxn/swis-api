@@ -90,3 +90,14 @@ func PostDumpRestore(ctx *gin.Context) {
 	core.BatchRestoreItems[Project](ctx, Cache, pkgName)
 	return
 }
+
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags projects
+// @Accept json
+// @Produce json
+// @Router /projects/types [get]
+func ListTypes(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Project{})
+	return
+}

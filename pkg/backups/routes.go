@@ -19,4 +19,6 @@ func Routes(g *gin.RouterGroup) {
 		ActiveToggleBackupByServiceKey)
 	g.POST("/restore",
 		PostDumpRestore)
+	g.GET("/types",
+		ListTypes)
 }

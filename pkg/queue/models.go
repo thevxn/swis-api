@@ -12,7 +12,7 @@ type Task struct {
 	Description string `json:"description"`
 
 	// An identifier of a worker for the task to be executed with.
-	WorkerName string `json:"worker_name" binding:"required"`
+	WorkerName string `json:"worker_name" binding:"required" required:"true"`
 
 	// Processed is an indicator that such task is being worked on.
 	Processed bool `json:"processed"`

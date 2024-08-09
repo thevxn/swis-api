@@ -18,4 +18,6 @@ func Routes(g *gin.RouterGroup) {
 		DeleteProjectByKey)
 	g.POST("/restore",
 		PostDumpRestore)
+	g.GET("/types",
+		ListTypes)
 }

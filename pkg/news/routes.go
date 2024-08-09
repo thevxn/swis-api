@@ -20,4 +20,6 @@ func Routes(g *gin.RouterGroup) {
 		DeleteSourcesByUserKey)
 	g.POST("/sources/restore",
 		PostDumpRestore)
+	g.GET("/types",
+		ListTypes)
 }

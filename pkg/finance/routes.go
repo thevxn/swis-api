@@ -10,6 +10,8 @@ func Routes(g *gin.RouterGroup) {
 		GetRootData)
 	g.POST("/restore",
 		PostDumpRestore)
+	g.GET("/types",
+		ListTypes)
 
 	g.GET("/accounts/",
 		GetAccounts)

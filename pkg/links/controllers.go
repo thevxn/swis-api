@@ -70,6 +70,17 @@ func PostDumpRestore(ctx *gin.Context) {
 	return
 }
 
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags links
+// @Accept json
+// @Produce json
+// @Router /links/types [get]
+func ListTypes(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Link{})
+	return
+}
+
 // @Summary Update link by its Key
 // @Description update link by its Key
 // @Tags links

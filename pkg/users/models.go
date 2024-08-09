@@ -3,7 +3,7 @@ package users
 // Low-level User struct with all user's details.
 type User struct {
 	// ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property).
-	Name string `json:"name" binding:"required"`
+	Name string `json:"name" binding:"required" required:"true"`
 
 	// Full Name of such user.
 	FullName string `json:"full_name"`
@@ -32,7 +32,7 @@ type User struct {
 	SpotifyLink string `json:"spotify_link"`
 
 	// Email address main, personal
-	EmailMain string `json:"email_main"`
+	EmailMain string `json:"email_main" required:"true"`
 
 	// Email alias in cloudflare email routing
 	EmailAlias string `json:"email_alias"`
