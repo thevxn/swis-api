@@ -282,7 +282,7 @@ func listFieldTypes(str interface{}) map[string]FieldDetail {
 			elemType := fieldType.Elem()
 			if elemType.Kind() == reflect.Struct {
 				body[jsonTag] = FieldDetail{
-					Type:     "json",
+					Type:     "[]json",
 					Required: requiredTag == "true",
 				}
 				continue
