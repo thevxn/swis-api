@@ -6,11 +6,8 @@ import (
 
 // depots CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/",
+	g.GET("/items",
 		GetAllDepotItems)
-	g.POST("/restore",
-		PostDumpRestore)
-
 	g.GET("/items/types",
 		ListTypes)
 	g.POST("/items/:key",
@@ -23,4 +20,7 @@ func Routes(g *gin.RouterGroup) {
 		UpdateDepotItemByKey)
 	g.DELETE("/items/:key",
 		DeleteDepotItemByKey)
+
+	g.POST("/restore",
+		PostDumpRestore)
 }
