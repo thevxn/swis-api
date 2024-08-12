@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.16.9"
+        "version": "5.16.10"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -570,6 +570,22 @@
                 }
             }
         },
+        "/depots/items/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
+            }
+        },
         "/depots/items/{key}": {
             "get": {
                 "description": "get depot item's details by :key route param",
@@ -686,22 +702,6 @@
                     "depots"
                 ],
                 "summary": "Upload depot dump backup -- restores all depot items",
-                "responses": {}
-            }
-        },
-        "/depots/types": {
-            "get": {
-                "description": "list package model's field types",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "depots"
-                ],
-                "summary": "List package model's field types",
                 "responses": {}
             }
         },
@@ -969,6 +969,22 @@
                         }
                     }
                 }
+            }
+        },
+        "/dish/incidents/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
             }
         },
         "/dish/incidents/{key}": {
@@ -1440,6 +1456,22 @@
                 }
             }
         },
+        "/dish/sockets/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
+            }
+        },
         "/dish/sockets/{host}": {
             "get": {
                 "description": "get socket list by Host",
@@ -1694,22 +1726,6 @@
                 }
             }
         },
-        "/dish/types": {
-            "get": {
-                "description": "list package model's field types",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "List package model's field types",
-                "responses": {}
-            }
-        },
         "/finance": {
             "get": {
                 "description": "get whole finance package content",
@@ -1761,6 +1777,22 @@
                         }
                     }
                 }
+            }
+        },
+        "/finance/accounts/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
             }
         },
         "/finance/accounts/{key}": {
@@ -1906,6 +1938,22 @@
                         }
                     }
                 }
+            }
+        },
+        "/finance/items/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
             }
         },
         "/finance/items/{key}": {
@@ -2058,22 +2106,6 @@
                 }
             }
         },
-        "/finance/types": {
-            "get": {
-                "description": "list package model's field types",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "finance"
-                ],
-                "summary": "List package model's field types",
-                "responses": {}
-            }
-        },
         "/infra": {
             "get": {
                 "description": "get all infrastructure details",
@@ -2112,6 +2144,22 @@
                         }
                     }
                 }
+            }
+        },
+        "/infra/domains/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
             }
         },
         "/infra/domains/{key}": {
@@ -2271,6 +2319,22 @@
                         }
                     }
                 }
+            }
+        },
+        "/infra/hosts/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
             }
         },
         "/infra/hosts/{key}": {
@@ -2511,6 +2575,22 @@
                 }
             }
         },
+        "/infra/networks/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
+            }
+        },
         "/infra/networks/{key}": {
             "get": {
                 "description": "get network by :key param",
@@ -2629,22 +2709,6 @@
                     "infra"
                 ],
                 "summary": "Upload infrastructure JSON dump",
-                "responses": {}
-            }
-        },
-        "/infra/types": {
-            "get": {
-                "description": "list package model's field types",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "infra"
-                ],
-                "summary": "List package model's field types",
                 "responses": {}
             }
         },
@@ -2870,6 +2934,22 @@
                 "responses": {}
             }
         },
+        "/news/sources/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
+            }
+        },
         "/news/sources/{key}": {
             "get": {
                 "description": "get news sources by their user :key param",
@@ -2953,22 +3033,6 @@
                         }
                     }
                 }
-            }
-        },
-        "/news/types": {
-            "get": {
-                "description": "list package model's field types",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "news"
-                ],
-                "summary": "List package model's field types",
-                "responses": {}
             }
         },
         "/news/{key}": {
@@ -3226,6 +3290,22 @@
                 }
             }
         },
+        "/queue/tasks/types": {
+            "get": {
+                "description": "list package model's field types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "queue"
+                ],
+                "summary": "List package model's field types",
+                "responses": {}
+            }
+        },
         "/queue/tasks/{key}": {
             "get": {
                 "description": "get task by its key param",
@@ -3329,22 +3409,6 @@
                         }
                     }
                 }
-            }
-        },
-        "/queue/types": {
-            "get": {
-                "description": "list package model's field types",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "queue"
-                ],
-                "summary": "List package model's field types",
-                "responses": {}
             }
         },
         "/roles": {
