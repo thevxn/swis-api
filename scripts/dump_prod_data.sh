@@ -56,7 +56,7 @@ declare -a paths=(
 	"/alvax"
 	"/backups/"
 	"/business/"
-	"/depots/"
+	"/depots/items"
 	"/dish/"
 
 	"/finance/"
@@ -65,9 +65,8 @@ declare -a paths=(
 	"/news/sources"
 	"/projects/"
 
+	"/queue/tasks"
 	"/roles/"
-	"/system/"
-	"/system/sync"
 	"/users/"
 )
 declare -a files=(
@@ -83,9 +82,8 @@ declare -a files=(
 	"/news_sources.json"
 	"/projects.json"
 
+	"/queue.json"
 	"/roles.json"
-	"/systems.json"
-	"/system_sync.json"
 	"/users.json"
 )
 
