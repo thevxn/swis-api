@@ -9,11 +9,11 @@ func Routes(g *gin.RouterGroup) {
 		GetDishRoot)
 	g.POST("/restore",
 		PostDumpRestore)
-	g.GET("/types",
-		ListTypes)
 
 	g.GET("/incidents",
 		GetIncidentList)
+	g.GET("/incidents/types",
+		ListTypesIncidents)
 	g.GET("/incidents/global",
 		GetGlobalIncidentList)
 	g.GET("/incidents/public",
@@ -31,6 +31,8 @@ func Routes(g *gin.RouterGroup) {
 
 	g.GET("/sockets",
 		GetSocketList)
+	g.GET("/sockets/types",
+		ListTypesSockets)
 	g.GET("/sockets/status",
 		GetSSEvents)
 	g.GET("/sockets/public",

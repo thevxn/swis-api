@@ -10,6 +10,8 @@ func Routes(g *gin.RouterGroup) {
 		GetTasks)
 	g.POST("/tasks",
 		PostNewTask)
+	g.GET("/tasks/types",
+		ListTypesTasks)
 	g.GET("/tasks/:key",
 		GetTaskByKey)
 	g.PUT("/tasks/:key",
@@ -20,6 +22,4 @@ func Routes(g *gin.RouterGroup) {
 		ProcessedToggleByKey)
 	g.POST("/restore",
 		PostDumpRestore)
-	g.GET("/types",
-		ListTypes)
 }

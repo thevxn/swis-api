@@ -16,7 +16,8 @@ var Package *core.Package = &core.Package{
 	Cache: []**core.Cache{
 		&Cache,
 	},
-	Routes: Routes,
+	Routes:  Routes,
+	Generic: true,
 }
 
 // GetProjects function dumps the projects cache contents.

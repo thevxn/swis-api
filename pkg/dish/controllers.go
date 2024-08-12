@@ -27,6 +27,10 @@ var Package *core.Package = &core.Package{
 		&CacheSockets,
 	},
 	Routes: Routes,
+	Subpackages: []string{
+		"incidents",
+		"sockets",
+	},
 }
 
 /*
@@ -735,9 +739,20 @@ func GetIncidentListBySocketID(ctx *gin.Context) {
 // @Tags dish
 // @Accept json
 // @Produce json
-// @Router /dish/types [get]
-func ListTypes(ctx *gin.Context) {
-	core.ParsePackageTypes(ctx, pkgName, Socket{}, Incident{})
+// @Router /dish/incidents/types [get]
+func ListTypesIncidents(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Incident{})
+	return
+}
+
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags dish
+// @Accept json
+// @Produce json
+// @Router /dish/sockets/types [get]
+func ListTypesSockets(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Socket{})
 	return
 }
 

@@ -10,12 +10,12 @@ func Routes(g *gin.RouterGroup) {
 		GetInfrastructure)
 	g.POST("/restore",
 		PostDumpRestore)
-	g.GET("/types",
-		ListTypes)
 
 	// domains CRUD
 	g.GET("/domains",
 		GetDomains)
+	g.GET("/domains/types",
+		ListTypesDomains)
 	g.GET("/domains/:key",
 		GetDomainByKey)
 	g.POST("/domains/:key",
@@ -30,6 +30,8 @@ func Routes(g *gin.RouterGroup) {
 	// hosts CRUD
 	g.GET("/hosts",
 		GetHosts)
+	g.GET("/hosts/types",
+		ListTypesHosts)
 	g.GET("/hosts/:key",
 		GetHostByKey)
 	g.POST("/hosts/:key/config",
@@ -50,6 +52,8 @@ func Routes(g *gin.RouterGroup) {
 	// networks CRUD
 	g.GET("/networks",
 		GetNetworks)
+	g.GET("/networks/types",
+		ListTypesNetworks)
 	g.GET("/networks/:key",
 		GetNetworkByKey)
 	g.POST("/networks/:key",

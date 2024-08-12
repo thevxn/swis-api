@@ -21,6 +21,9 @@ var Package *core.Package = &core.Package{
 		&Cache,
 	},
 	Routes: Routes,
+	Subpackages: []string{
+		"items",
+	},
 }
 
 // GetAllDepotItems GET method
@@ -101,7 +104,7 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Tags depots
 // @Accept json
 // @Produce json
-// @Router /depots/types [get]
+// @Router /depots/items/types [get]
 func ListTypes(ctx *gin.Context) {
 	core.ParsePackageType(ctx, pkgName, DepotItem{})
 	return

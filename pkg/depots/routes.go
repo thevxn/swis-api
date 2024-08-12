@@ -4,13 +4,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// depot CRUD -- functions in controllers.go
+// depots CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetAllDepotItems)
 	g.POST("/restore",
 		PostDumpRestore)
 
+	g.GET("/items/types",
+		ListTypes)
 	g.POST("/items/:key",
 		PostNewDepotItemByKey)
 	g.GET("/items/:key",
@@ -21,6 +23,4 @@ func Routes(g *gin.RouterGroup) {
 		UpdateDepotItemByKey)
 	g.DELETE("/items/:key",
 		DeleteDepotItemByKey)
-	g.GET("/types",
-		ListTypes)
 }

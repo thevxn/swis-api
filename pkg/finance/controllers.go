@@ -22,6 +22,10 @@ var Package *core.Package = &core.Package{
 		&CacheItems,
 	},
 	Routes: Routes,
+	Subpackages: []string{
+		"accounts",
+		"items",
+	},
 }
 
 /*
@@ -385,9 +389,20 @@ func DoTaxesByOwner(ctx *gin.Context) {
 // @Tags finance
 // @Accept json
 // @Produce json
-// @Router /finance/types [get]
-func ListTypes(ctx *gin.Context) {
-	core.ParsePackageTypes(ctx, pkgName, Account{}, Item{})
+// @Router /finance/accounts/types [get]
+func ListTypesAccounts(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Account{})
+	return
+}
+
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags finance
+// @Accept json
+// @Produce json
+// @Router /finance/items/types [get]
+func ListTypesItems(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Item{})
 	return
 }
 

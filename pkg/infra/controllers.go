@@ -24,6 +24,11 @@ var Package *core.Package = &core.Package{
 		&CacheNetworks,
 	},
 	Routes: Routes,
+	Subpackages: []string{
+		"domains",
+		"hosts",
+		"networks",
+	},
 }
 
 // @Summary Get whole infrastructure
@@ -621,9 +626,31 @@ func DeleteNetworkByKey(ctx *gin.Context) {
 // @Tags infra
 // @Accept json
 // @Produce json
-// @Router /infra/types [get]
-func ListTypes(ctx *gin.Context) {
-	core.ParsePackageTypes(ctx, pkgName, Domain{}, Host{}, Network{})
+// @Router /infra/domains/types [get]
+func ListTypesDomains(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Domain{})
+	return
+}
+
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags infra
+// @Accept json
+// @Produce json
+// @Router /infra/hosts/types [get]
+func ListTypesHosts(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Host{})
+	return
+}
+
+// @Summary List package model's field types
+// @Description list package model's field types
+// @Tags infra
+// @Accept json
+// @Produce json
+// @Router /infra/networks/types [get]
+func ListTypesNetworks(ctx *gin.Context) {
+	core.ParsePackageType(ctx, pkgName, Network{})
 	return
 }
 

@@ -21,6 +21,9 @@ var Package *core.Package = &core.Package{
 		&CacheTasks,
 	},
 	Routes: Routes,
+	Subpackages: []string{
+		"tasks",
+	},
 }
 
 // GetLinks returns JSON serialized list of tasks and their properties.
@@ -119,8 +122,8 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Tags queue
 // @Accept json
 // @Produce json
-// @Router /queue/types [get]
-func ListTypes(ctx *gin.Context) {
+// @Router /queue/tasks/types [get]
+func ListTypesTasks(ctx *gin.Context) {
 	core.ParsePackageType(ctx, pkgName, Task{})
 	return
 }

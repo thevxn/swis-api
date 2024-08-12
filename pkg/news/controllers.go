@@ -22,6 +22,9 @@ var Package *core.Package = &core.Package{
 		&Cache,
 	},
 	Routes: Routes,
+	Subpackages: []string{
+		"sources",
+	},
 }
 
 // GetSources
@@ -99,8 +102,8 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Tags news
 // @Accept json
 // @Produce json
-// @Router /news/types [get]
-func ListTypes(ctx *gin.Context) {
+// @Router /news/sources/types [get]
+func ListTypesSources(ctx *gin.Context) {
 	core.ParsePackageType(ctx, pkgName, []Source{})
 	return
 }
