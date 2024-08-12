@@ -28,6 +28,12 @@ func MountMany(parentRouter *gin.Engine, systemCache **Cache, pkgs ...*Package) 
 			if pkg.Generic {
 				genericPkgs = append(genericPkgs, pkg.Name)
 			}
+
+			if len(pkg.Subpackages) > 0 {
+				for _, sub := range pkg.Subpackages {
+					genericPkgs = append(genericPkgs, fmt.Sprintf("%s/%s", pkg.Name, sub))
+				}
+			}
 		}
 	}
 

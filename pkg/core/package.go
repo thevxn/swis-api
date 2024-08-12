@@ -9,15 +9,17 @@ import (
 )
 
 type Package struct {
-	Name    string
-	Cache   []**Cache
-	Routes  func(r *gin.RouterGroup)
-	Generic bool
+	Name        string
+	Cache       []**Cache
+	Routes      func(r *gin.RouterGroup)
+	Generic     bool
+	Subpackages []string
 }
 
 type FieldDetail struct {
 	Type     string `json:"type"`
 	Required bool   `json:"required"`
+	Readonly bool   `json:"readonly"`
 }
 
 func PrintAllRootItems(ctx *gin.Context, cache *Cache, pkgName string) {
@@ -277,6 +279,7 @@ func listFieldTypes(str interface{}) map[string]FieldDetail {
 
 		jsonTag := field.Tag.Get("json")
 		requiredTag := field.Tag.Get("required")
+		roTag := field.Tag.Get("readonly")
 
 		if fieldType.Kind() == reflect.Array || fieldType.Kind() == reflect.Slice {
 			elemType := fieldType.Elem()
@@ -284,6 +287,7 @@ func listFieldTypes(str interface{}) map[string]FieldDetail {
 				body[jsonTag] = FieldDetail{
 					Type:     "[]json",
 					Required: requiredTag == "true",
+					Readonly: roTag == "true",
 				}
 				continue
 			}
@@ -293,6 +297,7 @@ func listFieldTypes(str interface{}) map[string]FieldDetail {
 			body[jsonTag] = FieldDetail{
 				Type:     "json",
 				Required: requiredTag == "true",
+				Readonly: roTag == "true",
 			}
 			continue
 		}
@@ -300,6 +305,7 @@ func listFieldTypes(str interface{}) map[string]FieldDetail {
 		body[jsonTag] = FieldDetail{
 			Type:     fmt.Sprintf("%s", fieldType),
 			Required: requiredTag == "true",
+			Readonly: roTag == "true",
 		}
 	}
 
