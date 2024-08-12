@@ -44,7 +44,7 @@ func TestPostNewDepotItemByKey(t *testing.T) {
 func TestGetAllDepotItems(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/depots/", nil)
+	req, _ := http.NewRequest("GET", "/depots/items", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
