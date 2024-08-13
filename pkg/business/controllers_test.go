@@ -24,7 +24,7 @@ var TestPackage *core.Package = &core.Package{
  *  unit/integration tests
  */
 
-func TestPostBusinessByKey(t *testing.T) {
+func TestPostNewBusiness(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var biz Business = Business{
@@ -33,7 +33,7 @@ func TestPostBusinessByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(biz)
-	req, _ := http.NewRequest("POST", "/business/savla-dev", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/business", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -44,7 +44,7 @@ func TestPostBusinessByKey(t *testing.T) {
 func TestGetBusinessEntities(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/business/", nil)
+	req, _ := http.NewRequest("GET", "/business", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 

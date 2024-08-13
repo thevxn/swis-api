@@ -28,13 +28,14 @@ func TestPostBackeduServicepByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var bcp Backup = Backup{
+		ID:          "swapi",
 		ServiceName: "swapi",
 		Description: "A very swapi service.",
 		Active:      true,
 	}
 
 	jsonValue, _ := json.Marshal(bcp)
-	req, _ := http.NewRequest("POST", "/backups/swapi", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/backups/", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)

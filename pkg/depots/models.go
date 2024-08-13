@@ -2,7 +2,7 @@ package depots
 
 type DepotItem struct {
 	// Numeric unique ID of such Item.
-	ID int `json:"id" binding:"required" required:"true"`
+	ID string `json:"id" binding:"required" required:"true" readonly:"true"`
 
 	// Item description, name, amount, type etc.
 	Description string `json:"desc"`

@@ -48,9 +48,9 @@ func GetBusinessByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body business.Business true "query params"
 // @Success 200 {object} business.Business
-// @Router /business/{key} [post]
-func PostBusinessByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Business](ctx, Cache, pkgName, Business{})
+// @Router /business [post]
+func PostNewBusiness(ctx *gin.Context) {
+	core.AddNewItem[Business](ctx, Cache, pkgName, Business{})
 	return
 }
 

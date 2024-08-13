@@ -57,9 +57,9 @@ func GetSocketList(ctx *gin.Context) {
 // @Produce json
 // @Param request body dish.Socket true "query params"
 // @Success 200 {object} dish.Socket
-// @Router /dish/sockets/{key} [post]
-func PostNewSocketByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Socket](ctx, CacheSockets, pkgName, Socket{})
+// @Router /dish/sockets [post]
+func PostNewSocket(ctx *gin.Context) {
+	core.AddNewItem[Socket](ctx, CacheSockets, pkgName, Socket{})
 	return
 }
 

@@ -1,6 +1,9 @@
 package backups
 
 type Backup struct {
+	// Unique identifier.
+	ID string `json:"id" binding:"required" validation:"required" required:"true" readonly:"true"`
+
 	// Backuped service name -- unique identifier.
 	ServiceName string `json:"service_name" binding:"required" validation:"required" required:"true"`
 
@@ -13,7 +16,7 @@ type Backup struct {
 	// UNIX timestamp of the last provided backup.
 	Timestamp int `json:"timestamp"`
 
-	// Size of the gzip/tar archive.
+	// Size of the gzip/tar archive in bytes.
 	Size string `json:"backup_size"`
 
 	// Name of the compressed backup file.

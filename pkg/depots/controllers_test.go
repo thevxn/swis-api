@@ -24,16 +24,16 @@ var TestPackage *core.Package = &core.Package{
  *  unit/integration tests
  */
 
-func TestPostNewDepotItemByKey(t *testing.T) {
+func TestPostNewDepotItem(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var item DepotItem = DepotItem{
-		ID:          1,
+		ID:          "1",
 		Description: "An absolutely generic item.",
 	}
 
 	jsonValue, _ := json.Marshal(item)
-	req, _ := http.NewRequest("POST", "/depots/items/1", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/depots/items", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -78,7 +78,7 @@ func TestUpdateDepotItemByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var item DepotItem = DepotItem{
-		ID:          1,
+		ID:          "1",
 		Description: "An absolutely generic item, edited.",
 	}
 

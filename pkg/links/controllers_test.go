@@ -24,7 +24,7 @@ var TestPackage *core.Package = &core.Package{
  *  unit/integration tests
  */
 
-func TestPostNewLinkByKey(t *testing.T) {
+func TestPostNewLink(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var link Link = Link{
@@ -35,7 +35,7 @@ func TestPostNewLinkByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(link)
-	req, _ := http.NewRequest("POST", "/links/sd", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/links", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -129,6 +129,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Links: map[string]Link{
 			"sd": {
+				ID:          "sd",
 				Name:        "sd",
 				Description: "A shortcut for the savla.dev homepage.",
 				URL:         "https://www.savla.dev",
@@ -140,6 +141,7 @@ func TestPostDumpRestore(t *testing.T) {
 			/* run #2: blank keys SHOULD be ignored at all --- patched in pkg/core/package.go */
 			/* result: the struct below is skipped */
 			"": {
+				ID:          "",
 				Name:        "",
 				Description: "A blank link",
 				URL:         "http://about:blank",

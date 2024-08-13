@@ -51,9 +51,9 @@ func GetAccounts(ctx *gin.Context) {
 // @Produce json
 // @Param request body finance.Account true "query params"
 // @Success 200 {object} finance.Account
-// @Router /finance/accounts/{key} [post]
-func PostNewAccountByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Account](ctx, CacheAccounts, pkgName, Account{})
+// @Router /finance/accounts [post]
+func PostNewAccount(ctx *gin.Context) {
+	core.AddNewItem[Account](ctx, CacheAccounts, pkgName, Account{})
 	return
 }
 
@@ -151,9 +151,9 @@ func GetItems(ctx *gin.Context) {
 // @Produce json
 // @Param request body finance.Item true "query params"
 // @Success 200 {object} finance.Item
-// @Router /finance/items/{key} [post]
-func PostNewItemByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Item](ctx, CacheItems, pkgName, Item{})
+// @Router /finance/items [post]
+func PostNewItem(ctx *gin.Context) {
+	core.AddNewItem[Item](ctx, CacheItems, pkgName, Item{})
 	return
 }
 

@@ -24,10 +24,11 @@ var TestPackage *core.Package = &core.Package{
  *  unit/integration tests
  */
 
-func TestPostNewRoleByKey(t *testing.T) {
+func TestPostNewRole(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var role Role = Role{
+		ID:          "operators",
 		Name:        "operators",
 		Description: "A very role for operators",
 		Admin:       true,
@@ -35,7 +36,7 @@ func TestPostNewRoleByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(role)
-	req, _ := http.NewRequest("POST", "/roles/operators", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/roles", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)

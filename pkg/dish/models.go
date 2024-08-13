@@ -7,7 +7,7 @@ type Root struct {
 
 type Socket struct {
 	// Socket ID, snake_cased for socket editing and deleting.
-	ID string `json:"socket_id" binding:"required" validation:"required" required:"true"`
+	ID string `json:"socket_id" binding:"required" validation:"required" required:"true" readonly:"true"`
 
 	// GEneric name of the socket, to be used in dish results as failed one endpoint for example.
 	Name string `json:"socket_name" binding:"required" required:"true"`
@@ -59,7 +59,7 @@ type Socket struct {
 
 type Incident struct {
 	// Incident ID, stringified timestamp usually.
-	ID string `json:"id"`
+	ID string `json:"id" readonly:"true"`
 
 	// Incident name.
 	Name string `json:"name" binding:"required" required:"true"`

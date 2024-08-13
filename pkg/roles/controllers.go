@@ -50,9 +50,9 @@ func GetRoleByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body roles.Role true "query params"
 // @Success 200 {object} roles.Role
-// @Router /roles/{key} [post]
-func PostNewRoleByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Role](ctx, Cache, pkgName, Role{})
+// @Router /roles [post]
+func PostNewRole(ctx *gin.Context) {
+	core.AddNewItem[Role](ctx, Cache, pkgName, Role{})
 	return
 }
 

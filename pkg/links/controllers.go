@@ -53,9 +53,9 @@ func GetLinkByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body links.Link true "query params"
 // @Success 200 {object} links.Link
-// @Router /links/{key} [post]
-func PostNewLinkByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Link](ctx, Cache, pkgName, Link{})
+// @Router /links [post]
+func PostNewLink(ctx *gin.Context) {
+	core.AddNewItem[Link](ctx, Cache, pkgName, Link{})
 	return
 }
 

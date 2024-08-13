@@ -10,12 +10,12 @@ func Routes(g *gin.RouterGroup) {
 		GetNewsByUserKey)
 	g.GET("/sources",
 		GetSources)
+	g.POST("/sources",
+		PostNewSources)
 	g.GET("/sources/types",
 		ListTypesSources)
 	g.GET("/sources/:key",
 		GetSourcesByUserKey)
-	g.POST("/sources/:key",
-		PostNewSourcesByUserKey)
 	g.PUT("/sources/:key",
 		UpdateSourcesByUserKey)
 	g.DELETE("/sources/:key",

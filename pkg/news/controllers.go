@@ -57,8 +57,8 @@ func GetSourcesByUserKey(ctx *gin.Context) {
 // @Produce  json
 // @Success 200 {object} news.Source
 // @Router /news/sources/{key} [post]
-func PostNewSourcesByUserKey(ctx *gin.Context) {
-	core.AddNewItemByParam[[]Source](ctx, Cache, pkgName, []Source{})
+func PostNewSources(ctx *gin.Context) {
+	core.AddNewItem[[]Source](ctx, Cache, pkgName, []Source{})
 	return
 }
 

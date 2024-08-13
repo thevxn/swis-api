@@ -92,7 +92,7 @@ func TestPostDumpRestore(t *testing.T) {
 func TestGetRootData(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/finance/", nil)
+	req, _ := http.NewRequest("GET", "/finance", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -111,7 +111,7 @@ func TestGetRootData(t *testing.T) {
  *  accounts
  */
 
-func TestPostNewAccountByKey(t *testing.T) {
+func TestPostNewAccount(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var acc Account = Account{
@@ -124,7 +124,7 @@ func TestPostNewAccountByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(acc)
-	req, _ := http.NewRequest("POST", "/finance/accounts/test_acc", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/finance/accounts", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -145,7 +145,7 @@ func TestPostNewAccountByKey(t *testing.T) {
 func TestGetAccounts(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/finance/accounts/", nil)
+	req, _ := http.NewRequest("GET", "/finance/accounts", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -244,7 +244,7 @@ func TestDeleteAccountByKey(t *testing.T) {
  *  items (financial)
  */
 
-func TestPostNewItemByKey(t *testing.T) {
+func TestPostNewItem(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var item Item = Item{
@@ -257,7 +257,7 @@ func TestPostNewItemByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(item)
-	req, _ := http.NewRequest("POST", "/finance/items/test_item2", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/finance/items", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -268,7 +268,7 @@ func TestPostNewItemByKey(t *testing.T) {
 func TestGetItems(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/finance/items/", nil)
+	req, _ := http.NewRequest("GET", "/finance/items", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 

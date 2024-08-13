@@ -5,8 +5,8 @@ import (
 )
 
 type Task struct {
-	// Taks's ID as an unique identifier in the queue.
-	ID string `json:"name"`
+	// Task's ID as an unique identifier in the queue.
+	ID string `json:"id" readonly:"true"`
 
 	// Description of such task in human-readable format.
 	Description string `json:"description"`

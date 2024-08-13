@@ -24,17 +24,18 @@ var TestPackage *core.Package = &core.Package{
  *  unit/integration tests
  */
 
-func TestPostNewUserByKey(t *testing.T) {
+func TestPostNewUser(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var user User = User{
+		ID:        "operator",
 		Name:      "operator",
 		FullName:  "Mr. Operator",
 		TokenHash: "",
 	}
 
 	jsonValue, _ := json.Marshal(user)
-	req, _ := http.NewRequest("POST", "/users/operator", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/users", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -122,6 +123,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Users: map[string]User{
 			"operator": {
+				ID:     "operator",
 				Name:   "operator",
 				Active: true,
 			},

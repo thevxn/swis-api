@@ -8,8 +8,8 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/",
 		GetBusinessEntities)
-	g.POST("/:key",
-		PostBusinessByKey)
+	g.POST("",
+		PostNewBusiness)
 	g.GET("/:key",
 		GetBusinessByKey)
 	g.PUT("/:key",

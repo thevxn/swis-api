@@ -6,10 +6,10 @@ import (
 
 // roles CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/",
+	g.GET("",
 		GetRoles)
-	g.POST("/:key",
-		PostNewRoleByKey)
+	g.POST("",
+		PostNewRole)
 	g.GET("/:key",
 		GetRoleByKey)
 	g.PUT("/:key",

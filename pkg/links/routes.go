@@ -6,10 +6,10 @@ import (
 
 // links CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/",
+	g.GET("",
 		GetLinks)
-	g.POST("/:key",
-		PostNewLinkByKey)
+	g.POST("",
+		PostNewLink)
 	g.GET("/:key",
 		GetLinkByKey)
 	g.PUT("/:key",

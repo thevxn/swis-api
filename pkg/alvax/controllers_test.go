@@ -24,15 +24,16 @@ var TestPackage *core.Package = &core.Package{
  *  unit/integration tests
  */
 
-func TestPostNewConfigByKey(t *testing.T) {
+func TestPostNewConfig(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var cfg ConfigRoot = ConfigRoot{
+		ID:  "bot",
 		Key: "bot",
 	}
 
 	jsonValue, _ := json.Marshal(cfg)
-	req, _ := http.NewRequest("POST", "/alvax/bot", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/alvax/", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)

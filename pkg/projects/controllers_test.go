@@ -24,7 +24,7 @@ var TestPackage *core.Package = &core.Package{
  *  unit/integration tests
  */
 
-func TestPostNewProjectByKey(t *testing.T) {
+func TestPostNewProject(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var project Project = Project{
@@ -39,7 +39,7 @@ func TestPostNewProjectByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(project)
-	req, _ := http.NewRequest("POST", "/projects/test_project", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/projects", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -50,7 +50,7 @@ func TestPostNewProjectByKey(t *testing.T) {
 func TestGetProjects(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/projects/", nil)
+	req, _ := http.NewRequest("GET", "/projects", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 

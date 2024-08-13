@@ -268,7 +268,7 @@ func TestPostNewSocketByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(socket)
-	req, _ := http.NewRequest("POST", "/dish/sockets/test_socket", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/dish/sockets", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)

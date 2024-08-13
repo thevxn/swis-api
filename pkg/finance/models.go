@@ -6,7 +6,7 @@ import (
 
 type Account struct {
 	// Account unique ID, snake_cased identifier.
-	ID string `json:"account_id" binding:"required" required:"true"`
+	ID string `json:"id" binding:"required" required:"true" readonly:"true"`
 
 	// Account more verbose name.
 	Description string `json:"account_description"`
@@ -34,7 +34,7 @@ type Account struct {
 // ref: http://docs.savla.su/finance
 type Item struct {
 	// Item unique ID (e.g. datetime timestamp plus currency etc).
-	ID string `json:"id" binding:"required" required:"true"`
+	ID string `json:"id" binding:"required" required:"true" readonly:"true"`
 
 	// Type defines whether the item is an income, or an expense.
 	Type string `json:"type" binding:"required" required:"true"`

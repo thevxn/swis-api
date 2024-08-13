@@ -14,12 +14,12 @@ func Routes(g *gin.RouterGroup) {
 	// domains CRUD
 	g.GET("/domains",
 		GetDomains)
+	g.POST("/domains",
+		PostNewDomain)
 	g.GET("/domains/types",
 		ListTypesDomains)
 	g.GET("/domains/:key",
 		GetDomainByKey)
-	g.POST("/domains/:key",
-		PostNewDomainByKey)
 	g.POST("/domains/:key/deployment",
 		PostDomainDeploymentByKey)
 	g.PUT("/domains/:key",
@@ -30,6 +30,8 @@ func Routes(g *gin.RouterGroup) {
 	// hosts CRUD
 	g.GET("/hosts",
 		GetHosts)
+	g.POST("/hosts",
+		PostNewHost)
 	g.GET("/hosts/types",
 		ListTypesHosts)
 	g.GET("/hosts/:key",
@@ -42,8 +44,6 @@ func Routes(g *gin.RouterGroup) {
 		PostHostVMICByKey)
 	g.DELETE("/hosts/:key/vmic/:vm",
 		DeleteHostVMICByKeyAndVM)
-	g.POST("/hosts/:key",
-		PostNewHostByKey)
 	g.PUT("/hosts/:key",
 		UpdateHostByKey)
 	g.DELETE("/hosts/:key",
@@ -52,12 +52,12 @@ func Routes(g *gin.RouterGroup) {
 	// networks CRUD
 	g.GET("/networks",
 		GetNetworks)
+	g.POST("/networks",
+		PostNewNetwork)
 	g.GET("/networks/types",
 		ListTypesNetworks)
 	g.GET("/networks/:key",
 		GetNetworkByKey)
-	g.POST("/networks/:key",
-		PostNewNetworkByKey)
 	g.PUT("/networks/:key",
 		UpdateNetworkByKey)
 	g.DELETE("/networks/:key",

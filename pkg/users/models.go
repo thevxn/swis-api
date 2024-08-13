@@ -2,7 +2,10 @@ package users
 
 // Low-level User struct with all user's details.
 type User struct {
-	// ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property).
+	// User ID as an unique identifier.
+	ID string `json:"id" binding:"required" required:"true" readonly:"true"`
+
+	// ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property) (legacy).
 	Name string `json:"name" binding:"required" required:"true"`
 
 	// Full Name of such user.

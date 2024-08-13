@@ -22,7 +22,7 @@ type UserSource struct {
 
 type Source struct {
 	// Source unique identificator.
-	ID string `json:"source_id" required:"true"`
+	ID string `json:"id" required:"true" readonly:"true"`
 
 	// Source's more natural name.
 	Name string `json:"source_name"`

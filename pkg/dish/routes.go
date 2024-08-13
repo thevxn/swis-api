@@ -12,6 +12,8 @@ func Routes(g *gin.RouterGroup) {
 
 	g.GET("/incidents",
 		GetIncidentList)
+	g.POST("/incidents",
+		PostNewIncident)
 	g.GET("/incidents/types",
 		ListTypesIncidents)
 	g.GET("/incidents/global",
@@ -20,8 +22,6 @@ func Routes(g *gin.RouterGroup) {
 		GetPublicIncidentList)
 	g.GET("/incidents/:key",
 		GetIncidentListBySocketID)
-	g.POST("/incidents",
-		PostNewIncident)
 	g.PUT("/incidents/:key",
 		UpdateIncidentByKey)
 	g.PATCH("/incidents/:key",
@@ -31,6 +31,8 @@ func Routes(g *gin.RouterGroup) {
 
 	g.GET("/sockets",
 		GetSocketList)
+	g.POST("/sockets",
+		PostNewSocket)
 	g.GET("/sockets/types",
 		ListTypesSockets)
 	g.GET("/sockets/status",
@@ -39,8 +41,6 @@ func Routes(g *gin.RouterGroup) {
 		GetSocketListPublic)
 	g.GET("/sockets/:host",
 		GetSocketListByHost)
-	g.POST("/sockets/:key",
-		PostNewSocketByKey)
 	g.PUT("/sockets/:key",
 		UpdateSocketByKey)
 	g.PATCH("/sockets/:key",

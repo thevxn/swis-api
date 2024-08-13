@@ -93,7 +93,7 @@ func AuthorizationMiddleware() gin.HandlerFunc {
 			}
 		}
 
-		respondWithError(ctx, http.StatusForbidden, "access denied")
+		respondWithError(ctx, http.StatusNotFound, "resource not found")
 		return
 	}
 }

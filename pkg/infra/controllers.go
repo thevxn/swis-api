@@ -85,9 +85,9 @@ func GetDomainByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body infra.Domain true "query params"
 // @Success 200 {object} infra.Domain
-// @Router /infra/domains/{key} [post]
-func PostNewDomainByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Domain](ctx, CacheDomains, pkgName, Domain{})
+// @Router /infra/domains [post]
+func PostNewDomain(ctx *gin.Context) {
+	core.AddNewItem[Domain](ctx, CacheDomains, pkgName, Domain{})
 	return
 }
 
@@ -521,9 +521,9 @@ func PostHostFactsByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body infra.Host true "query params"
 // @Success 200 {object} infra.Host
-// @Router /infra/hosts/{key} [post]
-func PostNewHostByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Host](ctx, CacheHosts, pkgName, Host{})
+// @Router /infra/hosts [post]
+func PostNewHost(ctx *gin.Context) {
+	core.AddNewItem[Host](ctx, CacheHosts, pkgName, Host{})
 	return
 }
 
@@ -585,9 +585,9 @@ func GetNetworkByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body infra.Network true "query params"
 // @Success 200 {object} infra.Network
-// @Router /infra/networks/{key} [post]
-func PostNewNetworkByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Network](ctx, CacheNetworks, pkgName, Network{})
+// @Router /infra/networks [post]
+func PostNewNetwork(ctx *gin.Context) {
+	core.AddNewItem[Network](ctx, CacheNetworks, pkgName, Network{})
 	return
 }
 
@@ -660,7 +660,6 @@ func ListTypesNetworks(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Router /infra/restore [post]
-// PostDumpRestore
 func PostDumpRestore(ctx *gin.Context) {
 	var counter []int = []int{0, 0, 0}
 

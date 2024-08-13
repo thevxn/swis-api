@@ -58,9 +58,9 @@ func GetDepotItemByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body depots.DepotItem true "query params"
 // @Success 200 {object} depots.DepotItem
-// @Router /depots/items/{key} [post]
-func PostNewDepotItemByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[DepotItem](ctx, Cache, pkgName, DepotItem{})
+// @Router /depots/items [post]
+func PostNewDepotItem(ctx *gin.Context) {
+	core.AddNewItem[DepotItem](ctx, Cache, pkgName, DepotItem{})
 	return
 }
 

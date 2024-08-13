@@ -50,9 +50,9 @@ func GetProjectByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body projects.Project true "query params"
 // @Success 200 {object} projects.Project
-// @Router /projects/{key} [post]
-func PostNewProjectByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[Project](ctx, Cache, pkgName, Project{})
+// @Router /projects [post]
+func PostNewProject(ctx *gin.Context) {
+	core.AddNewItem[Project](ctx, Cache, pkgName, Project{})
 	return
 }
 

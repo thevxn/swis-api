@@ -6,12 +6,12 @@ import (
 
 // users CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/",
+	g.GET("",
 		GetUsers)
+	g.POST("",
+		PostNewUser)
 	g.GET("/:key",
 		GetUserByKey)
-	g.POST("/:key",
-		PostNewUserByKey)
 	g.PUT("/:key",
 		UpdateUserByKey)
 	g.DELETE("/:key",

@@ -69,6 +69,7 @@ func TestPostDumpRestore(t *testing.T) {
 		},
 		Networks: map[string]Network{
 			"test_net": {
+				ID:        "net_br32",
 				Hash:      "net_br32",
 				Name:      "net_br32",
 				Interface: "br32",
@@ -136,7 +137,7 @@ func TestPostNewDomainByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(dom)
-	req, _ := http.NewRequest("POST", "/infra/domains/test_domain", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/infra/domains", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -247,7 +248,7 @@ func TestPostNewHostByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(host)
-	req, _ := http.NewRequest("POST", "/infra/hosts/test_host", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/infra/hosts", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -335,6 +336,7 @@ func TestPostNewNetworkByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var net Network = Network{
+		ID:        "net_br32",
 		Hash:      "net_br32",
 		Name:      "net_br32",
 		Interface: "br32",
@@ -342,7 +344,7 @@ func TestPostNewNetworkByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(net)
-	req, _ := http.NewRequest("POST", "/infra/networks/test_net", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/infra/networks", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)

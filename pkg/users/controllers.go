@@ -72,9 +72,9 @@ func GetUserByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body users.User true "query params"
 // @Success 200 {object} users.User
-// @Router /users/{key} [post]
-func PostNewUserByKey(ctx *gin.Context) {
-	core.AddNewItemByParam[User](ctx, Cache, pkgName, User{})
+// @Router /users [post]
+func PostNewUser(ctx *gin.Context) {
+	core.AddNewItem[User](ctx, Cache, pkgName, User{})
 	return
 }
 
