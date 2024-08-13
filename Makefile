@@ -186,8 +186,13 @@ backup: dump
 
 .PHONY: import_dump
 import_dump: 
-	@echo -e "\n${YELLOW} Import stored data (${DUMP_DIR}) to backend... ${RESET}\n"
+	@echo -e "\n${YELLOW} Importing stored data (${DUMP_DIR}) to backend... ${RESET}\n"
 	@scripts/import_prod_data.sh
+
+.PHONY: migrations
+migrations:
+	@echo -e "\n${YELLOW} Runing migrations... ${RESET}\n"
+	@scripts/migrate.sh
 
 .PHONY: push
 push:
@@ -213,7 +218,6 @@ push_to_registry:
 	@[ -n "${REGISTRY}" ] && \
 		docker push ${REGISTRY}${DOCKER_IMAGE_TAG}
 	
-
 USER_TOKEN?=xxx
 TARGET_INSTANCE_URL?=http://localhost:${DOCKER_EXTERNAL_PORT}
 URL_PATH?=/

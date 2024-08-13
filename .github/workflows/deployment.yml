@@ -54,7 +54,7 @@ jobs:
         REGISTRY: ${{ secrets.REGISTRY }}
       run: make test_deploy e2e
 
-  dump_data:
+  dump_and_migrate:
     runs-on: [ self-hosted, rabbit, docker ]
     needs: [ test_deploy ]
     steps:
@@ -63,7 +63,7 @@ jobs:
       env:
         APP_URL: ${{ secrets.APP_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
-      run: make dump
+      run: make dump migrations
 
   prod_deploy:
     runs-on: [ self-hosted, rabbit, docker ]
