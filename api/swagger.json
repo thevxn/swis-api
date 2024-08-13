@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.16.11"
+        "version": "5.17.0"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -36,6 +36,35 @@
                             "items": {
                                 "$ref": "#/definitions/pkg_alvax.ConfigRoot"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new alvax config",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "alvax"
+                ],
+                "summary": "Add new alvax config",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
                         }
                     }
                 }
@@ -121,35 +150,6 @@
                     }
                 }
             },
-            "post": {
-                "description": "add new alvax config",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "alvax"
-                ],
-                "summary": "Add new alvax config",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_alvax.ConfigRoot"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "delete alvax config by its key",
                 "produces": [
@@ -193,6 +193,35 @@
                         "description": "ok",
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new backed up service",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Add new backed up serivce",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_backups.Backup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_backups.Backup"
                         }
                     }
                 }
@@ -287,35 +316,6 @@
                     }
                 }
             },
-            "post": {
-                "description": "add new backed up service",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "backups"
-                ],
-                "summary": "Add new backed up serivce",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_backups.Backup"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_backups.Backup"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "delete backup service by its key",
                 "produces": [
@@ -382,6 +382,35 @@
                             "items": {
                                 "$ref": "#/definitions/pkg_business.Business"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new business entity",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business"
+                ],
+                "summary": "Add new business entity",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_business.Business"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_business.Business"
                         }
                     }
                 }
@@ -467,35 +496,6 @@
                     }
                 }
             },
-            "post": {
-                "description": "add new business entity",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "business"
-                ],
-                "summary": "Add new business entity",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_business.Business"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_business.Business"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "delete business by its key",
                 "produces": [
@@ -524,7 +524,7 @@
                 }
             }
         },
-        "/depots": {
+        "/depots/items": {
             "get": {
                 "description": "get depot complete list",
                 "produces": [
@@ -542,6 +542,35 @@
                             "items": {
                                 "$ref": "#/definitions/pkg_depots.DepotItem"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new depot item",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "depots"
+                ],
+                "summary": "Add new depot item",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_depots.DepotItem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_depots.DepotItem"
                         }
                     }
                 }
@@ -621,35 +650,6 @@
                         "name": "id",
                         "in": "path",
                         "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_depots.DepotItem"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new depot item",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "depots"
-                ],
-                "summary": "Add new depot item",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_depots.DepotItem"
-                        }
                     }
                 ],
                 "responses": {
@@ -1041,6 +1041,13 @@
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "Socket ID, snake_cased for socket editing and deleting.",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
                         "type": "boolean",
                         "description": "Maintenance boolean states for the M. mode being applied to such socket/endpoint.",
                         "name": "maintenance",
@@ -1088,13 +1095,6 @@
                         "description": "More verbose name/description of the socket.",
                         "name": "socket_description",
                         "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Socket ID, snake_cased for socket editing and deleting.",
-                        "name": "socket_id",
-                        "in": "query",
-                        "required": true
                     },
                     {
                         "type": "string",
@@ -1395,6 +1395,35 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "add new socket to socket array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Adding new socket to socket array",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_dish.Socket"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_dish.Socket"
+                        }
+                    }
+                }
             }
         },
         "/dish/sockets/public": {
@@ -1511,35 +1540,6 @@
                     "dish"
                 ],
                 "summary": "Update socket by its ID",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_dish.Socket"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_dish.Socket"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new socket to socket array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dish"
-                ],
-                "summary": "Adding new socket to socket array",
                 "parameters": [
                     {
                         "description": "query params",
@@ -1757,6 +1757,35 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "add new finance account",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Add new finance account",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_finance.Account"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_finance.Account"
+                        }
+                    }
+                }
             }
         },
         "/finance/accounts/owner/:key": {
@@ -1843,35 +1872,6 @@
                     }
                 }
             },
-            "post": {
-                "description": "add new finance account",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "finance"
-                ],
-                "summary": "Add new finance account",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_finance.Account"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_finance.Account"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "delete finance account by ID",
                 "produces": [
@@ -1910,6 +1910,35 @@
                     "finance"
                 ],
                 "summary": "Get all account items",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_finance.Item"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new account item",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "finance"
+                ],
+                "summary": "Add new account item",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_finance.Item"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1984,35 +2013,6 @@
                     "finance"
                 ],
                 "summary": "Update account item by its key",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_finance.Item"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_finance.Item"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new account item",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "finance"
-                ],
-                "summary": "Add new account item",
                 "parameters": [
                     {
                         "description": "query params",
@@ -2144,6 +2144,35 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "add new domain",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Add new domain",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_infra.Domain"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_infra.Domain"
+                        }
+                    }
+                }
             }
         },
         "/infra/domains/types": {
@@ -2190,35 +2219,6 @@
                     "infra"
                 ],
                 "summary": "Update domain by its Key",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_infra.Domain"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_infra.Domain"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new domain",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "infra"
-                ],
-                "summary": "Add new domain",
                 "parameters": [
                     {
                         "description": "query params",
@@ -2319,6 +2319,35 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "add new host",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Add new host",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_infra.Host"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_infra.Host"
+                        }
+                    }
+                }
             }
         },
         "/infra/hosts/types": {
@@ -2365,35 +2394,6 @@
                     "infra"
                 ],
                 "summary": "Update host by its Key",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_infra.Host"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_infra.Host"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new host",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "infra"
-                ],
-                "summary": "Add new host",
                 "parameters": [
                     {
                         "description": "query params",
@@ -2573,6 +2573,35 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "add new network",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Add new network",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_infra.Network"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_infra.Network"
+                        }
+                    }
+                }
             }
         },
         "/infra/networks/types": {
@@ -2619,35 +2648,6 @@
                     "infra"
                 ],
                 "summary": "Update network by its Key",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_infra.Network"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_infra.Network"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new network",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "infra"
-                ],
-                "summary": "Add new network",
                 "parameters": [
                     {
                         "description": "query params",
@@ -2722,6 +2722,35 @@
                     "links"
                 ],
                 "summary": "Get all links",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_links.Link"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new link to links array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "links"
+                ],
+                "summary": "Add new link to links",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_links.Link"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2812,35 +2841,6 @@
                     }
                 }
             },
-            "post": {
-                "description": "add new link to links array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "links"
-                ],
-                "summary": "Add new link to links",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_links.Link"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_links.Link"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "delete link by its Key",
                 "produces": [
@@ -2898,7 +2898,7 @@
                 }
             }
         },
-        "/news/sources/": {
+        "/news/sources": {
             "get": {
                 "description": "get all news sources",
                 "produces": [
@@ -2913,6 +2913,24 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/pkg_news.NewsSources"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new news sources",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news"
+                ],
+                "summary": "Add new user sources",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_news.Source"
                         }
                     }
                 }
@@ -2998,24 +3016,6 @@
                     }
                 }
             },
-            "post": {
-                "description": "add new news sources by user :key param",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "news"
-                ],
-                "summary": "Add new user sources by user key",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_news.Source"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "delete user sources by user key",
                 "produces": [
@@ -3073,6 +3073,35 @@
                             "items": {
                                 "$ref": "#/definitions/pkg_projects.Project"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new project to projects list",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Add new project",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_projects.Project"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_projects.Project"
                         }
                     }
                 }
@@ -3138,35 +3167,6 @@
                     "projects"
                 ],
                 "summary": "Update project by its ID",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_projects.Project"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_projects.Project"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new project to projects list",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "projects"
-                ],
-                "summary": "Add new project",
                 "parameters": [
                     {
                         "description": "query params",
@@ -3432,6 +3432,35 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "add new role to roles array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Add new role to roles array",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_roles.Role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_roles.Role"
+                        }
+                    }
+                }
             }
         },
         "/roles/restore": {
@@ -3514,35 +3543,6 @@
                     }
                 }
             },
-            "post": {
-                "description": "add new role to roles array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roles"
-                ],
-                "summary": "Add new role to roles array",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_roles.Role"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_roles.Role"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "description": "delete role by its Key",
                 "produces": [
@@ -3589,6 +3589,35 @@
                             "items": {
                                 "$ref": "#/definitions/pkg_users.User"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add new user to users array",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Add new user to users array",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_users.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_users.User"
                         }
                     }
                 }
@@ -3654,35 +3683,6 @@
                     "users"
                 ],
                 "summary": "Update user by Key",
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/pkg_users.User"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/pkg_users.User"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "add new user to users array",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "users"
-                ],
-                "summary": "Add new user to users array",
                 "parameters": [
                     {
                         "description": "query params",
@@ -3896,6 +3896,10 @@
                 "docker": {
                     "$ref": "#/definitions/pkg_alvax.Docker"
                 },
+                "id": {
+                    "type": "string",
+                    "readOnly": true
+                },
                 "key": {
                     "type": "string"
                 },
@@ -3934,6 +3938,7 @@
         "pkg_backups.Backup": {
             "type": "object",
             "required": [
+                "id",
                 "service_name"
             ],
             "properties": {
@@ -3942,7 +3947,7 @@
                     "type": "boolean"
                 },
                 "backup_size": {
-                    "description": "Size of the gzip/tar archive.",
+                    "description": "Size of the gzip/tar archive in bytes.",
                     "type": "string"
                 },
                 "description": {
@@ -3960,6 +3965,11 @@
                 "file_name": {
                     "description": "Name of the compressed backup file.",
                     "type": "string"
+                },
+                "id": {
+                    "description": "Unique identifier.",
+                    "type": "string",
+                    "readOnly": true
                 },
                 "last_status": {
                     "description": "Last status string of such backup (e.g. success, failure).",
@@ -3999,7 +4009,8 @@
                 },
                 "id": {
                     "description": "Business' unique identifier.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "name_label": {
                     "description": "Company's business name.",
@@ -4048,7 +4059,8 @@
                 },
                 "id": {
                     "description": "Numeric unique ID of such Item.",
-                    "type": "integer"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "misc": {
                     "description": "More information, e.g. the more precise location specification.",
@@ -4080,7 +4092,8 @@
                 },
                 "id": {
                     "description": "Incident ID, stringified timestamp usually.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "name": {
                     "description": "Incident name.",
@@ -4146,8 +4159,8 @@
             "type": "object",
             "required": [
                 "host_name",
+                "id",
                 "port_tcp",
-                "socket_id",
                 "socket_name"
             ],
             "properties": {
@@ -4176,6 +4189,11 @@
                 "host_name": {
                     "description": "Hostname (server.random.com) or HTTP/S URI (https://endpoint.space).",
                     "type": "string"
+                },
+                "id": {
+                    "description": "Socket ID, snake_cased for socket editing and deleting.",
+                    "type": "string",
+                    "readOnly": true
                 },
                 "maintenance": {
                     "description": "Maintenance boolean states for the M. mode being applied to such socket/endpoint.",
@@ -4209,10 +4227,6 @@
                     "description": "More verbose name/description of the socket.",
                     "type": "string"
                 },
-                "socket_id": {
-                    "description": "Socket ID, snake_cased for socket editing and deleting.",
-                    "type": "string"
-                },
                 "socket_name": {
                     "description": "GEneric name of the socket, to be used in dish results as failed one endpoint for example.",
                     "type": "string"
@@ -4227,9 +4241,9 @@
             "type": "object",
             "required": [
                 "account_iban",
-                "account_id",
                 "account_number",
-                "account_swift_bic"
+                "account_swift_bic",
+                "id"
             ],
             "properties": {
                 "account_currency": {
@@ -4242,10 +4256,6 @@
                 },
                 "account_iban": {
                     "description": "Account IBAN code for international payments.",
-                    "type": "string"
-                },
-                "account_id": {
-                    "description": "Account unique ID, snake_cased identifier.",
                     "type": "string"
                 },
                 "account_number": {
@@ -4263,6 +4273,11 @@
                 "bank_code": {
                     "description": "Universal in-state bank code (CZ mainly).\nBank codes such as \"0100\" would be invalid as type int!",
                     "type": "string"
+                },
+                "id": {
+                    "description": "Account unique ID, snake_cased identifier.",
+                    "type": "string",
+                    "readOnly": true
                 }
             }
         },
@@ -4299,7 +4314,8 @@
                 },
                 "id": {
                     "description": "Item unique ID (e.g. datetime timestamp plus currency etc).",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "invoice_no": {
                     "description": "Invoice identification.",
@@ -4637,7 +4653,7 @@
         "pkg_infra.Domain": {
             "type": "object",
             "required": [
-                "domain_id"
+                "id"
             ],
             "properties": {
                 "cf_zone_id": {
@@ -4648,10 +4664,6 @@
                     "description": "Fully qualified domain name.",
                     "type": "string"
                 },
-                "domain_id": {
-                    "description": "Unique domain identifier.",
-                    "type": "string"
-                },
                 "domain_owner": {
                     "description": "Domain's owner (user)name.",
                     "type": "string"
@@ -4659,6 +4671,11 @@
                 "expiration_date": {
                     "description": "Domain's expiration date",
                     "type": "string"
+                },
+                "id": {
+                    "description": "Unique domain identifier.",
+                    "type": "string",
+                    "readOnly": true
                 },
                 "private_details": {
                     "description": "Private details (e.g. addresses, phone number etc in WHOIS)",
@@ -4786,7 +4803,8 @@
                 },
                 "id": {
                     "description": "Unique hash/ID to link to such host record.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "ip_address": {
                     "description": "Important network-related IP addresses to be assigned to such host (e.g. public interface address, wireguard interface address etc).",
@@ -4841,12 +4859,18 @@
         "pkg_infra.Network": {
             "type": "object",
             "required": [
-                "hash"
+                "hash",
+                "id"
             ],
             "properties": {
                 "hash": {
-                    "description": "Unique network's identifier",
+                    "description": "Unique network's identifier (legacy).",
                     "type": "string"
+                },
+                "id": {
+                    "description": "Unique network's identifier.",
+                    "type": "string",
+                    "readOnly": true
                 },
                 "interface": {
                     "description": "Interface(s) of such network.",
@@ -4964,6 +4988,7 @@
         "pkg_links.Link": {
             "type": "object",
             "required": [
+                "id",
                 "name",
                 "url"
             ],
@@ -4976,8 +5001,13 @@
                     "description": "Link's more verbose name/description.",
                     "type": "string"
                 },
+                "id": {
+                    "description": "Link's name/placeholder, used as an unique key (legacy).",
+                    "type": "string",
+                    "readOnly": true
+                },
                 "name": {
-                    "description": "Link's name/placeholder, used as an unique key.",
+                    "description": "Link's name/placeholder, used as an unique key (legacy).",
                     "type": "string"
                 },
                 "url": {
@@ -5029,9 +5059,10 @@
         "pkg_news.Source": {
             "type": "object",
             "properties": {
-                "source_id": {
+                "id": {
                     "description": "Source unique identificator.",
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                 },
                 "source_name": {
                     "description": "Source's more natural name.",
@@ -5062,13 +5093,18 @@
         "pkg_projects.Project": {
             "type": "object",
             "required": [
-                "project_id",
+                "id",
                 "project_name"
             ],
             "properties": {
                 "backuped": {
                     "description": "Projects backuped boolean.",
                     "type": "boolean"
+                },
+                "id": {
+                    "description": "Project's unique identificator.",
+                    "type": "string",
+                    "readOnly": true
                 },
                 "kanban_link": {
                     "description": "URL to kanboard/kanban project's page.",
@@ -5084,10 +5120,6 @@
                 },
                 "project_docs_link": {
                     "description": "URL to documentation page(s).",
-                    "type": "string"
-                },
-                "project_id": {
-                    "description": "Project's unique identificator.",
                     "type": "string"
                 },
                 "project_manager": {
@@ -5126,12 +5158,13 @@
                     "description": "Description of such task in human-readable format.",
                     "type": "string"
                 },
+                "id": {
+                    "description": "Task's ID as an unique identifier in the queue.",
+                    "type": "string",
+                    "readOnly": true
+                },
                 "last_change_timestamp": {
                     "description": "Timestamp of the last activity made on this task.",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "Taks's ID as an unique identifier in the queue.",
                     "type": "string"
                 },
                 "processed": {
@@ -5151,6 +5184,7 @@
         "pkg_roles.Role": {
             "type": "object",
             "required": [
+                "id",
                 "name"
             ],
             "properties": {
@@ -5166,8 +5200,13 @@
                     "description": "Role description to make more sense when listing those.",
                     "type": "string"
                 },
+                "id": {
+                    "description": "Role ID is its unique identifier.",
+                    "type": "string",
+                    "readOnly": true
+                },
                 "name": {
-                    "description": "Role name is its unique description, acts like an ID too.",
+                    "description": "Role name is its unique description, acts like an ID too (legacy).",
                     "type": "string"
                 }
             }
@@ -5175,6 +5214,7 @@
         "pkg_users.User": {
             "type": "object",
             "required": [
+                "id",
                 "name"
             ],
             "properties": {
@@ -5224,8 +5264,13 @@
                         "type": "string"
                     }
                 },
+                "id": {
+                    "description": "User ID as an unique identifier.",
+                    "type": "string",
+                    "readOnly": true
+                },
                 "name": {
-                    "description": "ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property).",
+                    "description": "ID not used anymore as indexing is used differently now (searching by Name, index respects array implicit property) (legacy).",
                     "type": "string"
                 },
                 "roles": {
