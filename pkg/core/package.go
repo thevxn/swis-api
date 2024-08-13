@@ -70,9 +70,22 @@ func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mod
 	return
 }
 
-func AddNewItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
-	//key := model.Name | model.ID
-	key := ctx.Param("key")
+func AddNewItem[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
+	meta := struct{
+		ID string `json:"id"`
+	}{}
+
+	if err := ctx.BindJSON(&meta); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"message": "cannot determine the new ID",
+			"package": pkgName,
+		})
+		return
+	}
+
+	key := meta.ID
 
 	if err := ctx.BindJSON(&model); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
