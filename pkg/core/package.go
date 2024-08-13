@@ -1,7 +1,10 @@
 package core
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"reflect"
 
@@ -71,13 +74,27 @@ func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mod
 }
 
 func AddNewItem[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) {
-	meta := struct{
+	// Read the body
+	bodyBytes, err := ioutil.ReadAll(ctx.Request.Body)
+	if err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"message": "Failed to read request body",
+			"package": pkgName,
+		})
+		return
+	}
+
+	bodyCopy := bodyBytes
+
+	meta := struct {
 		ID string `json:"id"`
 	}{}
 
-	if err := ctx.BindJSON(&meta); err != nil {
-		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
-			"code":    http.StatusBadRequest,
+	if err := json.Unmarshal(bodyCopy, &meta); err != nil {
+		ctx.IndentedJSON(http.StatusTeapot, gin.H{
+			"code":    http.StatusTeapot,
 			"error":   err.Error(),
 			"message": "cannot determine the new ID",
 			"package": pkgName,
@@ -86,6 +103,9 @@ func AddNewItem[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) 
 	}
 
 	key := meta.ID
+
+	// Reset the body so it can be read again
+	ctx.Request.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
 
 	if err := ctx.BindJSON(&model); err != nil {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
