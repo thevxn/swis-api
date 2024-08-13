@@ -51,7 +51,7 @@ func GetBackedupStatusByServiceKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body backups.Backup true "query params"
 // @Success 200 {object} backups.Backup
-// @Router /backups/ [post]
+// @Router /backups [post]
 func PostBackedupService(ctx *gin.Context) {
 	core.AddNewItem[Backup](ctx, Cache, pkgName, Backup{})
 	return

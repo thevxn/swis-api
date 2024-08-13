@@ -204,7 +204,7 @@ func BenchmarkUpdateProjectByKey(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		Cache = &core.Cache{}
-		req, _ := http.NewRequest("POST", "/projects/test_project", bytes.NewBuffer(jsonValue))
+		req, _ := http.NewRequest("POST", "/projects", bytes.NewBuffer(jsonValue))
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
 	}

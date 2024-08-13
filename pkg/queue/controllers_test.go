@@ -139,6 +139,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Tasks: map[string]Task{
 			"123456": {
+				ID:          "123456"
 				Description: "A testing task.",
 				WorkerName:  "test",
 				State:       "new",

@@ -28,6 +28,7 @@ func TestPostNewLink(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var link Link = Link{
+		ID:        "sd",
 		Name:        "sd",
 		Description: "A shortcut for the savla.dev homepage.",
 		URL:         "https://savla.dev",
@@ -85,6 +86,7 @@ func TestUpdateLinkByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var link Link = Link{
+		ID:        "sd",
 		Name:        "sd",
 		Description: "A shortcut for the savla.dev homepage.",
 		URL:         "https://www.savla.dev",

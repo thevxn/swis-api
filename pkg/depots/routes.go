@@ -8,10 +8,10 @@ import (
 func Routes(g *gin.RouterGroup) {
 	g.GET("/items",
 		GetAllDepotItems)
+	g.POST("/items",
+		PostNewDepotItem)
 	g.GET("/items/types",
 		ListTypes)
-	g.POST("/items/",
-		PostNewDepotItem)
 	g.GET("/items/:key",
 		GetDepotItemByKey)
 	g.GET("/items/owner/:owner",

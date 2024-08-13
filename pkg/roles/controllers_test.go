@@ -80,6 +80,7 @@ func TestUpdateRoleByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var role Role = Role{
+		ID:        "operators",
 		Name:        "operators",
 		Description: "A very role for operators",
 		Admin:       false,
@@ -125,6 +126,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Roles: map[string]Role{
 			"operators": {
+				ID:        "operators",
 				Name:        "operators",
 				Description: "A very role for operators",
 				Admin:       true,

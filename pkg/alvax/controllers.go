@@ -50,7 +50,7 @@ func GetConfigByKey(ctx *gin.Context) {
 // @Produce json
 // @Param request body alvax.ConfigRoot true "query params"
 // @Success 200 {object} alvax.ConfigRoot
-// @Router /alvax/ [post]
+// @Router /alvax [post]
 func PostNewConfig(ctx *gin.Context) {
 	core.AddNewItem[ConfigRoot](ctx, Cache, pkgName, ConfigRoot{})
 	return

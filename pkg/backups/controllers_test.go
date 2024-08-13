@@ -79,6 +79,7 @@ func TestUpdateBackupStatusByServiceKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var bcp Backup = Backup{
+		ID: "swapi",
 		ServiceName: "swapi",
 		Description: "A very swapi service.",
 		Active:      false,

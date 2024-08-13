@@ -6,9 +6,9 @@ import (
 
 // alvax CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/",
+	g.GET("",
 		GetConfigs)
-	g.POST("/",
+	g.POST("",
 		PostNewConfig)
 	g.GET("/:key",
 		GetConfigByKey)

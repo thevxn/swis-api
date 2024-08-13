@@ -46,7 +46,7 @@ func TestPostNewUser(t *testing.T) {
 func TestGetUsers(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/users/", nil)
+	req, _ := http.NewRequest("GET", "/users", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -79,6 +79,7 @@ func TestUpdateUserByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var user User = User{
+		ID:      "operator",
 		Name:      "operator",
 		FullName:  "Mrs. Operator",
 		TokenHash: "0x33",

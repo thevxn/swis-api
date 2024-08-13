@@ -6,7 +6,7 @@ import (
 
 // business CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/",
+	g.GET("",
 		GetBusinessEntities)
 	g.POST("",
 		PostNewBusiness)

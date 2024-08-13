@@ -33,7 +33,7 @@ var Package *core.Package = &core.Package{
 // @Tags depots
 // @Produce json
 // @Success 200 {object} []depots.DepotItem
-// @Router /depots [get]
+// @Router /depots/items [get]
 func GetAllDepotItems(ctx *gin.Context) {
 	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return

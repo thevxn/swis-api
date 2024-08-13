@@ -208,6 +208,7 @@ func TestUpdateIncidentByKey(t *testing.T) {
 	then := time.Now().Add(time.Hour * 1).UnixNano()
 
 	var inc Incident = Incident{
+		ID:	incidentID,
 		Name:           "site down",
 		StartTimestamp: now,
 		EndTimestamp:   then,
@@ -251,7 +252,7 @@ func TestDeleteIncidentByKey(t *testing.T) {
  *  sockets
  */
 
-func TestPostNewSocketByKey(t *testing.T) {
+func TestPostNewSocket(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var socket Socket = Socket{

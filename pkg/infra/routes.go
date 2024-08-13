@@ -6,7 +6,7 @@ import (
 
 // infra CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/",
+	g.GET("",
 		GetInfrastructure)
 	g.POST("/restore",
 		PostDumpRestore)

@@ -127,7 +127,7 @@ func TestGetInfrastructure(t *testing.T) {
  *  domains
  */
 
-func TestPostNewDomainByKey(t *testing.T) {
+func TestPostNewDomain(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var dom Domain = Domain{
@@ -238,7 +238,7 @@ func TestDeleteDomainByKey(t *testing.T) {
  *  hosts
  */
 
-func TestPostNewHostByKey(t *testing.T) {
+func TestPostNewHost(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var host Host = Host{
@@ -332,7 +332,7 @@ func TestDeleteHostByKey(t *testing.T) {
  *  networks
  */
 
-func TestPostNewNetworkByKey(t *testing.T) {
+func TestPostNewNetwork(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var net Network = Network{
@@ -389,6 +389,7 @@ func TestUpdateNetworkByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var net Network = Network{
+		ID:      "net_br32",
 		Hash:      "net_br32",
 		Name:      "net_br32",
 		Interface: "br32",

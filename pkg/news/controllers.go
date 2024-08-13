@@ -33,7 +33,7 @@ var Package *core.Package = &core.Package{
 // @Tags news
 // @Produce  json
 // @Success 200 {object} news.NewsSources.Sources
-// @Router /news/sources/ [get]
+// @Router /news/sources [get]
 func GetSources(ctx *gin.Context) {
 	core.PrintAllRootItems(ctx, Cache, pkgName)
 	return
@@ -51,12 +51,12 @@ func GetSourcesByUserKey(ctx *gin.Context) {
 	return
 }
 
-// @Summary Add new user sources by user key
-// @Description add new news sources by user :key param
+// @Summary Add new user sources
+// @Description add new news sources
 // @Tags news
 // @Produce  json
 // @Success 200 {object} news.Source
-// @Router /news/sources/{key} [post]
+// @Router /news/sources [post]
 func PostNewSources(ctx *gin.Context) {
 	core.AddNewItem[[]Source](ctx, Cache, pkgName, []Source{})
 	return
