@@ -28,7 +28,7 @@ func TestPostNewLink(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var link Link = Link{
-		ID:        "sd",
+		ID:          "sd",
 		Name:        "sd",
 		Description: "A shortcut for the savla.dev homepage.",
 		URL:         "https://savla.dev",
@@ -53,7 +53,7 @@ func TestPostNewLink(t *testing.T) {
 func TestGetLinks(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/links/", nil)
+	req, _ := http.NewRequest("GET", "/links", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -86,7 +86,7 @@ func TestUpdateLinkByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var link Link = Link{
-		ID:        "sd",
+		ID:          "sd",
 		Name:        "sd",
 		Description: "A shortcut for the savla.dev homepage.",
 		URL:         "https://www.savla.dev",

@@ -47,7 +47,7 @@ func TestPostNewRole(t *testing.T) {
 func TestGetRoles(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/roles/", nil)
+	req, _ := http.NewRequest("GET", "/roles", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -80,7 +80,7 @@ func TestUpdateRoleByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var role Role = Role{
-		ID:        "operators",
+		ID:          "operators",
 		Name:        "operators",
 		Description: "A very role for operators",
 		Admin:       false,
@@ -126,7 +126,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Roles: map[string]Role{
 			"operators": {
-				ID:        "operators",
+				ID:          "operators",
 				Name:        "operators",
 				Description: "A very role for operators",
 				Admin:       true,
@@ -138,6 +138,7 @@ func TestPostDumpRestore(t *testing.T) {
 			/* run #2: blank keys SHOULD be ignored at all --- patched in pkg/core/package.go */
 			/* result: the struct below is skipped */
 			"": {
+				ID:          "",
 				Name:        "",
 				Description: "blank role",
 				Admin:       true,

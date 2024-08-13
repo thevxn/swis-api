@@ -6,7 +6,7 @@ import (
 
 // finance CRUD -- functions in controllers.go
 func Routes(g *gin.RouterGroup) {
-	g.GET("/",
+	g.GET("",
 		GetRootData)
 	g.POST("/restore",
 		PostDumpRestore)
@@ -26,7 +26,7 @@ func Routes(g *gin.RouterGroup) {
 	g.DELETE("/accounts/:key",
 		DeleteAccountByKey)
 
-	g.GET("/items/",
+	g.GET("/items",
 		GetItems)
 	g.POST("/items",
 		PostNewItem)

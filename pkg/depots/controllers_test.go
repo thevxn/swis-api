@@ -70,7 +70,7 @@ func TestGetDepotItemByKey(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &item)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, 1, item.Item.ID)
+	assert.Equal(t, "1", item.Item.ID)
 	assert.NotEmpty(t, item.Item)
 }
 
@@ -94,7 +94,7 @@ func TestUpdateDepotItemByKey(t *testing.T) {
 
 	// tests
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, 1, ret.Item.ID)
+	assert.Equal(t, "1", ret.Item.ID)
 	assert.Equal(t, item.Description, ret.Item.Description)
 }
 
@@ -122,7 +122,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		DepotItem: map[string]DepotItem{
 			"1": {
-				ID:          1,
+				ID:          "1",
 				Description: "An absolutely generic item, edited.",
 			},
 			/* run #1: this item was 'crippled' on purpose to see how binding would act */
@@ -131,7 +131,7 @@ func TestPostDumpRestore(t *testing.T) {
 			/* run #2: blank keys SHOULD be ignored at all --- patched in pkg/core/package.go */
 			/* result: the struct below is skipped */
 			"": {
-				ID:          0,
+				ID:          "0",
 				Description: "A blank item.",
 			},
 		},

@@ -5,7 +5,7 @@ import (
 )
 
 func Routes(g *gin.RouterGroup) {
-	g.GET("/",
+	g.GET("",
 		GetDishRoot)
 	g.POST("/restore",
 		PostDumpRestore)

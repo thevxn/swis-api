@@ -45,6 +45,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Incidents: map[string]Incident{
 			"outage": {
+				ID:       "outage",
 				Name:     "outage",
 				Public:   true,
 				SocketID: "",
@@ -86,7 +87,7 @@ func TestPostDumpRestore(t *testing.T) {
 func TestGetDishRoot(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/dish/", nil)
+	req, _ := http.NewRequest("GET", "/dish", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -208,7 +209,7 @@ func TestUpdateIncidentByKey(t *testing.T) {
 	then := time.Now().Add(time.Hour * 1).UnixNano()
 
 	var inc Incident = Incident{
-		ID:	incidentID,
+		ID:             incidentID,
 		Name:           "site down",
 		StartTimestamp: now,
 		EndTimestamp:   then,
@@ -257,7 +258,7 @@ func TestPostNewSocket(t *testing.T) {
 
 	var socket Socket = Socket{
 		ID:   "test_socket",
-		Name: "test-socket",
+		Name: "test_socket",
 		Host: "host.example.com",
 		Port: 80,
 		DishTarget: []string{
@@ -316,7 +317,7 @@ func TestUpdateSocketByKey(t *testing.T) {
 
 	var socket Socket = Socket{
 		ID:   "test_socket",
-		Name: "test-socket",
+		Name: "test_socket",
 		Host: "host.example.com",
 		Port: 80,
 		DishTarget: []string{

@@ -33,7 +33,7 @@ func TestPostNewConfig(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(cfg)
-	req, _ := http.NewRequest("POST", "/alvax/", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/alvax", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -44,7 +44,7 @@ func TestPostNewConfig(t *testing.T) {
 func TestGetConfigs(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/alvax/", nil)
+	req, _ := http.NewRequest("GET", "/alvax", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -77,6 +77,7 @@ func TestUpdateConfigByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var cfg ConfigRoot = ConfigRoot{
+		ID:  "bot",
 		Key: "bot",
 	}
 
@@ -118,6 +119,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Configs: map[string]ConfigRoot{
 			"bot": {
+				ID:  "bot",
 				Key: "bot",
 			},
 			/* run #1: this item was 'crippled' on purpose to see how binding would act */
@@ -126,6 +128,7 @@ func TestPostDumpRestore(t *testing.T) {
 			/* run #2: blank keys SHOULD be ignored at all --- patched in pkg/core/package.go */
 			/* result: the struct below is skipped */
 			"": {
+				ID:  "",
 				Key: "",
 			},
 		},

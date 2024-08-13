@@ -68,7 +68,7 @@ func TestPostDumpRestore(t *testing.T) {
 			},
 		},
 		Networks: map[string]Network{
-			"test_net": {
+			"net_br32": {
 				ID:        "net_br32",
 				Hash:      "net_br32",
 				Name:      "net_br32",
@@ -76,9 +76,11 @@ func TestPostDumpRestore(t *testing.T) {
 				CIDRBlock: "/27",
 			},
 			"invalid_net": {
+				ID:   "",
 				Hash: "",
 			},
 			"": {
+				ID:   "",
 				Hash: "",
 			},
 		},
@@ -106,7 +108,7 @@ func TestPostDumpRestore(t *testing.T) {
 func TestGetInfrastructure(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/infra/", nil)
+	req, _ := http.NewRequest("GET", "/infra", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -372,7 +374,7 @@ func TestGetNetworks(t *testing.T) {
 func TestGetNetworkByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/infra/networks/test_net", nil)
+	req, _ := http.NewRequest("GET", "/infra/networks/net_br32", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -389,7 +391,7 @@ func TestUpdateNetworkByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var net Network = Network{
-		ID:      "net_br32",
+		ID:        "net_br32",
 		Hash:      "net_br32",
 		Name:      "net_br32",
 		Interface: "br32",
@@ -397,7 +399,7 @@ func TestUpdateNetworkByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(net)
-	req, _ := http.NewRequest("PUT", "/infra/networks/test_net", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("PUT", "/infra/networks/net_br32", bytes.NewBuffer(jsonValue))
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -414,7 +416,7 @@ func TestUpdateNetworkByKey(t *testing.T) {
 func TestDeleteNetworkByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("DELETE", "/infra/networks/test_net", nil)
+	req, _ := http.NewRequest("DELETE", "/infra/networks/net_br32", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -424,5 +426,5 @@ func TestDeleteNetworkByKey(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &ret)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, "test_net", ret.Key)
+	assert.Equal(t, "net_br32", ret.Key)
 }

@@ -95,6 +95,7 @@ func TestUpdateTaskByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var task Task = Task{
+		ID:          taskID,
 		Description: "A testing task (updated)",
 		WorkerName:  "test",
 		State:       "updated",
@@ -139,7 +140,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Tasks: map[string]Task{
 			"123456": {
-				ID:          "123456"
+				ID:          "123456",
 				Description: "A testing task.",
 				WorkerName:  "test",
 				State:       "new",
@@ -150,6 +151,7 @@ func TestPostDumpRestore(t *testing.T) {
 			/* run #2: blank keys SHOULD be ignored at all --- patched in pkg/core/package.go */
 			/* result: the struct below is skipped */
 			"": {
+				ID:          "",
 				Description: "A blank task",
 			},
 		},

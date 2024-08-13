@@ -259,7 +259,7 @@ type VMInstallConfig struct {
 }
 
 type Network struct {
-	// Unique network's identifier (legacy).
+	// Unique network's identifier.
 	ID string `json:"id" binding:"required" required:"true" readonly:"true"`
 
 	// Unique network's identifier (legacy).

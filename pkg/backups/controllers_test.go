@@ -35,7 +35,7 @@ func TestPostBackeduServicepByKey(t *testing.T) {
 	}
 
 	jsonValue, _ := json.Marshal(bcp)
-	req, _ := http.NewRequest("POST", "/backups/", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("POST", "/backups", bytes.NewBuffer(jsonValue))
 
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -46,7 +46,7 @@ func TestPostBackeduServicepByKey(t *testing.T) {
 func TestGetBackups(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/backups/", nil)
+	req, _ := http.NewRequest("GET", "/backups", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -79,7 +79,7 @@ func TestUpdateBackupStatusByServiceKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var bcp Backup = Backup{
-		ID: "swapi",
+		ID:          "swapi",
 		ServiceName: "swapi",
 		Description: "A very swapi service.",
 		Active:      false,
@@ -123,6 +123,7 @@ func TestPostDumpRestore(t *testing.T) {
 	}{
 		Backups: map[string]Backup{
 			"swapi": {
+				ID:          "swapi",
 				ServiceName: "swapi",
 				Description: "A very swapi service.",
 				Active:      true,
@@ -133,6 +134,7 @@ func TestPostDumpRestore(t *testing.T) {
 			/* run #2: blank keys SHOULD be ignored at all --- patched in pkg/core/package.go */
 			/* result: the struct below is skipped */
 			"": {
+				ID:          "",
 				ServiceName: "",
 				Description: "A blank service Name.",
 				Active:      false,

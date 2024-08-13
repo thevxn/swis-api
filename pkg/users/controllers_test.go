@@ -79,7 +79,7 @@ func TestUpdateUserByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var user User = User{
-		ID:      "operator",
+		ID:        "operator",
 		Name:      "operator",
 		FullName:  "Mrs. Operator",
 		TokenHash: "0x33",
