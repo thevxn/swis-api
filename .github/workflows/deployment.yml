@@ -67,7 +67,7 @@ jobs:
 
   prod_deploy:
     runs-on: [ self-hosted, rabbit, docker ]
-    needs: [ dump_data ]
+    needs: [ dump_and_migrate ]
     steps:
     - uses: actions/checkout@v4
     - name: Deploy prod docker container, recreate container with fresh image.
