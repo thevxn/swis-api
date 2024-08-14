@@ -4,6 +4,7 @@
 # simple helper script to migrate data from v5.16 to v5.17
 # krusty@vxn.dev / Aug 14, 2024
 
+[ -d "${DUMP_DIR}" ] || exit 1
 cd ${DUMP_DIR}
 
 jq . alvax_configs.json | \
@@ -17,7 +18,7 @@ jq . backups.json | \
 	mv backups.pretty.json backups.json
 
 jq . depots.json | \
-	sed -e 's/"id":[[:space:]]\([0-9]*\),/"id": "\1/"' \
+	sed -e 's/"id":[[:space:]]\([0-9]*\),/"id": "\1"/' | \
 	jq . > depots.pretty.json && \
 	mv depots.pretty.json depots.json
 

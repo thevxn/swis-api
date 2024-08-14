@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.17.0"
+        "version": "5.17.1"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -2930,7 +2930,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/pkg_news.Source"
+                            "$ref": "#/definitions/pkg_news.UserSource"
                         }
                     }
                 }
@@ -2982,7 +2982,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/pkg_news.Source"
+                            "$ref": "#/definitions/pkg_news.UserSource"
                         }
                     }
                 }
@@ -3011,7 +3011,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/pkg_news.Source"
+                            "$ref": "#/definitions/pkg_news.UserSource"
                         }
                     }
                 }
@@ -3948,7 +3948,7 @@
                 },
                 "backup_size": {
                     "description": "Size of the gzip/tar archive in bytes.",
-                    "type": "string"
+                    "type": "integer"
                 },
                 "description": {
                     "description": "More verbose description of such service backup.",
@@ -5048,9 +5048,9 @@
         "pkg_news.NewsSources": {
             "type": "object",
             "properties": {
-                "user_sources": {
-                    "type": "array",
-                    "items": {
+                "items": {
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/pkg_news.UserSource"
                     }
                 }
@@ -5059,11 +5059,6 @@
         "pkg_news.Source": {
             "type": "object",
             "properties": {
-                "id": {
-                    "description": "Source unique identificator.",
-                    "type": "string",
-                    "readOnly": true
-                },
                 "source_name": {
                     "description": "Source's more natural name.",
                     "type": "string"
@@ -5077,6 +5072,11 @@
         "pkg_news.UserSource": {
             "type": "object",
             "properties": {
+                "id": {
+                    "description": "Sources' unique identificator.",
+                    "type": "string",
+                    "readOnly": true
+                },
                 "news_sources": {
                     "description": "Actual user's news sources.",
                     "type": "array",
