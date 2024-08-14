@@ -7,55 +7,47 @@
 [ -d "${DUMP_DIR}" ] || exit 1
 cd ${DUMP_DIR}
 
-jq . alvax_configs.json | \
-	sed -e 's/"key": "\(.*\)",/"id": "\1",\n"key": "\1",/' | \
-	jq . > alvax_configs.pretty.json && \
+echo "Migrating alvax pkg..."
+jq '.items[] += {"id": .key}' alvax_configs.json > alvax_configs.pretty.json && \
 	mv alvax_configs.pretty.json alvax_configs.json
 
-jq . backups.json | \
-	sed -e 's/service_name/id/' | \
-	sed -e 's/"backup_size":[[:space:]]"\([0-9]*\)",/"backup_size": \1/' > backups.pretty.json && \
+echo "Migrating backups pkg..."
+jq '.items[].id = .items[].service_name | del(.items[].service_name) | .items[].backup_size = (.items[].backup_size | tonumber)' backups.json > backups.pretty.json && \
 	mv backups.pretty.json backups.json
 
-jq . depots.json | \
-	sed -e 's/"id":[[:space:]]\([0-9]*\),/"id": "\1"/' | \
-	jq . > depots.pretty.json && \
+echo "Migrating depots pkg..."
+jq '.items[].id = (.items[].id | tostring)' depots.json > depots.pretty.json && \
 	mv depots.pretty.json depots.json
 
-jq . dish_sockets.json | \
-	sed -e 's/socket_id/id/' > dish_sockets.pretty.json && \
+echo "Migrating dish pkg..."
+jq '.sockets[].id = .sockets[].socket_name | del(.sockets[].socket_id) ' dish_sockets.json > dish_sockets.pretty.json && \
 	mv dish_sockets.pretty.json dish_sockets.json
 
-jq . finance.json | \
-	sed -e 's/account_id/id/' > finance.pretty.json && \
+echo "Migrating finance pkg..."
+jq '.accounts[].id = .accounts[].account_id | del(.accounts[].account_id)' finance.json > finance.pretty.json && \
 	mv finance.pretty.json finance.json
 
-jq . infra.json | \
-	sed -e 's/domain_id/id/' | \
-	sed -e 's/"hash": "\(.*\)",/"id": "\1",\n"hash": "\1",/' | \
-	jq . > infra.pretty.json && \
+echo "Migrating infra pkg..."
+jq '.domains[].id = .domains[].domain_id | del(.domains[].domain_id) | .networks[].id = .networks[].hash' infra.json > infra.pretty.json && \
 	mv infra.pretty.json infra.json
 
-jq . links.json | \
-	sed -e 's/"name": "\(.*\)",/"id": "\1",\n"name": "\1",/' | \
-	jq . > links.pretty.json && \
+echo "Migrating links pkg..."
+jq '.items[].id = .items[].name' links.json > links.pretty.json && \
 	mv links.pretty.json links.json
 
-jq . news_sources.json | \
-	sed -e 's/source_id/id/' > news_sources.pretty.json && \
+echo "Migrating news pkg..."
+jq '.items = (.items | (to_entries | map({(.key): {id: .key, user_name: .key, news_sources: .value}}) | add))' news_sources.json > news_sources.pretty.json && \
 	mv news_sources.pretty.json news_sources.json
 
-jq . projects.json | \
-	sed -e 's/project_id/id/' > projects.pretty.json && \
+echo "Migrating projects pkg..."
+jq '.items[].id = .items[].project_id | del(.items[].project_name)' projects.json > projects.pretty.json && \
 	mv projects.pretty.json projects.json
 
-jq . roles.json | \
-	sed -e 's/"name": "\(.*\)",/"id": "\1",\n"name": "\1",/' | \
-	jq . > roles.pretty.json && \
+echo "Migrating roles pkg..."
+jq '.items[].id = .items[].name' roles.json > roles.pretty.json && \
 	mv roles.pretty.json roles.json
 
-jq . users.json | \
-	sed -e 's/"name": "\(.*\)",/"id": "\1",\n"name": "\1",/' | \
-	jq . > users.pretty.json && \
+echo "Migrating users pkg..."
+jq '.items[].id = .items[].name' users.json > users.pretty.json && \
 	mv users.pretty.json users.json
 
