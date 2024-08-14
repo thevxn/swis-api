@@ -44,10 +44,10 @@ func GetSources(ctx *gin.Context) {
 // @Description get news sources by their user :key param
 // @Tags news
 // @Produce  json
-// @Success 200 {object} news.Source
+// @Success 200 {object} news.UserSource
 // @Router /news/sources/{key} [get]
 func GetSourcesByUserKey(ctx *gin.Context) {
-	core.PrintItemByParam[[]Source](ctx, Cache, pkgName, []Source{})
+	core.PrintItemByParam[UserSource](ctx, Cache, pkgName, UserSource{})
 	return
 }
 
@@ -55,10 +55,10 @@ func GetSourcesByUserKey(ctx *gin.Context) {
 // @Description add new news sources
 // @Tags news
 // @Produce  json
-// @Success 200 {object} news.Source
+// @Success 200 {object} news.UserSource
 // @Router /news/sources [post]
 func PostNewSources(ctx *gin.Context) {
-	core.AddNewItem[[]Source](ctx, Cache, pkgName, []Source{})
+	core.AddNewItem[UserSource](ctx, Cache, pkgName, UserSource{})
 	return
 }
 
@@ -67,10 +67,10 @@ func PostNewSources(ctx *gin.Context) {
 // @Tags news
 // @Produce json
 // @Param request body news.Source true "query params"
-// @Success 200 {object} news.Source
+// @Success 200 {object} news.UserSource
 // @Router /news/sources/{key} [put]
 func UpdateSourcesByUserKey(ctx *gin.Context) {
-	core.UpdateItemByParam[[]Source](ctx, Cache, pkgName, []Source{})
+	core.UpdateItemByParam[UserSource](ctx, Cache, pkgName, UserSource{})
 	return
 }
 
@@ -93,7 +93,7 @@ func DeleteSourcesByUserKey(ctx *gin.Context) {
 // @Produce json
 // @Router /news/sources/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems[[]Source](ctx, Cache, pkgName)
+	core.BatchRestoreItems[UserSource](ctx, Cache, pkgName)
 	return
 }
 
@@ -104,7 +104,7 @@ func PostDumpRestore(ctx *gin.Context) {
 // @Produce json
 // @Router /news/sources/types [get]
 func ListTypesSources(ctx *gin.Context) {
-	core.ParsePackageType(ctx, pkgName, []Source{})
+	core.ParsePackageType(ctx, pkgName, UserSource{})
 	return
 }
 
@@ -129,7 +129,7 @@ func GetNewsByUserKey(ctx *gin.Context) {
 		return
 	}
 
-	userSources, ok := rawUserSources.([]Source)
+	userSources, ok := rawUserSources.(UserSource)
 	if !ok {
 		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
@@ -143,7 +143,7 @@ func GetNewsByUserKey(ctx *gin.Context) {
 	//var R = []Rss{}
 	var items = []Item{}
 
-	for _, source := range userSources {
+	for _, source := range userSources.Sources {
 		contents := fetchRSSContents(source)
 		if contents == nil {
 			continue

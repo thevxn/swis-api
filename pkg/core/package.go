@@ -80,7 +80,7 @@ func AddNewItem[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) 
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"error":   err.Error(),
-			"message": "Failed to read request body",
+			"message": "failed to read request body",
 			"package": pkgName,
 		})
 		return
@@ -93,8 +93,8 @@ func AddNewItem[T any](ctx *gin.Context, cache *Cache, pkgName string, model T) 
 	}{}
 
 	if err := json.Unmarshal(bodyCopy, &meta); err != nil {
-		ctx.IndentedJSON(http.StatusTeapot, gin.H{
-			"code":    http.StatusTeapot,
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
 			"error":   err.Error(),
 			"message": "cannot determine the new ID",
 			"package": pkgName,

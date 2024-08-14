@@ -17,7 +17,7 @@ type Backup struct {
 	Timestamp int `json:"timestamp"`
 
 	// Size of the gzip/tar archive in bytes.
-	Size string `json:"backup_size"`
+	Size int `json:"backup_size"`
 
 	// Name of the compressed backup file.
 	FileName string `json:"file_name"`

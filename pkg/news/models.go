@@ -9,10 +9,13 @@ import (
 //
 
 type NewsSources struct {
-	UserSources []UserSource `json:"user_sources"`
+	UserSources map[string]UserSource `json:"items"`
 }
 
 type UserSource struct {
+	// Sources' unique identificator.
+	ID string `json:"id" required:"true" readonly:"true"`
+
 	// News sources linked username.
 	User string `json:"user_name" required:"true"`
 
@@ -21,9 +24,6 @@ type UserSource struct {
 }
 
 type Source struct {
-	// Source unique identificator.
-	ID string `json:"id" required:"true" readonly:"true"`
-
 	// Source's more natural name.
 	Name string `json:"source_name"`
 
