@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.17.2"
+        "version": "5.17.3"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -4748,6 +4748,11 @@
                 "id"
             ],
             "properties": {
+                "backup": {
+                    "description": "Logical property to determine if such host is to be backed up.",
+                    "type": "boolean",
+                    "default": false
+                },
                 "children": {
                     "description": "Children of such machine -- should use machines' hashes for proper linking.",
                     "type": "array",

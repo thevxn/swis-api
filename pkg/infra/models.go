@@ -68,6 +68,9 @@ type Host struct {
 	// Ansible roles to be applied to such host.
 	Roles []string `json:"roles"`
 
+	// Logical property to determine if such host is to be backed up.
+	Backup bool `json:"backup" default:"false"`
+
 	// Important network-related IP addresses to be assigned to such host (e.g. public interface address, wireguard interface address etc).
 	IPAddress []string `json:"ip_address"`
 
