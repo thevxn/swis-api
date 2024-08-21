@@ -9,10 +9,8 @@ import (
 // https://stackoverflow.com/a/71146788
 var origins map[string]bool = map[string]bool{
 	// examples
-	"http://swjango.savla.su":    true,
-	"http://swapp.savla.su":      true,
-	"http://swapi-docs.savla.su": true,
 	"http://swife-xp.savla.su":   true,
+	"https://swbro.vxn.dev":      true,
 }
 
 // https://stackoverflow.com/a/29439630

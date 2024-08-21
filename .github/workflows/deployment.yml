@@ -94,13 +94,13 @@ jobs:
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
       run: make import_dump
 
-  generate_docs:
-    runs-on: [ self-hosted, rabbit, docker ]
-    needs: [ import_data ]
-    steps:
-    - uses: actions/checkout@v4
-    - name: (re)Generate interface API swagger docs.
-      env:
-        APP_URL: ${{ secrets.APP_URL }}
-      run: make docs
+#  generate_docs:
+#    runs-on: [ self-hosted, rabbit, docker ]
+#    needs: [ import_data ]
+#    steps:
+#    - uses: actions/checkout@v4
+#    - name: (re)Generate interface API swagger docs.
+#      env:
+#        APP_URL: ${{ secrets.APP_URL }}
+#      run: make docs
    
