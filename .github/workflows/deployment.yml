@@ -74,6 +74,7 @@ jobs:
       env:
         APP_ENVIRONMENT: production
         APP_URL: ${{ secrets.APP_URL }}
+        APP_URLS_TRAEFIK: ${{ secrets.APP_URLS_TRAEFIK }}
         LOKI_URL: ${{ secrets.LOKI_URL }}
         ROOT_TOKEN: ${{ secrets.ROOT_TOKEN }}
         GIN_MODE: ${{ secrets.GIN_MODE }}
