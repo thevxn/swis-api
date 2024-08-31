@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"go.savla.dev/swis/v5/pkg/core"
+	"go.vxn.dev/swis/v5/pkg/core"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -30,8 +30,8 @@ func TestPostNewLink(t *testing.T) {
 	var link Link = Link{
 		ID:          "sd",
 		Name:        "sd",
-		Description: "A shortcut for the savla.dev homepage.",
-		URL:         "https://savla.dev",
+		Description: "A shortcut for the vxn.dev homepage.",
+		URL:         "https://vxn.dev",
 		Active:      true,
 	}
 
@@ -88,8 +88,8 @@ func TestUpdateLinkByKey(t *testing.T) {
 	var link Link = Link{
 		ID:          "sd",
 		Name:        "sd",
-		Description: "A shortcut for the savla.dev homepage.",
-		URL:         "https://www.savla.dev",
+		Description: "A shortcut for the vxn.dev homepage.",
+		URL:         "https://www.vxn.dev",
 		Active:      false,
 	}
 
@@ -133,8 +133,8 @@ func TestPostDumpRestore(t *testing.T) {
 			"sd": {
 				ID:          "sd",
 				Name:        "sd",
-				Description: "A shortcut for the savla.dev homepage.",
-				URL:         "https://www.savla.dev",
+				Description: "A shortcut for the vxn.dev homepage.",
+				URL:         "https://www.vxn.dev",
 				Active:      false,
 			},
 			/* run #1: this item was 'crippled' on purpose to see how binding would act */

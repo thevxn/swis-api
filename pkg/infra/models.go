@@ -62,7 +62,7 @@ type Host struct {
 	// Brief node's description -- shown in node's MOTD on remote login.
 	Description string `json:"description"`
 
-	// Host's default domain name (e.g. savla.su as internal domain name).
+	// Host's default domain name (e.g. vxn.su as internal domain name).
 	Domain string `json:"domain"`
 
 	// Ansible roles to be applied to such host.
@@ -190,7 +190,7 @@ type Configuration struct {
 	BindExporterPresent    bool   `json:"bind_exporter_present" yaml:"bind_exporter_present" default:false`
 	LokiPresent            bool   `json:"loki_present" yaml:"loki_present" default:false`
 	LokiDockerTag          string `json:"loki_image_tag" yaml:"loki_image_tag"`
-	LokiURL                string `json:"loki_url" yaml:"loki_url" default:"loki.savla.su"`
+	LokiURL                string `json:"loki_url" yaml:"loki_url" default:"loki.vxn.su"`
 	LokiPort               int    `json:"loki_port" yaml:"loki_port" default:3000`
 	GrafanaPresent         bool   `json:"grafana_present" yaml:"grafana_present" default:false`
 	GrafanaDockerTag       string `json:"grafana_docker_tag_version" yaml:"grafana_docker_tag_version"`

@@ -31,7 +31,7 @@ type Account struct {
 	Owner string `json:"account_owner"`
 }
 
-// ref: http://docs.savla.su/finance
+// ref: http://docs.vxn.su/finance
 type Item struct {
 	// Item unique ID (e.g. datetime timestamp plus currency etc).
 	ID string `json:"id" binding:"required" required:"true" readonly:"true"`

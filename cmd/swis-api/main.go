@@ -4,11 +4,11 @@
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support
-// @contact.url http://savla.dev/swapi
-// @contact.email krusty@savla.dev
+// @contact.url http://vxn.dev/swapi
+// @contact.email krusty@vxn.dev
 
 // @license.name MIT
-// @license.url https://github.com/savla-dev/swis-api/blob/master/LICENSE
+// @license.url https://github.com/vxn-dev/swis-api/blob/master/LICENSE
 
 // @host swis-api-run-prod:8050
 // @BasePath /
@@ -32,23 +32,23 @@ import (
 	"time"
 
 	// swapi modules -- very local dependencies
-	"go.savla.dev/swis/v5/pkg/alvax"
-	"go.savla.dev/swis/v5/pkg/auth"
-	"go.savla.dev/swis/v5/pkg/backups"
-	"go.savla.dev/swis/v5/pkg/business"
-	"go.savla.dev/swis/v5/pkg/config"
-	"go.savla.dev/swis/v5/pkg/core"
-	"go.savla.dev/swis/v5/pkg/depots"
-	"go.savla.dev/swis/v5/pkg/dish"
-	"go.savla.dev/swis/v5/pkg/finance"
-	"go.savla.dev/swis/v5/pkg/infra"
-	"go.savla.dev/swis/v5/pkg/links"
-	"go.savla.dev/swis/v5/pkg/news"
-	"go.savla.dev/swis/v5/pkg/projects"
-	"go.savla.dev/swis/v5/pkg/queue"
-	"go.savla.dev/swis/v5/pkg/roles"
-	"go.savla.dev/swis/v5/pkg/system"
-	"go.savla.dev/swis/v5/pkg/users"
+	"go.vxn.dev/swis/v5/pkg/alvax"
+	"go.vxn.dev/swis/v5/pkg/auth"
+	"go.vxn.dev/swis/v5/pkg/backups"
+	"go.vxn.dev/swis/v5/pkg/business"
+	"go.vxn.dev/swis/v5/pkg/config"
+	"go.vxn.dev/swis/v5/pkg/core"
+	"go.vxn.dev/swis/v5/pkg/depots"
+	"go.vxn.dev/swis/v5/pkg/dish"
+	"go.vxn.dev/swis/v5/pkg/finance"
+	"go.vxn.dev/swis/v5/pkg/infra"
+	"go.vxn.dev/swis/v5/pkg/links"
+	"go.vxn.dev/swis/v5/pkg/news"
+	"go.vxn.dev/swis/v5/pkg/projects"
+	"go.vxn.dev/swis/v5/pkg/queue"
+	"go.vxn.dev/swis/v5/pkg/roles"
+	"go.vxn.dev/swis/v5/pkg/system"
+	"go.vxn.dev/swis/v5/pkg/users"
 
 	// remote dependencies
 	gin "github.com/gin-gonic/gin"
@@ -72,7 +72,7 @@ func main() {
 	// Mirroring Middleware
 	//router.Use(core.MirrorMiddleware())
 
-	// serve savla-dev internal favicon
+	// serve vxn-dev internal favicon
 	router.StaticFile("/favicon.ico", "./favicon.ico")
 
 	// @Summary Simple ping-pong route

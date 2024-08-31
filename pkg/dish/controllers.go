@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	//"go.savla.dev/dish/pkg/socket"
-	"go.savla.dev/swis/v5/pkg/core"
+	//"go.vxn.dev/dish/pkg/socket"
+	"go.vxn.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )

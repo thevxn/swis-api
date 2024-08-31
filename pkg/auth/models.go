@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"go.savla.dev/swis/v5/pkg/users"
+	"go.vxn.dev/swis/v5/pkg/users"
 )
 
 type AuthParams struct {

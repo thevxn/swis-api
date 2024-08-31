@@ -19,7 +19,7 @@ type User struct {
 	ACL []string `json:"ACL"`
 
 	// Presence/Absence boolean. If false, one is not allowed to log-in (token is rejected),
-	// to interract with savla-dev infra in general (by default).
+	// to interract with vxn-dev infra in general (by default).
 	Active bool `json:"active" default:false`
 
 	// Unique token used for auth purposes, SHA512 preferred.
