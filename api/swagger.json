@@ -6,14 +6,14 @@
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "url": "http://savla.dev/swapi",
-            "email": "krusty@savla.dev"
+            "url": "http://vxn.dev/swapi",
+            "email": "krusty@vxn.dev"
         },
         "license": {
             "name": "MIT",
-            "url": "https://github.com/savla-dev/swis-api/blob/master/LICENSE"
+            "url": "https://github.com/vxn-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.17.4"
+        "version": "5.17.5"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -4499,7 +4499,7 @@
                 },
                 "loki_url": {
                     "type": "string",
-                    "default": "loki.savla.su"
+                    "default": "loki.vxn.su"
                 },
                 "nameserver_primary": {
                     "type": "string"
@@ -4783,7 +4783,7 @@
                     "type": "string"
                 },
                 "domain": {
-                    "description": "Host's default domain name (e.g. savla.su as internal domain name).",
+                    "description": "Host's default domain name (e.g. vxn.su as internal domain name).",
                     "type": "string"
                 },
                 "expires_at": {
@@ -5231,7 +5231,7 @@
                     }
                 },
                 "active": {
-                    "description": "Presence/Absence boolean. If false, one is not allowed to log-in (token is rejected),\nto interract with savla-dev infra in general (by default).",
+                    "description": "Presence/Absence boolean. If false, one is not allowed to log-in (token is rejected),\nto interract with vxn-dev infra in general (by default).",
                     "type": "boolean"
                 },
                 "country": {
