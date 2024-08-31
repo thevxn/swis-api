@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"go.savla.dev/swis/v5/pkg/core"
+	"go.vxn.dev/swis/v5/pkg/core"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -31,11 +31,11 @@ func TestPostNewProject(t *testing.T) {
 		ID:          "test_project",
 		Name:        "Test Project",
 		Description: "Description for a test project",
-		DocsLink:    "https://savla.dev",
+		DocsLink:    "https://vxn.dev",
 		Manager:     "random",
 		Published:   false,
 		Backuped:    true,
-		URL:         "http://savla.dev",
+		URL:         "http://vxn.dev",
 	}
 
 	jsonValue, _ := json.Marshal(project)
@@ -93,11 +93,11 @@ func TestUpdateProjectByKey(t *testing.T) {
 		ID:          "test_project",
 		Name:        "Test Project",
 		Description: "Description for a test project",
-		DocsLink:    "https://savla.dev",
+		DocsLink:    "https://vxn.dev",
 		Manager:     "genuine person",
 		Published:   true,
 		Backuped:    true,
-		URL:         "http://savla.dev",
+		URL:         "http://vxn.dev",
 	}
 
 	jsonValue, _ := json.Marshal(project)
@@ -141,11 +141,11 @@ func TestPostDumpRestore(t *testing.T) {
 				ID:          "test_project",
 				Name:        "Test Project",
 				Description: "Description for a test project",
-				DocsLink:    "https://savla.dev",
+				DocsLink:    "https://vxn.dev",
 				Manager:     "random",
 				Published:   false,
 				Backuped:    true,
-				URL:         "http://savla.dev",
+				URL:         "http://vxn.dev",
 			},
 			/* run #1: this item was 'crippled' on purpose to see how binding would act */
 			/* result: it cannot be arsed, all fields are exported to JSON, even unlisted ones... */
@@ -156,11 +156,11 @@ func TestPostDumpRestore(t *testing.T) {
 				ID: "",
 				//Name:        "Next Project",
 				Description: "Description for the next project",
-				DocsLink:    "https://savla.dev",
+				DocsLink:    "https://vxn.dev",
 				Manager:     "random",
 				Published:   false,
 				Backuped:    true,
-				URL:         "http://savla.dev/next",
+				URL:         "http://vxn.dev/next",
 			},
 		},
 	}
@@ -193,11 +193,11 @@ func BenchmarkUpdateProjectByKey(b *testing.B) {
 		ID:          "test_project",
 		Name:        "Test Project",
 		Description: "Description for a test project",
-		DocsLink:    "https://savla.dev",
+		DocsLink:    "https://vxn.dev",
 		Manager:     "genuine person",
 		Published:   true,
 		Backuped:    true,
-		URL:         "http://savla.dev",
+		URL:         "http://vxn.dev",
 	}
 
 	jsonValue, _ := json.Marshal(project)

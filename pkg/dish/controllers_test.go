@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"go.savla.dev/swis/v5/pkg/core"
+	"go.vxn.dev/swis/v5/pkg/core"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -214,7 +214,7 @@ func TestUpdateIncidentByKey(t *testing.T) {
 		StartTimestamp: now,
 		EndTimestamp:   then,
 		Public:         false,
-		//SocketID:  "https_savla_dev",
+		//SocketID:  "https_vxn_dev",
 	}
 
 	jsonValue, _ := json.Marshal(inc)

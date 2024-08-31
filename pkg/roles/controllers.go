@@ -1,7 +1,7 @@
 package roles
 
 import (
-	"go.savla.dev/swis/v5/pkg/core"
+	"go.vxn.dev/swis/v5/pkg/core"
 
 	"github.com/gin-gonic/gin"
 )

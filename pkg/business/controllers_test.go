@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"go.savla.dev/swis/v5/pkg/core"
+	"go.vxn.dev/swis/v5/pkg/core"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -28,8 +28,8 @@ func TestPostNewBusiness(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var biz Business = Business{
-		ID:        "savla-dev",
-		NameLabel: "savla.dev",
+		ID:        "vxn-dev",
+		NameLabel: "vxn.dev",
 	}
 
 	jsonValue, _ := json.Marshal(biz)
@@ -60,7 +60,7 @@ func TestGetBusinessEntities(t *testing.T) {
 func TestGetBusinessByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("GET", "/business/savla-dev", nil)
+	req, _ := http.NewRequest("GET", "/business/vxn-dev", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -78,12 +78,12 @@ func TestUpdateBusinessByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var biz Business = Business{
-		ID:        "savla-dev",
-		NameLabel: "savla.dev ltd.",
+		ID:        "vxn-dev",
+		NameLabel: "vxn.dev ltd.",
 	}
 
 	jsonValue, _ := json.Marshal(biz)
-	req, _ := http.NewRequest("PUT", "/business/savla-dev", bytes.NewBuffer(jsonValue))
+	req, _ := http.NewRequest("PUT", "/business/vxn-dev", bytes.NewBuffer(jsonValue))
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -101,7 +101,7 @@ func TestUpdateBusinessByKey(t *testing.T) {
 func TestDeleteBusinessByKey(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
-	req, _ := http.NewRequest("DELETE", "/business/savla-dev", nil)
+	req, _ := http.NewRequest("DELETE", "/business/vxn-dev", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
@@ -111,7 +111,7 @@ func TestDeleteBusinessByKey(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &ret)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, "savla-dev", ret.Key)
+	assert.Equal(t, "vxn-dev", ret.Key)
 }
 
 func TestPostDumpRestore(t *testing.T) {
@@ -121,9 +121,9 @@ func TestPostDumpRestore(t *testing.T) {
 		Entities map[string]Business `json:"items"`
 	}{
 		Entities: map[string]Business{
-			"savla-dev": {
-				ID:        "savla-dev",
-				NameLabel: "savla.dev",
+			"vxn-dev": {
+				ID:        "vxn-dev",
+				NameLabel: "vxn.dev",
 			},
 			/* run #1: this item was 'crippled' on purpose to see how binding would act */
 			/* result: it cannot be arsed, all fields are exported to JSON, even unlisted ones... */
