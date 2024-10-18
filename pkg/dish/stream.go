@@ -18,6 +18,11 @@ func NewDispatcher() (stream *Stream) {
 	go stream.listen()
 	go stream.heartbeat()
 
+	// Init stats
+	if CacheStreamer != nil {
+		CacheStreamer.Set("stats", StreamerStats{ClientCount: 0})
+	}
+
 	return stream
 }
 

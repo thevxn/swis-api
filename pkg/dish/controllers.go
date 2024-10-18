@@ -748,7 +748,7 @@ func GetIncidentListBySocketID(ctx *gin.Context) {
 // @Router       /dish/streamer/stats [get]
 func GetStreamerStats(ctx *gin.Context) {
 	var counter int
-	var key string = "stats"
+	var exportedStats = map[string]StreamerStats{}
 
 	if CacheStreamer == nil {
 		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
@@ -756,42 +756,28 @@ func GetStreamerStats(ctx *gin.Context) {
 			"count":   counter,
 			"package": pkgName,
 			"message": "cannot access streamer cache",
-			"key":     key,
 		})
 		return
 	}
 
-	rawStat, ok := CacheSockets.Get(key)
-	if !ok {
-		ctx.IndentedJSON(http.StatusNotFound, gin.H{
-			"code":    http.StatusNotFound,
-			"count":   counter,
-			"package": pkgName,
-			"message": "no streamer statistics",
-			"key":     key,
-		})
-		return
+	rawStats, counter := CacheStreamer.GetAll()
+
+	// loop over string-map of interface{}
+	for key, rawStat := range rawStats {
+		stat, ok := rawStat.(StreamerStats)
+		if !ok {
+			continue
+		}
+
+		exportedStats[key] = stat
 	}
 
-	stat, ok := rawStat.(StreamerStats)
-	if !ok {
-		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
-			"code":    http.StatusInternalServerError,
-			"count":   counter,
-			"package": pkgName,
-			"message": "could not assert type dish.StreamerStats",
-			"key":     key,
-		})
-		return
-	}
-
-	counter++
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"count":   counter,
-		"item":    stat,
+		"items":   exportedStats,
 		"message": "ok, dumping streamer statistics",
-		"key":     key,
+		"package": pkgName,
 	})
 	return
 }
