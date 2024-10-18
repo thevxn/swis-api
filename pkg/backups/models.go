@@ -19,6 +19,9 @@ type Backup struct {
 	// Size of the gzip/tar archive in bytes.
 	Size int `json:"backup_size"`
 
+	// TimeToLive aka the tolerable age of last backup in hours.
+	TTL float64 `json:"ttl"`
+
 	// Name of the compressed backup file.
 	FileName string `json:"file_name"`
 
