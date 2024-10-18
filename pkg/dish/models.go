@@ -47,6 +47,9 @@ type Socket struct {
 	// TestTimestamp tells the time of the last socket testing being executed upon.
 	TestTimestamp int64 `json:"test_timestamp"`
 
+	// SLA time duration in hours since the start of such incident, (0 = disabled).
+	SLATime float64 `json:"sla_time"`
+
 	// Healthy boolean indicates wheter is socket okay, or the way around.
 	Healthy bool `json:"healthy" default:false`
 
@@ -80,6 +83,9 @@ type Incident struct {
 	// Estimated end of incident handling/resolving.
 	EndTimestamp int64 `json:"end_date"`
 
+	// SLA time duration in hours since the start of such incident, (0 = disabled).
+	SLATime float64 `json:"sla_time"`
+
 	// Reason of the incident that happened.
 	Reason string `json:"reason"`
 
@@ -90,7 +96,15 @@ type Incident struct {
 	Comment string `json:"comment"`
 }
 
+// The SSE message channel.
 type ClientChan chan Message
+
+// SSE message struct.
+type Message struct {
+	Content    string   `json:"content"`
+	SocketList []string `json:"socket_list"`
+	Timestamp  int64    `json:"timestamp"`
+}
 
 // Stream is a SSE data structure
 type Stream struct {
@@ -103,8 +117,8 @@ type Stream struct {
 	TotalClients  map[chan string]bool
 }
 
-type Message struct {
-	Content    string   `json:"content"`
-	SocketList []string `json:"socket_list"`
-	Timestamp  int64    `json:"timestamp"`
+// SSE streamer statistics.
+type StreamerStats struct {
+	// Total number of the SSE stream clients/listeners.
+	ClientCount int `json:"client_count"`
 }

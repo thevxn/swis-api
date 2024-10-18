@@ -16,6 +16,7 @@ import (
 var (
 	CacheIncidents *core.Cache
 	CacheSockets   *core.Cache
+	CacheStreamer  *core.Cache
 	Dispatcher     *Stream
 	pkgName        string = "dish"
 )
@@ -25,6 +26,7 @@ var Package *core.Package = &core.Package{
 	Cache: []**core.Cache{
 		&CacheIncidents,
 		&CacheSockets,
+		&CacheStreamer,
 	},
 	Routes: Routes,
 	Subpackages: []string{
@@ -723,6 +725,72 @@ func GetIncidentListBySocketID(ctx *gin.Context) {
 		"count":   counter,
 		"items":   exportedIncidents,
 		"message": "ok, dumping incidents list by socketID",
+		"key":     key,
+	})
+	return
+}
+
+/*
+
+  streamer stats
+
+*/
+
+// GetStreamerStats returns the SSE streamer statistics.
+//
+// @Summary      Get SSE streamer statistics
+// @Description  get SSE streamer statistics
+// @Tags         dish
+// @Produce      json
+// @Success      200  {object}  dish.StreamerStats
+// @Failure      404  {object}  dish.StreamerStats
+// @Failure      500  {object}  dish.StreamerStats
+// @Router       /dish/streamer/stats [get]
+func GetStreamerStats(ctx *gin.Context) {
+	var counter int
+	var key string = "stats"
+
+	if CacheStreamer == nil {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"count":   counter,
+			"package": pkgName,
+			"message": "cannot access streamer cache",
+			"key":     key,
+		})
+		return
+	}
+
+	rawStat, ok := CacheSockets.Get(key)
+	if !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"count":   counter,
+			"package": pkgName,
+			"message": "no streamer statistics",
+			"key":     key,
+		})
+		return
+	}
+
+	stat, ok := rawStat.(StreamerStats)
+	if !ok {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"count":   counter,
+			"package": pkgName,
+			"message": "could not assert type dish.StreamerStats",
+			"key":     key,
+		})
+		return
+	}
+
+	counter++
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"count":   counter,
+		"item":    stat,
+		"message": "ok, dumping streamer statistics",
 		"key":     key,
 	})
 	return

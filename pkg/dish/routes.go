@@ -5,11 +5,13 @@ import (
 )
 
 func Routes(g *gin.RouterGroup) {
+	// common
 	g.GET("",
 		GetDishRoot)
 	g.POST("/restore",
 		PostDumpRestore)
 
+	// incidents
 	g.GET("/incidents",
 		GetIncidentList)
 	g.POST("/incidents",
@@ -29,6 +31,7 @@ func Routes(g *gin.RouterGroup) {
 	g.DELETE("/incidents/:key",
 		DeleteIncidentByKey)
 
+	// sockets
 	g.GET("/sockets",
 		GetSocketList)
 	g.POST("/sockets",
@@ -55,4 +58,8 @@ func Routes(g *gin.RouterGroup) {
 		DeleteSocketByKey)
 	g.POST("/sockets/results",
 		BatchPostHealthyStatus)
+
+	// streamer stats
+	g.GET("/streamer/stats",
+		GetStreamerStats)
 }
