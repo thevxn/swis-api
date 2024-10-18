@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/vxn-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.17.5"
+        "version": "5.17.8"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -763,6 +763,12 @@
                         "in": "query"
                     },
                     {
+                        "type": "number",
+                        "description": "SLA time duration in hours since the start of such incident, (0 = disabled).",
+                        "name": "sla_time",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "ID of the referencing socket(s).\nSocketID []string `json:\"socket_id\"`",
                         "name": "socket_id",
@@ -870,6 +876,12 @@
                         "type": "string",
                         "description": "Reason of the incident that happened.",
                         "name": "reason",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "SLA time duration in hours since the start of such incident, (0 = disabled).",
+                        "name": "sla_time",
                         "in": "query"
                     },
                     {
@@ -1091,6 +1103,12 @@
                         "in": "query"
                     },
                     {
+                        "type": "number",
+                        "description": "SLA time duration in hours since the start of such incident, (0 = disabled).",
+                        "name": "sla_time",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "More verbose name/description of the socket.",
                         "name": "socket_description",
@@ -1182,6 +1200,12 @@
                         "type": "string",
                         "description": "Reason of the incident that happened.",
                         "name": "reason",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "SLA time duration in hours since the start of such incident, (0 = disabled).",
+                        "name": "sla_time",
                         "in": "query"
                     },
                     {
@@ -1287,6 +1311,12 @@
                         "type": "string",
                         "description": "Reason of the incident that happened.",
                         "name": "reason",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "SLA time duration in hours since the start of such incident, (0 = disabled).",
+                        "name": "sla_time",
                         "in": "query"
                     },
                     {
@@ -1721,6 +1751,38 @@
                         "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/pkg_dish.Socket"
+                        }
+                    }
+                }
+            }
+        },
+        "/dish/streamer/stats": {
+            "get": {
+                "description": "get SSE streamer statistics",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dish"
+                ],
+                "summary": "Get SSE streamer statistics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_dish.StreamerStats"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_dish.StreamerStats"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_dish.StreamerStats"
                         }
                     }
                 }
@@ -3987,6 +4049,10 @@
                 "timestamp": {
                     "description": "UNIX timestamp of the last provided backup.",
                     "type": "integer"
+                },
+                "ttl": {
+                    "description": "TimeToLive aka the tolerable age of last backup in hours.",
+                    "type": "number"
                 }
             }
         },
@@ -4107,6 +4173,10 @@
                     "description": "Reason of the incident that happened.",
                     "type": "string"
                 },
+                "sla_time": {
+                    "description": "SLA time duration in hours since the start of such incident, (0 = disabled).",
+                    "type": "number"
+                },
                 "socket_id": {
                     "description": "ID of the referencing socket(s).\nSocketID []string `json:\"socket_id\"`",
                     "type": "string"
@@ -4223,6 +4293,10 @@
                     "description": "ResponseTime is the time for the request to be processed.",
                     "type": "number"
                 },
+                "sla_time": {
+                    "description": "SLA time duration in hours since the start of such incident, (0 = disabled).",
+                    "type": "number"
+                },
                 "socket_description": {
                     "description": "More verbose name/description of the socket.",
                     "type": "string"
@@ -4233,6 +4307,15 @@
                 },
                 "test_timestamp": {
                     "description": "TestTimestamp tells the time of the last socket testing being executed upon.",
+                    "type": "integer"
+                }
+            }
+        },
+        "pkg_dish.StreamerStats": {
+            "type": "object",
+            "properties": {
+                "client_count": {
+                    "description": "Total number of the SSE stream clients/listeners.",
                     "type": "integer"
                 }
             }
