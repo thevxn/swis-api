@@ -54,7 +54,7 @@ func MountPackage(router *gin.Engine, pkg *Package) bool {
 		return false
 	}
 
-	if err := initCaches(pkg.Cache); err != nil {
+	if err := initCaches(pkg.Cache, pkg.CacheNames); err != nil {
 		fmt.Errorf("failed to mount '%s' package: %s", pkg.Name, err.Error())
 		return false
 	}
@@ -67,18 +67,24 @@ func MountPackage(router *gin.Engine, pkg *Package) bool {
 	return true
 }
 
-func initCaches(caches []**Cache) error {
-	for _, cache := range caches {
-		if cache == nil {
-			c := &Cache{}
-			cache = &c
+func initCaches(caches []**Cache, names []string) error {
+	if len(names) != len(caches) {
+		names = make([]string, len(caches))
+	}
 
-			return nil
+	for idx, name := range names {
+		cache := caches[idx]
+
+		if cache == nil {
+			c := &Cache{Name: name}
+			cache = &c
 		}
 
 		if *cache == nil {
-			*cache = &Cache{}
+			*cache = &Cache{Name: name}
 		}
+
+		caches[idx] = cache
 	}
 
 	return nil

@@ -11,18 +11,37 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Package struct describes the structure of a generic package to be loaded into the engine at start.
 type Package struct {
-	Name        string
-	Cache       []**Cache
-	Routes      func(r *gin.RouterGroup)
-	Generic     bool
+	// Name hold the name of a package.
+	Name string
+
+	// Cache is an array of pointers to caches to be initialized.
+	Cache []**Cache
+
+	// CacheName is an array of names for such caches being initialized.
+	CacheNames []string
+
+	// Routes is a function which holds the package's routes with their methods specified too.
+	Routes func(r *gin.RouterGroup)
+
+	// Generic is a boolean indicating whether is the root package a generic CRUD package (does not contain any subpackages).
+	Generic bool
+
+	// Subpackages is an array of subpackage names to register as generic ones.
 	Subpackages []string
 }
 
+// FieldDetail is a struct to describe any loaded model's field for the type enum export.
 type FieldDetail struct {
-	Type     string `json:"type"`
-	Required bool   `json:"required"`
-	Readonly bool   `json:"readonly"`
+	// Type holds the name of suck type.
+	Type string `json:"type"`
+
+	// Required indicates whether is the field required or not.
+	Required bool `json:"required"`
+
+	// ReadOnly indicates whether is the field readonly (write-locked) or not.
+	Readonly bool `json:"readonly"`
 }
 
 func PrintAllRootItems(ctx *gin.Context, cache *Cache, pkgName string) {
