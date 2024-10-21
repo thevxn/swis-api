@@ -30,6 +30,9 @@ type Package struct {
 
 	// Subpackages is an array of subpackage names to register as generic ones.
 	Subpackages []string
+
+	// SubpackageModels is a map to match the root model for such subpackage.
+	SubpackageModels map[string]any
 }
 
 // FieldDetail is a struct to describe any loaded model's field for the type enum export.
@@ -244,38 +247,128 @@ func DeleteItemByParam(ctx *gin.Context, cache *Cache, pkgName string) {
 	return
 }
 
-func BatchRestoreItems[T any](ctx *gin.Context, cache *Cache, pkgName string) {
+func BatchRestoreItems[T any](ctx *gin.Context, pkg Package) {
 	var counter int = 0
 
-	items := struct {
-		Items map[string]T `json:"items"`
-	}{}
+	if len(pkg.Subpackages) == 0 {
+		items := struct {
+			Items map[string]T `json:"items"`
+		}{}
 
-	if err := ctx.BindJSON(&items); err != nil {
-		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
-			"code":    http.StatusBadRequest,
-			"error":   err.Error(),
-			"message": "cannot bind input JSON stream",
-			"package": pkgName,
+		if err := ctx.BindJSON(&items); err != nil {
+			ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+				"code":    http.StatusBadRequest,
+				"error":   err.Error(),
+				"message": "cannot bind input JSON stream",
+				"package": pkg.Name,
+			})
+			return
+		}
+
+		cache := *pkg.Cache[0]
+
+		for key, item := range items.Items {
+			if key == "" {
+				continue
+			}
+			cache.Set(key, item)
+			counter++
+		}
+
+		ctx.IndentedJSON(http.StatusCreated, gin.H{
+			"code":    http.StatusCreated,
+			"count":   counter,
+			"message": "items restored successfully",
+			"package": pkg.Name,
 		})
 		return
 	}
 
-	for key, item := range items.Items {
-		if key == "" {
-			continue
+	if len(pkg.Subpackages) != len(pkg.SubpackageModels) {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "cannot restore data: wrong package configuration",
+			"package": pkg.Name,
+		})
+		return
+	}
+
+	for idx, subpkg := range pkg.Subpackages {
+		// Otherwise, we have to extract each subpackage's data manually.
+		items := subpkgItems{}
+
+		if err := ctx.BindJSON(&items); err != nil {
+			ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+				"code":    http.StatusBadRequest,
+				"error":   err.Error(),
+				"message": "cannot bind input JSON stream (subpackages)",
+				"package": pkg.Name,
+			})
+			return
 		}
-		cache.Set(key, item)
-		counter++
+
+		// Assert subpackage's model type
+		var ok bool
+		counter, ok = restoreSubpackageData(items, pkg.SubpackageModels, subpkg, *pkg.Cache[idx])
+		if !ok {
+			ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+				"code":    http.StatusInternalServerError,
+				"message": "cannot restore data: cannot assert subpackage's model type",
+				"package": pkg.Name,
+			})
+			return
+		}
 	}
 
 	ctx.IndentedJSON(http.StatusCreated, gin.H{
 		"code":    http.StatusCreated,
 		"count":   counter,
-		"message": "items restored successfully",
-		"package": pkgName,
+		"message": "items restored successfully (subpackages)",
+		"package": pkg.Name,
 	})
 	return
+}
+
+type subpkgItems struct {
+	Items map[string]interface{} `json:"items"`
+}
+
+func restore[T any](input interface{}, model T) (map[string]T, bool) {
+	m, ok := input.(map[string]T)
+	if !ok {
+		return nil, false
+	}
+
+	return m, true
+}
+
+func restoreSubpackageData[K string, V any](items subpkgItems, m map[string]V, subpkg string, cache *Cache) (int, bool) {
+	var counter int
+
+	for k, v := range m {
+		if k != subpkg {
+			continue
+		}
+
+		subData, ok := restore(items.Items[subpkg], v)
+		if !ok {
+			return 0, false
+		}
+
+		for key, item := range subData {
+			if key == "" {
+				continue
+			}
+
+			ok = cache.Set(key, item)
+			if !ok {
+				return 0, false
+			}
+			counter++
+		}
+	}
+
+	return counter, true
 }
 
 func ParsePackageTypes(ctx *gin.Context, pkgName string, models ...interface{}) {
