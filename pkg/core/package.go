@@ -35,6 +35,22 @@ type Package struct {
 	SubpackageModels map[string]any
 }
 
+type RestorePackage struct {
+	Name string
+
+	// Cache is an array of pointers to caches to be initialized.
+	Cache []**Cache
+
+	// CacheName is an array of names for such caches being initialized.
+	CacheNames []string
+
+	// Subpackages is an array of subpackage names to register as generic ones.
+	Subpackages []string
+
+	// SubpackageModels is a map to match the root model for such subpackage.
+	SubpackageModels map[string]any
+}
+
 // FieldDetail is a struct to describe any loaded model's field for the type enum export.
 type FieldDetail struct {
 	// Type holds the name of suck type.
@@ -247,7 +263,9 @@ func DeleteItemByParam(ctx *gin.Context, cache *Cache, pkgName string) {
 	return
 }
 
-func BatchRestoreItems[T any](ctx *gin.Context, pkg Package) {
+type restoreMap map[string]interface{}
+
+func BatchRestoreItems[T any](ctx *gin.Context, pkg *RestorePackage) {
 	var counter int = 0
 
 	if len(pkg.Subpackages) == 0 {
@@ -284,6 +302,10 @@ func BatchRestoreItems[T any](ctx *gin.Context, pkg Package) {
 		return
 	}
 
+	//
+	//  restore subpackages' data
+	//
+
 	if len(pkg.Subpackages) != len(pkg.SubpackageModels) {
 		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
@@ -293,30 +315,47 @@ func BatchRestoreItems[T any](ctx *gin.Context, pkg Package) {
 		return
 	}
 
+	var items restoreMap
+
+	// Bind the raw data.
+	if err := ctx.BindJSON(&items); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"message": "cannot bind input JSON stream (subpackages)",
+			"package": pkg.Name,
+		})
+		return
+	}
+
 	for idx, subpkg := range pkg.Subpackages {
 		// Otherwise, we have to extract each subpackage's data manually.
-		items := subpkgItems{}
 
-		if err := ctx.BindJSON(&items); err != nil {
+		// Fetch a map of subpackage's data with the correct type of map's values.
+		subData, ok := assertSubpackageType(items[subpkg], pkg.SubpackageModels[subpkg])
+		if !ok {
 			ctx.IndentedJSON(http.StatusBadRequest, gin.H{
-				"code":    http.StatusBadRequest,
-				"error":   err.Error(),
-				"message": "cannot bind input JSON stream (subpackages)",
+				"code":    http.StatusInternalServerError,
+				"message": "cannot assert subpacakge's root type to the subpackage's raw data",
 				"package": pkg.Name,
 			})
 			return
 		}
 
-		// Assert subpackage's model type
-		var ok bool
-		counter, ok = restoreSubpackageData(items, pkg.SubpackageModels, subpkg, *pkg.Cache[idx])
-		if !ok {
-			ctx.IndentedJSON(http.StatusBadRequest, gin.H{
-				"code":    http.StatusInternalServerError,
-				"message": "cannot restore data: cannot assert subpackage's model type",
-				"package": pkg.Name,
-			})
-			return
+		cache := *pkg.Cache[idx]
+
+		// Load subpackage's data in memory.
+		for key, item := range subData {
+			if key == "" {
+				continue
+			}
+
+			ok = cache.Set(key, item)
+			if !ok {
+				// nasty...
+				continue
+			}
+			counter++
 		}
 	}
 
@@ -329,46 +368,24 @@ func BatchRestoreItems[T any](ctx *gin.Context, pkg Package) {
 	return
 }
 
-type subpkgItems struct {
-	Items map[string]interface{} `json:"items"`
-}
-
-func restore[T any](input interface{}, model T) (map[string]T, bool) {
-	m, ok := input.(map[string]T)
+func assertSubpackageType[T any](input interface{}, model T) (map[string]T, bool) {
+	data, ok := input.(map[string]interface{})
 	if !ok {
 		return nil, false
 	}
 
-	return m, true
-}
+	output := make(map[string]T)
 
-func restoreSubpackageData[K string, V any](items subpkgItems, m map[string]V, subpkg string, cache *Cache) (int, bool) {
-	var counter int
-
-	for k, v := range m {
-		if k != subpkg {
-			continue
-		}
-
-		subData, ok := restore(items.Items[subpkg], v)
+	for k, v := range data {
+		value, ok := v.(T)
 		if !ok {
-			return 0, false
+			return nil, false
 		}
 
-		for key, item := range subData {
-			if key == "" {
-				continue
-			}
-
-			ok = cache.Set(key, item)
-			if !ok {
-				return 0, false
-			}
-			counter++
-		}
+		output[k] = value
 	}
 
-	return counter, true
+	return output, true
 }
 
 func ParsePackageTypes(ctx *gin.Context, pkgName string, models ...interface{}) {
