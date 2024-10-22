@@ -34,9 +34,13 @@ var Package *core.Package = &core.Package{
 }
 
 var restorePackage = &core.RestorePackage{
-	Name:       pkgName,
-	Cache:      caches,
-	CacheNames: []string{"Cache"},
+	Name:  pkgName,
+	Cache: caches,
+	CacheNames: []string{
+		"CacheDomains",
+		"CacheḦosts",
+		"CacheNetworks",
+	},
 	Subpackages: []string{
 		"domains",
 		"hosts",

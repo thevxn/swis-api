@@ -6,18 +6,18 @@ import (
 
 type Infrastructures struct {
 	// Whole infrastructure object.
-	Infrastructure Infrastructure `json:"infrastructure"`
+	Infrastructures []Infrastructure `json:"infrastructures"`
 }
 
 type Infrastructure struct {
 	// Domains linked to such infrastructure.
-	Domains []Domain `json:"domains"`
+	Domains map[string]Domain `json:"domains"`
 
 	// Hosts/nodes linked to such infrastructure.
-	Hosts []Host `json:"hosts"`
+	Hosts map[string]Host `json:"hosts"`
 
 	// Networks linked to such infrastructure.
-	Networks []Network `json:"networks"`
+	Networks map[string]Network `json:"networks"`
 }
 
 type Domain struct {
@@ -45,7 +45,7 @@ type Domain struct {
 
 // High-level struct for batch []Host array importing.
 type Hosts struct {
-	Hosts []Host `json:"hosts"`
+	Hosts map[string]Host `json:"hosts"`
 }
 
 // Low-level Host model for a generic machine.

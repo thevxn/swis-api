@@ -31,10 +31,16 @@ var Package *core.Package = &core.Package{
 }
 
 var restorePackage = &core.RestorePackage{
-	Name:        pkgName,
-	Cache:       caches,
-	CacheNames:  []string{"CacheAccounts", "CacheItems"},
-	Subpackages: []string{"accounts", "items"},
+	Name:  pkgName,
+	Cache: caches,
+	CacheNames: []string{
+		"CacheAccounts",
+		"CacheItems",
+	},
+	Subpackages: []string{
+		"accounts",
+		"items",
+	},
 	SubpackageModels: map[string]any{
 		"accounts": Account{},
 		"items":    Item{},
@@ -443,6 +449,11 @@ func GetRootData(ctx *gin.Context) {
 // @Produce json
 // @Router /finance/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
+	core.BatchRestoreItems[FinanceRoot](ctx, restorePackage)
+	return
+}
+
+func PostDumpRestore2(ctx *gin.Context) {
 	var counter []int = []int{0, 0}
 
 	var importFinance = struct {

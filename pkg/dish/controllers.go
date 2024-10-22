@@ -38,10 +38,17 @@ var Package *core.Package = &core.Package{
 }
 
 var restorePackage = &core.RestorePackage{
-	Name:        pkgName,
-	Cache:       caches,
-	CacheNames:  []string{"CacheIncidents", "CacheSockets", "CacheStreamer"},
-	Subpackages: []string{"incidents", "sockets"},
+	Name:  pkgName,
+	Cache: caches,
+	CacheNames: []string{
+		"CacheIncidents",
+		"CacheSockets",
+		"CacheStreamer",
+	},
+	Subpackages: []string{
+		"incidents",
+		"sockets",
+	},
 	SubpackageModels: map[string]any{
 		"incidents": Incident{},
 		"sockets":   Socket{},

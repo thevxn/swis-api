@@ -4,6 +4,11 @@ import (
 	"time"
 )
 
+type FinanceRoot struct {
+	Accounts map[string]Account `json:"accounts"`
+	Items    map[string]Item    `json:"items"`
+}
+
 type Account struct {
 	// Account unique ID, snake_cased identifier.
 	ID string `json:"id" binding:"required" required:"true" readonly:"true"`

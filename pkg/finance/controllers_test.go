@@ -77,7 +77,7 @@ func TestPostDumpRestore(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	var ret = struct {
-		Count []int `json:"counter"`
+		Count []int `json:"count"`
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &ret)
 
@@ -157,7 +157,7 @@ func TestGetAccounts(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	// number 2 down below is wrong, see notes above (cca L87)
+	// TODO: number 2 there is not correct, the "invalid" account should not be imported
 	assert.Equal(t, 2, items.Count)
 	assert.NotEmpty(t, items.Accounts)
 }
@@ -295,7 +295,7 @@ func TestGetItemsByAccountID(t *testing.T) {
 	json.Unmarshal(w.Body.Bytes(), &items)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, 2, items.Count)
+	assert.Equal(t, 1, items.Count)
 	assert.NotEmpty(t, items.Items)
 }
 

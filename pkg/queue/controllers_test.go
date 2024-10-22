@@ -164,10 +164,10 @@ func TestPostDumpRestore(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	var ret = struct {
-		Count int `json:"count"`
+		Count []int `json:"count"`
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &ret)
 
 	assert.Equal(t, http.StatusCreated, w.Code)
-	assert.Equal(t, 1, ret.Count)
+	assert.Equal(t, []int{1}, ret.Count)
 }

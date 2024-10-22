@@ -74,7 +74,7 @@ func TestPostDumpRestore(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	var ret = struct {
-		Count []int `json:"counter"`
+		Count []int `json:"count"`
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &ret)
 

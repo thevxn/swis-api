@@ -25,20 +25,20 @@ var TestPackage *core.Package = &core.Package{
 	Routes: Routes,
 }
 
-/*
- *  unit/integration tests
- */
+//
+//  unit/integration tests
+//
 
-/*
- *  common
- */
+//
+//  common
+//
 
 func TestPostDumpRestore(t *testing.T) {
 	r := core.SetupTestEnv(TestPackage)
 
 	var items = struct {
-		Domains  map[string]Domain  `json:"Domains"`
-		Hosts    map[string]Host    `json:"Hosts"`
+		Domains  map[string]Domain  `json:"domains"`
+		Hosts    map[string]Host    `json:"hosts"`
 		Networks map[string]Network `json:"networks"`
 	}{
 		Domains: map[string]Domain{
@@ -93,7 +93,7 @@ func TestPostDumpRestore(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	var ret = struct {
-		Count []int `json:"counter"`
+		Count []int `json:"count"`
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &ret)
 
