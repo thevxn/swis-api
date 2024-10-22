@@ -90,20 +90,20 @@ func PrintItemByParam[T any](ctx *gin.Context, cache *Cache, pkgName string, mod
 		return
 	}
 
-	item, ok := rawItem.(T)
+	/*item, ok := rawItem.(T)
 	if !ok {
 		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
 			"code":    http.StatusInternalServerError,
 			"key":     key,
-			"message": "cannot assert data type, database internal error",
+			"message": fmt.Sprintf("cannot assert data type, database internal error (type: %s)", reflect.TypeOf(rawItem)),
 			"package": pkgName,
 		})
 		return
-	}
+	}*/
 
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
-		"item":    item,
+		"item":    rawItem,
 		"key":     key,
 		"message": "ok, dumping item's contents",
 		"package": pkgName,
@@ -263,12 +263,12 @@ func DeleteItemByParam(ctx *gin.Context, cache *Cache, pkgName string) {
 	return
 }
 
-type restoreMap map[string]interface{}
-
 func BatchRestoreItems[T any](ctx *gin.Context, pkg *RestorePackage) {
-	var counter int = 0
+	var counter []int
 
 	if len(pkg.Subpackages) == 0 {
+		counter = make([]int, 1)
+
 		items := struct {
 			Items map[string]T `json:"items"`
 		}{}
@@ -290,7 +290,7 @@ func BatchRestoreItems[T any](ctx *gin.Context, pkg *RestorePackage) {
 				continue
 			}
 			cache.Set(key, item)
-			counter++
+			counter[0]++
 		}
 
 		ctx.IndentedJSON(http.StatusCreated, gin.H{
@@ -315,7 +315,9 @@ func BatchRestoreItems[T any](ctx *gin.Context, pkg *RestorePackage) {
 		return
 	}
 
-	var items restoreMap
+	counter = make([]int, len(pkg.Subpackages))
+
+	var items map[string]interface{}
 
 	// Bind the raw data.
 	if err := ctx.BindJSON(&items); err != nil {
@@ -336,13 +338,22 @@ func BatchRestoreItems[T any](ctx *gin.Context, pkg *RestorePackage) {
 		if !ok {
 			ctx.IndentedJSON(http.StatusBadRequest, gin.H{
 				"code":    http.StatusInternalServerError,
-				"message": "cannot assert subpacakge's root type to the subpackage's raw data",
+				"message": "cannot assert subpackage's root type to the subpackage's raw data",
 				"package": pkg.Name,
 			})
 			return
 		}
 
 		cache := *pkg.Cache[idx]
+
+		/*if reflect.TypeOf(subData).String() != fmt.Sprintf("map[string]%s", reflect.TypeOf(pkg.SubpackageModels[subpkg])) {
+			ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+				"code":    http.StatusInternalServerError,
+				"message": fmt.Sprintf("invalid subpackage's data assertion: %s not %s", reflect.TypeOf(subData).String(), fmt.Sprintf("map[string]%s", reflect.TypeOf(pkg.SubpackageModels[subpkg]))),
+				"package": pkg.Name,
+			})
+			return
+		}*/
 
 		// Load subpackage's data in memory.
 		for key, item := range subData {
@@ -352,10 +363,14 @@ func BatchRestoreItems[T any](ctx *gin.Context, pkg *RestorePackage) {
 
 			ok = cache.Set(key, item)
 			if !ok {
-				// nasty...
-				continue
+				ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+					"code":    http.StatusInternalServerError,
+					"message": fmt.Sprintf("cannot save the item: %s", reflect.TypeOf(item)),
+					"package": pkg.Name,
+				})
+				return
 			}
-			counter++
+			counter[idx]++
 		}
 	}
 
@@ -371,19 +386,27 @@ func BatchRestoreItems[T any](ctx *gin.Context, pkg *RestorePackage) {
 func assertSubpackageType[T any](input interface{}, model T) (map[string]T, bool) {
 	data, ok := input.(map[string]interface{})
 	if !ok {
+		fmt.Printf("cannot assert map[string]interface{}\n")
 		return nil, false
 	}
+
+	//fmt.Printf("%s\n", reflect.TypeOf(model))
 
 	output := make(map[string]T)
 
 	for k, v := range data {
 		value, ok := v.(T)
 		if !ok {
+			fmt.Printf("wrong type assertion: %s\n", reflect.TypeOf(value))
 			return nil, false
 		}
 
+		//fmt.Printf("%s\n", reflect.TypeOf(value))
+
 		output[k] = value
 	}
+
+	//fmt.Printf("%s\n", reflect.TypeOf(output))
 
 	return output, true
 }
