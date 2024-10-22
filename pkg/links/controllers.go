@@ -9,17 +9,26 @@ import (
 )
 
 var (
-	Cache   *core.Cache
+	Cache *core.Cache
+
+	caches = []**core.Cache{
+		&Cache,
+	}
 	pkgName string = "links"
 )
 
 var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
-		&Cache,
-	},
+	Name:    pkgName,
 	Routes:  Routes,
 	Generic: true,
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:             pkgName,
+	Cache:            caches,
+	CacheNames:       []string{"Cache"},
+	Subpackages:      []string{},
+	SubpackageModels: map[string]any{},
 }
 
 // GetLinks returns JSON serialized list of links and their properties.
@@ -66,7 +75,7 @@ func PostNewLink(ctx *gin.Context) {
 // @Produce json
 // @Router /links/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems[Link](ctx, Cache, pkgName)
+	core.BatchRestoreItems[Link](ctx, restorePackage)
 	return
 }
 

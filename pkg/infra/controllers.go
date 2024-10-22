@@ -13,21 +13,39 @@ var (
 	CacheHosts    *core.Cache
 	CacheNetworks *core.Cache
 	CacheDomains  *core.Cache
-	pkgName       string = "infra"
-)
 
-var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
+	caches = []**core.Cache{
 		&CacheDomains,
 		&CacheHosts,
 		&CacheNetworks,
-	},
+	}
+	pkgName string = "infra"
+)
+
+var Package *core.Package = &core.Package{
+	Name:   pkgName,
+	Cache:  caches,
 	Routes: Routes,
 	Subpackages: []string{
 		"domains",
 		"hosts",
 		"networks",
+	},
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:       pkgName,
+	Cache:      caches,
+	CacheNames: []string{"Cache"},
+	Subpackages: []string{
+		"domains",
+		"hosts",
+		"networks",
+	},
+	SubpackageModels: map[string]any{
+		"domains":  Domain{},
+		"hosts":    Host{},
+		"networks": Network{},
 	},
 }
 
@@ -661,6 +679,11 @@ func ListTypesNetworks(ctx *gin.Context) {
 // @Produce json
 // @Router /infra/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
+	core.BatchRestoreItems[Infrastructure](ctx, restorePackage)
+	return
+}
+
+func PostDumpRestore2(ctx *gin.Context) {
 	var counter []int = []int{0, 0, 0}
 
 	var importInfra = struct {

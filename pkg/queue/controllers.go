@@ -12,18 +12,28 @@ import (
 
 var (
 	CacheTasks *core.Cache
-	pkgName    string = "queue"
+
+	caches = []**core.Cache{
+		&CacheTasks,
+	}
+	pkgName string = "queue"
 )
 
 var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
-		&CacheTasks,
-	},
+	Name:   pkgName,
+	Cache:  caches,
 	Routes: Routes,
 	Subpackages: []string{
 		"tasks",
 	},
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:             pkgName,
+	Cache:            caches,
+	CacheNames:       []string{"CacheTasks"},
+	Subpackages:      []string{},
+	SubpackageModels: map[string]any{},
 }
 
 // GetLinks returns JSON serialized list of tasks and their properties.
@@ -113,7 +123,7 @@ func PostNewTask(ctx *gin.Context) {
 // @Produce json
 // @Router /queue/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems[Task](ctx, CacheTasks, pkgName)
+	core.BatchRestoreItems[Task](ctx, restorePackage)
 	return
 }
 

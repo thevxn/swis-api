@@ -12,19 +12,29 @@ import (
 )
 
 var (
-	Cache   *core.Cache
+	Cache *core.Cache
+
+	caches = []**core.Cache{
+		&Cache,
+	}
 	pkgName string = "news"
 )
 
 var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
-		&Cache,
-	},
+	Name:   pkgName,
+	Cache:  caches,
 	Routes: Routes,
 	Subpackages: []string{
 		"sources",
 	},
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:             pkgName,
+	Cache:            caches,
+	CacheNames:       []string{"Cache"},
+	Subpackages:      []string{},
+	SubpackageModels: map[string]any{},
 }
 
 // GetSources
@@ -93,7 +103,7 @@ func DeleteSourcesByUserKey(ctx *gin.Context) {
 // @Produce json
 // @Router /news/sources/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems[UserSource](ctx, Cache, pkgName)
+	core.BatchRestoreItems[UserSource](ctx, restorePackage)
 	return
 }
 

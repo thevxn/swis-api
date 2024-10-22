@@ -11,19 +11,29 @@ import (
 )
 
 var (
-	Cache   *core.Cache
+	Cache *core.Cache
+
+	caches = []**core.Cache{
+		&Cache,
+	}
 	pkgName string = "depots"
 )
 
 var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
-		&Cache,
-	},
+	Name:   pkgName,
+	Cache:  caches,
 	Routes: Routes,
 	Subpackages: []string{
 		"items",
 	},
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:             pkgName,
+	Cache:            caches,
+	CacheNames:       []string{"Cache"},
+	Subpackages:      []string{},
+	SubpackageModels: map[string]any{},
 }
 
 // GetAllDepotItems GET method
@@ -95,7 +105,7 @@ func DeleteDepotItemByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /depots/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems[DepotItem](ctx, Cache, pkgName)
+	core.BatchRestoreItems[DepotItem](ctx, restorePackage)
 	return
 }
 

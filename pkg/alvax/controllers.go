@@ -7,17 +7,27 @@ import (
 )
 
 var (
-	Cache   *core.Cache
+	Cache *core.Cache
+
+	caches = []**core.Cache{
+		&Cache,
+	}
 	pkgName string = "alvax"
 )
 
 var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
-		&Cache,
-	},
+	Name:    pkgName,
+	Cache:   caches,
 	Routes:  Routes,
 	Generic: true,
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:             pkgName,
+	Cache:            caches,
+	CacheNames:       []string{"Cache"},
+	Subpackages:      []string{},
+	SubpackageModels: map[string]any{},
 }
 
 // GetConfigs function dumps the alvax cache contents.
@@ -88,7 +98,7 @@ func DeleteConfigByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /alvax/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems[ConfigRoot](ctx, Cache, pkgName)
+	core.BatchRestoreItems[ConfigRoot](ctx, restorePackage)
 	return
 }
 

@@ -7,17 +7,27 @@ import (
 )
 
 var (
-	Cache   *core.Cache
+	Cache *core.Cache
+
+	caches = []**core.Cache{
+		&Cache,
+	}
 	pkgName string = "roles"
 )
 
 var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
-		&Cache,
-	},
+	Name:    pkgName,
+	Cache:   caches,
 	Routes:  Routes,
 	Generic: true,
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:             pkgName,
+	Cache:            caches,
+	CacheNames:       []string{"Cache"},
+	Subpackages:      []string{},
+	SubpackageModels: map[string]any{},
 }
 
 // GetRoles returns JSON serialized list of roles and their properties.
@@ -88,7 +98,7 @@ func DeleteRoleByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /roles/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems[Role](ctx, Cache, pkgName)
+	core.BatchRestoreItems[Role](ctx, restorePackage)
 	return
 }
 

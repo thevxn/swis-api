@@ -9,17 +9,27 @@ import (
 )
 
 var (
-	Cache   *core.Cache
+	Cache *core.Cache
+
+	caches = []**core.Cache{
+		&Cache,
+	}
 	pkgName string = "backups"
 )
 
 var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
-		&Cache,
-	},
+	Name:    pkgName,
+	Cache:   caches,
 	Routes:  Routes,
 	Generic: true,
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:             pkgName,
+	Cache:            caches,
+	CacheNames:       []string{"Cache"},
+	Subpackages:      []string{},
+	SubpackageModels: map[string]any{},
 }
 
 // @Summary Get all backed up services
@@ -75,7 +85,7 @@ func DeleteBackupByServiceKey(ctx *gin.Context) {
 // @Produce json
 // @Router /backups/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems[Backup](ctx, Cache, pkgName)
+	core.BatchRestoreItems[Backup](ctx, restorePackage)
 	return
 }
 

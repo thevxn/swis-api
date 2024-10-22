@@ -12,19 +12,32 @@ import (
 var (
 	CacheAccounts *core.Cache
 	CacheItems    *core.Cache
-	pkgName       string = "finance"
+
+	caches = []**core.Cache{
+		&CacheAccounts,
+		&CacheItems,
+	}
+	pkgName string = "finance"
 )
 
 var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
-		&CacheAccounts,
-		&CacheItems,
-	},
+	Name:   pkgName,
+	Cache:  caches,
 	Routes: Routes,
 	Subpackages: []string{
 		"accounts",
 		"items",
+	},
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:        pkgName,
+	Cache:       caches,
+	CacheNames:  []string{"CacheAccounts", "CacheItems"},
+	Subpackages: []string{"accounts", "items"},
+	SubpackageModels: map[string]any{
+		"accounts": Account{},
+		"items":    Item{},
 	},
 }
 

@@ -7,17 +7,27 @@ import (
 )
 
 var (
-	Cache   *core.Cache
+	Cache *core.Cache
+
+	caches = []**core.Cache{
+		&Cache,
+	}
 	pkgName string = "projects"
 )
 
 var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
-		&Cache,
-	},
+	Name:    pkgName,
+	Cache:   caches,
 	Routes:  Routes,
 	Generic: true,
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:             pkgName,
+	Cache:            caches,
+	CacheNames:       []string{"Cache"},
+	Subpackages:      []string{},
+	SubpackageModels: map[string]any{},
 }
 
 // GetProjects function dumps the projects cache contents.
@@ -88,7 +98,7 @@ func DeleteProjectByKey(ctx *gin.Context) {
 // @Produce json
 // @Router /projects/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
-	core.BatchRestoreItems[Project](ctx, Cache, pkgName)
+	core.BatchRestoreItems[Project](ctx, restorePackage)
 	return
 }
 

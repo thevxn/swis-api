@@ -18,20 +18,33 @@ var (
 	CacheSockets   *core.Cache
 	CacheStreamer  *core.Cache
 	Dispatcher     *Stream
-	pkgName        string = "dish"
-)
 
-var Package *core.Package = &core.Package{
-	Name: pkgName,
-	Cache: []**core.Cache{
+	caches = []**core.Cache{
 		&CacheIncidents,
 		&CacheSockets,
 		&CacheStreamer,
-	},
+	}
+	pkgName string = "dish"
+)
+
+var Package *core.Package = &core.Package{
+	Name:   pkgName,
+	Cache:  caches,
 	Routes: Routes,
 	Subpackages: []string{
 		"incidents",
 		"sockets",
+	},
+}
+
+var restorePackage = &core.RestorePackage{
+	Name:        pkgName,
+	Cache:       caches,
+	CacheNames:  []string{"CacheIncidents", "CacheSockets", "CacheStreamer"},
+	Subpackages: []string{"incidents", "sockets"},
+	SubpackageModels: map[string]any{
+		"incidents": Incident{},
+		"sockets":   Socket{},
 	},
 }
 
@@ -844,6 +857,11 @@ func GetDishRoot(ctx *gin.Context) {
 // @Failure      500  {array}   dish.Incident
 // @Router       /dish/restore [post]
 func PostDumpRestore(ctx *gin.Context) {
+	core.BatchRestoreItems[Root](ctx, restorePackage)
+	return
+}
+
+func PostDumpRestore2(ctx *gin.Context) {
 	var counter []int = []int{0, 0}
 
 	var importDish = struct {
