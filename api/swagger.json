@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/vxn-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.18.0"
+        "version": "5.18.1"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -4931,22 +4931,22 @@
             "properties": {
                 "domains": {
                     "description": "Domains linked to such infrastructure.",
-                    "type": "array",
-                    "items": {
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/pkg_infra.Domain"
                     }
                 },
                 "hosts": {
                     "description": "Hosts/nodes linked to such infrastructure.",
-                    "type": "array",
-                    "items": {
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/pkg_infra.Host"
                     }
                 },
                 "networks": {
                     "description": "Networks linked to such infrastructure.",
-                    "type": "array",
-                    "items": {
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/definitions/pkg_infra.Network"
                     }
                 }
