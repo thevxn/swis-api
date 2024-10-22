@@ -35,7 +35,7 @@ var restorePackage = &core.RestorePackage{
 // @Description get alvax config list
 // @Tags alvax
 // @Produce json
-// @Success 200 {object} []alvax.ConfigRoot
+// @Success 200 {object} alvax.ConfigRootMap
 // @Router /alvax [get]
 func GetConfigs(ctx *gin.Context) {
 	core.PrintAllRootItems(ctx, Cache, pkgName)

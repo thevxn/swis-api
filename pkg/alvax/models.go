@@ -1,5 +1,9 @@
 package alvax
 
+type ConfigRootMap struct {
+	Items map[string]ConfigRoot `json:"items"`
+}
+
 type ConfigRoot struct {
 	ID       string             `json:"id" required:"true" readonly:"true"`
 	Key      string             `json:"key" required:"true"`

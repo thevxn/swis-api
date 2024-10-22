@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/vxn-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.17.9"
+        "version": "5.18.0"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -32,10 +32,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/pkg_alvax.ConfigRoot"
-                            }
+                            "$ref": "#/definitions/pkg_alvax.ConfigRootMap"
                         }
                     }
                 }
@@ -3970,6 +3967,17 @@
                 },
                 "server": {
                     "$ref": "#/definitions/pkg_alvax.Server"
+                }
+            }
+        },
+        "pkg_alvax.ConfigRootMap": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/pkg_alvax.ConfigRoot"
+                    }
                 }
             }
         },

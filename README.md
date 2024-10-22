@@ -1,4 +1,4 @@
-# swis-api (swapi) v5.17
+# swis-api (swapi) v5.18
 
 [![Go Reference](https://pkg.go.dev/badge/go.vxn.dev/swis/v5.svg)](https://pkg.go.dev/go.vxn.dev/swis/v5)
 [![Go Report Card](https://goreportcard.com/badge/go.vxn.dev/swis/v5)](https://goreportcard.com/report/go.vxn.dev/swis/v5)
