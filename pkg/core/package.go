@@ -401,7 +401,7 @@ func assertSubpackageType[T any](input interface{}, model T) (map[string]T, bool
 			return nil, false
 		}
 
-		//fmt.Printf("%s\n", reflect.TypeOf(value))
+		fmt.Printf("%s\n", reflect.TypeOf(value))
 
 		output[k] = value
 	}

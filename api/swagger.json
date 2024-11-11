@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/vxn-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.18.1"
+        "version": "5.18.2"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -2347,6 +2347,37 @@
                             "items": {
                                 "$ref": "#/definitions/pkg_infra.DNSRecord"
                             }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/pkg_infra.Domain"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/domains/{key}/dmarc": {
+            "post": {
+                "description": "post domain mail report by key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "infra"
+                ],
+                "summary": "Post domain mail report by key",
+                "parameters": [
+                    {
+                        "description": "DMARC parsed report",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/pkg_infra.SimpleReport"
                         }
                     }
                 ],
@@ -4775,6 +4806,13 @@
                 "registrar_name": {
                     "description": "Name of the current registrar",
                     "type": "string"
+                },
+                "reports": {
+                    "description": "Parsed DMARC reports.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pkg_infra.SimpleReport"
+                    }
                 }
             }
         },
@@ -4983,6 +5021,40 @@
                 "network_name": {
                     "description": "Network name, verbose ID.",
                     "type": "string"
+                }
+            }
+        },
+        "pkg_infra.SimpleReport": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "domain": {
+                    "type": "string"
+                },
+                "reporting_org": {
+                    "type": "string"
+                },
+                "sources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pkg_infra.Source"
+                    }
+                }
+            }
+        },
+        "pkg_infra.Source": {
+            "type": "object",
+            "properties": {
+                "dkim_selector": {
+                    "type": "string"
+                },
+                "ip_address": {
+                    "type": "string"
+                },
+                "mail_count": {
+                    "type": "integer"
                 }
             }
         },

@@ -2,8 +2,10 @@ package dish
 
 import (
 	//"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"reflect"
 	"strconv"
 	"time"
 
@@ -55,11 +57,9 @@ var restorePackage = &core.RestorePackage{
 	},
 }
 
-/*
-
-  sockets
-
-*/
+//
+//  sockets
+//
 
 // @Summary Get all sockets list
 // @Description get socket list, socket array
@@ -124,13 +124,16 @@ func GetSocketListPublic(ctx *gin.Context) {
 	rawSocketsMap, _ := CacheSockets.GetAll()
 
 	for _, rawSocket := range rawSocketsMap {
-		socket, ok := rawSocket.(Socket)
+		socket, ok := rawSocket.(*Socket)
 		if !ok {
+			fmt.Printf("cannot assert type: %s\n", reflect.TypeOf(rawSocketsMap))
+			fmt.Printf("rawSocket: %v\n", rawSocket)
+			fmt.Printf("Socket: %v\n", Socket{})
 			continue
 		}
 
 		if socket.Public {
-			exportedSockets[socket.ID] = socket
+			exportedSockets[socket.ID] = *socket
 			counter++
 		}
 	}
@@ -502,11 +505,9 @@ func GetSSEvents(ctx *gin.Context) {
 	return
 }
 
-/*
-
-  incidents
-
-*/
+//
+//  incidents
+//
 
 // GetIncidentList lists all available incidents
 //
@@ -750,11 +751,9 @@ func GetIncidentListBySocketID(ctx *gin.Context) {
 	return
 }
 
-/*
-
-  streamer stats
-
-*/
+//
+//  streamer stats
+//
 
 // GetStreamerStats returns the SSE streamer statistics.
 //

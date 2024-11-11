@@ -20,6 +20,10 @@ type Infrastructure struct {
 	Networks map[string]Network `json:"networks"`
 }
 
+//
+//  Domains
+//
+
 type Domain struct {
 	// Unique domain identifier.
 	ID string `json:"id" binding:"required" required:"true" readonly:"true"`
@@ -41,7 +45,29 @@ type Domain struct {
 
 	// Cloudflare Zone ID
 	CfZoneID string `json:"cf_zone_id"`
+
+	// Parsed DMARC reports.
+	Reports []SimpleReport `json:"reports"`
 }
+
+// Parsed and cherry-picked DMARC report for such domain.
+type SimpleReport struct {
+	Domain       string    `json:"domain"`
+	ReportingOrg string    `json:"reporting_org"`
+	Sources      []Source  `json:"sources"`
+	CreatedAt    time.Time `json:"created_at"`
+}
+
+// Source part detail for the DMARC simple report.
+type Source struct {
+	IPAddress    string `json:"ip_address"`
+	MailCount    int    `json:"mail_count"`
+	DKIMSelector string `json:"dkim_selector"`
+}
+
+//
+//  Hosts
+//
 
 // High-level struct for batch []Host array importing.
 type Hosts struct {
@@ -260,6 +286,10 @@ type VMInstallConfig struct {
 	IPV4DNS      string `json:"ipv4_dns" yaml:"ipv4_dns"`
 	BridgeName   string `json:"bridge_name" yaml:"bridge_name"`
 }
+
+//
+//  Networks
+//
 
 type Network struct {
 	// Unique network's identifier.

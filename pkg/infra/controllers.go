@@ -3,6 +3,7 @@ package infra
 import (
 	"net/http"
 	"os"
+	"time"
 
 	"go.vxn.dev/swis/v5/pkg/core"
 
@@ -216,6 +217,84 @@ func PostDomainDeploymentByKey(ctx *gin.Context) {
 		"code":    http.StatusOK,
 		"key":     key,
 		"message": "domain records successfully deployed",
+		"package": pkgName,
+	})
+	return
+}
+
+// @Summary Post domain mail report by key
+// @Description post domain mail report by key
+// @Tags infra
+// @Produce json
+// @Param request body infra.SimpleReport true "DMARC parsed report"
+// @Success 200 {object} infra.Domain
+// @Router /infra/domains/{key}/dmarc [post]
+func PostDomainMailReportByKey(ctx *gin.Context) {
+	key := ctx.Param("key")
+
+	rawDomain, ok := CacheDomains.Get(key)
+	if !ok {
+		ctx.IndentedJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"message": "domain not found by key",
+			"package": pkgName,
+			"key":     key,
+		})
+		return
+	}
+
+	var domain Domain
+
+	domain, ok = rawDomain.(Domain)
+	if !ok {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"message": "cannot assert Domain data type",
+			"package": pkgName,
+			"key":     key,
+		})
+		return
+	}
+
+	var report SimpleReport
+
+	if err := ctx.BindJSON(&report); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+			"key":     key,
+			"message": "cannot bind input JSON stream",
+			"package": pkgName,
+		})
+		return
+	}
+
+	var newReports []SimpleReport
+
+	for _, oldReport := range domain.Reports {
+		if time.Now().Add(time.Hour * -25).After(oldReport.CreatedAt) {
+			continue
+		}
+
+		newReports = append(newReports, oldReport)
+	}
+
+	newReports = append(newReports, report)
+
+	if saved := CacheDomains.Set(key, domain); !saved {
+		ctx.IndentedJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"key":     key,
+			"message": "updated domain couldn't be saved to database",
+			"package": pkgName,
+		})
+		return
+	}
+
+	ctx.IndentedJSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"key":     key,
+		"message": "domain mail report added successfully",
 		"package": pkgName,
 	})
 	return
