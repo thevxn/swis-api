@@ -119,6 +119,10 @@ test:
 	@echo -e "\n${YELLOW} Running tests in all packages (go test)... ${RESET}\n"
 	go test -count=1 -v ./...
 
+test_coverage:
+	@go test -v -coverprofile coverage.profile ./... && \
+		go tool cover -func coverage.profile
+
 .PHONY: unit
 unit: test
 

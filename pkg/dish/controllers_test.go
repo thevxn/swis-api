@@ -354,7 +354,7 @@ func TestGetSocketListByHost(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	var sockets = struct {
-		Sockets map[string]Socket `json:"items"`
+		Sockets []Socket `json:"sockets"`
 	}{}
 	json.Unmarshal(w.Body.Bytes(), &sockets)
 

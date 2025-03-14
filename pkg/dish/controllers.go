@@ -2,10 +2,9 @@ package dish
 
 import (
 	//"encoding/json"
-	"fmt"
+
 	"io"
 	"net/http"
-	"reflect"
 	"strconv"
 	"time"
 
@@ -124,16 +123,16 @@ func GetSocketListPublic(ctx *gin.Context) {
 	rawSocketsMap, _ := CacheSockets.GetAll()
 
 	for _, rawSocket := range rawSocketsMap {
-		socket, ok := rawSocket.(*Socket)
+		socket, ok := rawSocket.(Socket)
 		if !ok {
-			fmt.Printf("cannot assert type: %s\n", reflect.TypeOf(rawSocketsMap))
+			/*fmt.Printf("cannot assert type: %s\n", reflect.TypeOf(rawSocketsMap))
 			fmt.Printf("rawSocket: %v\n", rawSocket)
-			fmt.Printf("Socket: %v\n", Socket{})
+			fmt.Printf("Socket: %v\n", Socket{})*/
 			continue
 		}
 
 		if socket.Public {
-			exportedSockets[socket.ID] = *socket
+			exportedSockets[socket.ID] = socket
 			counter++
 		}
 	}
@@ -144,7 +143,6 @@ func GetSocketListPublic(ctx *gin.Context) {
 		"items":   exportedSockets,
 		"message": "ok, dumping public sockets",
 	})
-	return
 }
 
 // @Summary Get socket list by host
@@ -157,7 +155,7 @@ func GetSocketListPublic(ctx *gin.Context) {
 // Get sockets by hostname/dish-name.
 func GetSocketListByHost(ctx *gin.Context) {
 	var host string = ctx.Param("host")
-	var exportedSockets = make(map[string]Socket)
+	var exportedSockets []Socket
 	var counter int = 0
 
 	rawSocketsMap, _ := CacheSockets.GetAll()
@@ -169,7 +167,7 @@ func GetSocketListByHost(ctx *gin.Context) {
 		}
 
 		if contains(socket.DishTarget, host) && !socket.Muted {
-			exportedSockets[socket.ID] = socket
+			exportedSockets = append(exportedSockets, socket)
 			counter++
 		}
 	}
@@ -177,11 +175,10 @@ func GetSocketListByHost(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"count":   counter,
-		"items":   exportedSockets,
+		"sockets": exportedSockets,
 		"message": "ok, dumping sockets by host",
 		"host":    host,
 	})
-	return
 }
 
 // @Summary Batch update socket's healthy state.

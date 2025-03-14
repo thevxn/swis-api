@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/vxn-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.18.2"
+        "version": "5.18.3"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
