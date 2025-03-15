@@ -117,7 +117,7 @@ func DeleteSocketByKey(ctx *gin.Context) {
 // @Success 200 {string} string	"ok"
 // @Router /dish/sockets/public [get]
 func GetSocketListPublic(ctx *gin.Context) {
-	var exportedSockets = make(map[string]Socket)
+	var exportedSockets []Socket
 	var counter int = 0
 
 	rawSocketsMap, _ := CacheSockets.GetAll()
@@ -125,14 +125,14 @@ func GetSocketListPublic(ctx *gin.Context) {
 	for _, rawSocket := range rawSocketsMap {
 		socket, ok := rawSocket.(Socket)
 		if !ok {
-			/*fmt.Printf("cannot assert type: %s\n", reflect.TypeOf(rawSocketsMap))
+			/*fmt.Printf("cannot assert type: %s\n", reflect.TypeOf(rawSocket))
 			fmt.Printf("rawSocket: %v\n", rawSocket)
 			fmt.Printf("Socket: %v\n", Socket{})*/
 			continue
 		}
 
 		if socket.Public {
-			exportedSockets[socket.ID] = socket
+			exportedSockets = append(exportedSockets, socket)
 			counter++
 		}
 	}
@@ -140,7 +140,7 @@ func GetSocketListPublic(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    http.StatusOK,
 		"count":   counter,
-		"items":   exportedSockets,
+		"sockets": exportedSockets,
 		"message": "ok, dumping public sockets",
 	})
 }
@@ -859,12 +859,12 @@ func GetDishRoot(ctx *gin.Context) {
 // @Failure      404  {array}   dish.Incident
 // @Failure      500  {array}   dish.Incident
 // @Router       /dish/restore [post]
-func PostDumpRestore(ctx *gin.Context) {
+func PostDumpRestore2(ctx *gin.Context) {
 	core.BatchRestoreItems[Root](ctx, restorePackage)
 	return
 }
 
-func PostDumpRestore2(ctx *gin.Context) {
+func PostDumpRestore(ctx *gin.Context) {
 	var counter []int = []int{0, 0}
 
 	var importDish = struct {
