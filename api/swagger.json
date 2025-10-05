@@ -13,7 +13,7 @@
             "name": "MIT",
             "url": "https://github.com/vxn-dev/swis-api/blob/master/LICENSE"
         },
-        "version": "5.18.4"
+        "version": "5.18.5"
     },
     "host": "swis-api-run-prod:8050",
     "basePath": "/",
@@ -3901,7 +3901,35 @@
         }
     },
     "definitions": {
-        "pkg_alvax.Channel": {
+        "pkg_alvax.ChannelSpecific": {
+            "type": "object",
+            "properties": {
+                "memeMode": {
+                    "type": "boolean"
+                },
+                "sendErrors": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "pkg_alvax.Channels": {
+            "type": "object",
+            "properties": {
+                "Discord": {
+                    "$ref": "#/definitions/pkg_alvax.ChannelsDiscord"
+                },
+                "Kanban": {
+                    "$ref": "#/definitions/pkg_alvax.ChannelsKanban"
+                },
+                "Redmine": {
+                    "$ref": "#/definitions/pkg_alvax.ChannelsRedmine"
+                },
+                "Telegram": {
+                    "$ref": "#/definitions/pkg_alvax.ChannelsTelegram"
+                }
+            }
+        },
+        "pkg_alvax.ChannelsDiscord": {
             "type": "object",
             "properties": {
                 "baseUrl": {
@@ -3912,27 +3940,13 @@
                 },
                 "commands": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/pkg_alvax.Command"
-                    }
-                },
-                "defaultGroupId": {
-                    "type": "integer"
-                },
-                "githubGroupId": {
-                    "type": "integer"
+                    "items": {}
                 },
                 "integrate": {
                     "type": "boolean"
                 },
-                "memeMode": {
-                    "type": "boolean"
-                },
                 "methods": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
+                    "$ref": "#/definitions/pkg_alvax.ChannelsDiscordMethods"
                 },
                 "name": {
                     "type": "string"
@@ -3943,18 +3957,117 @@
                 "token": {
                     "type": "string"
                 },
-                "username": {
-                    "type": "string"
-                },
-                "wehbookEndpoint": {
-                    "type": "string"
-                },
-                "wehbookUrl": {
+                "webhookEndpoint": {
                     "type": "string"
                 }
             }
         },
-        "pkg_alvax.Command": {
+        "pkg_alvax.ChannelsDiscordMethods": {
+            "type": "object"
+        },
+        "pkg_alvax.ChannelsKanban": {
+            "type": "object",
+            "properties": {
+                "baseUrl": {
+                    "type": "string"
+                },
+                "integrate": {
+                    "type": "boolean"
+                },
+                "methods": {
+                    "$ref": "#/definitions/pkg_alvax.ChannelsKanbanMethods"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "pkg_alvax.ChannelsKanbanMethods": {
+            "type": "object"
+        },
+        "pkg_alvax.ChannelsRedmine": {
+            "type": "object",
+            "properties": {
+                "baseUrl": {
+                    "type": "string"
+                },
+                "integrate": {
+                    "type": "boolean"
+                },
+                "methods": {
+                    "$ref": "#/definitions/pkg_alvax.ChannelsRedmineMethods"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "pkg_alvax.ChannelsRedmineMethods": {
+            "type": "object"
+        },
+        "pkg_alvax.ChannelsTelegram": {
+            "type": "object",
+            "properties": {
+                "baseUrl": {
+                    "type": "string"
+                },
+                "channelSpecific": {
+                    "$ref": "#/definitions/pkg_alvax.ChannelsTelegramChannelSpecific"
+                },
+                "commands": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pkg_alvax.ChannelsTelegramCommandsItem"
+                    }
+                },
+                "defaultGroupId": {
+                    "type": "integer"
+                },
+                "dishGroupId": {
+                    "type": "integer"
+                },
+                "gitHubGroupId": {
+                    "type": "integer"
+                },
+                "integrate": {
+                    "type": "boolean"
+                },
+                "methods": {
+                    "$ref": "#/definitions/pkg_alvax.ChannelsTelegramMethods"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "prodWebhook": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "webhookEndpoint": {
+                    "type": "string"
+                },
+                "webhookUrl": {
+                    "type": "string"
+                }
+            }
+        },
+        "pkg_alvax.ChannelsTelegramChannelSpecific": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/pkg_alvax.ChannelSpecific"
+            }
+        },
+        "pkg_alvax.ChannelsTelegramCommandsItem": {
             "type": "object",
             "properties": {
                 "description": {
@@ -3968,9 +4081,18 @@
                 },
                 "parameters": {
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": {}
+                }
+            }
+        },
+        "pkg_alvax.ChannelsTelegramMethods": {
+            "type": "object",
+            "properties": {
+                "sendMessage": {
+                    "type": "string"
+                },
+                "sendPhoto": {
+                    "type": "string"
                 }
             }
         },
@@ -3978,10 +4100,7 @@
             "type": "object",
             "properties": {
                 "channels": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/pkg_alvax.Channel"
-                    }
+                    "$ref": "#/definitions/pkg_alvax.Channels"
                 },
                 "docker": {
                     "$ref": "#/definitions/pkg_alvax.Docker"
@@ -3995,6 +4114,9 @@
                 },
                 "ngrok": {
                     "$ref": "#/definitions/pkg_alvax.Ngrok"
+                },
+                "remoteConfigSourceUrl": {
+                    "type": "string"
                 },
                 "server": {
                     "$ref": "#/definitions/pkg_alvax.Server"
