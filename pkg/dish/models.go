@@ -20,7 +20,7 @@ type Socket struct {
 
 	// Socket TCP port part
 	// Even default port 80 should be added here.
-	Port int `json:"port_tcp" binding:"required" validation:"required" required:"true"`
+	Port int `json:"port_tcp"`
 
 	// If the Host is HTTP/S endpoint, one can specify which HTTP Result/Response codes are okay and not to alert upon.
 	ExpectedHTTPCodes []int `json:"expected_http_code_array"`
@@ -74,7 +74,7 @@ type Incident struct {
 	Type string `json:"type"`
 
 	// ID of the referencing socket(s).
-	//SocketID []string `json:"socket_id"`
+	// SocketID []string `json:"socket_id"`
 	SocketID string `json:"socket_id"`
 
 	// The very start datetime of such incident.
